@@ -306,6 +306,7 @@
       letter-spacing: 0.15em;
       text-transform: uppercase;
     }
+    .hero-badge:empty { display: none; }
     .hero-content {
       padding: 60px 64px;
     }
@@ -3890,7 +3891,7 @@ function renderHero(drop) {
   const img = document.getElementById('hero-img');
   img.src = drop.heroImage; img.alt = drop.title;
   img.classList.remove('img-placeholder');
-  document.getElementById('hero-badge').textContent   = drop.badge || '';
+  document.getElementById('hero-badge').textContent   = '';
   document.getElementById('hero-eyebrow').textContent = drop.title + ' · ' + drop.subtitle;
   document.getElementById('hero-title').textContent   = drop.description.split('.')[0] + '.';
   document.getElementById('hero-desc').textContent    = drop.description;
