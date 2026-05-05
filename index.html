@@ -2335,13 +2335,11 @@
     <h1 class="hero-title" id="hero-title"></h1>
     <p class="hero-desc" id="hero-desc"></p>
     <div class="hero-actions">
-      <a class="btn btn--filled" id="hero-cta-primary" href="#">Shop All</a>
-      <a class="btn btn--gold" id="hero-cta-secondary" href="#">Ver Lookbook</a>
       <a class="btn btn--cita" id="hero-cta-cita"
          href="https://wa.me/34667775501?text=Hola%2C%20me%20gustar%C3%ADa%20pedir%20cita%20en%20vuestra%20tienda."
          target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;vertical-align:middle"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        <span id="hero-cta-cita-label">Pedir cita</span>
+        <span id="hero-cta-cita-label">WhatsApp</span>
       </a>
     </div>
   </div>
@@ -3895,12 +3893,6 @@ function renderHero(drop) {
   document.getElementById('hero-eyebrow').textContent = drop.title + ' · ' + drop.subtitle;
   document.getElementById('hero-title').textContent   = drop.description.split('.')[0] + '.';
   document.getElementById('hero-desc').textContent    = drop.description;
-  const ctaP = document.getElementById('hero-cta-primary');
-  const ctaS = document.getElementById('hero-cta-secondary');
-  ctaP.textContent = drop.ctaPrimary.label;
-  ctaP.href = '#';
-  ctaP.onclick = e => { e.preventDefault(); openCollectionModal(drop); };
-  ctaS.textContent = drop.ctaSecondary.label; ctaS.href = drop.ctaSecondary.href;
 }
 
 function renderProducts(drop) {
@@ -4331,7 +4323,7 @@ renderAll();
 /* ── Pedir cita bilingüe ── */
 function updateCitaBtn() {
   const el = document.getElementById('hero-cta-cita-label');
-  if (el) el.textContent = currentLang === 'ca' ? 'Demanar cita' : 'Pedir cita';
+  if (el) el.textContent = 'WhatsApp';
 }
 
 /* ── Volver arriba ── */
