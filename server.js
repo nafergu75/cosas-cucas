@@ -80,7 +80,7 @@ function bufferBody(req) {
   return new Promise((resolve, reject) => {
     const chunks = [];
     let length = 0;
-    const MAX_SIZE = 5 * 1024 * 1024; // Límite de 5MB
+    const MAX_SIZE = 10 * 1024 * 1024; // Límite de 10MB
     req.on('data', c => {
       length += c.length;
       if (length > MAX_SIZE) {
@@ -177,7 +177,11 @@ http.createServer(async (req, res) => {
       const contentType = req.headers['content-type'] || '';
       const apiRes = await fetch(PIXELAPI_URL, {
         method:  'POST',
-        headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': contentType },
+        headers: { 
+          'Authorization': `Bearer ${apiKey}`, 
+          'Content-Type': contentType,
+          'Content-Length': body.length.toString()
+        },
         body,
       });
       const text = await apiRes.text();
@@ -198,10 +202,30 @@ http.createServer(async (req, res) => {
     } catch (err) {
       console.error('[/api/try-on]', err.message);
       if (err.message === 'Payload Too Large') {
-        jsonRes(res, 413, { error: 'El archivo enviado es demasiado grande (máx. 5MB)' });
+        jsonRes(res, 413, { error: 'El archivo enviado es demasiado grande (máx. 10MB)' });
       } else {
         jsonRes(res, 500, { error: 'Error interno del servidor' });
       }
+    }
+    return;
+  }
+
+  // ── GET /api/try-on/jobs/:id (Polling PixelAPI) ──────────────
+  if (req.url.startsWith('/api/try-on/jobs/') && req.method === 'GET') {
+    const apiKey = PIXELAPI_KEY || req.headers['x-api-key'] || '';
+    if (!apiKey) return jsonRes(res, 503, { error: 'API key no configurada' });
+    
+    try {
+      const jobId = req.url.split('/').pop();
+      const apiRes = await fetch(`https://api.pixelapi.dev/v1/virtual-tryon/jobs/${jobId}`, {
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${apiKey}` }
+      });
+      const text = await apiRes.text();
+      res.writeHead(apiRes.status, { 'Content-Type': 'application/json' });
+      res.end(text);
+    } catch (err) {
+      jsonRes(res, 500, { error: 'Error en polling' });
     }
     return;
   }
