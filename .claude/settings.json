@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "$d = 'C:\\Users\\NACHO PC\\Desktop\\documntos prueba\\cosas-cucas'; $s = git -C $d status --porcelain; if ($s) { git -C $d add -A; $f = (git -C $d diff --cached --name-only | Select-Object -First 5) -join ', '; $m = 'Auto-guardado: ' + $f; git -C $d commit -m $m; git -C $d push origin master }",
+            "timeout": 60,
+            "statusMessage": "Subiendo cambios a GitHub..."
+          }
+        ]
+      }
+    ]
+  }
+}
