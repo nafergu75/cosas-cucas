@@ -216,16 +216,28 @@ http.createServer(async (req, res) => {
     if (!apiKey) return jsonRes(res, 503, { error: 'API key no configurada' });
     
     try {
-      const jobId = req.url.split('/').pop();
+      const pathOnly = req.url.split('?')[0];
+      const jobId = pathOnly.split('/').pop();
       const apiRes = await fetch(`https://api.pixelapi.dev/v1/virtual-tryon/jobs/${jobId}`, {
         method: 'GET',
         headers: { 'Authorization': `Bearer ${apiKey}` }
       });
       const text = await apiRes.text();
+      
+      let isJson = false;
+      try {
+        JSON.parse(text);
+        isJson = true;
+      } catch(e) {}
+
       res.writeHead(apiRes.status, { 'Content-Type': 'application/json' });
-      res.end(text);
+      if (isJson) {
+        res.end(text);
+      } else {
+        res.end(JSON.stringify({ error: `PixelAPI Polling Error: ${text.substring(0, 50)}...` }));
+      }
     } catch (err) {
-      jsonRes(res, 500, { error: 'Error en polling' });
+      jsonRes(res, 500, { error: 'Error interno en el proxy de polling' });
     }
     return;
   }
@@ -313,6 +325,19 @@ http.createServer(async (req, res) => {
     } catch (err) {
       console.error('[/api/telas]', err.message);
       return jsonRes(res, 500, { error: 'No se pudieron cargar las telas' });
+    }
+  }
+
+  // ── GET /api/aderezos ─────────────────────────────────────────
+  if (req.url === '/api/aderezos' && req.method === 'GET') {
+    try {
+      const dir = path.join(ROOT, 'aderezos');
+      const files = await fs.promises.readdir(dir);
+      const images = files.filter(f => f.match(/\.(jpg|jpeg|png|webp)$/i));
+      return jsonRes(res, 200, images);
+    } catch (err) {
+      console.error('[/api/aderezos]', err.message);
+      return jsonRes(res, 500, { error: 'No se pudieron cargar los aderezos' });
     }
   }
 
