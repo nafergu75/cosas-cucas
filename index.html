@@ -959,19 +959,23 @@
     ═══════════════════════════════════════════════════════════════════════════ */
     .col-modal {
       position: fixed; inset: 0; z-index: 4000;
-      display: none; overflow-x: hidden; overflow-y: auto;
+      display: none; overflow: hidden;
       background: rgba(26,23,20,0.55);
       height: 100vh;
       height: 100dvh;
+    }
+    .col-modal.open { display: flex; justify-content: center; align-items: stretch; }
+    .col-modal__panel {
+      background: var(--color-bg);
+      width: min(100%, 1140px);
+      max-width: 1140px; margin: 0 auto;
+      height: 100vh;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       overscroll-behavior-y: contain;
       touch-action: pan-y;
-    }
-    .col-modal.open { display: block; }
-    .col-modal__panel {
-      background: var(--color-bg);
-      max-width: 1140px; margin: 0 auto;
-      min-height: 100vh;
       box-shadow: 0 0 80px rgba(26,23,20,0.3);
     }
     .col-modal__topbar {
@@ -2144,20 +2148,24 @@
         height: 100vh;
         height: 100dvh;
         max-height: 100dvh;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior-y: contain;
-        touch-action: pan-y;
+        overflow: hidden;
       }
 
       .col-modal.open {
-        display: block;
+        display: flex;
       }
 
       .col-modal__panel {
         width: 100%;
-        min-height: 100dvh;
+        height: 100vh;
+        height: 100dvh;
+        max-height: 100dvh;
+        min-height: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-y: contain;
+        touch-action: pan-y;
         padding-bottom: env(safe-area-inset-bottom);
       }
 
@@ -2198,6 +2206,7 @@
 
       .col-modal__topbar {
         padding: 12px 16px;
+        flex-shrink: 0;
       }
 
       .col-modal__topbar-title {
@@ -3780,6 +3789,8 @@ function buildNav() {
 }
 
 /* ── Modal colección ── */
+let collectionModalScrollY = 0;
+
 function openCollectionModal(drop) {
   const labels = { es: 'Piezas de la colección', ca: "Peces de la col·lecció" };
   const notes  = { es: '¿Te interesa alguna pieza? Escríbenos o pide cita en tienda.', ca: "T'interessa alguna peça? Escriu-nos o demana cita a la botiga." };
@@ -3807,13 +3818,28 @@ function openCollectionModal(drop) {
   document.getElementById('col-modal-cta').textContent = drop.ctaSecondary.label;
   document.getElementById('col-modal-cta').href        = drop.ctaSecondary.href;
   const modal = document.getElementById('col-modal');
+  const panel = modal.querySelector('.col-modal__panel');
+  collectionModalScrollY = window.scrollY || document.documentElement.scrollTop || 0;
   modal.classList.add('open');
-  modal.scrollTop = 0;
+  if (panel) panel.scrollTop = 0;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${collectionModalScrollY}px`;
+  document.body.style.left = '0';
+  document.body.style.right = '0';
+  document.body.style.width = '100%';
+  document.body.style.overflow = 'hidden';
   document.documentElement.style.overscrollBehavior = 'none';
 }
 function closeCollectionModal() {
   document.getElementById('col-modal').classList.remove('open');
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
+  document.body.style.width = '';
+  document.body.style.overflow = '';
   document.documentElement.style.overscrollBehavior = '';
+  window.scrollTo(0, collectionModalScrollY);
 }
 document.getElementById('col-modal-close').addEventListener('click', closeCollectionModal);
 document.getElementById('col-modal').addEventListener('click', e => {
