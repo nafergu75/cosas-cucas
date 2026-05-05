@@ -256,81 +256,96 @@
   }
   .tech-text a:hover { text-decoration: underline; }
 
-  /* ── IFRAME AREA (derecha) ──────────────────────────────────── */
-  #iframe-wrap {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-    overflow: hidden;
-    min-height: 0;
-  }
-
-  #tryon-iframe {
+  /* ── WORKSPACE NATIVO (derecha) ─────────────────────────────── */
+  #tryon-workspace {
     flex: 1;
-    border: none;
-    width: 100%;
-    height: 100%;
-    min-height: 0;
-  }
-
-  /* Estado de carga */
-  #iframe-loading {
-    position: absolute;
-    inset: 0;
+    background: var(--bg-alt);
+    padding: 30px 40px;
     display: flex;
     flex-direction: column;
+    gap: 24px;
+    overflow-y: auto;
+  }
+  .workspace-header { text-align: center; }
+  .workspace-title { font-family: var(--font-disp); font-size: 1.5rem; color: var(--gold); font-style: italic; }
+  .workspace-subtitle { font-size: .8rem; color: var(--muted); margin-top: 4px; }
+
+  .workspace-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .ws-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  .ws-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .ws-step {
+    width: 20px; height: 20px; border-radius: 50%; background: var(--gold);
+    color: var(--white); font-size: .6rem; font-weight: bold;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ws-card-header h3 { font-size: .85rem; font-weight: 600; color: var(--text); }
+
+  .file-drop-area, .fabric-drop-area {
+    background: var(--bg);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    height: 240px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
-    background: var(--bg-alt);
-    pointer-events: none;
-    transition: opacity .4s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
   }
-  #iframe-loading.hidden { opacity: 0; }
-  .loading-spinner {
-    width: 36px; height: 36px;
-    border: 3px solid var(--border);
-    border-top-color: var(--gold);
-    border-radius: 50%;
+  .file-drop-area:hover { border-color: var(--gold); }
+  .fabric-drop-area { cursor: default; }
+  .drop-msg { font-size: .75rem; color: var(--muted); padding: 20px; text-align: center; line-height: 1.5; }
+  .file-drop-area img, .fabric-drop-area img {
+    width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;
+  }
+
+  .workspace-action { text-align: center; }
+  .btn-primary {
+    background: var(--gold); color: var(--white);
+    padding: 14px 32px; font-size: .8rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .1em;
+    border: none; border-radius: var(--radius);
+    cursor: pointer; transition: background .2s, opacity .2s;
+  }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-primary:not(:disabled):hover { background: var(--gold-light); }
+
+  .workspace-result {
+    flex: 1;
+    min-height: 400px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .result-placeholder { font-size: .85rem; color: var(--muted); }
+  .result-loading {
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+  }
+  .spinner {
+    width: 32px; height: 32px; border: 3px solid var(--border);
+    border-top-color: var(--gold); border-radius: 50%;
     animation: spin .8s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-text {
-    font-size: .72rem; font-weight: 600; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--muted);
+  .workspace-result img {
+    width: 100%; height: 100%; object-fit: contain;
   }
-
-  /* Fallback / Enlace principal */
-  #iframe-fallback {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    padding: 40px;
-    text-align: center;
-    height: 100%;
-  }
-  .fallback-icon { font-size: 3rem; opacity: .3; }
-  .fallback-title {
-    font-family: var(--font-disp); font-size: 1.4rem;
-    font-style: italic; color: var(--text);
-  }
-  .fallback-sub {
-    font-size: .82rem; color: var(--muted);
-    max-width: 380px; line-height: 1.65;
-  }
-  .btn-fallback {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 28px;
-    background: var(--gold); color: var(--white);
-    font-size: .72rem; font-weight: 700; letter-spacing: .1em;
-    text-transform: uppercase; text-decoration: none;
-    border-radius: var(--radius);
-    transition: background .2s;
-  }
-  .btn-fallback:hover { background: var(--gold-light); }
 
   /* ── RESPONSIVE ─────────────────────────────────────────────── */
   @media (max-width: 768px) {
@@ -346,10 +361,8 @@
       height: auto;
     }
     .guide-tech { display: none; }
-    #iframe-wrap {
-      height: calc(100dvh - 52px - 240px);
-      min-height: 400px;
-    }
+    #tryon-workspace { padding: 20px; }
+    .workspace-cards { grid-template-columns: 1fr; }
   }
   </style>
 </head>
@@ -430,7 +443,7 @@
 
     <div class="guide-fabrics" id="fabrics-panel">
       <span class="fabrics-label">Colección de Telas</span>
-      <p class="fabrics-desc">¿Quieres ver cómo quedaría un traje con una de nuestras telas? Descárgala y súbela en el apartado "Garment" (Prenda) del probador para teñir el traje con este patrón.</p>
+      <p class="fabrics-desc">Haz clic en una tela para aplicarla al traje virtual en el panel principal.</p>
       <div class="fabrics-grid" id="fabrics-grid">
         <!-- Las miniaturas se cargarán aquí por JS -->
       </div>
@@ -445,24 +458,90 @@
   </aside>
 
   <!-- Área principal (Derecha) -->
-  <div id="iframe-wrap">
-    <div id="iframe-fallback">
-      <span class="fallback-icon">👗</span>
-      <p class="fallback-title">Probador Virtual</p>
-      <p class="fallback-sub">Debido a nuevas restricciones de seguridad de la plataforma de Inteligencia Artificial (Hugging Face), ahora el probador debe abrirse en una ventana nueva segura.</p>
-      <a class="btn-fallback"
-         href="https://huggingface.co/spaces/Kwai-Kolors/Kolors-Virtual-Try-On"
-         target="_blank" rel="noopener">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path d="M2 12L12 2M12 2H6M12 2v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        Abrir Probador Virtual
-      </a>
+  <div id="tryon-workspace">
+    <div class="workspace-header">
+      <h2 class="workspace-title">Probador Mágico</h2>
+      <p class="workspace-subtitle">Selecciona tu foto y una tela de la izquierda para generar tu traje a medida.</p>
+    </div>
+
+    <div class="workspace-cards">
+      <!-- Tarjeta 1: Persona -->
+      <div class="ws-card">
+        <div class="ws-card-header">
+          <span class="ws-step">1</span>
+          <h3>Tu Foto</h3>
+        </div>
+        <div class="ws-card-body">
+          <label class="file-drop-area" id="drop-person">
+            <span class="drop-msg">Haz clic aquí para subir una foto frontal tuya</span>
+            <input type="file" id="input-person" accept="image/*" hidden>
+            <img id="preview-person" style="display:none;" alt="Preview Cliente">
+          </label>
+        </div>
+      </div>
+
+      <!-- Tarjeta 2: Tela -->
+      <div class="ws-card">
+        <div class="ws-card-header">
+          <span class="ws-step">2</span>
+          <h3>Tela Elegida</h3>
+        </div>
+        <div class="ws-card-body">
+          <div class="fabric-drop-area" id="drop-fabric">
+            <span class="drop-msg" id="fabric-msg">Ninguna tela seleccionada.<br><br>Haz clic en una de la galería (a la izquierda).</span>
+            <img id="preview-fabric" style="display:none;" alt="Preview Tela">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="workspace-action">
+      <button class="btn-primary" id="btn-run" disabled>Generar Prueba Virtual</button>
+    </div>
+
+    <div class="workspace-result" id="result-area">
+      <!-- Estado vacío, loading o imagen final -->
+      <div class="result-placeholder" id="result-placeholder">
+        El resultado aparecerá aquí.
+      </div>
+      <div class="result-loading" id="result-loading" style="display:none;">
+        <div class="spinner"></div>
+        <span style="font-size: .8rem; color: var(--muted);">Tejiendo el traje virtual con Inteligencia Artificial... (puede tardar un poco)</span>
+      </div>
+      <img id="result-image" style="display:none;" alt="Resultado Probador">
     </div>
   </div>
 </main>
 
 <script>
+  // Variables y Elementos del DOM
+  const inputPerson = document.getElementById('input-person');
+  const previewPerson = document.getElementById('preview-person');
+  const previewFabric = document.getElementById('preview-fabric');
+  const fabricMsg = document.getElementById('fabric-msg');
+  const btnRun = document.getElementById('btn-run');
+  const resultLoading = document.getElementById('result-loading');
+  const resultImage = document.getElementById('result-image');
+  const resultPlaceholder = document.getElementById('result-placeholder');
+
+  let selectedFabricUrl = null;
+  let selectedPersonFile = null;
+
+  // Manejo de la subida de foto del cliente
+  inputPerson.addEventListener('change', (e) => {
+    if (e.target.files && e.target.files[0]) {
+      selectedPersonFile = e.target.files[0];
+      previewPerson.src = URL.createObjectURL(selectedPersonFile);
+      previewPerson.style.display = 'block';
+      document.querySelector('#drop-person .drop-msg').style.display = 'none';
+      checkReady();
+    }
+  });
+
+  // Función para habilitar el botón si están ambas imágenes
+  function checkReady() {
+    btnRun.disabled = !(selectedPersonFile && selectedFabricUrl);
+  }
 
   /* Cargar telas dinámicamente desde el servidor */
   fetch('/api/telas').then(r => r.json()).then(telas => {
@@ -474,20 +553,89 @@
     telas.forEach(tela => {
       const a = document.createElement('a');
       a.className = 'fabric-item';
-      a.href = `/telas/${tela}`;
-      a.download = tela; // Permite que al hacer clic se descargue automáticamente
-      a.title = 'Descargar tela para probar color';
+      a.href = '#';
+      a.title = 'Usar esta tela';
       a.innerHTML = `
         <img src="/telas/${tela}" loading="lazy" alt="Tela Fallera">
         <div class="fabric-overlay">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
         </div>
       `;
+      // Al hacer clic, asignar la tela al workspace
+      a.onclick = (e) => {
+        e.preventDefault();
+        selectedFabricUrl = '/telas/' + tela;
+        previewFabric.src = selectedFabricUrl;
+        previewFabric.style.display = 'block';
+        fabricMsg.style.display = 'none';
+        
+        // Efecto visual de selección en la galería
+        document.querySelectorAll('.fabric-item').forEach(el => el.style.borderColor = 'var(--border)');
+        a.style.borderColor = 'var(--gold)';
+        
+        checkReady();
+      };
       grid.appendChild(a);
     });
   }).catch(e => {
     console.error('Error cargando telas:', e);
     document.getElementById('fabrics-panel').style.display = 'none';
+  });
+
+  // Ejecución de la API
+  btnRun.addEventListener('click', async () => {
+    if (!selectedPersonFile || !selectedFabricUrl) return;
+
+    // Cambiar estado a cargando
+    btnRun.disabled = true;
+    btnRun.textContent = 'Generando...';
+    resultPlaceholder.style.display = 'none';
+    resultImage.style.display = 'none';
+    resultLoading.style.display = 'flex';
+
+    try {
+      // 1. Descargar el blob de la tela seleccionada para poder enviarlo
+      const fabricRes = await fetch(selectedFabricUrl);
+      const fabricBlob = await fabricRes.blob();
+
+      // 2. Montar los datos para la API
+      const formData = new FormData();
+      formData.append('person_image', selectedPersonFile);
+      formData.append('garment_image', fabricBlob, 'tela.jpg');
+
+      // 3. Llamada segura al backend de Node (que proxy-ea a PixelAPI)
+      const apiRes = await fetch('/api/try-on', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await apiRes.json();
+      
+      if (!apiRes.ok) {
+        throw new Error(data.error || 'Fallo en la comunicación con la Inteligencia Artificial.');
+      }
+
+      // La API de Try-on normalmente devuelve la imagen generada en un campo url, output o result
+      const finalUrl = data.image_url || data.url || data.output || data.result;
+      if (!finalUrl) {
+        throw new Error('La API respondió con éxito pero no devolvió ninguna URL de imagen.');
+      }
+
+      // Mostrar el resultado final
+      resultImage.src = finalUrl;
+      resultImage.style.display = 'block';
+
+    } catch (err) {
+      alert('⚠️ Hubo un error al generar la prueba:\\n\\n' + err.message);
+      resultPlaceholder.style.display = 'flex';
+    } finally {
+      // Restaurar estado
+      btnRun.disabled = false;
+      btnRun.textContent = 'Generar Prueba Virtual';
+      resultLoading.style.display = 'none';
+    }
   });
 </script>
 

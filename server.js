@@ -7,7 +7,7 @@ const PORT         = 4747;
 const ROOT         = __dirname;
 
 // ── API Keys ────────────────────────────────────────────────────────
-const PIXELAPI_KEY   = process.env.PIXELAPI_KEY   || '';
+const PIXELAPI_KEY   = process.env.PIXELAPI_KEY   || 'CLAVE_ELIMINADA';
 const ANTHROPIC_KEY  = process.env.ANTHROPIC_KEY  || '';
 const BRAVE_KEY      = process.env.BRAVE_KEY       || '';
 const CONTACT_KEY    = process.env.CONTACT_KEY     || '';   // Web3Forms access key
