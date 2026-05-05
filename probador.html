@@ -1,32 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Probador Virtual · Cosas Cucas | Indumentaria Fallera</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Probador Virtual · Cosas Cucas | Indumentaria Valenciana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <style>
-  /* ═══════════════════════════════════════════════════════════════
-     VARIABLES — mismo sistema de diseño que la web principal
-  ═══════════════════════════════════════════════════════════════ */
   :root {
-    --bg:          #F4EDD8;
-    --bg-alt:      #EDE5CE;
-    --bg-dark:     #1A1714;
-    --gold:        #B5903A;
-    --gold-light:  #D4B166;
-    --text:        #1A1714;
-    --muted:       #6B5D4F;
-    --border:      #D9CEB4;
-    --white:       #FDFAF3;
-    --font-body:   'Space Grotesk', sans-serif;
-    --font-disp:   'Playfair Display', serif;
-    --radius:      3px;
-    --shadow:      0 4px 24px rgba(26,23,20,.12);
+    --bg:         #F4EDD8;
+    --bg-alt:     #EDE5CE;
+    --bg-dark:    #1A1714;
+    --gold:       #B5903A;
+    --gold-light: #D4B166;
+    --text:       #1A1714;
+    --muted:      #6B5D4F;
+    --border:     #D9CEB4;
+    --white:      #FDFAF3;
+    --font-body:  'Space Grotesk', sans-serif;
+    --font-disp:  'Playfair Display', serif;
+    --radius:     3px;
+    /* Colores del traje — el SVG los lee directamente via fill:var(...) */
+    --c-falda:   #1B3A8A;
+    --c-corpino: #922020;
+    --c-zapatos: #3D2010;
+    --c-flores:  #D4388A;
+    --c-manton:  #C4A820;
+    --c-aderezo: #B5903A;
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; overflow: hidden; }
   body {
@@ -34,352 +35,181 @@
     background: var(--bg);
     color: var(--text);
     -webkit-font-smoothing: antialiased;
-    display: flex;
-    flex-direction: column;
+    display: flex; flex-direction: column;
   }
 
-  /* ── HEADER ─────────────────────────────────────────────────── */
+  /* ── HEADER ─────────────────────────────── */
   #header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    height: 52px;
-    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; height: 52px; flex-shrink: 0;
     background: var(--bg-dark);
-    border-bottom: 1px solid rgba(217,206,180,.15);
-    gap: 12px;
+    border-bottom: 1px solid rgba(217,206,180,.15); gap: 12px;
   }
   .hdr-left { display: flex; align-items: center; gap: 14px; }
-  .hdr-brand {
-    display: flex; align-items: center; gap: 9px;
-    text-decoration: none;
-  }
-  .hdr-brand img {
-    height: 30px; width: auto; object-fit: contain;
-  }
-  .hdr-brand-name {
-    font-size: .68rem; font-weight: 700; letter-spacing: .18em;
-    text-transform: uppercase; color: var(--gold-light);
-    white-space: nowrap;
-  }
-  .hdr-sep {
-    width: 1px; height: 22px;
-    background: rgba(217,206,180,.2);
-  }
-  .hdr-title {
-    font-family: var(--font-disp);
-    font-size: .95rem; font-style: italic;
-    color: rgba(253,250,243,.7);
-    white-space: nowrap;
-  }
-  .hdr-badge {
-    font-size: .58rem; font-weight: 700; letter-spacing: .14em;
-    text-transform: uppercase;
-    background: var(--gold); color: var(--white);
-    padding: 3px 8px; border-radius: 2px;
-  }
-  .hdr-back {
-    font-size: .65rem; font-weight: 600; letter-spacing: .1em;
-    text-transform: uppercase; color: rgba(253,250,243,.5);
-    text-decoration: none;
-    display: flex; align-items: center; gap: 5px;
-    transition: color .2s;
-    white-space: nowrap;
-  }
-  .hdr-back:hover { color: var(--gold-light); }
-  .hdr-back svg { flex-shrink: 0; }
+  .hdr-brand { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+  .hdr-brand img { height: 30px; width: auto; object-fit: contain; }
+  .hdr-brand-name { font-size:.68rem; font-weight:700; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--gold-light); white-space:nowrap; }
+  .hdr-sep { width:1px; height:22px; background:rgba(217,206,180,.2); }
+  .hdr-title { font-family:var(--font-disp); font-size:.95rem; font-style:italic;
+    color:rgba(253,250,243,.7); white-space:nowrap; }
+  .hdr-badge { font-size:.58rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    background:var(--gold); color:var(--white); padding:3px 8px; border-radius:2px; }
+  .hdr-back { font-size:.65rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+    color:rgba(253,250,243,.5); text-decoration:none; display:flex; align-items:center; gap:5px;
+    transition:color .2s; white-space:nowrap; }
+  .hdr-back:hover { color:var(--gold-light); }
 
-  /* ── LAYOUT PRINCIPAL ───────────────────────────────────────── */
+  /* ── LAYOUT 3 COLUMNAS ───────────────────── */
   #main {
-    flex: 1;
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    overflow: hidden;
-    min-height: 0;
+    flex: 1; display: grid;
+    grid-template-columns: 164px 1fr 252px;
+    overflow: hidden; min-height: 0;
   }
 
-  /* ── PANEL GUÍA (izquierda) ─────────────────────────────────── */
-  #guide {
-    background: var(--white);
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 0;
+  /* ── PANEL IZQUIERDO ─────────────────────── */
+  #parts-panel {
+    background: var(--white); border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; overflow-y: auto;
+  }
+  .pp-section { padding: 14px 12px 0; border-bottom: 1px solid var(--border); }
+  .pp-section:last-child { border-bottom: none; padding-bottom: 14px; }
+  .pp-label { font-size:.58rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--gold); display:block; margin-bottom:10px; }
+
+  .part-btn {
+    display: flex; align-items: center; gap: 9px;
+    width: 100%; padding: 9px 8px; margin-bottom: 5px;
+    background: transparent; border: 1px solid transparent;
+    border-radius: var(--radius); cursor: pointer; transition: all .18s; text-align: left;
+  }
+  .part-btn:hover { background: var(--bg-alt); border-color: var(--border); }
+  .part-btn.active { background: var(--bg); border-color: var(--gold); }
+  .part-btn.active .pb-name { color: var(--gold); font-weight: 700; }
+  .part-color-dot { width:20px; height:20px; border-radius:50%; flex-shrink:0;
+    border:2px solid rgba(0,0,0,.12); transition:background .4s; }
+  .pb-name { font-size:.72rem; font-weight:600; color:var(--text); }
+  .pb-sub  { font-size:.58rem; color:var(--muted); }
+
+  .comp-btn {
+    display: flex; align-items: center; gap: 9px;
+    width: 100%; padding: 8px 8px; margin-bottom: 6px;
+    background: transparent; border: 1px solid var(--border);
+    border-radius: var(--radius); cursor: pointer; transition: all .18s; text-align: left;
+  }
+  .comp-btn:hover { border-color: var(--gold-light); }
+  .comp-btn.on { border-color: var(--gold); background: var(--bg); }
+  .toggle-pill { width:28px; height:16px; border-radius:8px; background:var(--border);
+    position:relative; flex-shrink:0; transition:background .2s; }
+  .toggle-pill::after { content:''; position:absolute; top:2px; left:2px; width:12px; height:12px;
+    border-radius:50%; background:white; transition:transform .2s; }
+  .comp-btn.on .toggle-pill { background:var(--gold); }
+  .comp-btn.on .toggle-pill::after { transform:translateX(12px); }
+  .cb-name { font-size:.7rem; font-weight:600; color:var(--text); }
+
+  .action-btn {
+    display:block; width:100%; padding:9px 8px; font-family:var(--font-body);
+    font-size:.62rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+    text-align:center; border-radius:var(--radius); cursor:pointer;
+    transition:all .2s; margin-bottom:7px; text-decoration:none;
+  }
+  .btn-gold    { background:var(--gold); color:var(--white); border:none; }
+  .btn-gold:hover { background:var(--gold-light); }
+  .btn-outline { background:transparent; color:var(--text); border:1px solid var(--border); }
+  .btn-outline:hover { border-color:var(--gold); color:var(--gold); }
+
+  /* ── CENTRO: modelo SVG ──────────────────── */
+  #model-wrap {
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden; background:var(--bg-alt); position:relative; padding:10px;
+  }
+  #model-svg {
+    height:100%; max-height:calc(100vh - 52px);
+    width:auto; max-width:100%;
+    filter:drop-shadow(0 8px 32px rgba(26,23,20,.18));
+  }
+  .part-group { cursor:pointer; transition:filter .25s; }
+  .part-group:hover { filter:drop-shadow(0 0 6px rgba(181,144,58,.55)); }
+  .part-group.sel   { filter:drop-shadow(0 0 10px rgba(181,144,58,.8)); }
+
+  #model-hint {
+    position:absolute; bottom:14px; left:50%; transform:translateX(-50%);
+    background:rgba(26,23,20,.8); color:rgba(253,250,243,.85);
+    font-size:.62rem; letter-spacing:.08em; padding:6px 16px; border-radius:20px;
+    pointer-events:none; white-space:nowrap; transition:opacity .5s;
   }
 
-  .guide-head {
-    padding: 20px 18px 16px;
-    border-bottom: 1px solid var(--border);
+  /* ── PANEL DERECHO: Telas ────────────────── */
+  #telas-panel {
+    background:var(--white); border-left:1px solid var(--border);
+    display:flex; flex-direction:column; overflow:hidden;
   }
-  .guide-eyebrow {
-    font-size: .6rem; font-weight: 700; letter-spacing: .2em;
-    text-transform: uppercase; color: var(--gold);
-    margin-bottom: 6px; display: block;
-  }
-  .guide-title {
-    font-family: var(--font-disp);
-    font-size: 1.1rem; font-weight: 600;
-    line-height: 1.25; color: var(--text);
-  }
-  .guide-title em { font-style: italic; color: var(--gold); }
+  #telas-head { padding:14px 14px 10px; border-bottom:1px solid var(--border); flex-shrink:0; }
+  .tp-eyebrow { font-size:.58rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--gold); display:block; margin-bottom:4px; }
+  .tp-title { font-family:var(--font-disp); font-size:1rem; font-style:italic; }
+  .tp-sub   { font-size:.65rem; color:var(--muted); margin-top:3px; }
+  #tp-active-part { font-weight:700; color:var(--gold); }
 
-  /* Pasos */
-  .guide-steps {
-    padding: 18px 18px 14px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+  .tp-filters { display:flex; gap:4px; flex-wrap:wrap;
+    padding:10px 12px; border-bottom:1px solid var(--border); flex-shrink:0; }
+  .tp-filter {
+    font-size:.57rem; font-weight:600; letter-spacing:.07em; text-transform:uppercase;
+    padding:3px 9px; border-radius:20px; border:1px solid var(--border);
+    background:transparent; color:var(--muted); cursor:pointer; transition:all .18s;
   }
-  .step {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  .step-num {
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    background: var(--gold);
-    color: var(--white);
-    font-size: .65rem; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-  .step-body {}
-  .step-title {
-    font-size: .78rem; font-weight: 600;
-    color: var(--text); margin-bottom: 2px;
-  }
-  .step-desc {
-    font-size: .7rem; color: var(--muted);
-    line-height: 1.5;
-  }
+  .tp-filter.active, .tp-filter:hover { background:var(--gold); border-color:var(--gold); color:var(--white); }
 
-  /* Consejos */
-  .guide-tips {
-    padding: 16px 18px;
-    border-bottom: 1px solid var(--border);
+  #telas-grid {
+    flex:1; overflow-y:auto;
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:8px; padding:12px; align-content:start;
   }
-  .tips-label {
-    font-size: .6rem; font-weight: 700; letter-spacing: .16em;
-    text-transform: uppercase; color: var(--muted);
-    margin-bottom: 10px; display: block;
+  .tela-card {
+    cursor:pointer; border-radius:var(--radius); border:2px solid transparent;
+    overflow:hidden; transition:border-color .18s, transform .18s;
   }
-  .tip {
-    display: flex; align-items: flex-start; gap: 7px;
-    margin-bottom: 8px;
-  }
-  .tip:last-child { margin-bottom: 0; }
-  .tip-dot {
-    width: 5px; height: 5px; border-radius: 50%;
-    background: var(--gold); flex-shrink: 0; margin-top: 6px;
-  }
-  .tip-text { font-size: .7rem; color: var(--muted); line-height: 1.5; }
+  .tela-card:hover { border-color:var(--gold-light); transform:translateY(-1px); }
+  .tela-card.sel   { border-color:var(--gold); }
 
-  /* Telas */
-  .guide-fabrics {
-    padding: 16px 18px;
-    border-bottom: 1px solid var(--border);
-  }
-  .fabrics-label {
-    font-size: .65rem; font-weight: 700; letter-spacing: .16em;
-    text-transform: uppercase; color: var(--gold);
-    margin-bottom: 8px; display: block;
-  }
-  .fabrics-desc {
-    font-size: .65rem; color: var(--muted); line-height: 1.4;
-    margin-bottom: 12px;
-  }
-  .fabrics-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    max-height: 220px;
-    overflow-y: auto;
-    padding-right: 4px;
-  }
-  /* Estilo scrollbar para telas */
-  .fabrics-grid::-webkit-scrollbar { width: 4px; }
-  .fabrics-grid::-webkit-scrollbar-thumb { background: var(--gold-light); border-radius: 4px; }
-  
-  .fabric-item {
-    aspect-ratio: 1;
-    background: var(--bg-alt);
-    border-radius: 4px;
-    overflow: hidden;
-    cursor: pointer;
-    border: 1px solid var(--border);
-    transition: transform 0.2s, border-color 0.2s;
-    position: relative;
-    display: block;
-  }
-  .fabric-item:hover {
-    transform: translateY(-2px);
-    border-color: var(--gold);
-  }
-  .fabric-item img {
-    width: 100%; height: 100%; object-fit: cover;
-  }
-  .fabric-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(26,23,20,0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-  .fabric-item:hover .fabric-overlay { opacity: 1; }
-  .fabric-overlay svg { color: var(--white); width: 18px; height: 18px; }
+  .tela-swatch { width:100%; aspect-ratio:1; position:relative; overflow:hidden; }
+  .tela-card[data-tipo="Seda"]       .tela-swatch { background-image:linear-gradient(135deg,rgba(255,255,255,.38) 0%,transparent 45%,rgba(0,0,0,.08) 100%); }
+  .tela-card[data-tipo="Terciopelo"] .tela-swatch { background-image:linear-gradient(135deg,rgba(0,0,0,.18) 0%,rgba(255,255,255,.06) 45%,rgba(0,0,0,.22) 100%); }
+  .tela-card[data-tipo="Tafetán"]    .tela-swatch { background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0,rgba(255,255,255,.05) 1px,transparent 1px,transparent 3px),repeating-linear-gradient(90deg,rgba(0,0,0,.03) 0,rgba(0,0,0,.03) 1px,transparent 1px,transparent 3px),linear-gradient(135deg,rgba(255,255,255,.22) 0%,transparent 60%); }
+  .tela-card[data-tipo="Raso"]       .tela-swatch { background-image:linear-gradient(120deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.48) 38%,rgba(255,255,255,.1) 52%,rgba(0,0,0,.07) 72%,rgba(255,255,255,.18) 100%); }
 
-  /* Nota tecnología */
-  .guide-tech {
-    padding: 14px 18px;
-    margin-top: auto;
-    border-top: 1px solid var(--border);
+  .tela-check {
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    background:rgba(181,144,58,.35); opacity:0; transition:opacity .18s;
   }
-  .tech-label {
-    font-size: .58rem; font-weight: 700; letter-spacing: .14em;
-    text-transform: uppercase; color: var(--muted);
-    margin-bottom: 6px; display: block;
-  }
-  .tech-text {
-    font-size: .68rem; color: var(--muted); line-height: 1.55;
-  }
-  .tech-text a {
-    color: var(--gold); text-decoration: none;
-  }
-  .tech-text a:hover { text-decoration: underline; }
+  .tela-card.sel .tela-check { opacity:1; }
+  .tela-name { font-size:.56rem; font-weight:600; color:var(--text);
+    padding:4px 5px 2px; background:var(--white); line-height:1.2; }
+  .tela-tipo { font-size:.5rem; color:var(--muted); padding:0 5px 4px; background:var(--white); }
+  .tela-card.sel .tela-name { color:var(--gold); }
 
-  /* ── WORKSPACE NATIVO (derecha) ─────────────────────────────── */
-  #tryon-workspace {
-    flex: 1;
-    background: var(--bg-alt);
-    padding: 30px 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    overflow-y: auto;
-  }
-  .workspace-header { text-align: center; }
-  .workspace-title { font-family: var(--font-disp); font-size: 1.5rem; color: var(--gold); font-style: italic; }
-  .workspace-subtitle { font-size: .8rem; color: var(--muted); margin-top: 4px; }
-
-  .workspace-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-  .ws-card {
-    background: var(--white);
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-  }
-  .ws-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-  .ws-step {
-    width: 20px; height: 20px; border-radius: 50%; background: var(--gold);
-    color: var(--white); font-size: .6rem; font-weight: bold;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .ws-card-header h3 { font-size: .85rem; font-weight: 600; color: var(--text); }
-
-  .file-drop-area, .fabric-drop-area {
-    background: var(--bg);
-    border: 1px dashed var(--border);
-    border-radius: var(--radius);
-    aspect-ratio: 3 / 4;
-    width: 100%;
-    height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-  }
-  .file-drop-area:hover { border-color: var(--gold); }
-  .fabric-drop-area { cursor: default; }
-  .drop-msg { font-size: .75rem; color: var(--muted); padding: 20px; text-align: center; line-height: 1.5; }
-  .file-drop-area img, .fabric-drop-area img {
-    width: 100%; height: 100%; object-fit: contain; position: absolute; inset: 0;
-  }
-
-  .workspace-action { text-align: center; }
-  .btn-primary {
-    background: var(--gold); color: var(--white);
-    padding: 14px 32px; font-size: .8rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: .1em;
-    border: none; border-radius: var(--radius);
-    cursor: pointer; transition: background .2s, opacity .2s;
-  }
-  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-  .btn-primary:not(:disabled):hover { background: var(--gold-light); }
-
-  .workspace-result {
-    flex: 1;
-    min-height: 400px;
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .result-placeholder { font-size: .85rem; color: var(--muted); }
-  .result-loading {
-    display: flex; flex-direction: column; align-items: center; gap: 14px;
-  }
-  .spinner {
-    width: 32px; height: 32px; border: 3px solid var(--border);
-    border-top-color: var(--gold); border-radius: 50%;
-    animation: spin .8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .workspace-result img {
-    width: 100%; height: 100%; object-fit: contain;
-  }
-
-  /* ── RESPONSIVE ─────────────────────────────────────────────── */
-  @media (max-width: 768px) {
-    html, body { overflow: auto; }
-    #main {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto 1fr;
-    }
-    #guide {
-      border-right: none;
-      border-bottom: 1px solid var(--border);
-      overflow: visible;
-      height: auto;
-    }
-    .guide-tech { display: none; }
-    #tryon-workspace { padding: 20px; }
-    .workspace-cards { grid-template-columns: 1fr; }
+  /* ── RESPONSIVE ─────────────────────────── */
+  @media (max-width:900px) {
+    html,body { overflow:auto; }
+    #main { grid-template-columns:1fr; overflow:visible; }
+    #parts-panel,#telas-panel { border:none; border-bottom:1px solid var(--border); }
+    #model-wrap { height:500px; }
+    #telas-grid { grid-template-columns:repeat(4,1fr); }
   }
   </style>
 </head>
 <body>
 
-<!-- ── HEADER ─────────────────────────────────────────────────── -->
+<!-- HEADER -->
 <header id="header">
   <div class="hdr-left">
     <a class="hdr-brand" href="/">
-      <img src="logo cosascucas.png" alt="Cosas Cucas" />
+      <img src="logo cosascucas.png" alt="Cosas Cucas">
       <span class="hdr-brand-name">Cosas Cucas</span>
     </a>
     <div class="hdr-sep"></div>
-    <span class="hdr-title">Probador Virtual</span>
-    <span class="hdr-badge">IA</span>
+    <span class="hdr-title">Probador de Telas</span>
+    <span class="hdr-badge">Nuevo</span>
   </div>
   <a class="hdr-back" href="/">
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -389,456 +219,485 @@
   </a>
 </header>
 
-<!-- ── LAYOUT ────────────────────────────────────────────────── -->
 <main id="main">
 
-  <!-- Panel guía -->
-  <aside id="guide">
-    <div class="guide-head">
-      <span class="guide-eyebrow">✦ Probador con IA</span>
-      <h1 class="guide-title">Prueba la prenda<br><em>antes de encargarla</em></h1>
+  <!-- ══ IZQUIERDA: Selector de parte ══ -->
+  <aside id="parts-panel">
+
+    <div class="pp-section">
+      <span class="pp-label">① Parte del traje</span>
+
+      <button class="part-btn active" data-part="falda" onclick="selectPart('falda')">
+        <div class="part-color-dot" id="dot-falda"></div>
+        <div><div class="pb-name">Falda</div><div class="pb-sub">Falda principal</div></div>
+      </button>
+
+      <button class="part-btn" data-part="corpino" onclick="selectPart('corpino')">
+        <div class="part-color-dot" id="dot-corpino"></div>
+        <div><div class="pb-name">Corpiño</div><div class="pb-sub">Cuerpo y mangas</div></div>
+      </button>
+
+      <button class="part-btn" data-part="zapatos" onclick="selectPart('zapatos')">
+        <div class="part-color-dot" id="dot-zapatos"></div>
+        <div><div class="pb-name">Zapatos</div><div class="pb-sub">Calzado</div></div>
+      </button>
     </div>
 
-    <div class="guide-steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <p class="step-title">Sube tu foto</p>
-          <p class="step-desc">Una foto frontal bien iluminada, sin sombras fuertes. Fondo neutro si es posible.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <p class="step-title">Sube la prenda</p>
-          <p class="step-desc">Foto del traje, vestido o complemento sobre fondo blanco. Puedes usar imágenes de nuestro catálogo.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <p class="step-title">Genera el resultado</p>
-          <p class="step-desc">Pulsa «Run» y en unos segundos la IA procesará la imagen con la prenda puesta.</p>
-        </div>
-      </div>
+    <div class="pp-section">
+      <span class="pp-label">② Añadir complementos</span>
+
+      <button class="comp-btn" id="comp-flores" onclick="toggleComplement('flores')">
+        <div class="toggle-pill"></div>
+        <div><div class="cb-name">🌸 Flores</div></div>
+      </button>
+
+      <button class="comp-btn" id="comp-manton" onclick="toggleComplement('manton')">
+        <div class="toggle-pill"></div>
+        <div><div class="cb-name">🧣 Mantón</div></div>
+      </button>
+
+      <button class="comp-btn" id="comp-aderezo" onclick="toggleComplement('aderezo')">
+        <div class="toggle-pill"></div>
+        <div><div class="cb-name">✨ Aderezo</div></div>
+      </button>
+
+      <button class="comp-btn" id="comp-peineta" onclick="toggleComplement('peineta')">
+        <div class="toggle-pill"></div>
+        <div><div class="cb-name">👑 Peineta</div></div>
+      </button>
     </div>
 
-    <div class="guide-tips">
-      <span class="tips-label">Consejos para mejores resultados</span>
-      <div class="tip">
-        <div class="tip-dot"></div>
-        <p class="tip-text">Usa fotos en posición recta, con brazos ligeramente separados del cuerpo.</p>
-      </div>
-      <div class="tip">
-        <div class="tip-dot"></div>
-        <p class="tip-text">La prenda debe verse completa y plana, sin arrugas ni dobleces.</p>
-      </div>
-      <div class="tip">
-        <div class="tip-dot"></div>
-        <p class="tip-text">Resolución mínima recomendada: 512 × 512 píxeles.</p>
-      </div>
-      <div class="tip">
-        <div class="tip-dot"></div>
-        <p class="tip-text">Si el resultado no es el esperado, activa «Randomize Seed» y vuelve a generar.</p>
-      </div>
+    <div class="pp-section" style="padding-bottom:14px; margin-top:auto;">
+      <span class="pp-label">③ Guardar</span>
+      <button class="action-btn btn-gold" onclick="downloadPNG()">⬇ Descargar</button>
+      <a class="action-btn btn-outline" id="btn-pedir"
+         href="mailto:info@cosascucas.es?subject=Consulta%20diseño%20traje">
+        ✉ Pedir este diseño
+      </a>
     </div>
 
-    <div class="guide-fabrics" id="fabrics-panel">
-      <span class="fabrics-label">Colección de Telas</span>
-      <p class="fabrics-desc">Haz clic en una tela para aplicarla al traje virtual en el panel principal.</p>
-      <div class="fabrics-grid" id="fabrics-grid">
-        <!-- Las miniaturas se cargarán aquí por JS -->
-      </div>
-    </div>
-
-    <div class="guide-tech">
-      <span class="tech-label">Tecnología</span>
-      <p class="tech-text">
-        Motor de IA: <a href="https://huggingface.co/spaces/Kwai-Kolors/Kolors-Virtual-Try-On" target="_blank" rel="noopener">Kolors Virtual Try-On</a> by Kwai·Kolors. Las imágenes se procesan en servidores externos y no se almacenan en nuestros sistemas.
-      </p>
-    </div>
-
-    <!-- Accesorios Panel -->
-    <div class="guide-fabrics" id="accessories-panel" style="display:none;">
-      <span class="fabrics-label">Aderezos y Complementos</span>
-      <p class="fabrics-desc">Haz clic en un aderezo para colocarlo sobre el resultado. Arrástralo, usa la rueda para cambiar tamaño y clic derecho para quitarlo.</p>
-      <div class="fabrics-grid" id="accessories-grid">
-        <!-- Las imágenes se cargarán aquí por JS -->
-      </div>
-    </div>
   </aside>
 
-  <!-- Área principal (Derecha) -->
-  <div id="tryon-workspace">
-    <div class="workspace-header">
-      <h2 class="workspace-title">Probador Mágico</h2>
-      <p class="workspace-subtitle">Selecciona tu foto y una tela de la izquierda para generar tu traje a medida.</p>
-    </div>
+  <!-- ══ CENTRO: Modelo SVG ══ -->
+  <div id="model-wrap">
+    <div id="model-hint">Elige una parte → selecciona una tela</div>
 
-    <div class="workspace-cards">
-      <!-- Tarjeta 1: Persona -->
-      <div class="ws-card">
-        <div class="ws-card-header">
-          <span class="ws-step">1</span>
-          <h3>Tu Foto</h3>
-        </div>
-        <div class="ws-card-body">
-          <label class="file-drop-area" id="drop-person">
-            <span class="drop-msg">Haz clic aquí para subir una foto frontal tuya</span>
-            <input type="file" id="input-person" accept="image/*" hidden>
-            <img id="preview-person" style="display:none;" alt="Preview Cliente">
-          </label>
-        </div>
-      </div>
+    <svg id="model-svg" viewBox="0 0 320 720" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="720" fill="#FDFAF3" rx="6"/>
 
-      <!-- Tarjeta 2: Tela -->
-      <div class="ws-card">
-        <div class="ws-card-header">
-          <span class="ws-step">2</span>
-          <h3>Tela Elegida</h3>
-        </div>
-        <div class="ws-card-body">
-          <div class="category-selector" style="margin-bottom: 12px; display: flex; gap: 10px; font-size: 0.75rem; color: var(--muted); border: 1px solid var(--border); padding: 8px; border-radius: var(--radius); background: var(--bg);">
-            <label style="cursor:pointer;"><input type="radio" name="category" value="lowerbody" checked> Falda</label>
-            <label style="cursor:pointer;"><input type="radio" name="category" value="upperbody"> Corpiño</label>
-            <label style="cursor:pointer;"><input type="radio" name="category" value="dress"> Vestido</label>
-          </div>
-          <div class="fabric-drop-area" id="drop-fabric" style="aspect-ratio: 1/1;">
-            <span class="drop-msg" id="fabric-msg">Ninguna tela seleccionada.<br><br>Haz clic en una de la galería (a la izquierda).</span>
-            <img id="preview-fabric" style="display:none;" alt="Preview Tela">
-          </div>
-        </div>
-      </div>
-    </div>
+      <!-- sombra suelo -->
+      <ellipse cx="160" cy="708" rx="108" ry="9" fill="rgba(26,23,20,.07)"/>
 
-    <div class="workspace-action">
-      <button class="btn-primary" id="btn-run" disabled>Generar Prueba Virtual</button>
-    </div>
+      <!-- ══ FALDA ══ -->
+      <g id="gFalda" class="part-group sel" onclick="selectPart('falda')">
+        <path style="fill:var(--c-falda)" d="M118,320 Q66,435 14,668 L306,668 Q254,435 202,320 Z"/>
+        <!-- pliegues oscuros laterales -->
+        <path fill="rgba(0,0,0,.17)" d="M118,320 Q80,430 28,668 Q54,668 78,656 Q116,440 132,324 Z"/>
+        <path fill="rgba(0,0,0,.17)" d="M202,320 Q240,430 292,668 Q266,668 242,656 Q204,440 188,324 Z"/>
+        <!-- brillo central -->
+        <path fill="rgba(255,255,255,.13)" d="M152,322 Q148,472 146,668 L174,668 Q172,472 168,322 Z"/>
+        <!-- puntilla inferior -->
+        <path fill="rgba(255,255,255,.2)" d="M14,668 Q58,650 102,664 Q146,678 194,664 Q238,650 306,668 L306,672 Q238,654 194,668 Q146,682 102,668 Q58,654 14,672 Z"/>
+      </g>
 
-    <div class="workspace-result" id="result-area">
-      <!-- Estado vacío, loading o imagen final -->
-      <div class="result-placeholder" id="result-placeholder">
-        El resultado aparecerá aquí.
-      </div>
-      <div class="result-loading" id="result-loading" style="display:none;">
-        <div class="spinner"></div>
-        <span style="font-size: .8rem; color: var(--muted);">Tejiendo el traje virtual con Inteligencia Artificial... (puede tardar un poco)</span>
-      </div>
-      <img id="result-image" style="display:none;" alt="Resultado Probador">
-      <div id="stickers-container" style="position: absolute; inset: 0; pointer-events: none; overflow: hidden;"></div>
-      
-      <!-- Action panel overlaid -->
-      <div id="result-actions" style="position: absolute; bottom: 20px; display: none; z-index: 10; width: 100%; gap: 10px; justify-content: center; flex-wrap: wrap;">
-        <button id="btn-apply-base" class="btn-primary" style="padding: 10px 20px; font-size: 0.7rem; box-shadow: var(--shadow);">Seguir Editando</button>
-        <button id="btn-download" class="btn-primary" style="padding: 10px 20px; font-size: 0.7rem; box-shadow: var(--shadow); background: var(--bg-dark);">Descargar Imagen</button>
-      </div>
-    </div>
+      <!-- ══ CORPIÑO + MANGAS ══ -->
+      <g id="gCorpino" class="part-group" onclick="selectPart('corpino')">
+        <!-- manga izq -->
+        <path style="fill:var(--c-corpino)" d="M90,167 Q44,176 34,217 Q28,246 47,262 Q68,272 88,257 Q97,241 92,183 Z"/>
+        <path fill="rgba(0,0,0,.2)" d="M90,167 Q53,176 40,212 Q62,210 82,210 Q88,196 90,167 Z"/>
+        <path fill="rgba(255,255,255,.14)" d="M60,258 Q48,248 44,234 Q38,218 42,208 Q38,228 40,250 Q50,268 66,270 Z"/>
+        <!-- manga dcha -->
+        <path style="fill:var(--c-corpino)" d="M230,167 Q276,176 286,217 Q292,246 273,262 Q252,272 232,257 Q223,241 228,183 Z"/>
+        <path fill="rgba(0,0,0,.2)" d="M230,167 Q267,176 280,212 Q258,210 238,210 Q232,196 230,167 Z"/>
+        <path fill="rgba(255,255,255,.14)" d="M260,258 Q272,248 276,234 Q282,218 278,208 Q282,228 280,250 Q270,268 254,270 Z"/>
+        <!-- cuerpo -->
+        <path style="fill:var(--c-corpino)"
+          d="M90,167 Q70,182 63,220 Q58,260 73,294 Q90,318 118,323 L202,323 Q230,318 247,294 Q262,260 257,220 Q250,182 230,167 Q210,151 190,147 Q170,151 150,153 Q128,153 110,160 Z"/>
+        <!-- sombras laterales -->
+        <path fill="rgba(0,0,0,.17)" d="M90,167 Q70,182 63,220 Q59,254 73,286 Q76,282 80,258 Q84,230 87,200 Q88,180 95,170 Z"/>
+        <path fill="rgba(0,0,0,.17)" d="M230,167 Q250,182 257,220 Q261,254 247,286 Q244,282 240,258 Q236,230 233,200 Q232,180 225,170 Z"/>
+        <!-- brillo central seda -->
+        <path fill="rgba(255,255,255,.12)" d="M150,152 Q152,222 153,321 L167,321 Q168,222 170,152 Z"/>
+        <!-- escote -->
+        <path fill="rgba(0,0,0,.1)"
+          d="M150,153 Q158,164 190,161 Q212,163 230,167 Q210,151 190,147 Q170,151 150,153 Z"/>
+      </g>
+
+      <!-- MANOS (piel) -->
+      <ellipse cx="44" cy="266" rx="13" ry="9" fill="#F0C090"/>
+      <ellipse cx="276" cy="266" rx="13" ry="9" fill="#F0C090"/>
+
+      <!-- CUELLO -->
+      <ellipse cx="160" cy="148" rx="16" ry="17" fill="#F0C090"/>
+
+      <!-- CARA -->
+      <ellipse cx="124" cy="91" rx="8" ry="10" fill="#EAB890"/>
+      <ellipse cx="196" cy="91" rx="8" ry="10" fill="#EAB890"/>
+      <ellipse cx="160" cy="84" rx="36" ry="46" fill="#F0C090"/>
+      <!-- cejas -->
+      <path d="M144,68 Q150,65 157,67" stroke="#5C3010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M163,67 Q170,65 176,68" stroke="#5C3010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <!-- ojos -->
+      <ellipse cx="150" cy="80" rx="5.5" ry="6.5" fill="#2C1600"/>
+      <ellipse cx="170" cy="80" rx="5.5" ry="6.5" fill="#2C1600"/>
+      <ellipse cx="151.5" cy="78.5" rx="2" ry="2" fill="white"/>
+      <ellipse cx="171.5" cy="78.5" rx="2" ry="2" fill="white"/>
+      <!-- nariz -->
+      <path d="M157,95 Q160,100 163,95" stroke="#C89070" stroke-width="1" fill="none"/>
+      <!-- boca -->
+      <path d="M152,107 Q160,113 168,107" fill="#D07878"/>
+      <path d="M152,107 Q160,110 168,107" stroke="#B86060" stroke-width=".8" fill="none"/>
+      <!-- colorete -->
+      <ellipse cx="138" cy="97" rx="9" ry="5" fill="#F0A090" opacity=".22"/>
+      <ellipse cx="182" cy="97" rx="9" ry="5" fill="#F0A090" opacity=".22"/>
+
+      <!-- PELO -->
+      <ellipse cx="160" cy="60" rx="46" ry="40" fill="#2C1600"/>
+      <ellipse cx="160" cy="42" rx="36" ry="28" fill="#2C1600"/>
+      <ellipse cx="160" cy="32" rx="26" ry="20" fill="#382800"/>
+      <ellipse cx="160" cy="27" rx="16" ry="12" fill="#2C1600"/>
+      <path d="M124,54 Q140,36 160,30" stroke="#4A3010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M196,54 Q180,36 160,30" stroke="#4A3010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M120,68 Q128,50 140,42" stroke="#4A3010" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <path d="M200,68 Q192,50 180,42" stroke="#4A3010" stroke-width="1" fill="none" stroke-linecap="round"/>
+
+      <!-- ══ ZAPATOS ══ -->
+      <g id="gZapatos" class="part-group" onclick="selectPart('zapatos')">
+        <!-- izq -->
+        <path style="fill:var(--c-zapatos)"
+          d="M116,668 Q100,670 90,677 Q87,684 92,687 Q108,690 140,686 Q148,680 148,672 Z"/>
+        <path fill="rgba(255,255,255,.22)" d="M108,672 Q120,670 138,672 Q128,668 116,668 Q110,668 108,672 Z"/>
+        <rect style="fill:var(--c-zapatos)" x="89" y="685" width="7" height="9" rx="2" opacity=".85"/>
+        <!-- dcho -->
+        <path style="fill:var(--c-zapatos)"
+          d="M204,668 Q220,670 230,677 Q233,684 228,687 Q212,690 180,686 Q172,680 172,672 Z"/>
+        <path fill="rgba(255,255,255,.22)" d="M212,672 Q200,670 182,672 Q192,668 204,668 Q210,668 212,672 Z"/>
+        <rect style="fill:var(--c-zapatos)" x="224" y="685" width="7" height="9" rx="2" opacity=".85"/>
+      </g>
+
+      <!-- ══ COMPLEMENTO: FLORES ══ -->
+      <g id="gFlores" opacity="0" style="transition:opacity .35s">
+        <circle cx="132" cy="36" r="7"    style="fill:var(--c-flores)"/>
+        <ellipse cx="122" cy="29" rx="5" ry="3" style="fill:var(--c-flores)" transform="rotate(-35 122 29)"/>
+        <ellipse cx="143" cy="29" rx="5" ry="3" style="fill:var(--c-flores)" transform="rotate(35 143 29)"/>
+        <ellipse cx="128" cy="23" rx="5" ry="3" style="fill:var(--c-flores)" transform="rotate(-65 128 23)"/>
+        <ellipse cx="136" cy="47" rx="5" ry="3" style="fill:var(--c-flores)" transform="rotate(70 136 47)"/>
+        <circle cx="132" cy="36" r="4"    fill="rgba(255,255,255,.42)"/>
+        <circle cx="148" cy="23" r="6"    style="fill:var(--c-flores)"/>
+        <circle cx="148" cy="23" r="3.5"  fill="rgba(255,255,255,.38)"/>
+        <circle cx="116" cy="47" r="5"    style="fill:var(--c-flores)"/>
+        <circle cx="116" cy="47" r="3"    fill="rgba(255,255,255,.32)"/>
+        <circle cx="142" cy="49" r="3.5"  style="fill:var(--c-flores)" opacity=".9"/>
+        <circle cx="128" cy="19" r="3"    style="fill:var(--c-flores)" opacity=".8"/>
+        <path d="M132,42 Q130,50 128,55" stroke="#3A7A20" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M128,50 Q122,46 118,48" stroke="#3A7A20" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <!-- ══ COMPLEMENTO: MANTÓN ══ -->
+      <g id="gManton" opacity="0" style="transition:opacity .35s">
+        <path style="fill:var(--c-manton)" opacity=".88"
+          d="M148,170 Q104,212 33,348 Q62,362 92,350 Q122,284 156,224 L160,214 L164,224 Q198,284 228,350 Q258,362 287,348 Q216,212 172,170 Z"/>
+        <path style="stroke:var(--c-manton)" stroke-width="3" fill="none" stroke-dasharray="5,4"
+          d="M33,348 Q62,364 92,350"/>
+        <path style="stroke:var(--c-manton)" stroke-width="3" fill="none" stroke-dasharray="5,4"
+          d="M287,348 Q258,364 228,350"/>
+        <path d="M148,170 Q104,212 33,348 Q62,362 92,350 Q122,284 156,224 L160,214 L164,224 Q198,284 228,350 Q258,362 287,348 Q216,212 172,170 Z"
+              fill="url(#manton-pat)" opacity=".18"/>
+      </g>
+
+      <!-- ══ COMPLEMENTO: ADEREZO ══ -->
+      <g id="gAderezo" opacity="0" style="transition:opacity .35s">
+        <path d="M148,160 Q160,173 172,160" style="stroke:var(--c-aderezo)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <circle cx="160" cy="173" r="4.5"  style="fill:var(--c-aderezo)"/>
+        <circle cx="153" cy="167" r="2.5"  style="fill:var(--c-aderezo)"/>
+        <circle cx="167" cy="167" r="2.5"  style="fill:var(--c-aderezo)"/>
+        <!-- pendiente izq -->
+        <circle cx="124" cy="99"  r="3.5"  style="fill:var(--c-aderezo)"/>
+        <line x1="124" y1="103" x2="124" y2="112" style="stroke:var(--c-aderezo)" stroke-width="1.5"/>
+        <circle cx="124" cy="114" r="3"    style="fill:var(--c-aderezo)"/>
+        <!-- pendiente dcho -->
+        <circle cx="196" cy="99"  r="3.5"  style="fill:var(--c-aderezo)"/>
+        <line x1="196" y1="103" x2="196" y2="112" style="stroke:var(--c-aderezo)" stroke-width="1.5"/>
+        <circle cx="196" cy="114" r="3"    style="fill:var(--c-aderezo)"/>
+      </g>
+
+      <!-- ══ COMPLEMENTO: PEINETA ══ -->
+      <g id="gPeineta" opacity="0" style="transition:opacity .35s">
+        <path d="M138,24 Q160,16 182,24 L180,33 Q160,27 140,33 Z" style="fill:var(--c-aderezo)"/>
+        <line x1="146" y1="23" x2="143" y2="10" style="stroke:var(--c-aderezo)" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="154" y1="21" x2="151" y2="7"  style="stroke:var(--c-aderezo)" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="162" y1="19" x2="160" y2="5"  style="stroke:var(--c-aderezo)" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="170" y1="21" x2="167" y2="7"  style="stroke:var(--c-aderezo)" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="178" y1="23" x2="175" y2="10" style="stroke:var(--c-aderezo)" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="143" cy="9"  r="2.5" style="fill:var(--c-aderezo)"/>
+        <circle cx="151" cy="6"  r="2.5" style="fill:var(--c-aderezo)"/>
+        <circle cx="160" cy="4"  r="2.5" style="fill:var(--c-aderezo)"/>
+        <circle cx="167" cy="6"  r="2.5" style="fill:var(--c-aderezo)"/>
+        <circle cx="175" cy="9"  r="2.5" style="fill:var(--c-aderezo)"/>
+      </g>
+
+      <defs>
+        <pattern id="manton-pat" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
+          <path d="M0,11 Q5.5,0 11,11 Q16.5,22 22,11" stroke="rgba(255,255,255,.55)" stroke-width="1" fill="none"/>
+        </pattern>
+      </defs>
+    </svg>
   </div>
+
+  <!-- ══ DERECHA: Librería de Telas ══ -->
+  <aside id="telas-panel">
+    <div id="telas-head">
+      <span class="tp-eyebrow">✦ Cosas Cucas</span>
+      <div class="tp-title">Librería de telas</div>
+      <div class="tp-sub">Editando: <span id="tp-active-part">Falda</span></div>
+    </div>
+    <div class="tp-filters">
+      <button class="tp-filter active" data-tipo="Todas"       onclick="filterTelas('Todas')">Todas</button>
+      <button class="tp-filter"        data-tipo="Seda"        onclick="filterTelas('Seda')">Seda</button>
+      <button class="tp-filter"        data-tipo="Terciopelo"  onclick="filterTelas('Terciopelo')">Terciopelo</button>
+      <button class="tp-filter"        data-tipo="Tafetán"     onclick="filterTelas('Tafetán')">Tafetán</button>
+      <button class="tp-filter"        data-tipo="Raso"        onclick="filterTelas('Raso')">Raso</button>
+    </div>
+    <div id="telas-grid"></div>
+  </aside>
+
 </main>
 
 <script>
-  // Variables y Elementos del DOM
-  const inputPerson = document.getElementById('input-person');
-  const previewPerson = document.getElementById('preview-person');
-  const previewFabric = document.getElementById('preview-fabric');
-  const fabricMsg = document.getElementById('fabric-msg');
-  const btnRun = document.getElementById('btn-run');
-  const resultLoading = document.getElementById('result-loading');
-  const resultImage = document.getElementById('result-image');
-  const resultPlaceholder = document.getElementById('result-placeholder');
+/* ══════════════════════════════════════════
+   DATOS: TELAS
+══════════════════════════════════════════ */
+const TELAS = [
+  { id:'seda-carmin',    nombre:'Seda Carmín',       tipo:'Seda',        color:'#922020' },
+  { id:'seda-azul',      nombre:'Seda Azul Rey',     tipo:'Seda',        color:'#1B3A8A' },
+  { id:'seda-verde',     nombre:'Seda Esmeralda',    tipo:'Seda',        color:'#1A6B3C' },
+  { id:'seda-dorada',    nombre:'Seda Dorada',       tipo:'Seda',        color:'#B5903A' },
+  { id:'seda-rosa',      nombre:'Seda Rosa Antiguo', tipo:'Seda',        color:'#C4858B' },
+  { id:'seda-naranja',   nombre:'Seda Naranja',      tipo:'Seda',        color:'#C4631A' },
+  { id:'seda-lila',      nombre:'Seda Lila',         tipo:'Seda',        color:'#9070C0' },
+  { id:'seda-celeste',   nombre:'Seda Celeste',      tipo:'Seda',        color:'#4A90C8' },
+  { id:'tercio-negro',   nombre:'Terciopelo Negro',  tipo:'Terciopelo',  color:'#181512' },
+  { id:'tercio-granate', nombre:'Terciopelo Granate',tipo:'Terciopelo',  color:'#6B1A2A' },
+  { id:'tercio-morado',  nombre:'Terciopelo Morado', tipo:'Terciopelo',  color:'#4E1A70' },
+  { id:'tercio-verde',   nombre:'Terc. Botella',     tipo:'Terciopelo',  color:'#1A3E20' },
+  { id:'tercio-marino',  nombre:'Terc. Marino',      tipo:'Terciopelo',  color:'#1A2A4A' },
+  { id:'tercio-caoba',   nombre:'Terc. Caoba',       tipo:'Terciopelo',  color:'#5C2A10' },
+  { id:'taf-perla',      nombre:'Tafetán Perla',     tipo:'Tafetán',     color:'#EEE5C8' },
+  { id:'taf-celeste',    nombre:'Tafetán Celeste',   tipo:'Tafetán',     color:'#8AB8D8' },
+  { id:'taf-rosa',       nombre:'Tafetán Rosa',      tipo:'Tafetán',     color:'#E8A0A8' },
+  { id:'taf-amarillo',   nombre:'Tafetán Amarillo',  tipo:'Tafetán',     color:'#D4A820' },
+  { id:'taf-menta',      nombre:'Tafetán Menta',     tipo:'Tafetán',     color:'#70C8A0' },
+  { id:'raso-negro',     nombre:'Raso Negro',        tipo:'Raso',        color:'#1E1A18' },
+  { id:'raso-burdeos',   nombre:'Raso Burdeos',      tipo:'Raso',        color:'#7D1830' },
+  { id:'raso-verde',     nombre:'Raso Verde',        tipo:'Raso',        color:'#2A6040' },
+  { id:'raso-azul',      nombre:'Raso Azul Noche',   tipo:'Raso',        color:'#1A2A58' },
+  { id:'raso-bronce',    nombre:'Raso Bronce',       tipo:'Raso',        color:'#8A6A28' },
+];
 
-  let selectedFabricUrl = null;
-  let selectedPersonFile = null;
+/* ══════════════════════════════════════════
+   ESTADO
+══════════════════════════════════════════ */
+const PART_MAP = {
+  falda:   { cssVar:'--c-falda',   svgId:'gFalda',   label:'Falda'   },
+  corpino: { cssVar:'--c-corpino', svgId:'gCorpino', label:'Corpiño' },
+  zapatos: { cssVar:'--c-zapatos', svgId:'gZapatos', label:'Zapatos' },
+  flores:  { cssVar:'--c-flores',  svgId:'gFlores',  label:'Flores'  },
+  manton:  { cssVar:'--c-manton',  svgId:'gManton',  label:'Mantón'  },
+  aderezo: { cssVar:'--c-aderezo', svgId:'gAderezo', label:'Aderezo' },
+  peineta: { cssVar:'--c-aderezo', svgId:'gPeineta', label:'Peineta' },
+};
 
-  // Manejo de la subida de foto del cliente
-  inputPerson.addEventListener('change', (e) => {
-    if (e.target.files && e.target.files[0]) {
-      selectedPersonFile = e.target.files[0];
-      previewPerson.src = URL.createObjectURL(selectedPersonFile);
-      previewPerson.style.display = 'block';
-      document.querySelector('#drop-person .drop-msg').style.display = 'none';
-      checkReady();
-    }
+const state = {
+  part: 'falda',
+  filter: 'Todas',
+  selections: {
+    falda:   { id:'seda-azul',    color:'#1B3A8A', nombre:'Seda Azul Rey'     },
+    corpino: { id:'seda-carmin',  color:'#922020', nombre:'Seda Carmín'       },
+    zapatos: { id:'tercio-caoba', color:'#5C2A10', nombre:'Terciopelo Caoba'  },
+    flores:  { id:'seda-rosa',    color:'#C4858B', nombre:'Seda Rosa Antiguo' },
+    manton:  { id:'seda-dorada',  color:'#B5903A', nombre:'Seda Dorada'       },
+    aderezo: { id:'seda-dorada',  color:'#B5903A', nombre:'Seda Dorada'       },
+    peineta: { id:'seda-dorada',  color:'#B5903A', nombre:'Seda Dorada'       },
+  },
+  complements: { flores:false, manton:false, aderezo:false, peineta:false }
+};
+
+/* ══════════════════════════════════════════
+   SELECCIONAR PARTE
+══════════════════════════════════════════ */
+function selectPart(part) {
+  state.part = part;
+
+  document.querySelectorAll('.part-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.part === part);
   });
 
-  // Función para habilitar el botón si están ambas imágenes
-  function checkReady() {
-    btnRun.disabled = !(selectedPersonFile && selectedFabricUrl);
+  const lbl = PART_MAP[part]?.label || part;
+  document.getElementById('tp-active-part').textContent = lbl;
+
+  // Resaltar en SVG
+  Object.keys(PART_MAP).forEach(p => {
+    const el = document.getElementById(PART_MAP[p].svgId);
+    if (el) el.classList.toggle('sel', p === part);
+  });
+
+  renderTelas();
+  hideHint();
+}
+
+/* ══════════════════════════════════════════
+   SELECCIONAR TELA → aplicar color
+══════════════════════════════════════════ */
+function selectTela(tela) {
+  const part = state.part;
+  state.selections[part] = { id:tela.id, color:tela.color, nombre:tela.nombre };
+
+  const cssVar = PART_MAP[part]?.cssVar;
+  if (cssVar) document.documentElement.style.setProperty(cssVar, tela.color);
+
+  // Actualizar dot del botón de parte
+  const dot = document.getElementById('dot-' + part);
+  if (dot) dot.style.background = tela.color;
+
+  renderTelas();
+  updateMailto();
+}
+
+/* ══════════════════════════════════════════
+   TOGGLE COMPLEMENTO
+══════════════════════════════════════════ */
+function toggleComplement(comp) {
+  const on = !state.complements[comp];
+  state.complements[comp] = on;
+
+  const svgEl = document.getElementById(PART_MAP[comp]?.svgId);
+  if (svgEl) svgEl.style.opacity = on ? '1' : '0';
+
+  const btn = document.getElementById('comp-' + comp);
+  if (btn) btn.classList.toggle('on', on);
+
+  if (on) selectPart(comp);
+  hideHint();
+}
+
+/* ══════════════════════════════════════════
+   RENDER GRID DE TELAS
+══════════════════════════════════════════ */
+function renderTelas() {
+  const grid = document.getElementById('telas-grid');
+  const activeSel = state.selections[state.part];
+  const lista = state.filter === 'Todas' ? TELAS : TELAS.filter(t => t.tipo === state.filter);
+
+  grid.innerHTML = '';
+  lista.forEach(t => {
+    const sel = activeSel?.id === t.id;
+    const card = document.createElement('div');
+    card.className = 'tela-card' + (sel ? ' sel' : '');
+    card.dataset.tipo = t.tipo;
+    card.innerHTML = `
+      <div class="tela-swatch" style="background:${t.color}">
+        <div class="tela-check">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4 9l4 4 6-7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="tela-name">${t.nombre}</div>
+      <div class="tela-tipo">${t.tipo}</div>`;
+    card.addEventListener('click', () => selectTela(t));
+    grid.appendChild(card);
+  });
+}
+
+/* ══════════════════════════════════════════
+   FILTRO
+══════════════════════════════════════════ */
+function filterTelas(tipo) {
+  state.filter = tipo;
+  document.querySelectorAll('.tp-filter').forEach(b => b.classList.toggle('active', b.dataset.tipo === tipo));
+  renderTelas();
+}
+
+/* ══════════════════════════════════════════
+   MAILTO dinámico
+══════════════════════════════════════════ */
+function updateMailto() {
+  const s = state.selections;
+  const comps = state.complements;
+  const body = `Hola, me gustaría información sobre un traje con estas telas:\n\n`
+    + `• Falda: ${s.falda?.nombre || '-'}\n`
+    + `• Corpiño: ${s.corpino?.nombre || '-'}\n`
+    + `• Zapatos: ${s.zapatos?.nombre || '-'}\n`
+    + (comps.flores  ? `• Flores: ${s.flores?.nombre || '-'}\n` : '')
+    + (comps.manton  ? `• Mantón: ${s.manton?.nombre || '-'}\n` : '')
+    + (comps.aderezo ? `• Aderezo: ${s.aderezo?.nombre || '-'}\n` : '')
+    + (comps.peineta ? `• Peineta: ${s.peineta?.nombre || '-'}\n` : '')
+    + `\nQuedo a su disposición para concertar una visita.`;
+  const link = document.getElementById('btn-pedir');
+  if (link) link.href = `mailto:info@cosascucas.es?subject=Consulta%20diseño%20traje&body=${encodeURIComponent(body)}`;
+}
+
+/* ══════════════════════════════════════════
+   DESCARGAR PNG
+══════════════════════════════════════════ */
+function downloadPNG() {
+  const svg  = document.getElementById('model-svg');
+  const cs   = getComputedStyle(document.documentElement);
+  const clone = svg.cloneNode(true);
+
+  // Inline CSS variables → valores reales
+  function resolveVars(str) {
+    return str.replace(/var\(--c-([^)]+)\)/g, (_, name) =>
+      cs.getPropertyValue('--c-' + name).trim() || '#888'
+    );
   }
-
-  /* Cargar telas dinámicamente desde el servidor */
-  function cargarGaleria(apiUrl, gridId, panelId, carpeta, etiqueta) {
-    const grid   = document.getElementById(gridId);
-    const panel  = document.getElementById(panelId);
-
-    fetch(apiUrl)
-      .then(r => {
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        return r.json();
-      })
-      .then(items => {
-        if (!items || items.error || items.length === 0) {
-          grid.innerHTML = `<p style="font-size:.68rem;color:var(--muted);grid-column:1/-1;padding:8px 0;">No hay ${etiqueta} disponibles.</p>`;
-          return;
-        }
-        items.forEach(nombre => {
-          const url = `/${carpeta}/${nombre}`;
-          const a = document.createElement('a');
-          a.className = 'fabric-item';
-          a.href = '#';
-          a.title = `Usar: ${nombre}`;
-          a.innerHTML = `
-            <img src="${url}" loading="lazy" alt="${etiqueta}">
-            <div class="fabric-overlay">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-            </div>
-          `;
-          if (carpeta === 'telas') {
-            a.onclick = (e) => {
-              e.preventDefault();
-              selectedFabricUrl = url;
-              previewFabric.src = url;
-              previewFabric.style.display = 'block';
-              fabricMsg.style.display = 'none';
-              document.querySelectorAll('#fabrics-grid .fabric-item').forEach(el => el.style.borderColor = 'var(--border)');
-              a.style.borderColor = 'var(--gold)';
-              checkReady();
-            };
-          } else {
-            a.innerHTML = a.innerHTML.replace('polyline points="20 6 9 17 4 12"', 'line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"');
-            a.onclick = (e) => { e.preventDefault(); addSticker(url); };
-          }
-          grid.appendChild(a);
-        });
-      })
-      .catch(err => {
-        console.error(`Error cargando ${etiqueta}:`, err);
-        grid.innerHTML = `<p style="font-size:.65rem;color:var(--muted);grid-column:1/-1;padding:8px 0;line-height:1.4;">&#9888; Inicia el servidor para ver la galería:<br><code style="font-size:.6rem;">node server.js</code></p>`;
-      });
-  }
-
-  cargarGaleria('/api/telas',    'fabrics-grid',     'fabrics-panel',     'telas',    'telas');
-  cargarGaleria('/api/aderezos', 'accessories-grid', 'accessories-panel', 'aderezos', 'aderezos');
-
-  // Ejecución de la API
-  btnRun.addEventListener('click', async () => {
-    if (!selectedPersonFile || !selectedFabricUrl) return;
-
-    // Cambiar estado a cargando
-    btnRun.disabled = true;
-    btnRun.textContent = 'Generando...';
-    resultPlaceholder.style.display = 'none';
-    resultImage.style.display = 'none';
-    resultLoading.style.display = 'flex';
-
-    try {
-      // 1. Helper para convertir Blob/File a Base64
-      const toBase64 = (blob) => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(blob);
-      });
-
-      // 2. Descargar y convertir tela a base64
-      const fabricRes = await fetch(selectedFabricUrl);
-      const fabricBlob = await fabricRes.blob();
-      const garmentBase64 = await toBase64(fabricBlob);
-
-      // 3. Convertir foto de persona a base64
-      const personBase64 = await toBase64(selectedPersonFile);
-
-      // Obtener categoría seleccionada
-      const categoryRadio = document.querySelector('input[name="category"]:checked');
-      const category = categoryRadio ? categoryRadio.value : 'dress';
-
-      // 4. Llamada segura al backend de Node (enviando JSON)
-      const apiRes = await fetch('/api/try-on', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          person_image: personBase64,
-          garment_image: garmentBase64,
-          category: category
-        })
-      });
-
-      const data = await apiRes.json();
-      
-      if (!apiRes.ok) {
-        let errMsg = data.error || 'Fallo en la comunicación con la Inteligencia Artificial.';
-        if (data.detail) errMsg += ' - ' + JSON.stringify(data.detail);
-        throw new Error(errMsg);
-      }
-
-      let finalUrl = null;
-
-      // 5. PixelAPI es asíncrona y devuelve un job_id
-      if (data.job_id) {
-        let status = data.status;
-        let jobData = data;
-        let retries = 0;
-        const MAX_RETRIES = 60; // máx. 2,5 min
-        const loadingMsg = resultLoading.querySelector('span');
-
-        // Bucle de comprobación (polling) cada 2.5 segundos
-        while (status === 'queued' || status === 'processing' || status === 'in_progress') {
-          if (retries >= MAX_RETRIES) throw new Error('El tiempo de espera máximo se ha superado. Inténtalo de nuevo.');
-          await new Promise(r => setTimeout(r, 2500));
-          retries++;
-          if (loadingMsg) loadingMsg.textContent = `Procesando con IA... (${Math.round(retries * 2.5)}s)`;
-
-          const pollRes = await fetch(`/api/try-on/jobs/${data.job_id}`);
-          jobData = await pollRes.json();
-
-          if (!pollRes.ok) throw new Error(jobData.error || jobData.detail || 'Error en el servidor al consultar estado.');
-
-          status = jobData.status;
-
-          if (status === 'failed' || status === 'error') {
-            throw new Error('La Inteligencia Artificial no pudo procesar esta imagen. Intenta con otra foto.');
-          }
-        }
-        
-        // Cuando termina, la imagen está en uno de estos campos
-        finalUrl = jobData.image_url || jobData.url || jobData.output || jobData.result;
-      } else {
-        // Por si acaso la API fuera síncrona en el futuro
-        finalUrl = data.image_url || data.url || data.output || data.result;
-      }
-
-      if (!finalUrl) {
-        throw new Error('La API completó el trabajo pero no devolvió ninguna imagen.');
-      }
-
-      // Mostrar el resultado final
-      resultImage.src = finalUrl;
-      resultImage.style.display = 'block';
-      const ra = document.getElementById('result-actions');
-      ra.style.display = 'flex';
-      document.getElementById('accessories-panel').style.display = 'block';
-
-    } catch (err) {
-      alert('⚠️ Hubo un error al generar la prueba:\n\n' + err.message);
-      resultPlaceholder.style.display = 'flex';
-    } finally {
-      // Restaurar estado
-      btnRun.disabled = false;
-      btnRun.textContent = 'Generar Prueba Virtual';
-      resultLoading.style.display = 'none';
-    }
+  clone.querySelectorAll('[style]').forEach(el => {
+    el.setAttribute('style', resolveVars(el.getAttribute('style')));
   });
+  // Quitar hint si existe
+  clone.querySelector && clone.querySelector('#model-hint') && clone.querySelector('#model-hint').remove();
 
-  // ── Lógica para Usar Foto Resultante como Nueva Foto Base (Multicapa)
-  const btnApplyBase = document.getElementById('btn-apply-base');
-  btnApplyBase.addEventListener('click', async () => {
-    try {
-      btnApplyBase.textContent = 'Aplicando...';
-      const res = await fetch(resultImage.src);
-      const blob = await res.blob();
-      
-      // Asignamos la nueva imagen como la foto principal del cliente
-      selectedPersonFile = new File([blob], "base_iterada.jpg", { type: "image/jpeg" });
-      previewPerson.src = URL.createObjectURL(selectedPersonFile);
-      previewPerson.style.display = 'block';
-      document.querySelector('#drop-person .drop-msg').style.display = 'none';
-      
-      // Limpiamos el panel de resultados para la siguiente prenda
-      resultImage.style.display = 'none';
-      document.getElementById('result-actions').style.display = 'none';
-      resultPlaceholder.style.display = 'flex';
-      document.getElementById('stickers-container').innerHTML = ''; // Limpiar complementos
-      
-      checkReady();
-      btnApplyBase.textContent = 'Usar como Foto Base (Seguir Editando)';
-      alert('✅ La foto generada ahora es tu "Foto Base".\n\nPuedes seleccionar OTRA prenda (ej: Corpiño) y OTRA tela, y darle a Generar de nuevo.');
-    } catch(err) {
-      alert('Error al aplicar la foto base: ' + err.message);
-      btnApplyBase.textContent = 'Usar como Foto Base (Seguir Editando)';
-    }
-  });
+  const data = new XMLSerializer().serializeToString(clone);
+  const blob = new Blob([data], { type:'image/svg+xml;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const img  = new Image();
+  img.onload = () => {
+    const W = 640, H = Math.round(640 * 720 / 320);
+    const c = document.createElement('canvas');
+    c.width = W; c.height = H;
+    c.getContext('2d').drawImage(img, 0, 0, W, H);
+    URL.revokeObjectURL(url);
+    c.toBlob(png => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(png);
+      a.download = 'diseno-cosascucas.png';
+      a.click();
+    }, 'image/png');
+  };
+  img.src = url;
+}
 
-  // ── Botón Descargar
-  document.getElementById('btn-download').addEventListener('click', () => {
-    const a = document.createElement('a');
-    a.href = resultImage.src;
-    a.download = 'probador-cosas-cucas.jpg';
-    a.click();
-  });
+function hideHint() {
+  const h = document.getElementById('model-hint');
+  if (h) { h.style.opacity = '0'; h.style.pointerEvents = 'none'; }
+}
 
-  // ── Stickers / Aderezos
-  const stickersContainer = document.getElementById('stickers-container');
+/* ══════════════════════════════════════════
+   INICIO
+══════════════════════════════════════════ */
+// Aplicar colores iniciales desde state
+Object.keys(state.selections).forEach(part => {
+  const cssVar = PART_MAP[part]?.cssVar;
+  if (cssVar) document.documentElement.style.setProperty(cssVar, state.selections[part].color);
+  const dot = document.getElementById('dot-' + part);
+  if (dot) dot.style.background = state.selections[part].color;
+});
 
-  function addSticker(imageUrl) {
-    stickersContainer.style.pointerEvents = 'auto';
+renderTelas();
+updateMailto();
 
-    const div = document.createElement('div');
-    div.style.position = 'absolute';
-    div.style.width = '120px';
-    div.style.left = '50%';
-    div.style.top = '30%';
-    div.style.transform = 'translate(-50%, -50%)';
-    div.style.cursor = 'grab';
-    div.style.userSelect = 'none';
-    div.style.transition = 'box-shadow 0.2s';
-    div.style.borderRadius = '4px';
-    div.style.overflow = 'hidden';
-
-    const img = document.createElement('img');
-    img.src = imageUrl;
-    img.style.width = '100%';
-    img.style.display = 'block';
-    img.style.mixBlendMode = 'multiply'; // elimina fondo blanco visualmente
-    div.appendChild(img);
-
-    let isDragging = false;
-    let initialX, initialY, currentX = 0, currentY = 0;
-    let xOffset = 0, yOffset = 0;
-
-    div.addEventListener('mousedown', (e) => {
-      e.stopPropagation();
-      initialX = e.clientX - xOffset;
-      initialY = e.clientY - yOffset;
-      isDragging = true;
-      div.style.cursor = 'grabbing';
-    });
-
-    document.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-      currentX = e.clientX - initialX;
-      currentY = e.clientY - initialY;
-      xOffset = currentX;
-      yOffset = currentY;
-      div.style.transform = `translate(calc(-50% + ${currentX}px), calc(-50% + ${currentY}px))`;
-    });
-
-    document.addEventListener('mouseup', () => {
-      isDragging = false;
-      div.style.cursor = 'grab';
-    });
-
-    let stickerWidth = 120;
-    div.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      stickerWidth = Math.min(Math.max(40, stickerWidth - e.deltaY * 0.3), 400);
-      div.style.width = stickerWidth + 'px';
-    }, { passive: false });
-
-    div.addEventListener('contextmenu', (e) => {
-      e.preventDefault();
-      div.remove();
-      if (stickersContainer.children.length === 0) stickersContainer.style.pointerEvents = 'none';
-    });
-
-    div.addEventListener('mouseenter', () => div.style.boxShadow = '0 0 0 2px var(--gold)');
-    div.addEventListener('mouseleave', () => div.style.boxShadow = 'none');
-
-    stickersContainer.appendChild(div);
-  }
+// Ocultar hint tras 6s
+setTimeout(hideHint, 6000);
 </script>
-
 </body>
 </html>
