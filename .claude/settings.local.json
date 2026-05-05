@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s http://localhost:4747/api/telas)",
+      "Bash(curl -s http://localhost:4747/api/aderezos)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4747/telas/10d72799667cdfedd50b7db1e47de9af.jpg)"
+    ]
+  }
+}

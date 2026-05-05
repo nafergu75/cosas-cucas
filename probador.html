@@ -567,45 +567,60 @@
   }
 
   /* Cargar telas dinámicamente desde el servidor */
-  fetch('/api/telas').then(r => r.json()).then(telas => {
-    const grid = document.getElementById('fabrics-grid');
-    if (!telas || telas.error || telas.length === 0) {
-      document.getElementById('fabrics-panel').style.display = 'none';
-      return;
-    }
-    telas.forEach(tela => {
-      const a = document.createElement('a');
-      a.className = 'fabric-item';
-      a.href = '#';
-      a.title = 'Usar esta tela';
-      a.innerHTML = `
-        <img src="/telas/${tela}" loading="lazy" alt="Tela Fallera">
-        <div class="fabric-overlay">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-        </div>
-      `;
-      // Al hacer clic, asignar la tela al workspace
-      a.onclick = (e) => {
-        e.preventDefault();
-        selectedFabricUrl = '/telas/' + tela;
-        previewFabric.src = selectedFabricUrl;
-        previewFabric.style.display = 'block';
-        fabricMsg.style.display = 'none';
-        
-        // Efecto visual de selección en la galería
-        document.querySelectorAll('.fabric-item').forEach(el => el.style.borderColor = 'var(--border)');
-        a.style.borderColor = 'var(--gold)';
-        
-        checkReady();
-      };
-      grid.appendChild(a);
-    });
-  }).catch(e => {
-    console.error('Error cargando telas:', e);
-    document.getElementById('fabrics-panel').style.display = 'none';
-  });
+  function cargarGaleria(apiUrl, gridId, panelId, carpeta, etiqueta) {
+    const grid   = document.getElementById(gridId);
+    const panel  = document.getElementById(panelId);
+
+    fetch(apiUrl)
+      .then(r => {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(items => {
+        if (!items || items.error || items.length === 0) {
+          grid.innerHTML = `<p style="font-size:.68rem;color:var(--muted);grid-column:1/-1;padding:8px 0;">No hay ${etiqueta} disponibles.</p>`;
+          return;
+        }
+        items.forEach(nombre => {
+          const url = `/${carpeta}/${nombre}`;
+          const a = document.createElement('a');
+          a.className = 'fabric-item';
+          a.href = '#';
+          a.title = `Usar: ${nombre}`;
+          a.innerHTML = `
+            <img src="${url}" loading="lazy" alt="${etiqueta}">
+            <div class="fabric-overlay">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+          `;
+          if (carpeta === 'telas') {
+            a.onclick = (e) => {
+              e.preventDefault();
+              selectedFabricUrl = url;
+              previewFabric.src = url;
+              previewFabric.style.display = 'block';
+              fabricMsg.style.display = 'none';
+              document.querySelectorAll('#fabrics-grid .fabric-item').forEach(el => el.style.borderColor = 'var(--border)');
+              a.style.borderColor = 'var(--gold)';
+              checkReady();
+            };
+          } else {
+            a.innerHTML = a.innerHTML.replace('polyline points="20 6 9 17 4 12"', 'line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"');
+            a.onclick = (e) => { e.preventDefault(); addSticker(url); };
+          }
+          grid.appendChild(a);
+        });
+      })
+      .catch(err => {
+        console.error(`Error cargando ${etiqueta}:`, err);
+        grid.innerHTML = `<p style="font-size:.65rem;color:var(--muted);grid-column:1/-1;padding:8px 0;line-height:1.4;">&#9888; Inicia el servidor para ver la galería:<br><code style="font-size:.6rem;">node server.js</code></p>`;
+      });
+  }
+
+  cargarGaleria('/api/telas',    'fabrics-grid',     'fabrics-panel',     'telas',    'telas');
+  cargarGaleria('/api/aderezos', 'accessories-grid', 'accessories-panel', 'aderezos', 'aderezos');
 
   // Ejecución de la API
   btnRun.addEventListener('click', async () => {
@@ -753,33 +768,8 @@
     a.click();
   });
 
-  // ── Aderezos y Complementos (imágenes reales desde /aderezos/)
-  const accGrid = document.getElementById('accessories-grid');
+  // ── Stickers / Aderezos
   const stickersContainer = document.getElementById('stickers-container');
-
-  fetch('/api/aderezos').then(r => r.json()).then(aderezos => {
-    if (!aderezos || aderezos.error || aderezos.length === 0) return;
-    aderezos.forEach(file => {
-      const url = '/aderezos/' + file;
-      const a = document.createElement('a');
-      a.className = 'fabric-item';
-      a.href = '#';
-      a.title = 'Añadir este aderezo';
-      a.innerHTML = `
-        <img src="${url}" loading="lazy" alt="Aderezo">
-        <div class="fabric-overlay">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line>
-          </svg>
-        </div>
-      `;
-      a.onclick = (e) => {
-        e.preventDefault();
-        addSticker(url);
-      };
-      accGrid.appendChild(a);
-    });
-  }).catch(() => {});
 
   function addSticker(imageUrl) {
     stickersContainer.style.pointerEvents = 'auto';
