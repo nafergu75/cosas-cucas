@@ -79,10 +79,36 @@ function jsonRes(res, status, obj) {
 function bufferBody(req) {
   return new Promise((resolve, reject) => {
     const chunks = [];
-    req.on('data', c => chunks.push(c));
+    let length = 0;
+    const MAX_SIZE = 5 * 1024 * 1024; // Límite de 5MB
+    req.on('data', c => {
+      length += c.length;
+      if (length > MAX_SIZE) {
+        req.destroy();
+        reject(new Error('Payload Too Large'));
+      }
+      chunks.push(c);
+    });
     req.on('end',  () => resolve(Buffer.concat(chunks)));
     req.on('error', reject);
   });
+}
+
+// ── Rate Limiting ───────────────────────────────────────────────
+const rateLimit = new Map();
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minuto
+const MAX_REQUESTS = 30; // 30 peticiones por minuto por IP
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const userLimiter = rateLimit.get(ip) || { count: 0, resetTime: now + RATE_LIMIT_WINDOW };
+  if (now > userLimiter.resetTime) {
+    userLimiter.count = 0;
+    userLimiter.resetTime = now + RATE_LIMIT_WINDOW;
+  }
+  userLimiter.count++;
+  rateLimit.set(ip, userLimiter);
+  return userLimiter.count <= MAX_REQUESTS;
 }
 
 async function braveSearch(query) {
@@ -108,10 +134,35 @@ async function braveSearch(query) {
 /* ── servidor ──────────────────────────────────────────────────── */
 http.createServer(async (req, res) => {
 
-  // ── CORS preflight ───────────────────────────────────────────
-  res.setHeader('Access-Control-Allow-Origin',  '*');
+  // ── CORS y Cabeceras de Seguridad ────────────────────────────
+  const origin = req.headers.origin;
+  const allowedOrigins = [
+    'http://localhost:4747', 'http://127.0.0.1:4747',
+    'https://cosascucas.es', 'https://www.cosascucas.es',
+    'https://cosas-cucas.es', 'https://www.cosas-cucas.es'
+  ];
+  
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  } else {
+    res.setHeader('Access-Control-Allow-Origin', allowedOrigins[0]);
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Api-Key');
+  
+  // Cabeceras de Seguridad recomendadas
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+
   if (req.method === 'OPTIONS') { res.writeHead(204); return res.end(); }
+
+  // ── Rate Limiting (Solo rutas API) ───────────────────────────
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+  if (req.url.startsWith('/api/') && !checkRateLimit(ip)) {
+    return jsonRes(res, 429, { error: 'Demasiadas peticiones. Por favor, espera un minuto.' });
+  }
 
   // ── POST /api/try-on ─────────────────────────────────────────
   if (req.url === '/api/try-on' && req.method === 'POST') {
@@ -134,7 +185,11 @@ http.createServer(async (req, res) => {
       res.end(text);
     } catch (err) {
       console.error('[/api/try-on]', err.message);
-      jsonRes(res, 500, { error: err.message });
+      if (err.message === 'Payload Too Large') {
+        jsonRes(res, 413, { error: 'El archivo enviado es demasiado grande (máx. 5MB)' });
+      } else {
+        jsonRes(res, 500, { error: 'Error interno del servidor' });
+      }
     }
     return;
   }
@@ -195,7 +250,10 @@ http.createServer(async (req, res) => {
 
     } catch (err) {
       console.error('[/api/chat]', err.message);
-      return jsonRes(res, 500, { error: err.message });
+      if (err.message === 'Payload Too Large') {
+        return jsonRes(res, 413, { error: 'Mensaje demasiado largo.' });
+      }
+      return jsonRes(res, 500, { error: 'Error interno del servidor al procesar la solicitud.' });
     }
   }
 
@@ -207,6 +265,19 @@ http.createServer(async (req, res) => {
   // ── GET /api/contact-status ───────────────────────────────────
   if (req.url === '/api/contact-status' && req.method === 'GET') {
     return jsonRes(res, 200, { configured: !!CONTACT_KEY });
+  }
+
+  // ── GET /api/telas ────────────────────────────────────────────
+  if (req.url === '/api/telas' && req.method === 'GET') {
+    try {
+      const telasDir = path.join(ROOT, 'telas');
+      const files = await fs.promises.readdir(telasDir);
+      const images = files.filter(f => f.match(/\.(jpg|jpeg|png)$/i));
+      return jsonRes(res, 200, images);
+    } catch (err) {
+      console.error('[/api/telas]', err.message);
+      return jsonRes(res, 500, { error: 'No se pudieron cargar las telas' });
+    }
   }
 
   // ── POST /api/contact ─────────────────────────────────────────
@@ -239,14 +310,18 @@ http.createServer(async (req, res) => {
       return jsonRes(res, 500, { error: data.message || 'Error al enviar el mensaje' });
     } catch (err) {
       console.error('[/api/contact]', err.message);
-      return jsonRes(res, 500, { error: err.message });
+      if (err.message === 'Payload Too Large') {
+        return jsonRes(res, 413, { error: 'El mensaje supera el tamaño permitido.' });
+      }
+      return jsonRes(res, 500, { error: 'Error interno al enviar el mensaje de contacto.' });
     }
   }
 
   // ── Archivos estáticos ───────────────────────────────────────
   let p = decodeURIComponent(req.url.split('?')[0]);
   if (p === '/' || p === '') p = '/index.html';
-  const full = path.join(ROOT, p);
+  // Normalizar la ruta para evitar Path Traversal (ej. ../../etc/passwd)
+  const full = path.normalize(path.join(ROOT, p));
   if (!full.startsWith(ROOT)) { res.writeHead(403); return res.end(); }
 
   fs.readFile(full, (err, data) => {
