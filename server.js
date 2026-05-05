@@ -181,8 +181,20 @@ http.createServer(async (req, res) => {
         body,
       });
       const text = await apiRes.text();
+      
+      // Intentar parsear el JSON. Si falla (ej. devuelve "Internal Server Error" en texto plano), lo envolvemos.
+      let isJson = false;
+      try {
+        JSON.parse(text);
+        isJson = true;
+      } catch(e) {}
+
       res.writeHead(apiRes.status, { 'Content-Type': 'application/json' });
-      res.end(text);
+      if (isJson) {
+        res.end(text);
+      } else {
+        res.end(JSON.stringify({ error: `Error del servidor externo (PixelAPI): ${text.substring(0, 50)}...` }));
+      }
     } catch (err) {
       console.error('[/api/try-on]', err.message);
       if (err.message === 'Payload Too Large') {

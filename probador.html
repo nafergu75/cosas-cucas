@@ -295,7 +295,9 @@
     background: var(--bg);
     border: 1px dashed var(--border);
     border-radius: var(--radius);
-    height: 240px;
+    aspect-ratio: 3 / 4;
+    width: 100%;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -307,7 +309,7 @@
   .fabric-drop-area { cursor: default; }
   .drop-msg { font-size: .75rem; color: var(--muted); padding: 20px; text-align: center; line-height: 1.5; }
   .file-drop-area img, .fabric-drop-area img {
-    width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: contain; position: absolute; inset: 0;
   }
 
   .workspace-action { text-align: center; }
