@@ -2155,6 +2155,20 @@
         display: flex;
       }
 
+      .col-modal.col-modal--mobile-page {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: auto;
+        height: auto;
+        max-height: none;
+        min-height: 100vh;
+        min-height: 100dvh;
+        overflow: visible;
+        align-items: flex-start;
+        background: var(--color-bg);
+      }
+
       .col-modal__panel {
         width: 100%;
         height: 100vh;
@@ -2167,6 +2181,15 @@
         overscroll-behavior-y: contain;
         touch-action: pan-y;
         padding-bottom: env(safe-area-inset-bottom);
+      }
+
+      .col-modal--mobile-page .col-modal__panel {
+        height: auto;
+        max-height: none;
+        min-height: 100vh;
+        min-height: 100dvh;
+        overflow: visible;
+        box-shadow: none;
       }
 
       .col-modal__hero {
@@ -3819,25 +3842,39 @@ function openCollectionModal(drop) {
   document.getElementById('col-modal-cta').href        = drop.ctaSecondary.href;
   const modal = document.getElementById('col-modal');
   const panel = modal.querySelector('.col-modal__panel');
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
   collectionModalScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+
+  modal.classList.toggle('col-modal--mobile-page', isMobile);
+  modal.style.top = isMobile ? `${collectionModalScrollY}px` : '';
   modal.classList.add('open');
-  if (panel) panel.scrollTop = 0;
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${collectionModalScrollY}px`;
-  document.body.style.left = '0';
-  document.body.style.right = '0';
-  document.body.style.width = '100%';
-  document.body.style.overflow = 'hidden';
-  document.documentElement.style.overscrollBehavior = 'none';
+
+  if (isMobile) {
+    if (panel) panel.scrollTop = 0;
+    document.body.style.minHeight = `${collectionModalScrollY + modal.scrollHeight + window.innerHeight}px`;
+    window.scrollTo(0, collectionModalScrollY);
+  } else {
+    if (panel) panel.scrollTop = 0;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${collectionModalScrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overscrollBehavior = 'none';
+  }
 }
 function closeCollectionModal() {
-  document.getElementById('col-modal').classList.remove('open');
+  const modal = document.getElementById('col-modal');
+  modal.classList.remove('open', 'col-modal--mobile-page');
+  modal.style.top = '';
   document.body.style.position = '';
   document.body.style.top = '';
   document.body.style.left = '';
   document.body.style.right = '';
   document.body.style.width = '';
   document.body.style.overflow = '';
+  document.body.style.minHeight = '';
   document.documentElement.style.overscrollBehavior = '';
   window.scrollTo(0, collectionModalScrollY);
 }
