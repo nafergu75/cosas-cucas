@@ -959,8 +959,13 @@
     ═══════════════════════════════════════════════════════════════════════════ */
     .col-modal {
       position: fixed; inset: 0; z-index: 4000;
-      display: none; overflow-y: auto;
+      display: none; overflow-x: hidden; overflow-y: auto;
       background: rgba(26,23,20,0.55);
+      height: 100vh;
+      height: 100dvh;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: contain;
+      touch-action: pan-y;
     }
     .col-modal.open { display: block; }
     .col-modal__panel {
@@ -2135,15 +2140,29 @@
       }
 
       .col-modal {
-        overscroll-behavior: contain;
+        display: none;
+        height: 100vh;
+        height: 100dvh;
+        max-height: 100dvh;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-y: contain;
+        touch-action: pan-y;
+      }
+
+      .col-modal.open {
+        display: block;
       }
 
       .col-modal__panel {
+        width: 100%;
         min-height: 100dvh;
+        padding-bottom: env(safe-area-inset-bottom);
       }
 
       .col-modal__hero {
-        height: min(58dvh, 420px);
+        height: min(48dvh, 360px);
       }
 
       .col-modal__hero img,
@@ -2175,6 +2194,36 @@
       .deco-mosaic,
       .col-modal__grid {
         grid-template-columns: 1fr;
+      }
+
+      .col-modal__topbar {
+        padding: 12px 16px;
+      }
+
+      .col-modal__topbar-title {
+        max-width: calc(100vw - 86px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .col-modal__body {
+        padding: 28px 16px calc(env(safe-area-inset-bottom) + 56px);
+      }
+
+      .col-modal__desc {
+        margin-bottom: 32px;
+        padding-left: 14px;
+        font-size: 0.96rem;
+        line-height: 1.7;
+      }
+
+      .col-modal__grid {
+        margin-bottom: 42px;
+      }
+
+      .col-modal__card-img {
+        aspect-ratio: 4 / 5;
       }
 
       .deco-cell {
@@ -3760,11 +3809,11 @@ function openCollectionModal(drop) {
   const modal = document.getElementById('col-modal');
   modal.classList.add('open');
   modal.scrollTop = 0;
-  document.body.style.overflow = 'hidden';
+  document.documentElement.style.overscrollBehavior = 'none';
 }
 function closeCollectionModal() {
   document.getElementById('col-modal').classList.remove('open');
-  document.body.style.overflow = '';
+  document.documentElement.style.overscrollBehavior = '';
 }
 document.getElementById('col-modal-close').addEventListener('click', closeCollectionModal);
 document.getElementById('col-modal').addEventListener('click', e => {
