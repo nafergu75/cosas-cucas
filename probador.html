@@ -180,6 +180,63 @@
   }
   .tip-text { font-size: .7rem; color: var(--muted); line-height: 1.5; }
 
+  /* Telas */
+  .guide-fabrics {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .fabrics-label {
+    font-size: .65rem; font-weight: 700; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 8px; display: block;
+  }
+  .fabrics-desc {
+    font-size: .65rem; color: var(--muted); line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  .fabrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    max-height: 220px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  /* Estilo scrollbar para telas */
+  .fabrics-grid::-webkit-scrollbar { width: 4px; }
+  .fabrics-grid::-webkit-scrollbar-thumb { background: var(--gold-light); border-radius: 4px; }
+  
+  .fabric-item {
+    aspect-ratio: 1;
+    background: var(--bg-alt);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    transition: transform 0.2s, border-color 0.2s;
+    position: relative;
+    display: block;
+  }
+  .fabric-item:hover {
+    transform: translateY(-2px);
+    border-color: var(--gold);
+  }
+  .fabric-item img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .fabric-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(26,23,20,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .fabric-item:hover .fabric-overlay { opacity: 1; }
+  .fabric-overlay svg { color: var(--white); width: 18px; height: 18px; }
+
   /* Nota tecnología */
   .guide-tech {
     padding: 14px 18px;
@@ -372,6 +429,14 @@
       </div>
     </div>
 
+    <div class="guide-fabrics" id="fabrics-panel">
+      <span class="fabrics-label">Colección de Telas</span>
+      <p class="fabrics-desc">¿Quieres ver cómo quedaría un traje con una de nuestras telas? Descárgala y súbela en el apartado "Garment" (Prenda) del probador para teñir el traje con este patrón.</p>
+      <div class="fabrics-grid" id="fabrics-grid">
+        <!-- Las miniaturas se cargarán aquí por JS -->
+      </div>
+    </div>
+
     <div class="guide-tech">
       <span class="tech-label">Tecnología</span>
       <p class="tech-text">
@@ -455,6 +520,32 @@
     loading.classList.add('hidden');
     iframe.style.display = 'none';
     fallback.classList.add('visible');
+  });
+
+  /* Cargar telas dinámicamente desde el servidor */
+  fetch('/api/telas').then(r => r.json()).then(telas => {
+    const grid = document.getElementById('fabrics-grid');
+    if (!telas || telas.error || telas.length === 0) {
+      document.getElementById('fabrics-panel').style.display = 'none';
+      return;
+    }
+    telas.forEach(tela => {
+      const a = document.createElement('a');
+      a.className = 'fabric-item';
+      a.href = `/telas/${tela}`;
+      a.download = tela; // Permite que al hacer clic se descargue automáticamente
+      a.title = 'Descargar tela para probar color';
+      a.innerHTML = `
+        <img src="/telas/${tela}" loading="lazy" alt="Tela Fallera">
+        <div class="fabric-overlay">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        </div>
+      `;
+      grid.appendChild(a);
+    });
+  }).catch(e => {
+    console.error('Error cargando telas:', e);
+    document.getElementById('fabrics-panel').style.display = 'none';
   });
 </script>
 
