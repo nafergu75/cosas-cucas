@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Probador Virtual · Cosas Cucas | Indumentaria Fallera</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+  /* ═══════════════════════════════════════════════════════════════
+     VARIABLES — mismo sistema que la web principal
+  ═══════════════════════════════════════════════════════════════ */
+  :root {
+    --bg:          #F4EDD8;
+    --bg-alt:      #EDE5CE;
+    --bg-dark:     #1A1714;
+    --gold:        #B5903A;
+    --gold-light:  #D4B166;
+    --text:        #1A1714;
+    --muted:       #6B5D4F;
+    --border:      #D9CEB4;
+    --white:       #FDFAF3;
+    --font-body:   'Space Grotesk', sans-serif;
+    --font-disp:   'Playfair Display', serif;
+    --radius:      3px;
+    --shadow:      0 4px 24px rgba(26,23,20,.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 15px; scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  button { cursor: pointer; border: none; background: none; font-family: inherit; }
+  a { text-decoration: none; color: inherit; }
+
+  /* ── HEADER ─────────────────────────────────────────────────── */
+  #header {
+    position: sticky; top: 0; z-index: 200;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+    gap: 12px;
+  }
+  .hdr-brand { display: flex; align-items: center; gap: 10px; }
+  .hdr-brand img { height: 36px; width: auto; }
+  .hdr-back {
+    font-size: .7rem; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted);
+    display: flex; align-items: center; gap: 6px;
+    transition: color .2s;
+  }
+  .hdr-back:hover { color: var(--gold); }
+  .hdr-title {
+    font-family: var(--font-disp); font-size: 1.1rem;
+    font-weight: 400; font-style: italic;
+    white-space: nowrap;
+  }
+  .hdr-actions { display: flex; gap: 8px; }
+  .btn-hdr {
+    padding: 7px 16px; font-size: .7rem; font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase;
+    border: 1px solid var(--border); border-radius: var(--radius);
+    color: var(--text); transition: all .2s; white-space: nowrap;
+  }
+  .btn-hdr:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-hdr.gold { background: var(--gold); border-color: var(--gold); color: var(--white); }
+  .btn-hdr.gold:hover { background: var(--gold-light); border-color: var(--gold-light); }
+
+  /* ── STUDIO LAYOUT ──────────────────────────────────────────── */
+  #studio {
+    display: grid;
+    grid-template-columns: 220px 1fr 300px;
+    grid-template-rows: calc(100vh - 60px);
+    overflow: hidden;
+  }
+
+  /* ── LEFT PANEL ─────────────────────────────────────────────── */
+  #panel-left {
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    overflow-y: auto;
+  }
+  .panel-section {
+    padding: 18px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .panel-section:last-child { border-bottom: none; flex: 1; }
+  .panel-label {
+    font-size: .65rem; font-weight: 700; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  /* Upload zone */
+  #upload-zone {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 22px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    position: relative;
+  }
+  #upload-zone:hover, #upload-zone.drag-over {
+    border-color: var(--gold); background: rgba(181,144,58,.05);
+  }
+  #upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+  .upload-icon { font-size: 2rem; margin-bottom: 8px; opacity: .5; }
+  .upload-text { font-size: .75rem; color: var(--muted); line-height: 1.5; }
+  .upload-text strong { display: block; color: var(--text); font-weight: 600; font-size: .8rem; }
+
+  .btn-webcam {
+    width: 100%; margin-top: 10px; padding: 10px;
+    border: 1px solid var(--border); border-radius: var(--radius);
+    font-size: .72rem; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted);
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    transition: all .2s;
+  }
+  .btn-webcam:hover { border-color: var(--gold); color: var(--text); }
+
+  /* Layers */
+  #layers-list { display: flex; flex-direction: column; gap: 6px; }
+  .layer-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 8px; background: var(--bg);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    cursor: pointer; transition: border-color .2s;
+    position: relative;
+  }
+  .layer-item.selected { border-color: var(--gold); }
+  .layer-thumb {
+    width: 32px; height: 32px; object-fit: cover;
+    border-radius: 2px; flex-shrink: 0; background: var(--bg-alt);
+  }
+  .layer-name {
+    font-size: .7rem; font-weight: 500; flex: 1;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .layer-delete {
+    width: 20px; height: 20px; display: flex; align-items: center;
+    justify-content: center; font-size: .85rem; color: var(--muted);
+    flex-shrink: 0; transition: color .2s;
+  }
+  .layer-delete:hover { color: #c0392b; }
+
+  /* Layer controls */
+  #layer-controls { margin-top: 12px; display: none; }
+  #layer-controls.visible { display: block; }
+  .ctrl-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .ctrl-label { font-size: .65rem; color: var(--muted); width: 64px; flex-shrink: 0; }
+  .ctrl-range {
+    flex: 1; -webkit-appearance: none; appearance: none;
+    height: 3px; background: var(--border); border-radius: 2px; outline: none;
+  }
+  .ctrl-range::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 14px; height: 14px;
+    background: var(--gold); border-radius: 50%; cursor: pointer;
+  }
+  .ctrl-row-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+  .btn-ctrl {
+    padding: 5px 10px; font-size: .65rem; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase;
+    border: 1px solid var(--border); border-radius: var(--radius);
+    color: var(--muted); transition: all .2s;
+  }
+  .btn-ctrl:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-ctrl.danger:hover { border-color: #c0392b; color: #c0392b; }
+
+  /* ── CENTER CANVAS ───────────────────────────────────────────── */
+  #canvas-area {
+    background: var(--bg-alt);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-start;
+    overflow: hidden; position: relative;
+  }
+  #canvas-wrap {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+    padding: 20px;
+  }
+  #main-canvas {
+    box-shadow: var(--shadow);
+    display: block;
+  }
+  /* Empty state */
+  #empty-state {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 16px; text-align: center; padding: 40px;
+    pointer-events: none;
+  }
+  #empty-state.hidden { display: none; }
+  .empty-icon { font-size: 4rem; opacity: .25; }
+  .empty-title {
+    font-family: var(--font-disp); font-size: 1.6rem;
+    font-style: italic; opacity: .4;
+  }
+  .empty-sub { font-size: .8rem; color: var(--muted); opacity: .7; }
+
+  /* Canvas toolbar */
+  #canvas-toolbar {
+    width: 100%; padding: 10px 20px;
+    background: var(--white); border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    flex-wrap: wrap;
+  }
+  .btn-action {
+    padding: 9px 18px; font-size: .7rem; font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase;
+    border: 1px solid var(--border); border-radius: var(--radius);
+    color: var(--text); transition: all .2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .btn-action:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-action.primary { background: var(--gold); border-color: var(--gold); color: var(--white); }
+  .btn-action.primary:hover { background: var(--gold-light); }
+  .btn-action:disabled { opacity: .4; cursor: default; pointer-events: none; }
+
+  /* ── RIGHT PANEL ─────────────────────────────────────────────── */
+  #panel-right {
+    background: var(--white);
+    border-left: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .lib-tabs {
+    display: flex; border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .lib-tab {
+    flex: 1; padding: 12px 6px; font-size: .65rem; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
+    text-align: center; color: var(--muted);
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    transition: color .2s, border-color .2s; white-space: nowrap;
+  }
+  .lib-tab.active { color: var(--gold); border-color: var(--gold); }
+  .lib-tab:hover { color: var(--text); }
+
+  /* Search + filter */
+  .lib-search {
+    padding: 10px 12px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+    display: flex; gap: 8px; align-items: center;
+  }
+  .search-input {
+    flex: 1; padding: 7px 10px; font-family: var(--font-body); font-size: .75rem;
+    background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+    color: var(--text); outline: none; transition: border-color .2s;
+  }
+  .search-input:focus { border-color: var(--gold); }
+  .search-input::placeholder { color: var(--muted); }
+
+  .lib-filters {
+    padding: 8px 12px; border-bottom: 1px solid var(--border);
+    display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0;
+  }
+  .filter-chip {
+    padding: 4px 10px; font-size: .62rem; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase;
+    border: 1px solid var(--border); border-radius: 20px;
+    color: var(--muted); cursor: pointer; transition: all .2s;
+  }
+  .filter-chip.active { background: var(--gold); border-color: var(--gold); color: var(--white); }
+  .filter-chip:hover:not(.active) { border-color: var(--gold); color: var(--gold); }
+
+  /* Library grid */
+  #lib-grid {
+    flex: 1; overflow-y: auto; padding: 12px;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 8px; align-content: start;
+  }
+  .lib-item {
+    cursor: pointer; position: relative; border-radius: var(--radius);
+    border: 2px solid transparent; overflow: hidden;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+    aspect-ratio: 3/4;
+    background: var(--bg-alt);
+  }
+  .lib-item:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26,23,20,.15);
+  }
+  .lib-item.active { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold); }
+  .lib-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    object-position: center top; transition: transform .4s;
+  }
+  .lib-item:hover img { transform: scale(1.05); }
+  .lib-item-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(26,23,20,.85) 0%, transparent 100%);
+    padding: 20px 6px 6px;
+    font-size: .58rem; font-weight: 600; letter-spacing: .06em;
+    color: var(--white); text-transform: uppercase; line-height: 1.3;
+    opacity: 0; transition: opacity .2s;
+  }
+  .lib-item:hover .lib-item-label { opacity: 1; }
+  .lib-item-badge {
+    position: absolute; top: 5px; right: 5px;
+    background: var(--gold); color: var(--white);
+    font-size: .5rem; font-weight: 700; letter-spacing: .1em;
+    padding: 2px 6px; text-transform: uppercase; border-radius: 2px;
+  }
+
+  /* ── MODALS ──────────────────────────────────────────────────── */
+  .modal-bg {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(26,23,20,.65);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s;
+  }
+  .modal-bg.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--bg);
+    max-width: 700px; width: 100%;
+    border-radius: var(--radius);
+    overflow: hidden;
+    transform: translateY(20px); transition: transform .3s;
+    max-height: 90vh; overflow-y: auto;
+  }
+  .modal-bg.open .modal { transform: translateY(0); }
+  .modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 24px; border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: var(--bg); z-index: 2;
+  }
+  .modal-title { font-family: var(--font-disp); font-size: 1.2rem; font-style: italic; }
+  .modal-close {
+    width: 36px; height: 36px; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; color: var(--muted); transition: all .2s; flex-shrink: 0;
+  }
+  .modal-close:hover { background: var(--text); color: var(--white); border-color: var(--text); }
+  .modal-body { padding: 24px; }
+
+  /* Webcam modal */
+  #webcam-video {
+    width: 100%; border-radius: var(--radius);
+    background: #000; display: block;
+    max-height: 400px; object-fit: cover;
+  }
+  .webcam-actions { display: flex; gap: 10px; margin-top: 14px; justify-content: center; }
+  #webcam-canvas { display: none; }
+
+  /* Compare modal */
+  #compare-wrap {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .compare-side { text-align: center; }
+  .compare-label {
+    font-size: .65rem; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 8px;
+  }
+  .compare-img {
+    width: 100%; border-radius: var(--radius);
+    box-shadow: var(--shadow); display: block;
+  }
+
+  /* Gallery */
+  #gallery-section {
+    padding: 40px 24px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-alt);
+  }
+  .gallery-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .gallery-title {
+    font-size: .7rem; font-weight: 700; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .gallery-clear {
+    font-size: .65rem; color: var(--muted); padding: 5px 10px;
+    border: 1px solid var(--border); border-radius: var(--radius);
+    transition: all .2s;
+  }
+  .gallery-clear:hover { border-color: #c0392b; color: #c0392b; }
+  #gallery-grid {
+    display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  .gallery-thumb {
+    position: relative; width: 120px; height: 160px;
+    border-radius: var(--radius); overflow: hidden; flex-shrink: 0;
+    border: 2px solid var(--border); cursor: pointer;
+    transition: border-color .2s, transform .2s;
+  }
+  .gallery-thumb:hover { border-color: var(--gold); transform: translateY(-2px); }
+  .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-thumb-del {
+    position: absolute; top: 4px; right: 4px;
+    background: rgba(26,23,20,.7); color: var(--white);
+    width: 20px; height: 20px; border-radius: 50%;
+    font-size: .75rem; display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .2s;
+  }
+  .gallery-thumb:hover .gallery-thumb-del { opacity: 1; }
+  #gallery-empty {
+    color: var(--muted); font-size: .82rem; font-style: italic;
+  }
+
+  /* Toast */
+  #toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+    background: var(--bg-dark); color: var(--white);
+    padding: 12px 24px; border-radius: var(--radius);
+    font-size: .78rem; font-weight: 500; z-index: 2000;
+    transition: transform .3s ease;
+    pointer-events: none; white-space: nowrap;
+  }
+  #toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* Loading overlay */
+  #loading {
+    position: fixed; inset: 0; z-index: 3000;
+    background: rgba(244,237,216,.9);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 16px;
+    opacity: 0; pointer-events: none; transition: opacity .3s;
+  }
+  #loading.visible { opacity: 1; pointer-events: all; }
+  .spinner {
+    width: 40px; height: 40px;
+    border: 3px solid var(--border);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+  }
+  .loading-text { font-size: .8rem; color: var(--muted); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── AI TRY-ON ────────────────────────────────────────────── */
+  .btn-hdr.ai-active {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border-color: var(--gold); color: var(--white);
+    animation: ai-pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes ai-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(181,144,58,.45); }
+    50%       { box-shadow: 0 0 0 7px rgba(181,144,58,.0); }
+  }
+  .btn-action.ai-ready {
+    background: var(--gold); border-color: var(--gold); color: var(--white);
+  }
+  .btn-action.ai-ready:hover { background: var(--gold-light); }
+
+  .ai-field-label {
+    font-size: .64rem; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 6px; display: block;
+  }
+  .ai-input {
+    width: 100%; padding: 9px 12px;
+    font-family: var(--font-body); font-size: .8rem;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius); color: var(--text); outline: none;
+    transition: border-color .2s;
+  }
+  .ai-input:focus { border-color: var(--gold); }
+  .ai-input::placeholder { color: var(--muted); }
+  .ai-status {
+    font-size: .74rem; color: var(--muted); padding: 9px 12px;
+    background: var(--bg-alt); border-radius: var(--radius);
+    border-left: 3px solid var(--border); line-height: 1.5;
+  }
+  .ai-status.ok  { border-color: #27ae60; color: #1a7a40; background: rgba(39,174,96,.06); }
+  .ai-status.err { border-color: #c0392b; color: #922b21; background: rgba(192,57,43,.06); }
+
+  .ai-garment-info {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; background: var(--bg-alt);
+    border: 1px solid var(--border); border-radius: var(--radius);
+  }
+  .ai-garment-thumb {
+    width: 40px; height: 52px; object-fit: cover;
+    border-radius: 2px; flex-shrink: 0; background: var(--border);
+  }
+  .ai-garment-name { font-size: .78rem; font-weight: 600; }
+  .ai-garment-cat  { font-size: .62rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top: 2px; }
+
+  .ai-result-img {
+    display: block; margin: 0 auto; max-width: 100%;
+    border-radius: var(--radius); box-shadow: var(--shadow);
+    max-height: 68vh; object-fit: contain;
+  }
+  .ai-result-actions {
+    display: flex; gap: 10px; justify-content: center;
+    margin-top: 16px; flex-wrap: wrap;
+  }
+
+  /* ── RESPONSIVE ─────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    #studio {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      overflow: visible;
+      height: auto;
+    }
+    #panel-left { border-right: none; border-bottom: 1px solid var(--border); }
+    #panel-right { border-left: none; border-top: 1px solid var(--border); height: 480px; }
+    #canvas-area { min-height: 60vw; }
+    #lib-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 500px) {
+    #header { padding: 0 14px; }
+    .hdr-title { display: none; }
+    #lib-grid { grid-template-columns: repeat(3, 1fr); }
+    #compare-wrap { grid-template-columns: 1fr; }
+    .gallery-thumb { width: 90px; height: 120px; }
+    /* canvas toolbar: oculta texto largo en móvil */
+    #btn-ai-canvas::before { content: '🤖'; }
+    #btn-ai-canvas { font-size: 0; padding: 9px 12px; }
+    #btn-ai-canvas::before { font-size: .85rem; }
+    #canvas-toolbar { gap: 6px; padding: 8px 12px; }
+    .btn-action { padding: 8px 12px; font-size: .62rem; }
+  }
+  </style>
+</head>
+
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════════════════════════ -->
+<header id="header">
+  <div class="hdr-brand">
+    <a class="hdr-back" href="index.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Volver
+    </a>
+    <img src="logo cosascucas.png" alt="Cosas Cucas" onerror="this.style.display='none'" />
+  </div>
+
+  <h1 class="hdr-title">Probador Virtual</h1>
+
+  <div class="hdr-actions">
+    <button class="btn-hdr" id="btn-ai-settings" title="Configurar API IA">⚙ API</button>
+    <button class="btn-hdr" id="btn-ai-tryon" disabled title="Prueba virtual con IA">🤖 IA Try-On</button>
+    <button class="btn-hdr" id="btn-compare" disabled>↔ Comparar</button>
+    <button class="btn-hdr" id="btn-save-look" disabled>♡ Guardar look</button>
+    <button class="btn-hdr gold" id="btn-download" disabled>↓ Descargar</button>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════════
+     STUDIO
+══════════════════════════════════════════════════════════════ -->
+<div id="studio">
+
+  <!-- LEFT PANEL -->
+  <aside id="panel-left">
+
+    <div class="panel-section">
+      <div class="panel-label">Tu foto</div>
+      <div id="upload-zone">
+        <input type="file" id="file-input" accept="image/*" />
+        <div class="upload-icon">📷</div>
+        <div class="upload-text">
+          <strong>Sube tu foto</strong>
+          Arrastra aquí o pulsa para seleccionar
+        </div>
+      </div>
+      <button class="btn-webcam" id="btn-webcam">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M22 12s-4-8-10-8S2 12 2 12s4 8 10 8 10-8 10-8"/></svg>
+        Usar cámara
+      </button>
+    </div>
+
+    <div class="panel-section" id="layers-section">
+      <div class="panel-label">Capas activas</div>
+      <div id="layers-list">
+        <p style="font-size:.72rem;color:var(--muted);font-style:italic;">
+          Añade prendas desde la biblioteca →
+        </p>
+      </div>
+
+      <div id="layer-controls">
+        <div class="ctrl-row">
+          <span class="ctrl-label">Opacidad</span>
+          <input type="range" class="ctrl-range" id="ctrl-opacity" min="0" max="100" value="80" />
+        </div>
+        <div class="ctrl-row">
+          <span class="ctrl-label">Escala</span>
+          <input type="range" class="ctrl-range" id="ctrl-scale" min="20" max="200" value="100" />
+        </div>
+        <div class="ctrl-row-btns">
+          <button class="btn-ctrl" id="ctrl-flip">↔ Voltear</button>
+          <button class="btn-ctrl" id="ctrl-front">↑ Arriba</button>
+          <button class="btn-ctrl" id="ctrl-back">↓ Abajo</button>
+          <button class="btn-ctrl danger" id="ctrl-delete">✕ Borrar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-label">Blend mode</div>
+      <select id="blend-select" style="width:100%;padding:8px;font-family:var(--font-body);font-size:.75rem;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;">
+        <option value="normal">Normal</option>
+        <option value="multiply" selected>Multiply (recomendado)</option>
+        <option value="overlay">Overlay</option>
+        <option value="screen">Screen</option>
+        <option value="soft-light">Soft Light</option>
+        <option value="hard-light">Hard Light</option>
+        <option value="color">Color</option>
+        <option value="luminosity">Luminosity</option>
+      </select>
+    </div>
+
+  </aside>
+
+  <!-- CENTER CANVAS -->
+  <div id="canvas-area">
+    <div id="canvas-wrap">
+      <canvas id="main-canvas"></canvas>
+      <div id="empty-state">
+        <div class="empty-icon">👗</div>
+        <div class="empty-title">Tu probador personal</div>
+        <div class="empty-sub">Sube una foto o hazte una con la cámara<br>y empieza a probar la indumentaria fallera</div>
+      </div>
+    </div>
+    <div id="canvas-toolbar">
+      <button class="btn-action" id="btn-clear-all" disabled>✕ Limpiar todo</button>
+      <button class="btn-action" id="btn-reset-photo" disabled>↺ Nueva foto</button>
+      <button class="btn-action" id="btn-use-model">✦ Usar modelo</button>
+      <button class="btn-action" id="btn-ai-canvas" disabled title="Prueba virtual con IA — selecciona una prenda primero">🤖 Probar con IA</button>
+      <button class="btn-action primary" id="btn-download-tb" disabled>↓ Descargar PNG</button>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <aside id="panel-right">
+    <div class="lib-tabs" id="lib-tabs">
+      <button class="lib-tab active" data-cat="outfits">Outfits</button>
+      <button class="lib-tab" data-cat="telas">Telas</button>
+      <button class="lib-tab" data-cat="aderezos">Aderezos</button>
+      <button class="lib-tab" data-cat="ss">Semana Santa</button>
+    </div>
+
+    <div class="lib-search">
+      <input type="text" class="search-input" id="lib-search" placeholder="Buscar…" />
+    </div>
+
+    <div class="lib-filters" id="lib-filters"></div>
+
+    <div id="lib-grid"></div>
+  </aside>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     GALLERY
+══════════════════════════════════════════════════════════════ -->
+<section id="gallery-section">
+  <div class="gallery-header">
+    <span class="gallery-title">Mis looks guardados</span>
+    <button class="gallery-clear" id="btn-gallery-clear">Borrar todo</button>
+  </div>
+  <div id="gallery-grid">
+    <p id="gallery-empty" style="color:var(--muted);font-size:.82rem;font-style:italic;">
+      Todavía no has guardado ningún look. Compón uno y pulsa "Guardar look".
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     MODAL — Webcam
+══════════════════════════════════════════════════════════════ -->
+<div class="modal-bg" id="webcam-modal">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-header">
+      <span class="modal-title">Hazte una foto</span>
+      <button class="modal-close" id="webcam-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <video id="webcam-video" autoplay playsinline muted></video>
+      <canvas id="webcam-canvas"></canvas>
+      <div class="webcam-actions">
+        <button class="btn-action" id="btn-switch-cam">↺ Cambiar cámara</button>
+        <button class="btn-action primary" id="btn-capture">📷 Capturar foto</button>
+      </div>
+      <p style="text-align:center;font-size:.7rem;color:var(--muted);margin-top:10px;">
+        La foto no se envía a ningún servidor. Procesamiento 100% local.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     MODAL — Comparar
+══════════════════════════════════════════════════════════════ -->
+<div class="modal-bg" id="compare-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Comparar — antes y después</span>
+      <button class="modal-close" id="compare-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="compare-wrap">
+        <div class="compare-side">
+          <div class="compare-label">Sin prendas</div>
+          <img id="compare-before" class="compare-img" src="" alt="Antes" />
+        </div>
+        <div class="compare-side">
+          <div class="compare-label">Con tu look</div>
+          <img id="compare-after" class="compare-img" src="" alt="Después" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     MODAL — Configuración IA / PixelAPI
+══════════════════════════════════════════════════════════════ -->
+<div class="modal-bg" id="ai-settings-modal">
+  <div class="modal" style="max-width:460px">
+    <div class="modal-header">
+      <span class="modal-title">Configuración IA · PixelAPI</span>
+      <button class="modal-close" id="ai-settings-close">✕</button>
+    </div>
+    <div class="modal-body" style="display:flex;flex-direction:column;gap:16px;">
+
+      <!-- Estado del servidor -->
+      <div id="ai-server-status" class="ai-status" style="display:none"></div>
+
+      <!-- Opción A: variable de entorno (recomendado) -->
+      <div style="padding:10px 12px;background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--radius);font-size:.72rem;line-height:1.7;color:var(--muted);">
+        <strong style="display:block;color:var(--text);margin-bottom:4px;">Opción A — Servidor (recomendado)</strong>
+        Reinicia el servidor con la clave como variable de entorno:<br>
+        <code style="display:inline-block;margin-top:4px;padding:3px 8px;background:var(--bg-dark);color:var(--gold-light);border-radius:2px;font-size:.68rem;user-select:all;">PIXELAPI_KEY=pk_live_… node server.js</code>
+      </div>
+
+      <!-- Opción B: localStorage (fallback) -->
+      <div>
+        <label class="ai-field-label" for="ai-key-input">Opción B — Clave en el navegador (fallback)</label>
+        <input type="password" class="ai-input" id="ai-key-input"
+          placeholder="pk_live_…" autocomplete="off" />
+        <p style="font-size:.67rem;color:var(--muted);margin-top:5px;line-height:1.5;">
+          Obtén tu clave en
+          <a href="https://pixelapi.dev" target="_blank" rel="noopener"
+             style="color:var(--gold);">pixelapi.dev</a>.
+          Se guarda solo en tu navegador, nunca se envía a terceros.
+        </p>
+      </div>
+      <div>
+        <label class="ai-field-label" for="ai-category">Categoría de prueba</label>
+        <select class="ai-input" id="ai-category">
+          <option value="full_body">Cuerpo completo (full_body)</option>
+          <option value="upper_body">Parte superior (upper_body)</option>
+          <option value="lower_body">Parte inferior (lower_body)</option>
+        </select>
+      </div>
+      <div>
+        <label class="ai-field-label">Prenda seleccionada para IA</label>
+        <div id="ai-garment-preview">
+          <p style="font-size:.76rem;color:var(--muted);font-style:italic;">
+            Ninguna prenda seleccionada. Elige una de la biblioteca.
+          </p>
+        </div>
+      </div>
+      <div id="ai-key-status" class="ai-status" style="display:none"></div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;">
+        <button class="btn-action" id="btn-ai-test">Verificar clave</button>
+        <button class="btn-action primary" id="btn-ai-save">Guardar y cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     MODAL — Resultado IA
+══════════════════════════════════════════════════════════════ -->
+<div class="modal-bg" id="ai-result-modal">
+  <div class="modal" style="max-width:540px">
+    <div class="modal-header">
+      <span class="modal-title">Tu look · Resultado IA</span>
+      <button class="modal-close" id="ai-result-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <img id="ai-result-img" class="ai-result-img" src="" alt="Resultado IA" />
+      <div class="ai-result-actions">
+        <button class="btn-action primary" id="btn-ai-use-result">✓ Usar como foto</button>
+        <button class="btn-action" id="btn-ai-save-result">♡ Guardar en galería</button>
+        <button class="btn-action" id="btn-ai-download-result">↓ Descargar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast + Loading -->
+<div id="toast"></div>
+<div id="loading"><div class="spinner"></div><span class="loading-text"></span></div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     FABRIC.JS
+══════════════════════════════════════════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+
+<script>
+'use strict';
+
+/* ══════════════════════════════════════════════════════════════
+   CATÁLOGO  — imágenes del propio proyecto cosas-cucas
+══════════════════════════════════════════════════════════════ */
+const CATALOG = {
+
+  outfits: [
+    { id:'o1',  label:'Fallera en pasarela',       img:'pasarela/_ADL4063.jpg', tags:['gala'] },
+    { id:'o2',  label:'Conjunto de gala',           img:'pasarela/_ADL4065.jpg', tags:['gala'] },
+    { id:'o3',  label:'Indumentaria clásica',       img:'pasarela/_ADL4068.jpg', tags:['clásico'] },
+    { id:'o4',  label:'Traje festivo',              img:'pasarela/_ADL4069.jpg', tags:['festivo'] },
+    { id:'o5',  label:'Look de fallera mayor',      img:'pasarela/_ADL4071.jpg', tags:['mayor','gala'] },
+    { id:'o6',  label:'Conjunto primavera',         img:'pasarela/_ADL4076.jpg', tags:['primavera'] },
+    { id:'o7',  label:'Traje brocado',              img:'pasarela/_ADL4077.jpg', tags:['brocado'] },
+    { id:'o8',  label:'Conjunto telas florales',    img:'pasarela/_ADL4080.jpg', tags:['floral'] },
+    { id:'o9',  label:'Look completo coral',        img:'pasarela/_ADL4081.jpg', tags:['coral'] },
+    { id:'o10', label:'Indumentaria festiva',       img:'pasarela/_ADL4083.jpg', tags:['festivo'] },
+    { id:'o11', label:'Traje de seda',              img:'pasarela/_ADL4087.jpg', tags:['seda','gala'] },
+    { id:'o12', label:'Conjunto manteleta',         img:'pasarela/_ADL4091.jpg', tags:['manteleta'] },
+    { id:'o13', label:'Fallera clásica',            img:'pasarela/_ADL4093.jpg', tags:['clásico'] },
+    { id:'o14', label:'Look brocado dorado',        img:'pasarela/_ADL4095.jpg', tags:['dorado','brocado'] },
+    { id:'o15', label:'Traje con peineta',          img:'pasarela/_ADL4097.jpg', tags:['peineta'] },
+    { id:'o16', label:'Conjunto especial',          img:'pasarela/_ADL4101.jpg', tags:['especial'] },
+    { id:'o17', label:'Traje de gala azul',         img:'pasarela/_ADL4111.jpg', tags:['azul','gala'] },
+    { id:'o18', label:'Fallera mayor referencia',   img:'pasarela/_ADL4169.jpg', tags:['mayor'] },
+  ],
+
+  telas: [
+    { id:'t1',  label:'Seda Valenciana Azul Cielo',       img:'telas/10d72799667cdfedd50b7db1e47de9af.jpg', tags:['seda','azul'] },
+    { id:'t2',  label:'Brocado Floral Crema Dorado',      img:'telas/1aabc72fb1c575ed124c9ec55ad54cc5.jpg', tags:['brocado','crema','floral'] },
+    { id:'t3',  label:'Seda Adamascada Granate y Oro',    img:'telas/1c104dbe51d74631eb953edc5ad7f1d3.jpg', tags:['seda','granate','dorado'] },
+    { id:'t4',  label:'Brocado Floral Azul Marino',       img:'telas/263301bf103659434f9942ceb2d54566.jpg', tags:['brocado','azul','floral'] },
+    { id:'t5',  label:'Terciopelo Burdeos',               img:'telas/2a31f651ecf3842456a80b9ec3e1ad41.jpg', tags:['terciopelo','burdeos'] },
+    { id:'t6',  label:'Seda Duchesse Negro',              img:'telas/316a2c6e9146f3d7767ca3b5f7ab9231.jpg', tags:['seda','negro'] },
+    { id:'t7',  label:'Brocado Multicolor Verde',         img:'telas/3848be776d5cf49e63811df2a6d218ff.jpg', tags:['brocado','verde','floral'] },
+    { id:'t8',  label:'Brocado Tonos Tierra',             img:'telas/3be8546ee42550456027263c71963b91.jpg', tags:['brocado','ocre'] },
+    { id:'t9',  label:'Seda Ramie Crema Natural',         img:'telas/43c1d191299024a1616e859c74621158.jpg', tags:['seda','crema'] },
+    { id:'t10', label:'Brocado Azul Cobalto',             img:'telas/46f9778c7094d400c2df163ac0c372b7.jpg', tags:['brocado','azul'] },
+    { id:'t11', label:'Seda Tafetán Rosa Palo',           img:'telas/479224d9440fb12613dd32bd4c356f9e.jpg', tags:['seda','rosa'] },
+    { id:'t12', label:'Brocado Dorado Barroco',           img:'telas/4a9966182b5518d6852ecc5709b47be6.jpg', tags:['brocado','dorado'] },
+    { id:'t13', label:'Seda Cruda con Bordado',           img:'telas/516090036d788e609211ff179f82799c.jpg', tags:['seda','bordado'] },
+    { id:'t14', label:'Tafetán Rojo Carmín',              img:'telas/54bafcd345701df74a7dfb79e4eed63a.jpg', tags:['tafetán','rojo'] },
+    { id:'t15', label:'Seda Floral Pastel',               img:'telas/647a511ff9eca426ac2669b2b46aaca4.jpg', tags:['seda','floral','pastel'] },
+    { id:'t16', label:'Brocado Jacquard Clásico',         img:'telas/69ad14805a6b0e89be0e59404d2b23ae.jpg', tags:['brocado','jacquard'] },
+    { id:'t17', label:'Terciopelo Verde Esmeralda',       img:'telas/6bde24ac5b50d6ca8c0bcba837bdce7e.jpg', tags:['terciopelo','verde'] },
+    { id:'t18', label:'Seda Floral Multicolor',           img:'telas/6e272e3e29e1fb91aac9889b4afc9b67.jpg', tags:['seda','floral'] },
+    { id:'t19', label:'Tela Bordada Fondo Azul',          img:'telas/7b262a97ab50be92a7f07e0a145d65be.jpg', tags:['bordado','azul'] },
+    { id:'t20', label:'Brocado Floral Naranja',           img:'telas/821924b765a779c2477ce691ec7ae18d.jpg', tags:['brocado','naranja','floral'] },
+    { id:'t21', label:'Seda Estampada Violeta',           img:'telas/856abd3cb99c1aac89ee8b16e961d07d.jpg', tags:['seda','violeta'] },
+    { id:'t22', label:'Brocado Granate Dorado',           img:'telas/86d5708f02be2e59052db0d06b0c4d07.jpg', tags:['brocado','granate','dorado'] },
+    { id:'t23', label:'Tela Floral Azul y Oro',           img:'telas/aca0413455ec2e9b26a4c28d1e83162d.jpg', tags:['floral','azul','dorado'] },
+    { id:'t24', label:'Seda Tornasolada Oro-Verde',       img:'telas/aeb47eca4eab818829a5fc16263b7b31.jpg', tags:['seda','dorado','verde'] },
+    { id:'t25', label:'Brocado Floral Rosa y Oro',        img:'telas/b8d32343036b943fe22a944290846e90.jpg', tags:['brocado','rosa','dorado'] },
+    { id:'t26', label:'Tela Jacquard Azul Marino',        img:'telas/bc31b627cd74bee19c2227910368c329.jpg', tags:['jacquard','azul'] },
+    { id:'t27', label:'Seda Floral Fondo Oscuro',         img:'telas/bf2f4463dc8bcf74175903fa1445d6ab.jpg', tags:['seda','floral'] },
+    { id:'t28', label:'Brocado Clásico Crema',            img:'telas/ce1329e103cace9e9bc268485eddc221.jpg', tags:['brocado','crema'] },
+    { id:'t29', label:'Terciopelo Azul Real',             img:'telas/d4b006080b3e62d38a9cc5c53ef2b259.jpg', tags:['terciopelo','azul'] },
+    { id:'t30', label:'Tela Bordada Multicolor',          img:'telas/d510f515e384294a699a7f8f54060342.jpg', tags:['bordado','floral'] },
+    { id:'t31', label:'Seda Jacquard Burdeos',            img:'telas/e0016a7759c718ff2eddec75fc8903d5.jpg', tags:['seda','jacquard','burdeos'] },
+    { id:'t32', label:'Brocado Floral Fucsia',            img:'telas/e3854f6f869326e6512ee841f2f1edc3.jpg', tags:['brocado','rosa','floral'] },
+    { id:'t33', label:'Seda Cruda Floral Pastel',         img:'telas/f128eb84642f1b5f63030d4414c25d6f.jpg', tags:['seda','crema','floral'] },
+    { id:'t34', label:'Brocat Blanc Flors Estil Brodat',  img:'telas/fd5de3fbbe1c25725787571f58ba3a41.jpg', tags:['brocado','blanco','floral'] },
+    { id:'t35', label:'Manteleta Bordada Crema Dorado',   img:'telas/ffe32f5d31acce1ce39f233343a0bdb1.jpg', tags:['bordado','crema','dorado'] },
+  ],
+
+  aderezos: [
+    { id:'a1',  label:'Aderezo Coral',              img:'aderezos/21ab46a569d3430db090f295b7e3a908.jpg', tags:['coral','dorado'], badge:'Aderezo' },
+    { id:'a2',  label:'Aderezo Azul Cobalto',       img:'aderezos/438c1629cc3b772fe1e671ef1d4d0ac6.jpg', tags:['azul','dorado'],  badge:'Aderezo' },
+    { id:'a3',  label:'Peineta Clásica Dorada',     img:'aderezos/58ac07274b84e60448c20eb68d15d790.jpg', tags:['peineta','dorado'], badge:'Peineta' },
+    { id:'a4',  label:'Aderezo Perla y Oro',        img:'aderezos/591ef1e7b578fff5f13bb9268ded15f9.jpg', tags:['perla','dorado'],  badge:'Aderezo' },
+    { id:'a5',  label:'Peineta Nácar',              img:'aderezos/6350b7a025fe15befd00e4f8334c4be8.jpg', tags:['peineta','nácar'],  badge:'Peineta' },
+    { id:'a6',  label:'Aderezo Granate',            img:'aderezos/6524e8732fe9e528434a1bfedfce3779.jpg', tags:['granate'],          badge:'Aderezo' },
+    { id:'a7',  label:'Conjunto Coral y Dorado',    img:'aderezos/819afad21f01466813598e4afcea5a16.jpg', tags:['coral','dorado'],  badge:'Conjunto' },
+    { id:'a8',  label:'Aderezo Azul y Plata',       img:'aderezos/91b21e9cbfdc1e4f4207d52783a468f8.jpg', tags:['azul','plata'],    badge:'Aderezo' },
+    { id:'a9',  label:'Peineta Alta Dorada',        img:'aderezos/cead7a26fdd820dd3933a8c294bca3c2.jpg', tags:['peineta','dorado'], badge:'Peineta' },
+    { id:'a10', label:'Aderezo Esmeralda',          img:'aderezos/e003445989cdec1be706e9640d7571df.jpg', tags:['verde','dorado'],  badge:'Aderezo' },
+    { id:'a11', label:'Conjunto Perla Barroca',     img:'aderezos/e00a3057ef8e742155e8bfdb3d736bb3.jpg', tags:['perla'],            badge:'Conjunto' },
+    { id:'a12', label:'Aderezo Rojo y Oro',         img:'aderezos/f684c6fe0e0ca8a61f8a3625a9f40b9f.jpg', tags:['rojo','dorado'],   badge:'Aderezo' },
+    { id:'a13', label:'Peineta Valenciana',         img:'aderezos/fd88bef3874eaa74c7469da60e5bc75b.jpg', tags:['peineta'],          badge:'Peineta' },
+    { id:'a14', label:'Aderezo Malva',              img:'aderezos/19c585d0c22e41248994ebf02b1fe1c3.jpg', tags:['malva','dorado'],  badge:'Aderezo' },
+    { id:'a15', label:'Conjunto Turquesa',          img:'aderezos/c7df22d4bd0b8a6995b3bb0639ce2373.jpg', tags:['turquesa'],         badge:'Conjunto' },
+  ],
+
+  ss: [
+    { id:'ss1',  label:'Mantilla Encaje Negro',    img:'semana%20santa/010893cf6c19d0bae03e9be537dc1330.jpg', tags:['mantilla','negro'] },
+    { id:'ss2',  label:'Mantilla Blanca Comunión', img:'semana%20santa/0ebbfd32ee04872f69b75dbeb98f7507.jpg', tags:['mantilla','blanco'] },
+    { id:'ss3',  label:'Manto Procesional',        img:'semana%20santa/1bc9d88ce7144bd1505f48cae828c87c.jpg', tags:['manto','negro'] },
+    { id:'ss4',  label:'Túnica Nazarena',          img:'semana%20santa/1c1843c5f8f54c0faffc0a5da3841bca.jpg', tags:['túnica'] },
+    { id:'ss5',  label:'Capirote Artesanal',       img:'semana%20santa/2f25c453c011582ce668bbac72fd39ee.jpg', tags:['capirote'] },
+    { id:'ss6',  label:'Faldón Bordado',           img:'semana%20santa/468eaef759310514c7456468edc64fb6.jpg', tags:['bordado'] },
+    { id:'ss7',  label:'Escapulario Artesanal',    img:'semana%20santa/475ccebb7d9585d12b966f51b1c11355.jpg', tags:['escapulario'] },
+    { id:'ss8',  label:'Cíngulo y Complementos',   img:'semana%20santa/5c38550680f45ba0c7b909126455e234.jpg', tags:['complementos'] },
+    { id:'ss9',  label:'Colección SS Exclusiva',   img:'semana%20santa/69f6d8f711d25356efa822377545774e.jpg', tags:['colección'] },
+    { id:'ss10', label:'Pieza Bordada Dorada',     img:'semana%20santa/9406c6a8b6fb6fb3434e4b685c4e27bd.jpg', tags:['bordado','dorado'] },
+    { id:'ss11', label:'Traje Procesional',        img:'semana%20santa/d4f33df56998267192e841ab6ab707f5.jpg', tags:['procesional'] },
+    { id:'ss12', label:'Conjunto Semana Santa',    img:'semana%20santa/fbdacbee0909ca9bc8744bb3222e72dd.jpg', tags:['conjunto'] },
+    { id:'ss13', label:'Portada Semana Santa',     img:'semana%20santa/c31ce8bacc2df79e98733f98bafb17ff.jpg', tags:['portada'] },
+  ],
+};
+
+/* ══════════════════════════════════════════════════════════════
+   FILTROS por categoría
+══════════════════════════════════════════════════════════════ */
+const FILTERS = {
+  outfits:  ['gala','clásico','festivo','brocado','floral','mayor'],
+  telas:    ['seda','brocado','terciopelo','azul','rojo','verde','dorado','floral'],
+  aderezos: ['aderezo','peineta','conjunto','dorado','coral','azul','perla'],
+  ss:       ['mantilla','manto','bordado','negro','blanco'],
+};
+
+/* ══════════════════════════════════════════════════════════════
+   CANVAS ENGINE  (Fabric.js wrapper)
+══════════════════════════════════════════════════════════════ */
+class CanvasEngine {
+  constructor() {
+    this.fc = null;       // Fabric.Canvas instance
+    this.bgDataURL = null; // original photo (sin overlays)
+    this.hasPhoto = false;
+  }
+
+  /* Inicializa el canvas adaptado al contenedor */
+  init() {
+    const wrap = document.getElementById('canvas-wrap');
+    const W = Math.min(wrap.clientWidth - 40, 520);
+    const H = Math.round(W * (4/3));
+
+    this.fc = new fabric.Canvas('main-canvas', {
+      width: W,
+      height: H,
+      backgroundColor: '#EDE5CE',
+      preserveObjectStacking: true,
+    });
+
+    this.fc.on('selection:created', () => App.onSelectLayer());
+    this.fc.on('selection:updated', () => App.onSelectLayer());
+    this.fc.on('selection:cleared', () => App.onDeselectLayer());
+    this.fc.on('object:modified', () => App.syncLayers());
+    this.fc.on('object:added', () => App.syncLayers());
+    this.fc.on('object:removed', () => App.syncLayers());
+  }
+
+  /* Carga una foto como fondo */
+  loadPhoto(src, onDone) {
+    const self = this;
+    fabric.Image.fromURL(src, function(img) {
+      if (!img || !img.width) {
+        App.hideLoading();                        // ← fix: loading no queda atascado
+        App.toast('Error al procesar la imagen');
+        return;
+      }
+      const scale = Math.min(
+        self.fc.width  / img.width,
+        self.fc.height / img.height
+      );
+      self.fc.setBackgroundImage(img, self.fc.renderAll.bind(self.fc), {
+        scaleX: scale, scaleY: scale,
+        left: (self.fc.width  - img.width  * scale) / 2,
+        top:  (self.fc.height - img.height * scale) / 2,
+      });
+      self.hasPhoto = true;
+      setTimeout(() => {
+        self.bgDataURL = self.toDataURL();
+        if (onDone) onDone();
+      }, 100);
+    }, { crossOrigin: 'anonymous' });
+  }
+
+  /* Añade una imagen como overlay interactivo */
+  addOverlay(src, label, category) {
+    const self = this;
+    const isOutfit = category === 'outfits';
+    fabric.Image.fromURL(src, function(img) {
+      if (!img || !img.width) { App.hideLoading(); App.toast('No se pudo cargar la imagen'); return; }
+
+      // Escala inicial
+      const maxW = isOutfit ? self.fc.width : self.fc.width * 0.55;
+      const maxH = isOutfit ? self.fc.height : self.fc.height * 0.55;
+      const scale = Math.min(maxW / img.width, maxH / img.height);
+
+      img.set({
+        left: (self.fc.width  - img.width  * scale) / 2,
+        top:  isOutfit ? 0 : (self.fc.height - img.height * scale) * 0.25,
+        scaleX: scale,
+        scaleY: scale,
+        opacity: isOutfit ? 0.78 : 0.92,
+        globalCompositeOperation: isOutfit ? 'multiply' : 'source-over',
+        cornerStyle: 'circle',
+        cornerColor: '#B5903A',
+        cornerStrokeColor: '#fff',
+        cornerSize: 10,
+        transparentCorners: false,
+        // metadata
+        _ccLabel: label,
+        _ccCategory: category,
+        _ccThumb: src,
+      });
+
+      self.fc.add(img);
+      self.fc.setActiveObject(img);
+      self.fc.renderAll();
+    }, { crossOrigin: 'anonymous' });
+  }
+
+  /* Exporta el canvas como data URL */
+  toDataURL() {
+    return this.fc.toDataURL({ format: 'jpeg', quality: 0.92, multiplier: 1 });
+  }
+
+  /* Descarga el canvas como PNG */
+  download(filename) {
+    const url = this.fc.toDataURL({ format: 'png', quality: 1, multiplier: 2 });
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename || 'cosas-cucas-look.png';
+    a.click();
+  }
+
+  /* Borra todos los overlays (conserva el fondo) */
+  clearOverlays() {
+    this.fc.getObjects().forEach(o => this.fc.remove(o));
+    this.fc.discardActiveObject();
+    this.fc.renderAll();
+  }
+
+  /* Borra todo incluyendo el fondo */
+  clearAll() {
+    this.clearOverlays();
+    this.fc.setBackgroundImage(null, this.fc.renderAll.bind(this.fc));
+    this.hasPhoto = false;
+    this.bgDataURL = null;
+  }
+
+  /* Operaciones sobre el objeto seleccionado */
+  getActive() { return this.fc.getActiveObject(); }
+  deleteActive() {
+    const obj = this.fc.getActiveObject();
+    if (obj) { this.fc.remove(obj); this.fc.discardActiveObject(); this.fc.renderAll(); }
+  }
+  bringForward()  { const o = this.getActive(); if (o) { this.fc.bringForward(o); this.fc.renderAll(); } }
+  sendBackward()  { const o = this.getActive(); if (o) { this.fc.sendBackwards(o); this.fc.renderAll(); } }
+  flipActive()    { const o = this.getActive(); if (o) { o.set('flipX', !o.flipX); this.fc.renderAll(); } }
+  setOpacity(v)   { const o = this.getActive(); if (o) { o.set('opacity', v/100); this.fc.renderAll(); } }
+  setScale(v)     {
+    const o = this.getActive();
+    if (!o) return;
+    const base = o._ccBaseScaleX || o.scaleX;
+    if (!o._ccBaseScaleX) o._ccBaseScaleX = o.scaleX;
+    if (!o._ccBaseScaleY) o._ccBaseScaleY = o.scaleY;
+    const factor = v / 100;
+    o.set({ scaleX: o._ccBaseScaleX * factor, scaleY: o._ccBaseScaleY * factor });
+    this.fc.renderAll();
+  }
+  setBlend(mode)  { const o = this.getActive(); if (o) { o.set('globalCompositeOperation', mode); this.fc.renderAll(); } }
+
+  getAllLayers() {
+    return this.fc.getObjects().map(o => ({
+      obj:      o,
+      label:    o._ccLabel    || 'Capa',
+      category: o._ccCategory || '',
+      thumb:    o._ccThumb    || '',
+    }));
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   WEBCAM MODULE
+══════════════════════════════════════════════════════════════ */
+class WebcamModule {
+  constructor() {
+    this.stream = null;
+    this.facingMode = 'user';
+    this.video = document.getElementById('webcam-video');
+    this.canvas = document.getElementById('webcam-canvas');
+  }
+
+  async start() {
+    try {
+      if (this.stream) this.stop();
+      this.stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: this.facingMode, width: { ideal: 1280 }, height: { ideal: 720 } },
+        audio: false,
+      });
+      this.video.srcObject = this.stream;
+      await this.video.play();
+      return true;
+    } catch (err) {
+      App.toast('No se pudo acceder a la cámara: ' + err.message);
+      return false;
+    }
+  }
+
+  async switchCamera() {
+    this.facingMode = this.facingMode === 'user' ? 'environment' : 'user';
+    return this.start();
+  }
+
+  capture() {
+    const v = this.video;
+    this.canvas.width  = v.videoWidth;
+    this.canvas.height = v.videoHeight;
+    this.canvas.getContext('2d').drawImage(v, 0, 0);
+    return this.canvas.toDataURL('image/jpeg', 0.92);
+  }
+
+  stop() {
+    if (this.stream) {
+      this.stream.getTracks().forEach(t => t.stop());
+      this.stream = null;
+    }
+    this.video.srcObject = null;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MAIN APP
+══════════════════════════════════════════════════════════════ */
+const App = {
+  engine:       null,
+  webcam:       null,
+  currentCat:   'outfits',
+  activeFilter: null,
+  searchQuery:  '',
+  savedLooks:   [],
+  _compareBeforeURL: null,
+  aiSelectedGarment: null,   // { img, label, cat } — última prenda elegida para IA
+  _aiResultUrl:      null,   // URL del resultado de la API
+
+  /* ── INIT ─────────────────────────────────────────────────── */
+  init() {
+    this.engine = new CanvasEngine();
+    this.webcam = new WebcamModule();
+
+    this.engine.init();
+    this.loadSavedLooks();
+    this.renderLibrary('outfits');
+    this.bindEvents();
+    this.setButtonStates(false);
+
+    // Hook AI opcional: carga TensorFlow.js BodyPix en background
+    this._loadBodyPix();
+  },
+
+  /* ── BIND EVENTS ──────────────────────────────────────────── */
+  bindEvents() {
+
+    /* Upload via click / drag-drop */
+    const zone = document.getElementById('upload-zone');
+    const input = document.getElementById('file-input');
+
+    input.addEventListener('change', e => {
+      const f = e.target.files[0];
+      if (f) this._handleFile(f);
+      input.value = '';
+    });
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault(); zone.classList.remove('drag-over');
+      const f = e.dataTransfer.files[0];
+      if (f) this._handleFile(f);
+    });
+
+    /* Webcam */
+    document.getElementById('btn-webcam').addEventListener('click', () => this.openWebcam());
+    document.getElementById('webcam-close').addEventListener('click', () => this.closeWebcam());
+    document.getElementById('btn-switch-cam').addEventListener('click', () => this.webcam.switchCamera());
+    document.getElementById('btn-capture').addEventListener('click', () => this.captureWebcam());
+
+    /* Library tabs */
+    document.getElementById('lib-tabs').addEventListener('click', e => {
+      const tab = e.target.closest('.lib-tab');
+      if (!tab) return;
+      document.querySelectorAll('.lib-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      this.activeFilter = null;
+      this.searchQuery = '';
+      document.getElementById('lib-search').value = '';
+      this.renderLibrary(tab.dataset.cat);
+    });
+
+    /* Search */
+    document.getElementById('lib-search').addEventListener('input', e => {
+      this.searchQuery = e.target.value.toLowerCase().trim();
+      this.renderItems();
+    });
+
+    /* Canvas toolbar */
+    document.getElementById('btn-clear-all').addEventListener('click', () => {
+      if (!confirm('¿Borrar todas las capas?')) return;
+      this.engine.clearOverlays();
+      this.updateLayerPanel();
+    });
+    document.getElementById('btn-reset-photo').addEventListener('click', () => {
+      if (!confirm('¿Cambiar la foto? Se borrarán las capas actuales.')) return;
+      this.engine.clearAll();
+      this.aiSelectedGarment = null;             // ← fix: limpia garment seleccionado
+      document.getElementById('empty-state').classList.remove('hidden');
+      this.setButtonStates(false);
+      this._syncAIBtn();                         // ← fix: sincroniza botones IA
+      this.updateLayerPanel();
+    });
+    document.getElementById('btn-use-model').addEventListener('click', () => {
+      this.loadPhoto('pasarela/_ADL4063.jpg');
+    });
+    document.getElementById('btn-download-tb').addEventListener('click', () => {
+      this.engine.download('cosas-cucas-look.png');
+      this.toast('Look descargado ✓');
+    });
+
+    /* Header actions */
+    document.getElementById('btn-compare').addEventListener('click', () => this.openCompare());
+    document.getElementById('btn-save-look').addEventListener('click', () => this.saveLook());
+    document.getElementById('btn-download').addEventListener('click', () => {
+      this.engine.download('cosas-cucas-look.png');
+      this.toast('Look descargado ✓');
+    });
+
+    /* Layer controls */
+    document.getElementById('ctrl-opacity').addEventListener('input', e => {
+      this.engine.setOpacity(+e.target.value);
+    });
+    document.getElementById('ctrl-scale').addEventListener('input', e => {
+      this.engine.setScale(+e.target.value);
+    });
+    document.getElementById('ctrl-flip').addEventListener('click', () => this.engine.flipActive());
+    document.getElementById('ctrl-front').addEventListener('click', () => this.engine.bringForward());
+    document.getElementById('ctrl-back').addEventListener('click', () => this.engine.sendBackward());
+    document.getElementById('ctrl-delete').addEventListener('click', () => {
+      this.engine.deleteActive();
+      this.updateLayerPanel();
+    });
+
+    /* Blend mode */
+    document.getElementById('blend-select').addEventListener('change', e => {
+      this.engine.setBlend(e.target.value);
+    });
+
+    /* Compare modal close */
+    document.getElementById('compare-close').addEventListener('click', () => {
+      document.getElementById('compare-modal').classList.remove('open');
+    });
+
+    /* Gallery clear */
+    document.getElementById('btn-gallery-clear').addEventListener('click', () => {
+      if (!confirm('¿Borrar todos los looks guardados?')) return;
+      this.savedLooks = [];
+      this._persistLooks();
+      this.renderGallery();
+    });
+
+    /* Close modals clicking backdrop */
+    document.querySelectorAll('.modal-bg').forEach(bg => {
+      bg.addEventListener('click', e => {
+        if (e.target === bg) {
+          bg.classList.remove('open');
+          if (bg.id === 'webcam-modal') this.webcam.stop();
+        }
+      });
+    });
+
+    /* ── IA / PixelAPI ─────────────────────────────────────── */
+    document.getElementById('btn-ai-settings').addEventListener('click', () => this.openAISettings());
+    document.getElementById('btn-ai-tryon').addEventListener('click', () => this.runAITryon());
+    document.getElementById('btn-ai-canvas').addEventListener('click', () => this.runAITryon());
+    document.getElementById('ai-settings-close').addEventListener('click', () => {
+      document.getElementById('ai-settings-modal').classList.remove('open');
+    });
+    document.getElementById('btn-ai-save').addEventListener('click', () => this.saveAPIKey());
+    document.getElementById('btn-ai-test').addEventListener('click', () => this.testAPIKey());
+    document.getElementById('ai-result-close').addEventListener('click', () => {
+      document.getElementById('ai-result-modal').classList.remove('open');
+    });
+    document.getElementById('btn-ai-use-result').addEventListener('click',      () => this.useAIResult());
+    document.getElementById('btn-ai-download-result').addEventListener('click', () => this._downloadAIResult());
+    document.getElementById('btn-ai-save-result').addEventListener('click',     () => this._saveAIResultToGallery());
+  },
+
+  /* ── FILE HANDLING ────────────────────────────────────────── */
+  _handleFile(file) {
+    if (!file.type.startsWith('image/')) { this.toast('Solo se permiten imágenes (JPG, PNG, WebP)'); return; }
+    if (file.size > 15 * 1024 * 1024) { this.toast('La imagen es demasiado grande (máx. 15 MB)'); return; }
+    const reader = new FileReader();
+    reader.onload = e => this.loadPhoto(e.target.result);
+    reader.readAsDataURL(file);
+  },
+
+  loadPhoto(src) {
+    this.showLoading('Cargando foto…');
+    this.engine.clearAll();
+
+    // Redimensiona al vuelo a máx 1200px — evita que imágenes de 3-4MB bloqueen el canvas
+    const tmpImg = new Image();
+    tmpImg.crossOrigin = 'anonymous';
+    tmpImg.onload = () => {
+      const MAX = 1200;
+      let w = tmpImg.naturalWidth  || tmpImg.width;
+      let h = tmpImg.naturalHeight || tmpImg.height;
+      if (w > MAX || h > MAX) {
+        const r = Math.min(MAX / w, MAX / h);
+        w = Math.round(w * r);
+        h = Math.round(h * r);
+      }
+      const tmpCanvas = document.createElement('canvas');
+      tmpCanvas.width = w; tmpCanvas.height = h;
+      tmpCanvas.getContext('2d').drawImage(tmpImg, 0, 0, w, h);
+      const resized = tmpCanvas.toDataURL('image/jpeg', 0.88);
+
+      this.engine.loadPhoto(resized, () => {
+        this.hideLoading();
+        document.getElementById('empty-state').classList.add('hidden');
+        this.setButtonStates(true);
+        this.updateLayerPanel();
+        this._syncAIBtn();
+        this.toast('Foto cargada. Ahora elige prendas →');
+      });
+    };
+    tmpImg.onerror = () => {
+      this.hideLoading();
+      this.toast('No se pudo cargar la imagen');
+    };
+    tmpImg.src = src;
+  },
+
+  /* ── WEBCAM ────────────────────────────────────────────────── */
+  async openWebcam() {
+    if (!navigator.mediaDevices?.getUserMedia) {
+      this.toast('Tu navegador no soporta la cámara'); return;
+    }
+    document.getElementById('webcam-modal').classList.add('open');
+    this.showLoading('Activando cámara…');
+    const ok = await this.webcam.start();
+    this.hideLoading();
+    if (!ok) document.getElementById('webcam-modal').classList.remove('open');
+  },
+  closeWebcam() {
+    this.webcam.stop();
+    document.getElementById('webcam-modal').classList.remove('open');
+  },
+  captureWebcam() {
+    const dataURL = this.webcam.capture();
+    this.closeWebcam();
+    this.loadPhoto(dataURL);
+  },
+
+  /* ── LIBRARY ──────────────────────────────────────────────── */
+  renderLibrary(cat) {
+    this.currentCat = cat;
+    this.activeFilter = null;
+
+    // Filtros
+    const chips = FILTERS[cat] || [];
+    const fEl = document.getElementById('lib-filters');
+    fEl.innerHTML = chips.map(c =>
+      `<span class="filter-chip" data-filter="${c}">${c}</span>`
+    ).join('');
+    fEl.querySelectorAll('.filter-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const f = chip.dataset.filter;
+        this.activeFilter = this.activeFilter === f ? null : f;
+        fEl.querySelectorAll('.filter-chip').forEach(c =>
+          c.classList.toggle('active', c.dataset.filter === this.activeFilter)
+        );
+        this.renderItems();
+      });
+    });
+
+    this.renderItems();
+  },
+
+  renderItems() {
+    const items = CATALOG[this.currentCat] || [];
+    const q = this.searchQuery;
+    const f = this.activeFilter;
+
+    const filtered = items.filter(item => {
+      const matchSearch = !q || item.label.toLowerCase().includes(q) ||
+        (item.tags && item.tags.some(t => t.includes(q)));
+      const matchFilter = !f || (item.tags && item.tags.includes(f));
+      return matchSearch && matchFilter;
+    });
+
+    const grid = document.getElementById('lib-grid');
+    if (filtered.length === 0) {
+      grid.innerHTML = '<p style="grid-column:1/-1;font-size:.75rem;color:var(--muted);text-align:center;padding:20px 0;font-style:italic;">Sin resultados</p>';
+      return;
+    }
+
+    grid.innerHTML = filtered.map(item => `
+      <div class="lib-item" data-id="${item.id}" data-cat="${this.currentCat}" title="${item.label}">
+        <img src="${item.img}" alt="${item.label}" loading="lazy" />
+        <span class="lib-item-label">${item.label}</span>
+        ${item.badge ? `<span class="lib-item-badge">${item.badge}</span>` : ''}
+      </div>
+    `).join('');
+
+    grid.querySelectorAll('.lib-item').forEach(el => {
+      el.addEventListener('click', () => {
+        const cat = el.dataset.cat;
+        const item = CATALOG[cat].find(i => i.id === el.dataset.id);
+        if (item) this.applyItem(item, cat);
+      });
+    });
+  },
+
+  /* ── APPLY ITEM ───────────────────────────────────────────── */
+  applyItem(item, cat) {
+    if (!this.engine.hasPhoto) {
+      this.toast('Primero sube tu foto o usa el modelo de referencia');
+      // Resalta el botón modelo
+      const btn = document.getElementById('btn-use-model');
+      btn.style.border = '2px solid var(--gold)';
+      btn.style.color  = 'var(--gold)';
+      setTimeout(() => { btn.style.border = ''; btn.style.color = ''; }, 1500);
+      return;
+    }
+    this.engine.addOverlay(item.img, item.label, cat);
+    document.getElementById('blend-select').value =
+      (cat === 'outfits') ? 'multiply' : 'normal';
+    // Guarda como prenda candidata para IA
+    this.aiSelectedGarment = { img: item.img, label: item.label, cat };
+    this._syncAIBtn();
+    this.toast(`"${item.label}" añadida`);
+  },
+
+  /* ── LAYER PANEL ──────────────────────────────────────────── */
+  onSelectLayer() {
+    const obj = this.engine.getActive();
+    if (!obj) return;
+    document.getElementById('layer-controls').classList.add('visible');
+    document.getElementById('ctrl-opacity').value = Math.round(obj.opacity * 100);
+    document.getElementById('ctrl-scale').value = 100;
+    obj._ccBaseScaleX = obj.scaleX;
+    obj._ccBaseScaleY = obj.scaleY;
+    // sync blend
+    const blend = obj.globalCompositeOperation || 'source-over';
+    document.getElementById('blend-select').value =
+      blend === 'source-over' ? 'normal' : blend;
+    this.updateLayerPanel();
+  },
+  onDeselectLayer() {
+    document.getElementById('layer-controls').classList.remove('visible');
+  },
+  syncLayers() { this.updateLayerPanel(); },
+
+  updateLayerPanel() {
+    const list = document.getElementById('layers-list');
+    const layers = this.engine.getAllLayers();
+    const active = this.engine.getActive();
+
+    if (layers.length === 0) {
+      list.innerHTML = '<p style="font-size:.72rem;color:var(--muted);font-style:italic;">Añade prendas desde la biblioteca →</p>';
+      return;
+    }
+
+    list.innerHTML = [...layers].reverse().map((l, _) => `
+      <div class="layer-item ${active === l.obj ? 'selected' : ''}">
+        <img class="layer-thumb" src="${l.thumb}" alt="${l.label}"
+          onerror="this.style.background='var(--bg-alt)'" />
+        <span class="layer-name">${l.label}</span>
+        <button class="layer-delete" data-label="${l.label}" title="Eliminar capa">✕</button>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('.layer-item').forEach((el, idx) => {
+      const realIdx = layers.length - 1 - idx;
+      el.addEventListener('click', e => {
+        if (e.target.classList.contains('layer-delete')) return;
+        this.engine.fc.setActiveObject(layers[realIdx].obj);
+        this.engine.fc.renderAll();
+        this.onSelectLayer();
+      });
+    });
+    list.querySelectorAll('.layer-delete').forEach((btn, idx) => {
+      const realIdx = layers.length - 1 - idx;
+      btn.addEventListener('click', () => {
+        this.engine.fc.remove(layers[realIdx].obj);
+        this.engine.fc.discardActiveObject();
+        this.engine.fc.renderAll();
+        this.updateLayerPanel();
+      });
+    });
+  },
+
+  /* ── COMPARE ──────────────────────────────────────────────── */
+  openCompare() {
+    if (!this.engine.hasPhoto) { this.toast('Primero carga una foto'); return; }
+    const before = this.engine.bgDataURL;
+    const after  = this.engine.toDataURL();
+    document.getElementById('compare-before').src = before || after;
+    document.getElementById('compare-after').src  = after;
+    document.getElementById('compare-modal').classList.add('open');
+  },
+
+  /* ── SAVE LOOK ────────────────────────────────────────────── */
+  saveLook() {
+    if (!this.engine.hasPhoto) { this.toast('Primero carga una foto'); return; }
+    const dataURL = this.engine.toDataURL();
+    const look = { id: Date.now(), img: dataURL, date: new Date().toLocaleDateString('es-ES') };
+    this.savedLooks.unshift(look);
+    if (this.savedLooks.length > 20) this.savedLooks.pop(); // máx 20 looks
+    this._persistLooks();
+    this.renderGallery();
+    this.toast('Look guardado en tu galería ✓');
+  },
+
+  _persistLooks() {
+    try {
+      // Solo guardamos las miniaturas (max 10 para no saturar localStorage)
+      const toSave = this.savedLooks.slice(0, 10);
+      localStorage.setItem('cc-probador-looks', JSON.stringify(toSave));
+    } catch(e) { /* quota exceeded */ }
+  },
+
+  loadSavedLooks() {
+    try {
+      const raw = localStorage.getItem('cc-probador-looks');
+      this.savedLooks = raw ? JSON.parse(raw) : [];
+    } catch(e) { this.savedLooks = []; }
+    this.renderGallery();
+  },
+
+  renderGallery() {
+    const grid = document.getElementById('gallery-grid');
+    const empty = document.getElementById('gallery-empty');
+    if (this.savedLooks.length === 0) {
+      grid.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+    grid.innerHTML = this.savedLooks.map(look => `
+      <div class="gallery-thumb" data-id="${look.id}">
+        <img src="${look.img}" alt="Look guardado" />
+        <span class="gallery-thumb-del" title="Eliminar">✕</span>
+        <span style="position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:.5rem;color:rgba(255,255,255,.7)">${look.date}</span>
+      </div>
+    `).join('');
+
+    grid.querySelectorAll('.gallery-thumb').forEach(el => {
+      const id = +el.dataset.id;
+      el.addEventListener('click', e => {
+        if (e.target.classList.contains('gallery-thumb-del')) {
+          this.savedLooks = this.savedLooks.filter(l => l.id !== id);
+          this._persistLooks();
+          this.renderGallery();
+          return;
+        }
+        // Click en miniatura → descargar
+        const look = this.savedLooks.find(l => l.id === id);
+        if (look) {
+          const a = document.createElement('a');
+          a.href = look.img; a.download = `cosas-cucas-look-${id}.jpg`; a.click();
+        }
+      });
+    });
+  },
+
+  /* ── UI HELPERS ───────────────────────────────────────────── */
+  setButtonStates(hasPhoto) {
+    ['btn-compare','btn-save-look','btn-download',
+     'btn-clear-all','btn-reset-photo','btn-download-tb'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.disabled = !hasPhoto;
+    });
+  },
+
+  toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(this._toastTimer);
+    this._toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+  },
+
+  showLoading(msg) {
+    document.querySelector('#loading .loading-text').textContent = msg || 'Cargando…';
+    document.getElementById('loading').classList.add('visible');
+  },
+  hideLoading() {
+    document.getElementById('loading').classList.remove('visible');
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     IA — PixelAPI Virtual Try-On
+  ══════════════════════════════════════════════════════════ */
+
+  /* Sincroniza el estado activo/inactivo de los botones IA */
+  _syncAIBtn() {
+    const ready = this.engine.hasPhoto && !!this.aiSelectedGarment;
+    ['btn-ai-tryon', 'btn-ai-canvas'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.disabled = !ready;
+      el.classList.toggle('ai-ready', ready);
+      el.classList.toggle('ai-active', ready); // hdr button glow
+    });
+    // Actualiza el preview de prenda en el modal de settings (si está abierto)
+    this._updateAIGarmentPreview();
+  },
+
+  _updateAIGarmentPreview() {
+    const wrap = document.getElementById('ai-garment-preview');
+    if (!wrap) return;
+    if (!this.aiSelectedGarment) {
+      wrap.innerHTML = '<p style="font-size:.76rem;color:var(--muted);font-style:italic;">Ninguna prenda seleccionada. Elige una de la biblioteca.</p>';
+      return;
+    }
+    const g = this.aiSelectedGarment;
+    const catLabel = { outfits: 'Outfit completo', telas: 'Tela / tejido', aderezos: 'Aderezo', ss: 'Semana Santa' }[g.cat] || g.cat;
+    wrap.innerHTML = `
+      <div class="ai-garment-info">
+        <img class="ai-garment-thumb" src="${g.img}" alt="${g.label}" onerror="this.style.opacity='.3'" />
+        <div>
+          <div class="ai-garment-name">${g.label}</div>
+          <div class="ai-garment-cat">${catLabel}</div>
+        </div>
+      </div>`;
+  },
+
+  openAISettings() {
+    const modal = document.getElementById('ai-settings-modal');
+    // Rellena la key local si existe
+    document.getElementById('ai-key-input').value = localStorage.getItem('pixelapi_key') || '';
+    // Auto-detecta categoría según la prenda
+    if (this.aiSelectedGarment) {
+      document.getElementById('ai-category').value =
+        this.aiSelectedGarment.cat === 'aderezos' ? 'upper_body' : 'full_body';
+    }
+    // Oculta status anterior
+    document.getElementById('ai-key-status').style.display = 'none';
+    this._updateAIGarmentPreview();
+    modal.classList.add('open');
+    // Consulta estado del servidor
+    const srvStatus = document.getElementById('ai-server-status');
+    fetch('/api/try-on-status')
+      .then(r => r.json())
+      .then(d => {
+        srvStatus.style.display = 'block';
+        srvStatus.textContent   = d.configured
+          ? '✓ PIXELAPI_KEY configurada en el servidor'
+          : '✗ PIXELAPI_KEY no detectada en el servidor — usa la Opción B o reinicia con la variable de entorno.';
+        srvStatus.className = 'ai-status ' + (d.configured ? 'ok' : 'err');
+      })
+      .catch(() => {
+        srvStatus.style.display = 'block';
+        srvStatus.textContent   = '⚠ No se pudo consultar el estado del servidor';
+        srvStatus.className     = 'ai-status';
+      });
+  },
+
+  saveAPIKey() {
+    const key = document.getElementById('ai-key-input').value.trim();
+    if (!key) { this._showAIStatus('Introduce una API key válida', 'err'); return; }
+    localStorage.setItem('pixelapi_key', key);
+    this._showAIStatus('✓ API key guardada correctamente', 'ok');
+    setTimeout(() => document.getElementById('ai-settings-modal').classList.remove('open'), 1100);
+  },
+
+  async testAPIKey() {
+    const key = document.getElementById('ai-key-input').value.trim();
+    if (!key) { this._showAIStatus('Introduce una API key primero', 'err'); return; }
+    this._showAIStatus('Verificando conexión…', '');
+    try {
+      const res = await fetch('https://api.pixelapi.dev/v1/virtual-tryon', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ person_image: 'ping', garment_image: 'ping', category: 'full_body' }),
+      });
+      if (res.status === 401 || res.status === 403) {
+        this._showAIStatus('✕ API key inválida o sin permisos', 'err');
+      } else {
+        // 400/422 = clave ok, parámetros de prueba inválidos — eso es correcto
+        this._showAIStatus('✓ API key válida — conexión establecida', 'ok');
+      }
+    } catch (e) {
+      this._showAIStatus('Error de red: ' + e.message, 'err');
+    }
+  },
+
+  _showAIStatus(msg, type) {
+    const el = document.getElementById('ai-key-status');
+    el.style.display = 'block';
+    el.textContent   = msg;
+    el.className     = 'ai-status' + (type ? ' ' + type : '');
+  },
+
+  async runAITryon() {
+    if (!this.engine.hasPhoto) {
+      this.toast('Primero sube tu foto o usa el modelo de referencia');
+      return;
+    }
+    if (!this.aiSelectedGarment) {
+      this.toast('Selecciona una prenda de la biblioteca primero');
+      return;
+    }
+
+    const category = document.getElementById('ai-category')?.value || 'full_body';
+    this.showLoading('✦ Generando prueba virtual con IA…');
+
+    try {
+      // 1. Foto de la persona → Blob (usa el fondo sin overlays)
+      const personDataURL = this.engine.bgDataURL || this.engine.toDataURL();
+      const personBlob    = await fetch(personDataURL).then(r => r.blob());
+
+      // 2. Prenda seleccionada → Blob (fetch del archivo local)
+      const garmentBlob = await fetch(this.aiSelectedGarment.img).then(r => r.blob());
+
+      // 3. FormData — mismo esquema que el componente React
+      const form = new FormData();
+      form.append('person_image',  personBlob,  'person.jpg');
+      form.append('garment_image', garmentBlob, this.aiSelectedGarment.img.split('/').pop());
+      form.append('category', category);
+
+      // 4. Headers opcionales: X-Api-Key si hay clave en localStorage
+      const headers = {};
+      const localKey = localStorage.getItem('pixelapi_key');
+      if (localKey) headers['X-Api-Key'] = localKey;
+
+      // 5. POST a nuestro servidor proxy → /api/try-on
+      const res  = await fetch('/api/try-on', { method: 'POST', headers, body: form });
+      const data = await res.json();
+      this.hideLoading();
+
+      if (!res.ok) throw new Error(data.error || `Error ${res.status}`);
+
+      // output_url es el campo que devuelve PixelAPI según el patrón del componente React
+      const url = data.output_url || data.output_image || data.result_url || data.url || data.result;
+      if (url) {
+        this._aiResultUrl = url;
+        this.showAIResult(url);
+      } else {
+        this.toast('Respuesta inesperada de la API — revisa la consola');
+        console.warn('[/api/try-on] respuesta:', data);
+      }
+    } catch (err) {
+      this.hideLoading();
+      this.toast('Error: ' + err.message);
+      console.error('[/api/try-on]', err);
+    }
+  },
+
+  showAIResult(url) {
+    document.getElementById('ai-result-img').src = url;
+    document.getElementById('ai-result-modal').classList.add('open');
+  },
+
+  useAIResult() {
+    if (!this._aiResultUrl) return;
+    document.getElementById('ai-result-modal').classList.remove('open');
+    this.loadPhoto(this._aiResultUrl);
+    this.toast('Resultado IA cargado como nueva foto ✓');
+  },
+
+  _downloadAIResult() {
+    if (!this._aiResultUrl) return;
+    const a = document.createElement('a');
+    a.href     = this._aiResultUrl;
+    a.download = 'cosas-cucas-ia-' + Date.now() + '.jpg';
+    a.click();
+    this.toast('Descargando resultado IA…');
+  },
+
+  _saveAIResultToGallery() {
+    if (!this._aiResultUrl) return;
+    const look = {
+      id: Date.now(),
+      img: this._aiResultUrl,
+      date: new Date().toLocaleDateString('es-ES') + ' · IA',
+    };
+    this.savedLooks.unshift(look);
+    if (this.savedLooks.length > 20) this.savedLooks.pop();
+    this._persistLooks();
+    this.renderGallery();
+    this.toast('Look IA guardado en galería ✓');
+    document.getElementById('ai-result-modal').classList.remove('open');
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     AI HOOK — TensorFlow.js BodyPix (carga silenciosa)
+     Punto de integración para segmentación corporal futura.
+     Cuando bodyPix esté disponible:
+       App.bodyPixNet.segmentPerson(imageElement) → mask
+     La mask puede usarse para recortar la silueta de la usuaria
+     y aplicar las prendas SOLO sobre el cuerpo (no el fondo).
+  ══════════════════════════════════════════════════════════ */
+  bodyPixNet: null,
+  _loadBodyPix() {
+    // Desactivado — TF.js pesa 30MB+ y ralentiza la carga.
+    // La segmentación corporal se gestiona ahora vía PixelAPI (server-side).
+    // TODO Fase 2: reactivar si se implementa segmentación local offline.
+  },
+};
+
+/* ══════════════════════════════════════════════════════════════
+   ARRANQUE
+══════════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  App.init();
+});
+</script>
+
+</body>
+</html>
