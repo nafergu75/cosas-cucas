@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Política de Privacidad · Cosas Cucas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #b5903a;
+      --gold-light: #d4a843;
+      --bg: #fdfaf3;
+      --bg-dark: #1a1714;
+      --text: #2c2a27;
+      --text-muted: #6b6560;
+      --border: rgba(44,42,39,0.12);
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+    }
+    /* ── Header ── */
+    .site-header {
+      background: var(--bg-dark);
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(181,144,58,0.2);
+    }
+    .site-header .inner {
+      max-width: 860px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-name {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 1.4rem; color: #fdfaf3; letter-spacing: 0.01em;
+    }
+    .brand-since {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em;
+      color: var(--gold); text-transform: uppercase; display: block; margin-top: 1px;
+    }
+    .back-link {
+      font-size: 0.78rem; color: rgba(253,250,243,0.5);
+      text-decoration: none; letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--gold-light); }
+    /* ── Main ── */
+    main { max-width: 860px; margin: 0 auto; padding: 56px 24px 80px; }
+    .page-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700; color: var(--text); margin-bottom: 8px;
+    }
+    .page-updated {
+      font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em;
+      margin-bottom: 40px; padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .responsible-box {
+      background: #f5f0e8; border-left: 3px solid var(--gold);
+      padding: 20px 24px; border-radius: 2px;
+      margin-bottom: 40px;
+    }
+    .responsible-box h2 {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
+    }
+    .responsible-box table { border-collapse: collapse; width: 100%; }
+    .responsible-box td { padding: 3px 0; font-size: 0.88rem; color: var(--text-muted); vertical-align: top; }
+    .responsible-box td:first-child { font-weight: 600; color: var(--text); min-width: 160px; padding-right: 16px; }
+    section { margin-bottom: 36px; }
+    h2 {
+      font-family: var(--font-display); font-size: 1.15rem;
+      font-weight: 700; color: var(--text); margin-bottom: 12px;
+      padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    }
+    p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px; }
+    ul, ol { font-size: 0.9rem; color: var(--text-muted); padding-left: 20px; margin-bottom: 12px; }
+    li { margin-bottom: 6px; }
+    strong { color: var(--text); font-weight: 600; }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .rights-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+      gap: 12px; margin: 16px 0;
+    }
+    .right-card {
+      border: 1px solid var(--border); border-radius: 4px;
+      padding: 14px 16px;
+    }
+    .right-card strong { font-size: 0.82rem; display: block; margin-bottom: 4px; }
+    .right-card span { font-size: 0.8rem; color: var(--text-muted); }
+    /* ── Footer ── */
+    .site-footer {
+      background: var(--bg-dark); padding: 28px 24px;
+      text-align: center;
+    }
+    .site-footer p { font-size: 0.75rem; color: rgba(253,250,243,0.3); margin: 0; }
+    .site-footer a { color: rgba(181,144,58,0.7); }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="index.html">
+      <span>
+        <span class="brand-name">Cosas Cucas</span>
+        <span class="brand-since">Desde 1982</span>
+      </span>
+    </a>
+    <a class="back-link" href="index.html">← Volver a la web</a>
+  </div>
+</header>
+
+<main>
+  <h1 class="page-title">Política de Privacidad</h1>
+  <p class="page-updated">Última actualización: mayo de 2025</p>
+
+  <div class="responsible-box">
+    <h2>Responsable del tratamiento</h2>
+    <table>
+      <tr><td>Empresa</td><td>Confecciones Hermanas Sáez SL</td></tr>
+      <tr><td>CIF</td><td>B98940232</td></tr>
+      <tr><td>Domicilio social</td><td>C/ Grabador Esteve 30, 46004 Valencia (España)</td></tr>
+      <tr><td>Email</td><td><a href="mailto:info@cosascucas.es">info@cosascucas.es</a></td></tr>
+      <tr><td>Teléfono</td><td>963 511 556</td></tr>
+      <tr><td>Nombre comercial</td><td>Cosas Cucas</td></tr>
+    </table>
+  </div>
+
+  <section>
+    <h2>1. ¿Qué datos personales recogemos?</h2>
+    <p>Recogemos únicamente los datos que usted nos facilita voluntariamente a través de:</p>
+    <ul>
+      <li><strong>Formulario de contacto:</strong> nombre, dirección de correo electrónico, número de teléfono (opcional) y el contenido de su mensaje.</li>
+      <li><strong>Suscripción al boletín:</strong> dirección de correo electrónico.</li>
+      <li><strong>Comunicaciones directas</strong> por email, teléfono o WhatsApp: los datos que nos aporte en esas conversaciones.</li>
+    </ul>
+    <p>No recogemos datos de categorías especiales (datos de salud, ideología, etc.) ni datos de menores de 14 años sin consentimiento parental.</p>
+  </section>
+
+  <section>
+    <h2>2. ¿Para qué usamos sus datos?</h2>
+    <ul>
+      <li>Responder a sus consultas y peticiones de información.</li>
+      <li>Gestionar solicitudes de cita previa y presupuestos de confección.</li>
+      <li>Enviar el boletín de novedades si usted se ha suscrito expresamente.</li>
+      <li>Cumplir con las obligaciones legales y fiscales que correspondan.</li>
+    </ul>
+    <p>No usaremos sus datos para ninguna finalidad distinta a las indicadas sin informarle previamente.</p>
+  </section>
+
+  <section>
+    <h2>3. Base jurídica del tratamiento</h2>
+    <ul>
+      <li><strong>Consentimiento:</strong> formulario de contacto y suscripción al boletín.</li>
+      <li><strong>Ejecución de un contrato:</strong> gestión de encargos de confección.</li>
+      <li><strong>Obligación legal:</strong> facturación y obligaciones fiscales.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>4. ¿Con quién compartimos sus datos?</h2>
+    <p>No cedemos sus datos personales a terceros con fines comerciales. Podemos compartirlos con proveedores de servicios técnicos (alojamiento web, correo electrónico) que actúan como encargados del tratamiento y están obligados a cumplir el RGPD. Únicamente revelaremos datos cuando lo exija una obligación legal.</p>
+  </section>
+
+  <section>
+    <h2>5. ¿Durante cuánto tiempo conservamos sus datos?</h2>
+    <ul>
+      <li>Datos de contacto y consultas: hasta que se resuelva la solicitud y, si hay relación comercial, durante los plazos exigidos por la normativa fiscal (generalmente 5 años).</li>
+      <li>Boletín: hasta que cancele su suscripción.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>6. Sus derechos</h2>
+    <p>En virtud del Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), usted tiene derecho a:</p>
+    <div class="rights-grid">
+      <div class="right-card"><strong>Acceso</strong><span>Conocer qué datos suyos tratamos.</span></div>
+      <div class="right-card"><strong>Rectificación</strong><span>Corregir datos inexactos o incompletos.</span></div>
+      <div class="right-card"><strong>Supresión</strong><span>Solicitar la eliminación de sus datos.</span></div>
+      <div class="right-card"><strong>Oposición</strong><span>Oponerse a determinados tratamientos.</span></div>
+      <div class="right-card"><strong>Limitación</strong><span>Restringir el tratamiento en ciertos casos.</span></div>
+      <div class="right-card"><strong>Portabilidad</strong><span>Recibir sus datos en formato estructurado.</span></div>
+    </div>
+    <p>Puede ejercer estos derechos enviando un correo a <a href="mailto:info@cosascucas.es">info@cosascucas.es</a> o por escrito a C/ Grabador Esteve 30, 46004 Valencia, adjuntando copia de su documento de identidad. Tiene igualmente derecho a presentar una reclamación ante la <strong>Agencia Española de Protección de Datos</strong> (<a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>).</p>
+  </section>
+
+  <section>
+    <h2>7. Cookies y tecnologías de seguimiento</h2>
+    <p>Esta web puede utilizar cookies técnicas estrictamente necesarias para su funcionamiento. No se instalan cookies de seguimiento publicitario sin su consentimiento previo. Para más información consulte nuestra política de cookies.</p>
+  </section>
+
+  <section>
+    <h2>8. Seguridad</h2>
+    <p>Adoptamos medidas técnicas y organizativas adecuadas para proteger sus datos frente a accesos no autorizados, pérdida o destrucción, de conformidad con el artículo 32 del RGPD.</p>
+  </section>
+
+  <section>
+    <h2>9. Cambios en esta política</h2>
+    <p>Podemos actualizar esta política para adaptarla a cambios normativos o en nuestros servicios. La fecha de última actualización siempre aparecerá al inicio del documento. Le recomendamos revisarla periódicamente.</p>
+  </section>
+
+  <section>
+    <h2>10. Contacto</h2>
+    <p>Para cualquier consulta relacionada con el tratamiento de sus datos personales, puede dirigirse a nosotros en:</p>
+    <ul>
+      <li>Email: <a href="mailto:info@cosascucas.es">info@cosascucas.es</a></li>
+      <li>Dirección: C/ Grabador Esteve 30, 46004 Valencia</li>
+      <li>Teléfono: 963 511 556</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Cosas Cucas · Confecciones Hermanas Sáez SL · CIF B98940232 ·
+    <a href="aviso-legal.html">Aviso legal</a>
+  </p>
+</footer>
+
+</body>
+</html>
