@@ -457,6 +457,15 @@
         Motor de IA: <a href="https://huggingface.co/spaces/Kwai-Kolors/Kolors-Virtual-Try-On" target="_blank" rel="noopener">Kolors Virtual Try-On</a> by Kwai·Kolors. Las imágenes se procesan en servidores externos y no se almacenan en nuestros sistemas.
       </p>
     </div>
+
+    <!-- Accesorios Panel -->
+    <div class="guide-fabrics" id="accessories-panel" style="display:none;">
+      <span class="fabrics-label">Aderezos y Complementos</span>
+      <p class="fabrics-desc">Haz clic en un aderezo para colocarlo sobre el resultado. Arrástralo, usa la rueda para cambiar tamaño y clic derecho para quitarlo.</p>
+      <div class="fabrics-grid" id="accessories-grid">
+        <!-- Las imágenes se cargarán aquí por JS -->
+      </div>
+    </div>
   </aside>
 
   <!-- Área principal (Derecha) -->
@@ -489,7 +498,12 @@
           <h3>Tela Elegida</h3>
         </div>
         <div class="ws-card-body">
-          <div class="fabric-drop-area" id="drop-fabric">
+          <div class="category-selector" style="margin-bottom: 12px; display: flex; gap: 10px; font-size: 0.75rem; color: var(--muted); border: 1px solid var(--border); padding: 8px; border-radius: var(--radius); background: var(--bg);">
+            <label style="cursor:pointer;"><input type="radio" name="category" value="lowerbody" checked> Falda</label>
+            <label style="cursor:pointer;"><input type="radio" name="category" value="upperbody"> Corpiño</label>
+            <label style="cursor:pointer;"><input type="radio" name="category" value="dress"> Vestido</label>
+          </div>
+          <div class="fabric-drop-area" id="drop-fabric" style="aspect-ratio: 1/1;">
             <span class="drop-msg" id="fabric-msg">Ninguna tela seleccionada.<br><br>Haz clic en una de la galería (a la izquierda).</span>
             <img id="preview-fabric" style="display:none;" alt="Preview Tela">
           </div>
@@ -511,6 +525,13 @@
         <span style="font-size: .8rem; color: var(--muted);">Tejiendo el traje virtual con Inteligencia Artificial... (puede tardar un poco)</span>
       </div>
       <img id="result-image" style="display:none;" alt="Resultado Probador">
+      <div id="stickers-container" style="position: absolute; inset: 0; pointer-events: none; overflow: hidden;"></div>
+      
+      <!-- Action panel overlaid -->
+      <div id="result-actions" style="position: absolute; bottom: 20px; display: none; z-index: 10; width: 100%; gap: 10px; justify-content: center; flex-wrap: wrap;">
+        <button id="btn-apply-base" class="btn-primary" style="padding: 10px 20px; font-size: 0.7rem; box-shadow: var(--shadow);">Seguir Editando</button>
+        <button id="btn-download" class="btn-primary" style="padding: 10px 20px; font-size: 0.7rem; box-shadow: var(--shadow); background: var(--bg-dark);">Descargar Imagen</button>
+      </div>
     </div>
   </div>
 </main>
@@ -614,13 +635,18 @@
       // 3. Convertir foto de persona a base64
       const personBase64 = await toBase64(selectedPersonFile);
 
+      // Obtener categoría seleccionada
+      const categoryRadio = document.querySelector('input[name="category"]:checked');
+      const category = categoryRadio ? categoryRadio.value : 'dress';
+
       // 4. Llamada segura al backend de Node (enviando JSON)
       const apiRes = await fetch('/api/try-on', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           person_image: personBase64,
-          garment_image: garmentBase64
+          garment_image: garmentBase64,
+          category: category
         })
       });
 
@@ -638,18 +664,24 @@
       if (data.job_id) {
         let status = data.status;
         let jobData = data;
-        
+        let retries = 0;
+        const MAX_RETRIES = 60; // máx. 2,5 min
+        const loadingMsg = resultLoading.querySelector('span');
+
         // Bucle de comprobación (polling) cada 2.5 segundos
         while (status === 'queued' || status === 'processing' || status === 'in_progress') {
+          if (retries >= MAX_RETRIES) throw new Error('El tiempo de espera máximo se ha superado. Inténtalo de nuevo.');
           await new Promise(r => setTimeout(r, 2500));
-          
+          retries++;
+          if (loadingMsg) loadingMsg.textContent = `Procesando con IA... (${Math.round(retries * 2.5)}s)`;
+
           const pollRes = await fetch(`/api/try-on/jobs/${data.job_id}`);
           jobData = await pollRes.json();
-          
+
           if (!pollRes.ok) throw new Error(jobData.error || jobData.detail || 'Error en el servidor al consultar estado.');
-          
+
           status = jobData.status;
-          
+
           if (status === 'failed' || status === 'error') {
             throw new Error('La Inteligencia Artificial no pudo procesar esta imagen. Intenta con otra foto.');
           }
@@ -669,9 +701,12 @@
       // Mostrar el resultado final
       resultImage.src = finalUrl;
       resultImage.style.display = 'block';
+      const ra = document.getElementById('result-actions');
+      ra.style.display = 'flex';
+      document.getElementById('accessories-panel').style.display = 'block';
 
     } catch (err) {
-      alert('⚠️ Hubo un error al generar la prueba:\\n\\n' + err.message);
+      alert('⚠️ Hubo un error al generar la prueba:\n\n' + err.message);
       resultPlaceholder.style.display = 'flex';
     } finally {
       // Restaurar estado
@@ -680,6 +715,139 @@
       resultLoading.style.display = 'none';
     }
   });
+
+  // ── Lógica para Usar Foto Resultante como Nueva Foto Base (Multicapa)
+  const btnApplyBase = document.getElementById('btn-apply-base');
+  btnApplyBase.addEventListener('click', async () => {
+    try {
+      btnApplyBase.textContent = 'Aplicando...';
+      const res = await fetch(resultImage.src);
+      const blob = await res.blob();
+      
+      // Asignamos la nueva imagen como la foto principal del cliente
+      selectedPersonFile = new File([blob], "base_iterada.jpg", { type: "image/jpeg" });
+      previewPerson.src = URL.createObjectURL(selectedPersonFile);
+      previewPerson.style.display = 'block';
+      document.querySelector('#drop-person .drop-msg').style.display = 'none';
+      
+      // Limpiamos el panel de resultados para la siguiente prenda
+      resultImage.style.display = 'none';
+      document.getElementById('result-actions').style.display = 'none';
+      resultPlaceholder.style.display = 'flex';
+      document.getElementById('stickers-container').innerHTML = ''; // Limpiar complementos
+      
+      checkReady();
+      btnApplyBase.textContent = 'Usar como Foto Base (Seguir Editando)';
+      alert('✅ La foto generada ahora es tu "Foto Base".\n\nPuedes seleccionar OTRA prenda (ej: Corpiño) y OTRA tela, y darle a Generar de nuevo.');
+    } catch(err) {
+      alert('Error al aplicar la foto base: ' + err.message);
+      btnApplyBase.textContent = 'Usar como Foto Base (Seguir Editando)';
+    }
+  });
+
+  // ── Botón Descargar
+  document.getElementById('btn-download').addEventListener('click', () => {
+    const a = document.createElement('a');
+    a.href = resultImage.src;
+    a.download = 'probador-cosas-cucas.jpg';
+    a.click();
+  });
+
+  // ── Aderezos y Complementos (imágenes reales desde /aderezos/)
+  const accGrid = document.getElementById('accessories-grid');
+  const stickersContainer = document.getElementById('stickers-container');
+
+  fetch('/api/aderezos').then(r => r.json()).then(aderezos => {
+    if (!aderezos || aderezos.error || aderezos.length === 0) return;
+    aderezos.forEach(file => {
+      const url = '/aderezos/' + file;
+      const a = document.createElement('a');
+      a.className = 'fabric-item';
+      a.href = '#';
+      a.title = 'Añadir este aderezo';
+      a.innerHTML = `
+        <img src="${url}" loading="lazy" alt="Aderezo">
+        <div class="fabric-overlay">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </div>
+      `;
+      a.onclick = (e) => {
+        e.preventDefault();
+        addSticker(url);
+      };
+      accGrid.appendChild(a);
+    });
+  }).catch(() => {});
+
+  function addSticker(imageUrl) {
+    stickersContainer.style.pointerEvents = 'auto';
+
+    const div = document.createElement('div');
+    div.style.position = 'absolute';
+    div.style.width = '120px';
+    div.style.left = '50%';
+    div.style.top = '30%';
+    div.style.transform = 'translate(-50%, -50%)';
+    div.style.cursor = 'grab';
+    div.style.userSelect = 'none';
+    div.style.transition = 'box-shadow 0.2s';
+    div.style.borderRadius = '4px';
+    div.style.overflow = 'hidden';
+
+    const img = document.createElement('img');
+    img.src = imageUrl;
+    img.style.width = '100%';
+    img.style.display = 'block';
+    img.style.mixBlendMode = 'multiply'; // elimina fondo blanco visualmente
+    div.appendChild(img);
+
+    let isDragging = false;
+    let initialX, initialY, currentX = 0, currentY = 0;
+    let xOffset = 0, yOffset = 0;
+
+    div.addEventListener('mousedown', (e) => {
+      e.stopPropagation();
+      initialX = e.clientX - xOffset;
+      initialY = e.clientY - yOffset;
+      isDragging = true;
+      div.style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      currentX = e.clientX - initialX;
+      currentY = e.clientY - initialY;
+      xOffset = currentX;
+      yOffset = currentY;
+      div.style.transform = `translate(calc(-50% + ${currentX}px), calc(-50% + ${currentY}px))`;
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+      div.style.cursor = 'grab';
+    });
+
+    let stickerWidth = 120;
+    div.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      stickerWidth = Math.min(Math.max(40, stickerWidth - e.deltaY * 0.3), 400);
+      div.style.width = stickerWidth + 'px';
+    }, { passive: false });
+
+    div.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      div.remove();
+      if (stickersContainer.children.length === 0) stickersContainer.style.pointerEvents = 'none';
+    });
+
+    div.addEventListener('mouseenter', () => div.style.boxShadow = '0 0 0 2px var(--gold)');
+    div.addEventListener('mouseleave', () => div.style.boxShadow = 'none');
+
+    stickersContainer.appendChild(div);
+  }
 </script>
 
 </body>
