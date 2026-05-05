@@ -2156,16 +2156,15 @@
       }
 
       .col-modal.col-modal--mobile-page {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: auto;
+        position: static;
+        inset: auto;
+        z-index: auto;
         height: auto;
         max-height: none;
         min-height: 100vh;
         min-height: 100dvh;
         overflow: visible;
-        align-items: flex-start;
+        display: block;
         background: var(--color-bg);
       }
 
@@ -3846,13 +3845,14 @@ function openCollectionModal(drop) {
   collectionModalScrollY = window.scrollY || document.documentElement.scrollTop || 0;
 
   modal.classList.toggle('col-modal--mobile-page', isMobile);
-  modal.style.top = isMobile ? `${collectionModalScrollY}px` : '';
+  modal.style.top = '';
   modal.classList.add('open');
 
   if (isMobile) {
     if (panel) panel.scrollTop = 0;
-    document.body.style.minHeight = `${collectionModalScrollY + modal.scrollHeight + window.innerHeight}px`;
-    window.scrollTo(0, collectionModalScrollY);
+    requestAnimationFrame(() => {
+      modal.scrollIntoView({ block: 'start', behavior: 'auto' });
+    });
   } else {
     if (panel) panel.scrollTop = 0;
     document.body.style.position = 'fixed';
