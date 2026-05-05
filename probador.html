@@ -301,17 +301,17 @@
     text-transform: uppercase; color: var(--muted);
   }
 
-  /* Fallback si el iframe no carga */
+  /* Fallback / Enlace principal */
   #iframe-fallback {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 20px;
     padding: 40px;
     text-align: center;
+    height: 100%;
   }
-  #iframe-fallback.visible { display: flex; }
   .fallback-icon { font-size: 3rem; opacity: .3; }
   .fallback-title {
     font-family: var(--font-disp); font-size: 1.4rem;
@@ -348,9 +348,8 @@
     .guide-tech { display: none; }
     #iframe-wrap {
       height: calc(100dvh - 52px - 240px);
-      min-height: 480px;
+      min-height: 400px;
     }
-    #tryon-iframe { height: 100%; }
   }
   </style>
 </head>
@@ -445,22 +444,14 @@
     </div>
   </aside>
 
-  <!-- Iframe con la IA -->
+  <!-- Área principal (Derecha) -->
   <div id="iframe-wrap">
-
-    <!-- Spinner de carga -->
-    <div id="iframe-loading">
-      <div class="loading-spinner"></div>
-      <span class="loading-text">Cargando probador…</span>
-    </div>
-
-    <!-- Fallback si el iframe falla -->
     <div id="iframe-fallback">
       <span class="fallback-icon">👗</span>
-      <p class="fallback-title">Abrir en nueva ventana</p>
-      <p class="fallback-sub">El probador no puede mostrarse en este panel por restricciones del navegador. Ábrelo directamente pulsando el botón.</p>
+      <p class="fallback-title">Probador Virtual</p>
+      <p class="fallback-sub">Debido a nuevas restricciones de seguridad de la plataforma de Inteligencia Artificial (Hugging Face), ahora el probador debe abrirse en una ventana nueva segura.</p>
       <a class="btn-fallback"
-         href="https://kwai-kolors-kolors-virtual-try-on.hf.space"
+         href="https://huggingface.co/spaces/Kwai-Kolors/Kolors-Virtual-Try-On"
          target="_blank" rel="noopener">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
           <path d="M2 12L12 2M12 2H6M12 2v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -468,59 +459,10 @@
         Abrir Probador Virtual
       </a>
     </div>
-
-    <iframe
-      id="tryon-iframe"
-      src="https://kwai-kolors-kolors-virtual-try-on.hf.space"
-      allow="camera; microphone; clipboard-write"
-      allowfullscreen
-      title="Probador Virtual — Kolors AI Try-On"
-      loading="lazy"
-    ></iframe>
-
   </div>
 </main>
 
 <script>
-  const iframe  = document.getElementById('tryon-iframe');
-  const loading = document.getElementById('iframe-loading');
-  const fallback = document.getElementById('iframe-fallback');
-
-  /* Oculta el spinner cuando el iframe carga */
-  iframe.addEventListener('load', () => {
-    loading.classList.add('hidden');
-    /* Si el iframe cargó pero devuelve contenido vacío (X-Frame-Options),
-       mostramos el fallback tras un pequeño retraso. */
-    setTimeout(() => {
-      try {
-        const doc = iframe.contentDocument;
-        if (doc && (doc.body === null || doc.body.childElementCount === 0)) {
-          iframe.style.display = 'none';
-          fallback.classList.add('visible');
-        }
-      } catch {
-        /* Cross-origin: el iframe cargó correctamente (CORS impide el acceso,
-           pero eso es normal cuando el contenido existe) */
-        loading.classList.add('hidden');
-      }
-    }, 1200);
-  });
-
-  /* Si el iframe tarda más de 20 s, ofrecemos el fallback */
-  const timeout = setTimeout(() => {
-    loading.classList.add('hidden');
-    iframe.style.display = 'none';
-    fallback.classList.add('visible');
-  }, 20000);
-
-  iframe.addEventListener('load', () => clearTimeout(timeout));
-
-  /* Mensaje de error explícito del iframe */
-  iframe.addEventListener('error', () => {
-    loading.classList.add('hidden');
-    iframe.style.display = 'none';
-    fallback.classList.add('visible');
-  });
 
   /* Cargar telas dinámicamente desde el servidor */
   fetch('/api/telas').then(r => r.json()).then(telas => {
