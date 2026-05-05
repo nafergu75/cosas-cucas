@@ -598,31 +598,72 @@
     resultLoading.style.display = 'flex';
 
     try {
-      // 1. Descargar el blob de la tela seleccionada para poder enviarlo
+      // 1. Helper para convertir Blob/File a Base64
+      const toBase64 = (blob) => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+
+      // 2. Descargar y convertir tela a base64
       const fabricRes = await fetch(selectedFabricUrl);
       const fabricBlob = await fabricRes.blob();
+      const garmentBase64 = await toBase64(fabricBlob);
 
-      // 2. Montar los datos para la API
-      const formData = new FormData();
-      formData.append('person_image', selectedPersonFile);
-      formData.append('garment_image', fabricBlob, 'tela.jpg');
+      // 3. Convertir foto de persona a base64
+      const personBase64 = await toBase64(selectedPersonFile);
 
-      // 3. Llamada segura al backend de Node (que proxy-ea a PixelAPI)
+      // 4. Llamada segura al backend de Node (enviando JSON)
       const apiRes = await fetch('/api/try-on', {
         method: 'POST',
-        body: formData
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          person_image: personBase64,
+          garment_image: garmentBase64
+        })
       });
 
       const data = await apiRes.json();
       
       if (!apiRes.ok) {
-        throw new Error(data.error || 'Fallo en la comunicación con la Inteligencia Artificial.');
+        let errMsg = data.error || 'Fallo en la comunicación con la Inteligencia Artificial.';
+        if (data.detail) errMsg += ' - ' + JSON.stringify(data.detail);
+        throw new Error(errMsg);
       }
 
-      // La API de Try-on normalmente devuelve la imagen generada en un campo url, output o result
-      const finalUrl = data.image_url || data.url || data.output || data.result;
+      let finalUrl = null;
+
+      // 5. PixelAPI es asíncrona y devuelve un job_id
+      if (data.job_id) {
+        let status = data.status;
+        let jobData = data;
+        
+        // Bucle de comprobación (polling) cada 2.5 segundos
+        while (status === 'queued' || status === 'processing' || status === 'in_progress') {
+          await new Promise(r => setTimeout(r, 2500));
+          
+          const pollRes = await fetch(`/api/try-on/jobs/${data.job_id}`);
+          jobData = await pollRes.json();
+          
+          if (!pollRes.ok) throw new Error(jobData.error || jobData.detail || 'Error en el servidor al consultar estado.');
+          
+          status = jobData.status;
+          
+          if (status === 'failed' || status === 'error') {
+            throw new Error('La Inteligencia Artificial no pudo procesar esta imagen. Intenta con otra foto.');
+          }
+        }
+        
+        // Cuando termina, la imagen está en uno de estos campos
+        finalUrl = jobData.image_url || jobData.url || jobData.output || jobData.result;
+      } else {
+        // Por si acaso la API fuera síncrona en el futuro
+        finalUrl = data.image_url || data.url || data.output || data.result;
+      }
+
       if (!finalUrl) {
-        throw new Error('La API respondió con éxito pero no devolvió ninguna URL de imagen.');
+        throw new Error('La API completó el trabajo pero no devolvió ninguna imagen.');
       }
 
       // Mostrar el resultado final
