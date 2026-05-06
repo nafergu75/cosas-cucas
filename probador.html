@@ -3,779 +3,767 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Probador de Telas · Cosas Cucas | Indumentaria Valenciana</title>
+  <title>Probador 3D Fallera · Cosas Cucas</title>
+  <script type="importmap">
+  {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/"}}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <style>
-  :root {
-    --bg:         #F4EDD8;
-    --bg-alt:     #EDE5CE;
-    --bg-dark:    #1A1714;
-    --gold:       #B5903A;
-    --gold-light: #D4B166;
-    --text:       #1A1714;
-    --muted:      #6B5D4F;
-    --border:     #D9CEB4;
-    --white:      #FDFAF3;
-    --font-body:  'Space Grotesk', sans-serif;
-    --font-disp:  'Playfair Display', serif;
-    --radius:     3px;
-  }
-  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-  html, body { height:100%; overflow:hidden; }
-  body {
-    font-family:var(--font-body); background:var(--bg-dark);
-    color:var(--text); -webkit-font-smoothing:antialiased;
-    display:flex; flex-direction:column;
-  }
+  :root{--bg:#F4EDD8;--bg-alt:#EDE5CE;--bg-dark:#1A1714;--gold:#B5903A;--gold-light:#D4B166;--text:#1A1714;--muted:#6B5D4F;--border:#D9CEB4;--white:#FDFAF3;--font-body:'Space Grotesk',sans-serif;--font-disp:'Playfair Display',serif;--r:3px}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden}
+  body{font-family:var(--font-body);background:var(--bg-dark);color:var(--text);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
 
-  /* ── HEADER ────────────────────────────── */
-  #header {
-    display:flex; align-items:center; justify-content:space-between;
-    padding:0 20px; height:52px; flex-shrink:0;
-    background:var(--bg-dark);
-    border-bottom:1px solid rgba(217,206,180,.15); gap:12px;
-  }
-  .hdr-left { display:flex; align-items:center; gap:14px; }
-  .hdr-brand { display:flex; align-items:center; gap:9px; text-decoration:none; }
-  .hdr-brand img { height:30px; width:auto; object-fit:contain; }
-  .hdr-brand-name { font-size:.68rem; font-weight:700; letter-spacing:.18em;
-    text-transform:uppercase; color:var(--gold-light); white-space:nowrap; }
-  .hdr-sep { width:1px; height:22px; background:rgba(217,206,180,.2); }
-  .hdr-title { font-family:var(--font-disp); font-size:.95rem; font-style:italic;
-    color:rgba(253,250,243,.7); white-space:nowrap; }
-  .hdr-badge { font-size:.57rem; font-weight:700; letter-spacing:.14em;
-    text-transform:uppercase; background:var(--gold); color:var(--white);
-    padding:3px 8px; border-radius:2px; }
-  .hdr-back { font-size:.65rem; font-weight:600; letter-spacing:.1em;
-    text-transform:uppercase; color:rgba(253,250,243,.5); text-decoration:none;
-    display:flex; align-items:center; gap:5px; transition:color .2s; white-space:nowrap; }
-  .hdr-back:hover { color:var(--gold-light); }
+  /* HEADER */
+  #hdr{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:52px;flex-shrink:0;background:var(--bg-dark);border-bottom:1px solid rgba(217,206,180,.15);gap:12px}
+  .hl{display:flex;align-items:center;gap:14px}
+  .hb{display:flex;align-items:center;gap:9px;text-decoration:none}
+  .hb img{height:30px;width:auto;object-fit:contain}
+  .hbn{font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-light);white-space:nowrap}
+  .hsp{width:1px;height:22px;background:rgba(217,206,180,.2)}
+  .htt{font-family:var(--font-disp);font-size:.95rem;font-style:italic;color:rgba(253,250,243,.7);white-space:nowrap}
+  .hbg{font-size:.57rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:var(--gold);color:var(--white);padding:3px 8px;border-radius:2px}
+  .hbk{font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(253,250,243,.5);text-decoration:none;display:flex;align-items:center;gap:5px;transition:color .2s;white-space:nowrap}
+  .hbk:hover{color:var(--gold-light)}
 
-  /* ── LAYOUT 3 COLUMNAS ─────────────────── */
-  #main {
-    flex:1; display:grid;
-    grid-template-columns: 192px 1fr 264px;
-    overflow:hidden; min-height:0;
-  }
+  /* MAIN LAYOUT */
+  #main{flex:1;display:grid;grid-template-columns:188px 1fr 260px;overflow:hidden;min-height:0}
 
-  /* ── PANEL IZQUIERDO ───────────────────── */
-  #parts-panel {
-    background:var(--white); border-right:1px solid var(--border);
-    display:flex; flex-direction:column; overflow-y:auto;
-  }
-  .pp-sec { padding:13px 12px 10px; border-bottom:1px solid var(--border); }
-  .pp-sec:last-child { border-bottom:none; padding-bottom:14px; margin-top:auto; }
-  .pp-label {
-    font-size:.56rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
-    color:var(--gold); display:block; margin-bottom:9px;
-  }
+  /* LEFT PANEL */
+  #lp{background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto}
+  .sec{padding:12px 11px 10px;border-bottom:1px solid var(--border)}
+  .sec:last-child{border-bottom:none;padding-bottom:14px;margin-top:auto}
+  .slbl{font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:9px}
 
-  .part-btn {
-    width:100%; display:flex; align-items:flex-start; gap:8px;
-    padding:8px 8px; margin-bottom:4px;
-    background:transparent; border:1px solid transparent;
-    border-radius:var(--radius); cursor:pointer; transition:all .16s; text-align:left;
-    position:relative;
-  }
-  .part-btn:hover { background:var(--bg-alt); border-color:var(--border); }
-  .part-btn.active { background:var(--bg); border-color:var(--gold); }
-  .part-btn.active .pb-name { color:var(--gold); font-weight:700; }
+  .pb{width:100%;display:flex;align-items:flex-start;gap:8px;padding:8px 8px;margin-bottom:4px;background:transparent;border:1px solid transparent;border-radius:var(--r);cursor:pointer;transition:all .16s;text-align:left;position:relative}
+  .pb:hover{background:var(--bg-alt);border-color:var(--border)}
+  .pb.act{background:var(--bg);border-color:var(--gold)}
+  .pb.act .pbn{color:var(--gold);font-weight:700}
+  .pbsw{width:22px;height:22px;border-radius:3px;flex-shrink:0;border:1.5px solid rgba(0,0,0,.12);background-size:cover;background-position:center;background-color:var(--bg-alt);margin-top:1px;transition:all .3s}
+  .pbnum{width:16px;height:16px;border-radius:50%;background:var(--border);color:var(--muted);font-size:.54rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+  .pb.act .pbnum{background:var(--gold);color:#fff}
+  .pbn{font-size:.72rem;font-weight:600;color:var(--text)}
+  .pbd{font-size:.57rem;color:var(--muted);margin-top:1px;line-height:1.3}
+  .pbs{font-size:.59rem;color:var(--gold);font-weight:600;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:118px}
+  .pbc{position:absolute;right:4px;top:50%;transform:translateY(-50%);background:transparent;border:none;cursor:pointer;color:var(--muted);font-size:.73rem;padding:3px 5px;border-radius:2px;transition:color .15s,background .15s;line-height:1}
+  .pbc:hover{color:#c00;background:rgba(200,0,0,.08)}
 
-  .pb-swatch {
-    width:22px; height:22px; border-radius:3px; flex-shrink:0;
-    border:1.5px solid rgba(0,0,0,.12);
-    background-size:cover; background-position:center;
-    margin-top:1px;
-    transition:all .3s;
-  }
-  .pb-swatch.empty { background:var(--bg-alt); }
+  /* toggle row */
+  .tog{display:flex;align-items:center;gap:8px;padding:7px 8px;margin-bottom:4px;border:1px solid var(--border);border-radius:var(--r);cursor:pointer;transition:all .16s}
+  .tog:hover{border-color:var(--gold-light)}
+  .tog.on{border-color:var(--gold);background:var(--bg)}
+  .tpill{width:28px;height:15px;border-radius:8px;background:var(--border);position:relative;flex-shrink:0;transition:background .2s}
+  .tpill::after{content:'';position:absolute;top:1.5px;left:1.5px;width:12px;height:12px;border-radius:50%;background:#fff;transition:transform .2s}
+  .tog.on .tpill{background:var(--gold)}
+  .tog.on .tpill::after{transform:translateX(13px)}
+  .togn{font-size:.69rem;font-weight:600;color:var(--text)}
 
-  .pb-info { flex:1; min-width:0; }
-  .pb-name { font-size:.72rem; font-weight:600; color:var(--text); }
-  .pb-desc { font-size:.58rem; color:var(--muted); margin-top:1px; line-height:1.3; }
-  .pb-sel  { font-size:.6rem; color:var(--gold); font-weight:600; margin-top:2px;
-    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:130px; }
+  /* action buttons */
+  .ab{display:block;width:100%;padding:9px 8px;font-family:var(--font-body);font-size:.61rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-align:center;border-radius:var(--r);cursor:pointer;transition:all .18s;margin-bottom:6px;text-decoration:none}
+  .bg{background:var(--gold);color:var(--white);border:none}.bg:hover{background:var(--gold-light)}
+  .bo{background:transparent;color:var(--text);border:1px solid var(--border)}.bo:hover{border-color:var(--gold);color:var(--gold)}
 
-  .pb-clear {
-    position:absolute; right:4px; top:50%; transform:translateY(-50%);
-    background:transparent; border:none; cursor:pointer;
-    color:var(--muted); font-size:.75rem; padding:3px 5px;
-    border-radius:2px; transition:color .15s, background .15s; line-height:1;
-  }
-  .pb-clear:hover { color:#c00; background:rgba(200,0,0,.08); }
+  /* CENTER: 3D scene */
+  #sw{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0d0b09}
+  #sw canvas{display:block;outline:none}
+  #ld{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#0d0b09;color:rgba(253,250,243,.55);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;z-index:10;pointer-events:none}
+  .sp{width:36px;height:36px;border:3px solid rgba(181,144,58,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  #tip{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:rgba(26,23,20,.82);color:rgba(253,250,243,.85);font-size:.6rem;letter-spacing:.08em;padding:6px 16px;border-radius:20px;pointer-events:none;white-space:nowrap;transition:opacity .5s}
 
-  /* Indicador de número de orden */
-  .layer-num {
-    width:16px; height:16px; border-radius:50%; background:var(--border);
-    color:var(--muted); font-size:.55rem; font-weight:700;
-    display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:3px;
-  }
-  .part-btn.active .layer-num { background:var(--gold); color:white; }
+  /* RIGHT PANEL */
+  #rp{background:var(--white);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+  #rh{padding:12px 13px 9px;border-bottom:1px solid var(--border);flex-shrink:0}
+  .rey{font-size:.56rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:3px}
+  .rtt{font-family:var(--font-disp);font-size:.96rem;font-style:italic}
+  .rsub{font-size:.62rem;color:var(--muted);margin-top:3px}
+  #rpart{font-weight:700;color:var(--gold)}
+  #tg{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:9px;align-content:start}
+  .tc{cursor:pointer;border-radius:var(--r);border:2px solid transparent;overflow:hidden;transition:border-color .15s,transform .13s}
+  .tc:hover{border-color:var(--gold-light);transform:translateY(-1px)}
+  .tc.sel{border-color:var(--gold)}
+  .ti{width:100%;aspect-ratio:1;overflow:hidden;position:relative;background:#ccc}
+  .ti img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .18s}
+  .tc:hover .ti img{transform:scale(1.07)}
+  .tck{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(181,144,58,.4);opacity:0;transition:opacity .15s}
+  .tc.sel .tck{opacity:1}
+  .tn{font-size:.53rem;font-weight:600;color:var(--text);padding:3px 4px 4px;background:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tc.sel .tn{color:var(--gold)}
 
-  /* Compare */
-  .compare-btn {
-    width:100%; padding:8px 10px;
-    background:var(--bg-alt); border:1px solid var(--border);
-    border-radius:var(--radius); cursor:pointer;
-    font-family:var(--font-body); font-size:.62rem; font-weight:600;
-    letter-spacing:.08em; text-transform:uppercase; color:var(--muted);
-    transition:all .16s; user-select:none; margin-bottom:7px;
-  }
-  .compare-btn:hover { border-color:var(--gold); color:var(--text); }
-  .compare-btn.active { background:var(--bg-dark); color:var(--white); border-color:var(--bg-dark); }
-
-  /* Action buttons */
-  .act-btn {
-    display:block; width:100%; padding:9px 8px;
-    font-family:var(--font-body); font-size:.61rem; font-weight:700;
-    letter-spacing:.12em; text-transform:uppercase;
-    text-align:center; border-radius:var(--radius); cursor:pointer;
-    transition:all .18s; margin-bottom:6px; text-decoration:none;
-  }
-  .btn-gold    { background:var(--gold); color:var(--white); border:none; }
-  .btn-gold:hover { background:var(--gold-light); }
-  .btn-outline { background:transparent; color:var(--text); border:1px solid var(--border); }
-  .btn-outline:hover { border-color:var(--gold); color:var(--gold); }
-
-  /* Capas info */
-  .layers-hint {
-    font-size:.58rem; color:var(--muted); line-height:1.55;
-    padding:8px 0 2px; border-top:1px solid var(--border); margin-top:4px;
-  }
-
-  /* ── CANVAS CENTRO ─────────────────────── */
-  #canvas-wrap {
-    position:relative; display:flex; align-items:center; justify-content:center;
-    overflow:hidden; background:#0d0b09;
-  }
-  #canvas {
-    max-height:100%; max-width:100%; display:block;
-    cursor:crosshair; image-rendering:-webkit-optimize-contrast;
-  }
-  #loading {
-    position:absolute; inset:0; display:flex; flex-direction:column;
-    align-items:center; justify-content:center; gap:14px;
-    background:#0d0b09; color:rgba(253,250,243,.55);
-    font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; z-index:10;
-  }
-  .spinner {
-    width:36px; height:36px; border:3px solid rgba(181,144,58,.2);
-    border-top-color:var(--gold); border-radius:50%;
-    animation:spin .8s linear infinite;
-  }
-  @keyframes spin { to { transform:rotate(360deg); } }
-  #fab-spin {
-    position:absolute; top:10px; right:10px; width:26px; height:26px;
-    border:2.5px solid rgba(181,144,58,.25); border-top-color:var(--gold);
-    border-radius:50%; animation:spin .7s linear infinite; display:none; z-index:5;
-  }
-  #tooltip {
-    position:absolute; bottom:14px; left:50%; transform:translateX(-50%);
-    background:rgba(26,23,20,.82); color:rgba(253,250,243,.85);
-    font-size:.6rem; letter-spacing:.08em; padding:6px 16px; border-radius:20px;
-    pointer-events:none; white-space:nowrap; transition:opacity .5s;
-  }
-
-  /* ── PANEL DERECHO ─────────────────────── */
-  #telas-panel {
-    background:var(--white); border-left:1px solid var(--border);
-    display:flex; flex-direction:column; overflow:hidden;
-  }
-  #telas-head { padding:13px 13px 9px; border-bottom:1px solid var(--border); flex-shrink:0; }
-  .tp-ey  { font-size:.56rem; font-weight:700; letter-spacing:.2em;
-    text-transform:uppercase; color:var(--gold); display:block; margin-bottom:3px; }
-  .tp-ttl { font-family:var(--font-disp); font-size:.98rem; font-style:italic; }
-  .tp-sub { font-size:.63rem; color:var(--muted); margin-top:3px; }
-  #tp-part { font-weight:700; color:var(--gold); }
-
-  #telas-grid {
-    flex:1; overflow-y:auto;
-    display:grid; grid-template-columns:repeat(3,1fr);
-    gap:5px; padding:9px; align-content:start;
-  }
-  .tc {
-    cursor:pointer; border-radius:var(--radius);
-    border:2px solid transparent; overflow:hidden;
-    transition:border-color .15s, transform .14s;
-  }
-  .tc:hover { border-color:var(--gold-light); transform:translateY(-1px); }
-  .tc.sel   { border-color:var(--gold); }
-  .tc-img { width:100%; aspect-ratio:1; overflow:hidden; position:relative; background:#ccc; }
-  .tc-img img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .18s; }
-  .tc:hover .tc-img img { transform:scale(1.07); }
-  .tc-chk {
-    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-    background:rgba(181,144,58,.4); opacity:0; transition:opacity .15s;
-  }
-  .tc.sel .tc-chk { opacity:1; }
-  .tc-name { font-size:.54rem; font-weight:600; color:var(--text); padding:3px 4px 4px;
-    background:var(--white); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .tc.sel .tc-name { color:var(--gold); }
-
-  /* ── RESPONSIVE ────────────────────────── */
-  @media (max-width:900px) {
-    html,body { overflow:auto; }
-    #main { grid-template-columns:1fr; overflow:visible; }
-    #parts-panel, #telas-panel { border:none; border-bottom:1px solid var(--border); }
-    #canvas-wrap { height:65vw; min-height:360px; }
-    #telas-grid { grid-template-columns:repeat(4,1fr); }
-  }
+  @media(max-width:900px){html,body{overflow:auto}#main{grid-template-columns:1fr;overflow:visible}#lp,#rp{border:none;border-bottom:1px solid var(--border)}#sw{height:60vw;min-height:340px}#tg{grid-template-columns:repeat(4,1fr)}}
   </style>
 </head>
 <body>
 
-<header id="header">
-  <div class="hdr-left">
-    <a class="hdr-brand" href="/">
-      <img src="logo cosascucas.png" alt="Cosas Cucas">
-      <span class="hdr-brand-name">Cosas Cucas</span>
-    </a>
-    <div class="hdr-sep"></div>
-    <span class="hdr-title">Probador de Telas</span>
-    <span class="hdr-badge">Nuevo</span>
+<header id="hdr">
+  <div class="hl">
+    <a class="hb" href="/"><img src="logo cosascucas.png" alt="Cosas Cucas"><span class="hbn">Cosas Cucas</span></a>
+    <div class="hsp"></div>
+    <span class="htt">Probador 3D Fallera</span>
+    <span class="hbg">3D</span>
   </div>
-  <a class="hdr-back" href="/">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
+  <a class="hbk" href="/">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     Volver a la web
   </a>
 </header>
 
 <main id="main">
 
-  <!-- ══ IZQUIERDA: partes del traje ══ -->
-  <aside id="parts-panel">
-
-    <div class="pp-sec">
-      <span class="pp-label">① Elige la parte</span>
-      <p style="font-size:.59rem;color:var(--muted);margin-bottom:9px;line-height:1.5;">
-        Las capas se aplican por orden de vestido (de interior a exterior).
-      </p>
-
-      <!-- FALDA -->
-      <button class="part-btn active" data-part="falda" onclick="selectPart('falda')">
-        <div class="layer-num">1</div>
-        <div class="pb-swatch empty" id="sw-falda"></div>
-        <div class="pb-info">
-          <div class="pb-name">Falda</div>
-          <div class="pb-desc">Capa exterior, gran vuelo</div>
-          <div class="pb-sel" id="sel-falda"></div>
-        </div>
-        <button class="pb-clear" id="clr-falda" style="display:none"
-          onclick="event.stopPropagation();removePart('falda')" title="Quitar">✕</button>
-      </button>
-
-      <!-- DELANTAL -->
-      <button class="part-btn" data-part="delantal" onclick="selectPart('delantal')">
-        <div class="layer-num">2</div>
-        <div class="pb-swatch empty" id="sw-delantal"></div>
-        <div class="pb-info">
-          <div class="pb-name">Delantal / Faldeta</div>
-          <div class="pb-desc">Panel frontal sobre la falda</div>
-          <div class="pb-sel" id="sel-delantal"></div>
-        </div>
-        <button class="pb-clear" id="clr-delantal" style="display:none"
-          onclick="event.stopPropagation();removePart('delantal')" title="Quitar">✕</button>
-      </button>
-
-      <!-- CORPIÑO -->
-      <button class="part-btn" data-part="corpino" onclick="selectPart('corpino')">
-        <div class="layer-num">3</div>
-        <div class="pb-swatch empty" id="sw-corpino"></div>
-        <div class="pb-info">
-          <div class="pb-name">Corpiño y Mangas</div>
-          <div class="pb-desc">Cuerpo ajustado con manga larga</div>
-          <div class="pb-sel" id="sel-corpino"></div>
-        </div>
-        <button class="pb-clear" id="clr-corpino" style="display:none"
-          onclick="event.stopPropagation();removePart('corpino')" title="Quitar">✕</button>
-      </button>
-
-      <!-- PICO / MANTONCILLO -->
-      <button class="part-btn" data-part="pico" onclick="selectPart('pico')">
-        <div class="layer-num">4</div>
-        <div class="pb-swatch empty" id="sw-pico"></div>
-        <div class="pb-info">
-          <div class="pb-name">Pico / Mantoncillo</div>
-          <div class="pb-desc">Encaje sobre hombros y escote</div>
-          <div class="pb-sel" id="sel-pico"></div>
-        </div>
-        <button class="pb-clear" id="clr-pico" style="display:none"
-          onclick="event.stopPropagation();removePart('pico')" title="Quitar">✕</button>
-      </button>
-
-      <p class="layers-hint">
-        Haz clic en una parte del traje en la foto para seleccionarla directamente.
-      </p>
+  <!-- LEFT: partes del traje -->
+  <aside id="lp">
+    <div class="sec">
+      <span class="slbl">① Parte del traje</span>
+      <button class="pb act" data-p="falda"   onclick="selPart('falda')">  <div class="pbnum">1</div><div class="pbsw" id="sw-falda"></div>  <div><div class="pbn">Falda</div><div class="pbd">Capa exterior</div><div class="pbs" id="ps-falda"></div></div><button class="pbc" id="pc-falda"   onclick="event.stopPropagation();remPart('falda')"   style="display:none">✕</button></button>
+      <button class="pb"     data-p="delantal" onclick="selPart('delantal')"><div class="pbnum">2</div><div class="pbsw" id="sw-delantal"></div><div><div class="pbn">Delantal</div><div class="pbd">Panel frontal</div><div class="pbs" id="ps-delantal"></div></div><button class="pbc" id="pc-delantal" onclick="event.stopPropagation();remPart('delantal')" style="display:none">✕</button></button>
+      <button class="pb"     data-p="corpino"  onclick="selPart('corpino')"> <div class="pbnum">3</div><div class="pbsw" id="sw-corpino"></div> <div><div class="pbn">Corpiño</div><div class="pbd">Cuerpo + mangas</div><div class="pbs" id="ps-corpino"></div></div> <button class="pbc" id="pc-corpino"  onclick="event.stopPropagation();remPart('corpino')"  style="display:none">✕</button></button>
+      <button class="pb"     data-p="pico"     onclick="selPart('pico')">    <div class="pbnum">4</div><div class="pbsw" id="sw-pico"></div>     <div><div class="pbn">Pico / Mantoncillo</div><div class="pbd">Encaje hombros</div><div class="pbs" id="ps-pico"></div></div>    <button class="pbc" id="pc-pico"     onclick="event.stopPropagation();remPart('pico')"     style="display:none">✕</button></button>
     </div>
 
-    <div class="pp-sec">
-      <span class="pp-label">② Comparar</span>
-      <button class="compare-btn" id="cmp-btn"
-        onmousedown="compare(true)" onmouseup="compare(false)"
-        ontouchstart="compare(true)" ontouchend="compare(false)">
-        ⏸ Mantén para ver original
-      </button>
+    <div class="sec">
+      <span class="slbl">② Complementos</span>
+      <div class="tog" id="tog-peineta" onclick="toggleComp('peineta')"><div class="tpill"></div><div class="togn">👑 Peineta</div></div>
+      <div class="tog" id="tog-flores"  onclick="toggleComp('flores')"> <div class="tpill"></div><div class="togn">🌸 Flores</div></div>
+      <div class="tog" id="tog-aderezo" onclick="toggleComp('aderezo')"><div class="tpill"></div><div class="togn">✨ Aderezo</div></div>
     </div>
 
-    <div class="pp-sec">
-      <span class="pp-label">③ Guardar</span>
-      <button class="act-btn btn-gold" onclick="downloadPNG()">⬇ Descargar diseño</button>
-      <a class="act-btn btn-outline" id="btn-pedir" href="mailto:info@cosascucas.es">
-        ✉ Pedir este diseño
-      </a>
+    <div class="sec">
+      <span class="slbl">③ Vista y guardar</span>
+      <button class="ab bg"  onclick="screenshot()">📷 Captura PNG</button>
+      <a      class="ab bo"  id="mailto-btn" href="mailto:info@cosascucas.es">✉ Pedir diseño</a>
     </div>
-
   </aside>
 
-  <!-- ══ CENTRO: canvas ══ -->
-  <div id="canvas-wrap">
-    <div id="loading"><div class="spinner"></div><span>Cargando modelo…</span></div>
-    <div id="fab-spin"></div>
-    <div id="tooltip">Haz clic en una parte del traje para seleccionarla · elige tela →</div>
-    <canvas id="canvas"></canvas>
+  <!-- CENTER: Three.js 3D -->
+  <div id="sw">
+    <div id="ld"><div class="sp"></div><span>Preparando escena 3D…</span></div>
+    <div id="tip">Arrastra para girar · rueda para zoom</div>
   </div>
 
-  <!-- ══ DERECHA: librería de telas ══ -->
-  <aside id="telas-panel">
-    <div id="telas-head">
-      <span class="tp-ey">✦ Cosas Cucas</span>
-      <div class="tp-ttl">Librería de telas</div>
-      <div class="tp-sub">Aplicando a: <strong id="tp-part">Falda</strong></div>
+  <!-- RIGHT: librería de telas -->
+  <aside id="rp">
+    <div id="rh">
+      <span class="rey">✦ Cosas Cucas</span>
+      <div class="rtt">Librería de telas</div>
+      <div class="rsub">Aplicando a: <strong id="rpart">Falda</strong></div>
     </div>
-    <div id="telas-grid"></div>
+    <div id="tg"></div>
   </aside>
 
 </main>
 
-<script>
-/* ════════════════════════════════════════════════
-   DATOS: 35 telas reales de la tienda
-════════════════════════════════════════════════ */
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* ═══════════════════════════════════════════
+   CATÁLOGO DE TELAS
+═══════════════════════════════════════════ */
 const TELAS = [
-  { src:'telas/7b262a97ab50be92a7f07e0a145d65be.jpg',  n:'Rojo Carmín'         },
-  { src:'telas/3848be776d5cf49e63811df2a6d218ff.jpg',  n:'Rojo Brocado'        },
-  { src:'telas/aca0413455ec2e9b26a4c28d1e83162d.jpg',  n:'Fucsia Dorado'       },
-  { src:'telas/1aabc72fb1c575ed124c9ec55ad54cc5.jpg',  n:'Morado Floral'       },
-  { src:'telas/3be8546ee42550456027263c71963b91.jpg',  n:'Violeta Real'        },
-  { src:'telas/43c1d191299024a1616e859c74621158.jpg',  n:'Granate Floral'      },
-  { src:'telas/479224d9440fb12613dd32bd4c356f9e.jpg',  n:'Burdeos Floral'      },
-  { src:'telas/10d72799667cdfedd50b7db1e47de9af.jpg',  n:'Azul Marino'         },
-  { src:'telas/1c104dbe51d74631eb953edc5ad7f1d3.jpg',  n:'Azul Noche'          },
-  { src:'telas/f128eb84642f1b5f63030d4414c25d6f.jpg',  n:'Azul Marino Ramos'   },
-  { src:'telas/d510f515e384294a699a7f8f54060342.jpg',  n:'Turquesa Floral'     },
-  { src:'telas/6e272e3e29e1fb91aac9889b4afc9b67.jpg',  n:'Verde Botella'       },
-  { src:'telas/316a2c6e9146f3d7767ca3b5f7ab9231.jpg',  n:'Verde Hunter'        },
-  { src:'telas/6bde24ac5b50d6ca8c0bcba837bdce7e.jpg',  n:'Verde Militar'       },
-  { src:'telas/d4b006080b3e62d38a9cc5c53ef2b259.jpg',  n:'Verde Menta'         },
-  { src:'telas/647a511ff9eca426ac2669b2b46aaca4.jpg',  n:'Verde Sage'          },
-  { src:'telas/2a31f651ecf3842456a80b9ec3e1ad41.jpg',  n:'Negro Dorado'        },
-  { src:'telas/46f9778c7094d400c2df163ac0c372b7.jpg',  n:'Marrón Chocolate'    },
-  { src:'telas/856abd3cb99c1aac89ee8b16e961d07d.jpg',  n:'Gris Topo'           },
-  { src:'telas/bf2f4463dc8bcf74175903fa1445d6ab.jpg',  n:'Gris Perla'          },
-  { src:'telas/b8d32343036b943fe22a944290846e90.jpg',  n:'Platino Floral'      },
-  { src:'telas/516090036d788e609211ff179f82799c.jpg',  n:'Malva Lavanda'       },
-  { src:'telas/821924b765a779c2477ce691ec7ae18d.jpg',  n:'Rosa Blush'          },
-  { src:'telas/aeb47eca4eab818829a5fc16263b7b31.jpg',  n:'Azul Acero'          },
-  { src:'telas/bc31b627cd74bee19c2227910368c329.jpg',  n:'Gris Plata Brocado'  },
-  { src:'telas/ce1329e103cace9e9bc268485eddc221.jpg',  n:'Dorado Mostaza'      },
-  { src:'telas/69ad14805a6b0e89be0e59404d2b23ae.jpg',  n:'Dorado Ocre'         },
-  { src:'telas/86d5708f02be2e59052db0d06b0c4d07.jpg',  n:'Blanco Bordado'      },
-  { src:'telas/fd5de3fbbe1c25725787571f58ba3a41.jpg',  n:'Crema Dorada'        },
-  { src:'telas/ffe32f5d31acce1ce39f233343a0bdb1.jpg',  n:'Champán Bordada'     },
-  { src:'telas/54bafcd345701df74a7dfb79e4eed63a.jpg',  n:'Blanco Peonías'      },
-  { src:'telas/e3854f6f869326e6512ee841f2f1edc3.jpg',  n:'Marfil Brocado'      },
-  { src:'telas/e0016a7759c718ff2eddec75fc8903d5.jpg',  n:'Colección Rollos A'  },
-  { src:'telas/4a9966182b5518d6852ecc5709b47be6.jpg',  n:'Colección Apilada'   },
-  { src:'telas/263301bf103659434f9942ceb2d54566.jpg',  n:'Colección Rollos B'  },
+  {src:'telas/7b262a97ab50be92a7f07e0a145d65be.jpg', n:'Rojo Carmín'},
+  {src:'telas/3848be776d5cf49e63811df2a6d218ff.jpg', n:'Rojo Brocado'},
+  {src:'telas/aca0413455ec2e9b26a4c28d1e83162d.jpg', n:'Fucsia Dorado'},
+  {src:'telas/1aabc72fb1c575ed124c9ec55ad54cc5.jpg', n:'Morado Floral'},
+  {src:'telas/3be8546ee42550456027263c71963b91.jpg', n:'Violeta Real'},
+  {src:'telas/43c1d191299024a1616e859c74621158.jpg', n:'Granate Floral'},
+  {src:'telas/479224d9440fb12613dd32bd4c356f9e.jpg', n:'Burdeos Floral'},
+  {src:'telas/10d72799667cdfedd50b7db1e47de9af.jpg', n:'Azul Marino'},
+  {src:'telas/1c104dbe51d74631eb953edc5ad7f1d3.jpg', n:'Azul Noche'},
+  {src:'telas/f128eb84642f1b5f63030d4414c25d6f.jpg', n:'Azul Marino Ramos'},
+  {src:'telas/d510f515e384294a699a7f8f54060342.jpg', n:'Turquesa Floral'},
+  {src:'telas/6e272e3e29e1fb91aac9889b4afc9b67.jpg', n:'Verde Botella'},
+  {src:'telas/316a2c6e9146f3d7767ca3b5f7ab9231.jpg', n:'Verde Hunter'},
+  {src:'telas/6bde24ac5b50d6ca8c0bcba837bdce7e.jpg', n:'Verde Militar'},
+  {src:'telas/d4b006080b3e62d38a9cc5c53ef2b259.jpg', n:'Verde Menta'},
+  {src:'telas/2a31f651ecf3842456a80b9ec3e1ad41.jpg', n:'Negro Dorado'},
+  {src:'telas/46f9778c7094d400c2df163ac0c372b7.jpg', n:'Marrón Chocolate'},
+  {src:'telas/856abd3cb99c1aac89ee8b16e961d07d.jpg', n:'Gris Topo'},
+  {src:'telas/bf2f4463dc8bcf74175903fa1445d6ab.jpg', n:'Gris Perla'},
+  {src:'telas/b8d32343036b943fe22a944290846e90.jpg', n:'Platino Floral'},
+  {src:'telas/516090036d788e609211ff179f82799c.jpg', n:'Malva Lavanda'},
+  {src:'telas/821924b765a779c2477ce691ec7ae18d.jpg', n:'Rosa Blush'},
+  {src:'telas/ce1329e103cace9e9bc268485eddc221.jpg', n:'Dorado Mostaza'},
+  {src:'telas/69ad14805a6b0e89be0e59404d2b23ae.jpg', n:'Dorado Ocre'},
+  {src:'telas/86d5708f02be2e59052db0d06b0c4d07.jpg', n:'Blanco Bordado'},
+  {src:'telas/fd5de3fbbe1c25725787571f58ba3a41.jpg', n:'Crema Dorada'},
+  {src:'telas/ffe32f5d31acce1ce39f233343a0bdb1.jpg', n:'Champán Bordada'},
+  {src:'telas/54bafcd345701df74a7dfb79e4eed63a.jpg', n:'Blanco Peonías'},
+  {src:'telas/e3854f6f869326e6512ee841f2f1edc3.jpg', n:'Marfil Brocado'},
+  {src:'telas/aeb47eca4eab818829a5fc16263b7b31.jpg', n:'Azul Acero'},
+  {src:'telas/647a511ff9eca426ac2669b2b46aaca4.jpg', n:'Verde Sage'},
+  {src:'telas/e0016a7759c718ff2eddec75fc8903d5.jpg', n:'Colección A'},
+  {src:'telas/4a9966182b5518d6852ecc5709b47be6.jpg', n:'Colección B'},
+  {src:'telas/263301bf103659434f9942ceb2d54566.jpg', n:'Colección C'},
+  {src:'telas/bc31b627cd74bee19c2227910368c329.jpg', n:'Gris Plata'},
 ];
 
-/* ════════════════════════════════════════════════
-   PARTES DEL TRAJE — configuración
+/* ═══════════════════════════════════════════
+   SHADERS — tinted fabric material
+═══════════════════════════════════════════ */
+const VERT = `
+  varying vec2 vUv;
+  varying vec3 vNormal;
+  void main(){
+    vUv = uv;
+    vNormal = normalMatrix * normal;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+  }`;
 
-   Masks calibradas sobre:
-   "pasarela/prendas/foto completa.jpg"
-   (~690 × 960 px, portrait, fondo gris neutro)
+const FRAG = `
+  uniform sampler2D map;
+  uniform int  hasMap;
+  uniform vec3 baseColor;
+  uniform vec2 tile;
+  uniform float opacity;
+  varying vec2 vUv;
+  varying vec3 vNormal;
 
-   ORDEN DE DIBUJO (interior → exterior):
-   1. falda      → falda exterior, gran vuelo
-   2. delantal   → panel frontal sobre la falda
-   3. corpino    → corpiño ajustado + mangas largas
-   4. pico       → mantoncillo / pico sobre hombros
-════════════════════════════════════════════════ */
-const PARTS = [
-  {
-    id: 'falda',
-    label: 'Falda',
-    desc: 'Capa exterior',
-    // Cubre toda la falda de cintura al suelo, gran vuelo lateral
-    mask: [
-      [0.29, 0.47],  // cintura izq
-      [0.71, 0.47],  // cintura dcha
-      [0.93, 0.62],  // lateral dcha alto
-      [0.99, 0.81],  // lateral dcha bajo
-      [1.00, 1.00],  // esquina inf dcha
-      [0.00, 1.00],  // esquina inf izq
-      [0.01, 0.81],  // lateral izq bajo
-      [0.07, 0.62],  // lateral izq alto
-    ],
-    blendAlpha: 0.88,
-  },
-  {
-    id: 'delantal',
-    label: 'Delantal / Faldeta',
-    desc: 'Panel frontal',
-    // Panel central delantero — se dibuja ENCIMA de la falda
-    mask: [
-      [0.27, 0.47],  // cintura izq
-      [0.73, 0.47],  // cintura dcha
-      [0.74, 0.53],  // bajada dcha
-      [0.76, 0.70],  // lateral dcha
-      [0.72, 0.89],  // inferior dcha
-      [0.62, 0.95],  // abajo dcha
-      [0.50, 0.96],  // centro bajo
-      [0.38, 0.95],  // abajo izq
-      [0.28, 0.89],  // inferior izq
-      [0.24, 0.70],  // lateral izq
-      [0.26, 0.53],  // bajada izq
-    ],
-    blendAlpha: 0.82,
-  },
-  {
-    id: 'corpino',
-    label: 'Corpiño y Mangas',
-    desc: 'Cuerpo + manga larga',
-    // Cubre el cuerpo ajustado + las dos mangas largas hasta la muñeca
-    mask: [
-      [0.07, 0.44],  // muñeca izq
-      [0.12, 0.39],  // antebrazo izq
-      [0.17, 0.33],  // codo izq
-      [0.23, 0.27],  // brazo izq
-      [0.29, 0.22],  // hombro izq
-      [0.37, 0.20],  // cuello izq
-      [0.50, 0.24],  // escote centro
-      [0.63, 0.20],  // cuello dcho
-      [0.71, 0.22],  // hombro dcho
-      [0.77, 0.27],  // brazo dcho
-      [0.83, 0.33],  // codo dcho
-      [0.88, 0.39],  // antebrazo dcho
-      [0.93, 0.44],  // muñeca dcha
-      [0.90, 0.47],  // cintura dcha ext
-      [0.65, 0.48],  // cintura dcha
-      [0.35, 0.48],  // cintura izq
-      [0.10, 0.47],  // cintura izq ext
-    ],
-    blendAlpha: 0.90,
-  },
-  {
-    id: 'pico',
-    label: 'Pico / Mantoncillo',
-    desc: 'Encaje hombros/escote',
-    // Pequeño triángulo de encaje alrededor del escote y hombros
-    mask: [
-      [0.24, 0.17],  // hombro izq ext
-      [0.31, 0.17],  // hombro izq
-      [0.40, 0.19],  // cuello izq
-      [0.50, 0.22],  // escote centro
-      [0.60, 0.19],  // cuello dcho
-      [0.69, 0.17],  // hombro dcho
-      [0.76, 0.17],  // hombro dcho ext
-      [0.74, 0.22],  // hombro dcho bajo
-      [0.67, 0.30],  // lateral dcho
-      [0.60, 0.37],  // escote dcho bajo
-      [0.50, 0.40],  // punta V
-      [0.40, 0.37],  // escote izq bajo
-      [0.33, 0.30],  // lateral izq
-      [0.26, 0.22],  // hombro izq bajo
-    ],
-    blendAlpha: 0.80,
-  },
-];
+  void main(){
+    vec3 N = normalize(vNormal);
+    float d1 = max(dot(N, normalize(vec3( 1.8, 2.5, 1.5))), 0.0) * 0.85;
+    float d2 = max(dot(N, normalize(vec3(-1.2, 1.8, 0.8))), 0.0) * 0.40;
+    float d3 = max(dot(N, normalize(vec3( 0.0, 1.5,-2.5))), 0.0) * 0.55;
+    float light = 0.38 + d1 + d2 + d3;
 
-/* ════════════════════════════════════════════════
-   ESTADO GLOBAL
-════════════════════════════════════════════════ */
-let activePart  = 'falda';
-let comparing   = false;
-const selected  = {};   // partId → { src, n, img }
-const imgCache  = {};   // src → HTMLImageElement
+    vec3 col;
+    if(hasMap == 1){
+      vec4 tex = texture2D(map, fract(vUv * tile));
+      /* multiply blend: tela × baseColor preserva el estampado */
+      col = tex.rgb * baseColor * 1.15;
+    } else {
+      col = baseColor;
+    }
+    gl_FragColor = vec4(clamp(col * light, 0.0, 1.0), opacity);
+  }`;
 
-/* ════════════════════════════════════════════════
-   CANVAS + MODELO
-════════════════════════════════════════════════ */
-const canvas   = document.getElementById('canvas');
-const ctx      = canvas.getContext('2d');
-const modelImg = new Image();
+/* ═══════════════════════════════════════════
+   THREE.JS SETUP
+═══════════════════════════════════════════ */
+const wrap    = document.getElementById('sw');
+const renderer = new THREE.WebGLRenderer({antialias:true, alpha:false});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type    = THREE.PCFSoftShadowMap;
+renderer.toneMapping       = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+wrap.appendChild(renderer.domElement);
 
-modelImg.onload = () => {
-  canvas.width  = modelImg.naturalWidth;
-  canvas.height = modelImg.naturalHeight;
-  document.getElementById('loading').style.display = 'none';
-  redraw();
-};
-modelImg.onerror = () => {
-  document.getElementById('loading').innerHTML =
-    '<span style="color:#e55">No se pudo cargar la foto modelo.</span>';
-};
-modelImg.src = 'pasarela/prendas/foto completa.jpg';
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x1A1714);
+scene.fog = new THREE.Fog(0x1A1714, 6, 12);
 
-/* ── Redibuja todo el canvas ─────────────────── */
-function redraw() {
-  const W = canvas.width, H = canvas.height;
-  ctx.clearRect(0, 0, W, H);
-  ctx.globalCompositeOperation = 'source-over';
-  ctx.globalAlpha = 1;
-  ctx.drawImage(modelImg, 0, 0);
+const camera = new THREE.PerspectiveCamera(42, 1, 0.05, 20);
+camera.position.set(0, 1.05, 3.0);
 
-  if (comparing) return;
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0, 0.95, 0);
+controls.minDistance = 1.2;
+controls.maxDistance = 4.5;
+controls.minPolarAngle = Math.PI * 0.12;
+controls.maxPolarAngle = Math.PI * 0.88;
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
 
-  // Aplica telas en orden de capas (interior → exterior)
-  for (const part of PARTS) {
-    const data = selected[part.id];
-    if (data?.img) applyLayer(data.img, part.mask, part.blendAlpha);
-  }
+/* ─── Lights ──────────────────────────────── */
+scene.add(new THREE.AmbientLight(0xFFF5E0, 0.45));
 
-  // Contorno dorado de la parte activa
-  const ap = PARTS.find(p => p.id === activePart);
-  if (ap) drawOutline(ap.mask);
-}
+const key = new THREE.DirectionalLight(0xFFEDD5, 1.3);
+key.position.set(2, 4, 2.5);
+key.castShadow = true;
+key.shadow.mapSize.setScalar(1024);
+scene.add(key);
 
-/* ── Aplica tela a una zona via blend multiply ─ */
-function applyLayer(fabricImg, mask, alpha) {
-  const W = canvas.width, H = canvas.height;
-  ctx.save();
+const fill = new THREE.DirectionalLight(0xD5E8FF, 0.6);
+fill.position.set(-2, 2.5, 1);
+scene.add(fill);
 
-  // 1. Clip al polígono de la prenda
-  ctx.beginPath();
-  mask.forEach(([px, py], i) => {
-    const x = px * W, y = py * H;
-    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-  });
-  ctx.closePath();
-  ctx.clip();
+const rim = new THREE.DirectionalLight(0xFFFFFF, 0.9);
+rim.position.set(0, 2.5, -3.5);
+scene.add(rim);
 
-  // 2. Muy pequeño lift blanco para garantizar visibilidad de telas oscuras
-  ctx.globalCompositeOperation = 'source-over';
-  ctx.globalAlpha = 0.07;
-  ctx.fillStyle = '#fff';
-  ctx.fillRect(0, 0, W, H);
+/* ─── Floor ───────────────────────────────── */
+const floorMesh = new THREE.Mesh(
+  new THREE.CircleGeometry(2.8, 48),
+  new THREE.MeshStandardMaterial({color:0x2C2420, roughness:0.9})
+);
+floorMesh.rotation.x = -Math.PI/2;
+floorMesh.receiveShadow = true;
+scene.add(floorMesh);
 
-  // 3. Tela con multiply: preserva pliegues y sombras del vestido original
-  const sc = Math.max(W / fabricImg.naturalWidth, H / fabricImg.naturalHeight);
-  const fw = fabricImg.naturalWidth  * sc;
-  const fh = fabricImg.naturalHeight * sc;
-  ctx.globalCompositeOperation = 'multiply';
-  ctx.globalAlpha = alpha;
-  ctx.drawImage(fabricImg, (W - fw) / 2, (H - fh) / 2, fw, fh);
+/* subtle ring on floor */
+const ringMesh = new THREE.Mesh(
+  new THREE.RingGeometry(1.15, 1.18, 64),
+  new THREE.MeshBasicMaterial({color:0xB5903A, opacity:0.18, transparent:true, side:THREE.DoubleSide})
+);
+ringMesh.rotation.x = -Math.PI/2;
+ringMesh.position.y = 0.002;
+scene.add(ringMesh);
 
-  ctx.restore();
-}
+/* ═══════════════════════════════════════════
+   BUILD BODY (modelo simplificado)
+═══════════════════════════════════════════ */
+const modelGroup = new THREE.Group();
+scene.add(modelGroup);
 
-/* ── Contorno animado de la parte activa ─────── */
-function drawOutline(mask) {
-  const W = canvas.width, H = canvas.height;
-  ctx.save();
-  ctx.beginPath();
-  mask.forEach(([px, py], i) => {
-    const x = px * W, y = py * H;
-    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-  });
-  ctx.closePath();
-  ctx.strokeStyle = 'rgba(181,144,58,0.7)';
-  ctx.lineWidth   = Math.max(W * 0.0045, 3);
-  ctx.setLineDash([Math.max(W * 0.014, 9), Math.max(W * 0.007, 5)]);
-  ctx.stroke();
-  ctx.restore();
-}
+const skinMat = new THREE.MeshStandardMaterial({color:0xF5C5A0, roughness:0.65, metalness:0.02});
+const hairMat = new THREE.MeshStandardMaterial({color:0x2C1800, roughness:0.88});
 
-/* ── Clic en canvas → detectar parte ──────────── */
-canvas.addEventListener('click', e => {
-  const r  = canvas.getBoundingClientRect();
-  const px = ((e.clientX - r.left)  * (canvas.width  / r.width )) / canvas.width;
-  const py = ((e.clientY - r.top)   * (canvas.height / r.height)) / canvas.height;
+/* Head */
+const headM = new THREE.Mesh(new THREE.SphereGeometry(0.114,32,32), skinMat);
+headM.position.set(0,1.565,0);
+headM.castShadow = true;
+modelGroup.add(headM);
 
-  // Recorre partes en orden inverso (exterior primero para tener prioridad)
-  for (let i = PARTS.length - 1; i >= 0; i--) {
-    if (pip(px, py, PARTS[i].mask)) { selectPart(PARTS[i].id); return; }
-  }
+/* Eyes */
+const eyeMat = new THREE.MeshStandardMaterial({color:0x3D1800});
+[-0.038,0.038].forEach(x=>{
+  const e = new THREE.Mesh(new THREE.SphereGeometry(0.013,8,8), eyeMat);
+  e.position.set(x,1.577,0.106);
+  modelGroup.add(e);
 });
 
-/* Ray-casting point-in-polygon */
-function pip(px, py, poly) {
-  let inside = false;
-  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
-    const [xi, yi] = poly[i], [xj, yj] = poly[j];
-    if (((yi > py) !== (yj > py)) &&
-        (px < (xj - xi) * (py - yi) / (yj - yi) + xi)) inside = !inside;
+/* Lips */
+const lipM = new THREE.Mesh(new THREE.SphereGeometry(0.017,8,8),
+  new THREE.MeshStandardMaterial({color:0xBF6B6B}));
+lipM.scale.set(1.9,0.55,0.7);
+lipM.position.set(0,1.543,0.109);
+modelGroup.add(lipM);
+
+/* Neck */
+const neckM = new THREE.Mesh(new THREE.CylinderGeometry(0.037,0.044,0.10,16), skinMat);
+neckM.position.set(0,1.448,0);
+modelGroup.add(neckM);
+
+/* Hair bun */
+const mainHair = new THREE.Mesh(new THREE.SphereGeometry(0.118,32,24), hairMat);
+mainHair.position.set(0,1.585,-0.018);
+mainHair.scale.set(1,0.88,0.84);
+modelGroup.add(mainHair);
+
+/* Rodetes (traditional buns on sides) */
+[-0.098,0.098].forEach(x=>{
+  const rod = new THREE.Mesh(new THREE.TorusGeometry(0.040,0.018,10,22), hairMat);
+  rod.position.set(x,1.597,-0.005);
+  rod.rotation.y = Math.PI/2;
+  modelGroup.add(rod);
+});
+
+/* Torso (LatheGeometry female silhouette) */
+const torsoProfile = [
+  new THREE.Vector2(0.165,1.40),
+  new THREE.Vector2(0.170,1.32),
+  new THREE.Vector2(0.175,1.24),
+  new THREE.Vector2(0.168,1.15),
+  new THREE.Vector2(0.158,1.02),
+  new THREE.Vector2(0.168,0.94),
+  new THREE.Vector2(0.178,0.88),
+];
+const torsoM = new THREE.Mesh(new THREE.LatheGeometry(torsoProfile,32), skinMat);
+torsoM.castShadow = true;
+modelGroup.add(torsoM);
+
+/* Hands (visible at wrist ends of sleeves) */
+const handGeo = new THREE.SphereGeometry(0.027,16,12);
+[-0.22,0.22].forEach(x=>{
+  const h = new THREE.Mesh(handGeo, skinMat);
+  h.position.set(x, 0.92, 0.05);
+  h.scale.set(1.3,0.85,0.65);
+  modelGroup.add(h);
+});
+
+/* ═══════════════════════════════════════════
+   GARMENT GEOMETRY BUILDERS
+═══════════════════════════════════════════ */
+function buildFaldaGeo(){
+  // Bell-shaped skirt: wide at floor, narrow at waist
+  const pts = [];
+  const n = 16;
+  for(let i=0;i<n;i++){
+    const t = i/(n-1);
+    const y = t * 1.02;                        // 0=floor → 1.02=waist
+    const r = 0.205 + Math.pow(1-t, 1.6)*0.92; // wide at bottom, narrow at top
+    pts.push(new THREE.Vector2(r, y));
   }
-  return inside;
+  return new THREE.LatheGeometry(pts, 80);
 }
 
-/* ════════════════════════════════════════════════
-   SELECCIONAR PARTE
-════════════════════════════════════════════════ */
-function selectPart(id) {
-  activePart = id;
-  const part = PARTS.find(p => p.id === id);
+function buildDelantalGeo(){
+  // Arched front apron panel
+  const sh = new THREE.Shape();
+  const w=0.52, h=0.97;
+  sh.moveTo(-w/2, 0);
+  sh.lineTo( w/2, 0);
+  sh.lineTo( w/2*0.88, -h*0.55);
+  sh.quadraticCurveTo( w/3, -h*1.03, 0, -h*1.04);
+  sh.quadraticCurveTo(-w/3, -h*1.03, -w/2*0.88, -h*0.55);
+  sh.closePath();
+  return new THREE.ShapeGeometry(sh, 24);
+}
 
-  // Actualizar botones izquierda
-  document.querySelectorAll('.part-btn').forEach(b =>
-    b.classList.toggle('active', b.dataset.part === id));
+function buildCorpinoGeo(){
+  // Fitted bodice
+  const pts = [
+    new THREE.Vector2(0.084, 0.44),
+    new THREE.Vector2(0.090, 0.38),
+    new THREE.Vector2(0.100, 0.30),
+    new THREE.Vector2(0.118, 0.20),
+    new THREE.Vector2(0.122, 0.12),
+    new THREE.Vector2(0.115, 0.04),
+    new THREE.Vector2(0.112, 0.00),
+  ];
+  return new THREE.LatheGeometry(pts, 32);
+}
 
-  // Actualizar label derecha
-  document.getElementById('tp-part').textContent = part?.label || id;
+function buildMangaGeo(){
+  // Long sleeve, slightly tapered
+  const pts = [
+    new THREE.Vector2(0.036, 0.00),  // wrist
+    new THREE.Vector2(0.038, 0.12),
+    new THREE.Vector2(0.042, 0.28),
+    new THREE.Vector2(0.048, 0.42),  // shoulder
+  ];
+  return new THREE.LatheGeometry(pts, 16);
+}
 
+function buildPicoGeo(){
+  // Triangular mantoncillo (V-shape)
+  const sh = new THREE.Shape();
+  sh.moveTo(-0.37, 0);
+  sh.lineTo( 0.37, 0);
+  sh.quadraticCurveTo( 0.30,-0.18, 0,-0.36);
+  sh.quadraticCurveTo(-0.30,-0.18,-0.37, 0);
+  sh.closePath();
+  return new THREE.ShapeGeometry(sh, 20);
+}
+
+/* ═══════════════════════════════════════════
+   MATERIAL FACTORY
+═══════════════════════════════════════════ */
+const loader = new THREE.TextureLoader();
+const texCache = {};
+
+function loadTex(src){
+  if(texCache[src]) return texCache[src];
+  const t = loader.load(src, tex=>{
+    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+    tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  });
+  texCache[src] = t;
+  return t;
+}
+
+function makeMat(color=0xEEE5C8, texSrc=null, opac=1.0){
+  const mat = new THREE.ShaderMaterial({
+    uniforms:{
+      map:       {value: texSrc ? loadTex(texSrc) : null},
+      hasMap:    {value: texSrc ? 1 : 0},
+      baseColor: {value: new THREE.Color(color)},
+      tile:      {value: new THREE.Vector2(2.5, 2.5)},
+      opacity:   {value: opac},
+    },
+    vertexShader:   VERT,
+    fragmentShader: FRAG,
+    side:           THREE.DoubleSide,
+    transparent:    opac < 1.0,
+  });
+  return mat;
+}
+
+/* ═══════════════════════════════════════════
+   GARMENT MESHES
+═══════════════════════════════════════════ */
+const GARMENTS = {};
+
+function buildGarments(){
+  /* ── FALDA ── */
+  const faldaMat  = makeMat(0xEEE5C8);
+  const faldaMesh = new THREE.Mesh(buildFaldaGeo(), faldaMat);
+  faldaMesh.position.y = 0.02;
+  faldaMesh.castShadow = true;
+  faldaMesh.receiveShadow = true;
+  modelGroup.add(faldaMesh);
+  GARMENTS.falda = {mesh:faldaMesh, mat:faldaMat};
+
+  /* ── DELANTAL ── */
+  const delantMat  = makeMat(0xFAF5E8, null, 0.93);
+  const delantMesh = new THREE.Mesh(buildDelantalGeo(), delantMat);
+  delantMesh.position.set(0, 1.01, 0.215);
+  delantMesh.rotation.x = Math.PI * 0.025;
+  modelGroup.add(delantMesh);
+  GARMENTS.delantal = {mesh:delantMesh, mat:delantMat};
+
+  /* ── CORPIÑO ── */
+  const corpMat  = makeMat(0xEEE5C8);
+  const corpMesh = new THREE.Mesh(buildCorpinoGeo(), corpMat);
+  corpMesh.position.y = 1.005;
+  corpMesh.castShadow = true;
+  modelGroup.add(corpMesh);
+
+  /* ── MANGAS ── */
+  const mangaGeo = buildMangaGeo();
+  const lManga   = new THREE.Mesh(mangaGeo, corpMat);
+  lManga.position.set(-0.205, 0.960, 0.018);
+  lManga.rotation.z = Math.PI * 0.10;
+  lManga.castShadow = true;
+  modelGroup.add(lManga);
+
+  const rManga = lManga.clone();
+  rManga.position.x = 0.205;
+  rManga.rotation.z = -Math.PI * 0.10;
+  modelGroup.add(rManga);
+
+  GARMENTS.corpino = {mesh:corpMesh, mat:corpMat, extras:[lManga, rManga]};
+
+  /* ── PICO / MANTONCILLO ── */
+  const picoMat  = makeMat(0xFAF5E8, null, 0.88);
+  const picoMesh = new THREE.Mesh(buildPicoGeo(), picoMat);
+  picoMesh.position.set(0, 1.40, 0.115);
+  picoMesh.rotation.x = Math.PI * 0.14;
+  modelGroup.add(picoMesh);
+  GARMENTS.pico = {mesh:picoMesh, mat:picoMat};
+}
+buildGarments();
+
+/* ═══════════════════════════════════════════
+   COMPLEMENTOS (accessories)
+═══════════════════════════════════════════ */
+const COMPS = {};
+
+function buildComps(){
+  /* Peineta (hair comb) */
+  const peiGrp = new THREE.Group();
+  const peiMat = new THREE.MeshStandardMaterial({color:0xB5903A, metalness:0.7, roughness:0.3});
+  // Base comb
+  const peiBase = new THREE.Mesh(new THREE.BoxGeometry(0.09,0.016,0.008), peiMat);
+  peiBase.position.set(0, 1.638, -0.048);
+  peiGrp.add(peiBase);
+  // Tines
+  for(let i=-3;i<=3;i++){
+    const tine = new THREE.Mesh(new THREE.CylinderGeometry(0.0025,0.002,0.048,6), peiMat);
+    tine.position.set(i*0.013, 1.668, -0.048);
+    peiGrp.add(tine);
+  }
+  peiGrp.visible = false;
+  modelGroup.add(peiGrp);
+  COMPS.peineta = peiGrp;
+
+  /* Flores (hair flowers) */
+  const flGrp  = new THREE.Group();
+  const flMat  = new THREE.MeshStandardMaterial({color:0xE85878, roughness:0.6});
+  const flMat2 = new THREE.MeshStandardMaterial({color:0xFFB8CC, roughness:0.6});
+  [[-.07,1.600,-.04],[.05,1.618,.00],[-.04,1.622,-.06]].forEach(([x,y,z],i)=>{
+    const f = new THREE.Mesh(new THREE.SphereGeometry(0.018,8,8), i%2?flMat2:flMat);
+    f.position.set(x,y,z);
+    flGrp.add(f);
+    // petals
+    for(let p=0;p<5;p++){
+      const a = (p/5)*Math.PI*2;
+      const pet = new THREE.Mesh(new THREE.SphereGeometry(0.011,6,6), i%2?flMat:flMat2);
+      pet.position.set(x+Math.cos(a)*0.022, y, z+Math.sin(a)*0.022);
+      pet.scale.set(1,0.4,1);
+      flGrp.add(pet);
+    }
+  });
+  flGrp.visible = false;
+  modelGroup.add(flGrp);
+  COMPS.flores = flGrp;
+
+  /* Aderezo (necklace + earrings) */
+  const adjGrp = new THREE.Group();
+  const jMat   = new THREE.MeshStandardMaterial({color:0xB5903A, metalness:0.85, roughness:0.2});
+  const gemMat = new THREE.MeshStandardMaterial({color:0x88CCFF, metalness:0.4, roughness:0.1, transparent:true, opacity:0.9});
+  // Necklace chain (torus segments)
+  for(let i=0;i<12;i++){
+    const a = (i/12)*Math.PI - Math.PI/2 + Math.PI*0.02;
+    const bead = new THREE.Mesh(new THREE.SphereGeometry(0.006,6,6), jMat);
+    bead.position.set(Math.cos(a)*0.075, 1.405+Math.sin(a)*0.015, Math.cos(a)*0.075*0.4+0.08);
+    adjGrp.add(bead);
+  }
+  // Pendant
+  const pend = new THREE.Mesh(new THREE.OctahedronGeometry(0.012), gemMat);
+  pend.position.set(0, 1.376, 0.105);
+  adjGrp.add(pend);
+  // Earrings
+  [-0.112,0.112].forEach(x=>{
+    const e1 = new THREE.Mesh(new THREE.SphereGeometry(0.007,8,8), jMat);
+    e1.position.set(x, 1.545, 0.060);
+    const e2 = new THREE.Mesh(new THREE.OctahedronGeometry(0.009), gemMat);
+    e2.position.set(x, 1.525, 0.062);
+    adjGrp.add(e1, e2);
+  });
+  adjGrp.visible = false;
+  modelGroup.add(adjGrp);
+  COMPS.aderezo = adjGrp;
+}
+buildComps();
+
+/* ═══════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════ */
+let activePart = 'falda';
+const selected = {};  // partId → tela src
+
+/* ═══════════════════════════════════════════
+   APPLY TELA TO GARMENT
+═══════════════════════════════════════════ */
+function applyTela(partId, tela){
+  selected[partId] = tela;
+  const g = GARMENTS[partId];
+  if(!g) return;
+
+  const tex = loadTex(tela.src);
+  g.mat.uniforms.map.value   = tex;
+  g.mat.uniforms.hasMap.value = 1;
+  g.mat.uniforms.baseColor.value.set(0xffffff);
+  g.mat.needsUpdate = true;
+
+  // Apply same mat to extras (mangas)
+  if(g.extras) g.extras.forEach(m=>m.material = g.mat);
+
+  updatePartUI(partId, tela);
   renderGrid();
-  hideTooltip();
-  redraw();
-}
-
-/* ════════════════════════════════════════════════
-   SELECCIONAR TELA → aplicar
-════════════════════════════════════════════════ */
-async function selectTela(t) {
-  showSpin(true);
-  try {
-    const img = await loadImg(t.src);
-    selected[activePart] = { ...t, img };
-    updatePartUI(activePart, t);
-    renderGrid();
-    redraw();
-    updateMailto();
-  } catch { /* imagen no disponible */ }
-  finally { showSpin(false); }
-}
-
-function removePart(id) {
-  delete selected[id];
-  updatePartUI(id, null);
-  renderGrid();
-  redraw();
   updateMailto();
 }
 
-/* ════════════════════════════════════════════════
-   ACTUALIZAR UI DE PARTE (dot + nombre)
-════════════════════════════════════════════════ */
-function updatePartUI(id, tela) {
-  const sw  = document.getElementById('sw-'  + id);
-  const sel = document.getElementById('sel-' + id);
-  const clr = document.getElementById('clr-' + id);
+function remPart(partId){
+  delete selected[partId];
+  const g = GARMENTS[partId];
+  if(g){
+    g.mat.uniforms.hasMap.value = 0;
+    g.mat.uniforms.map.value    = null;
+    g.mat.uniforms.baseColor.value.set(0xEEE5C8);
+    g.mat.needsUpdate = true;
+  }
+  updatePartUI(partId, null);
+  renderGrid();
+  updateMailto();
+}
 
-  if (tela) {
-    sw.classList.remove('empty');
+/* ═══════════════════════════════════════════
+   UI FUNCTIONS (exposed to window)
+═══════════════════════════════════════════ */
+window.selPart = function(id){
+  activePart = id;
+  document.querySelectorAll('.pb').forEach(b=>b.classList.toggle('act', b.dataset.p===id));
+  const labels = {falda:'Falda',delantal:'Delantal / Faldeta',corpino:'Corpiño y Mangas',pico:'Pico / Mantoncillo'};
+  document.getElementById('rpart').textContent = labels[id]||id;
+  renderGrid();
+
+  // Pulse the active mesh
+  const g = GARMENTS[id];
+  if(g) flashMesh(g.mesh);
+};
+
+window.remPart    = remPart;
+window.toggleComp = function(id){
+  const grp = COMPS[id];
+  if(!grp) return;
+  grp.visible = !grp.visible;
+  const tog = document.getElementById('tog-'+id);
+  if(tog) tog.classList.toggle('on', grp.visible);
+};
+
+window.screenshot = function(){
+  renderer.render(scene, camera);
+  const url = renderer.domElement.toDataURL('image/png');
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'fallera-3d-cosascucas.png';
+  a.click();
+};
+
+function updatePartUI(id, tela){
+  const sw  = document.getElementById('sw-'+id);
+  const ps  = document.getElementById('ps-'+id);
+  const pc  = document.getElementById('pc-'+id);
+  if(tela){
     sw.style.backgroundImage = `url('${tela.src}')`;
-    if (sel) sel.textContent = tela.n;
-    if (clr) clr.style.display = 'block';
+    if(ps) ps.textContent = tela.n;
+    if(pc) pc.style.display = 'block';
   } else {
-    sw.classList.add('empty');
     sw.style.backgroundImage = '';
-    if (sel) sel.textContent = '';
-    if (clr) clr.style.display = 'none';
+    if(ps) ps.textContent = '';
+    if(pc) pc.style.display = 'none';
   }
 }
 
-/* ════════════════════════════════════════════════
-   RENDER GRID DE TELAS
-════════════════════════════════════════════════ */
-function renderGrid() {
-  const grid = document.getElementById('telas-grid');
-  const cur  = selected[activePart];
-  grid.innerHTML = '';
+function updateMailto(){
+  const lines = Object.entries(selected).map(([id,t])=>{
+    const lbl={falda:'Falda',delantal:'Delantal',corpino:'Corpiño y Mangas',pico:'Pico'};
+    return `• ${lbl[id]||id}: ${t.n}`;
+  });
+  const body = lines.length
+    ? 'Hola, me interesa este diseño:\n\n'+lines.join('\n')+'\n\nQuiero concertar una visita.'
+    : 'Hola, me gustaría información sobre sus trajes de fallera.';
+  const a = document.getElementById('mailto-btn');
+  if(a) a.href=`mailto:info@cosascucas.es?subject=Consulta%20diseño%20fallera%203D&body=${encodeURIComponent(body)}`;
+}
 
-  TELAS.forEach(t => {
-    const sel  = cur?.src === t.src;
+/* flash outline on selected mesh */
+function flashMesh(mesh){
+  const orig = mesh.material.uniforms?.baseColor?.value.clone();
+  if(!orig) return;
+  let t = 0;
+  const id = setInterval(()=>{
+    t += 0.25;
+    const s = 0.5 + 0.5*Math.sin(t*6);
+    mesh.material.uniforms.baseColor.value.lerp(new THREE.Color(0xB5903A), s*0.15);
+    if(t>1.2){ clearInterval(id); if(orig) mesh.material.uniforms.baseColor.value.copy(orig); }
+  },40);
+}
+
+/* ═══════════════════════════════════════════
+   RENDER TELA GRID
+═══════════════════════════════════════════ */
+function renderGrid(){
+  const grid   = document.getElementById('tg');
+  const curSel = selected[activePart];
+  grid.innerHTML = '';
+  TELAS.forEach(t=>{
+    const sel  = curSel?.src === t.src;
     const card = document.createElement('div');
-    card.className = 'tc' + (sel ? ' sel' : '');
+    card.className = 'tc'+(sel?' sel':'');
     card.innerHTML = `
-      <div class="tc-img">
+      <div class="ti">
         <img src="${t.src}" alt="${t.n}" loading="lazy">
-        <div class="tc-chk">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <path d="M5 11l5 5 7-9" stroke="white" stroke-width="2.5"
-              stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
+        <div class="tck"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M5 11l5 5 7-9" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       </div>
-      <div class="tc-name">${t.n}</div>`;
-    card.addEventListener('click', () => selectTela(t));
+      <div class="tn">${t.n}</div>`;
+    card.addEventListener('click', ()=>{ applyTela(activePart, t); renderGrid(); });
     grid.appendChild(card);
   });
 }
-
-/* ════════════════════════════════════════════════
-   COMPARAR (ver original sin telas)
-════════════════════════════════════════════════ */
-function compare(on) {
-  comparing = on;
-  document.getElementById('cmp-btn').classList.toggle('active', on);
-  if (canvas.width) redraw();
-}
-
-/* ════════════════════════════════════════════════
-   CARGAR IMAGEN (con caché)
-════════════════════════════════════════════════ */
-function loadImg(src) {
-  if (imgCache[src]) return Promise.resolve(imgCache[src]);
-  return new Promise((res, rej) => {
-    const img = new Image();
-    img.onload  = () => { imgCache[src] = img; res(img); };
-    img.onerror = rej;
-    img.src = src;
-  });
-}
-
-/* ════════════════════════════════════════════════
-   MAILTO — incluye telas elegidas
-════════════════════════════════════════════════ */
-function updateMailto() {
-  const lines = PARTS
-    .filter(p => selected[p.id])
-    .map(p => `• ${p.label}: ${selected[p.id].n}`);
-
-  const body = lines.length
-    ? 'Hola, me gustaría información sobre un diseño con estas telas:\n\n'
-      + lines.join('\n')
-      + '\n\nQuedo a su disposición para concertar una visita. Gracias.'
-    : 'Hola, me gustaría información sobre sus trajes de fallera.';
-
-  const a = document.getElementById('btn-pedir');
-  if (a) a.href =
-    `mailto:info@cosascucas.es?subject=Consulta%20diseño%20traje%20fallera&body=${encodeURIComponent(body)}`;
-}
-
-/* ════════════════════════════════════════════════
-   DESCARGAR PNG
-════════════════════════════════════════════════ */
-function downloadPNG() {
-  if (!canvas.width) return;
-  canvas.toBlob(blob => {
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'diseno-cosascucas.png';
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
-  }, 'image/png');
-}
-
-/* ════════════════════════════════════════════════
-   HELPERS
-════════════════════════════════════════════════ */
-function showSpin(on) {
-  document.getElementById('fab-spin').style.display = on ? 'block' : 'none';
-}
-function hideTooltip() {
-  const t = document.getElementById('tooltip');
-  if (t) { t.style.opacity = '0'; t.style.pointerEvents = 'none'; }
-}
-setTimeout(hideTooltip, 6000);
-
-/* ════════════════════════════════════════════════
-   INICIO
-════════════════════════════════════════════════ */
 renderGrid();
+
+/* ═══════════════════════════════════════════
+   RESIZE + RENDER LOOP
+═══════════════════════════════════════════ */
+function resize(){
+  const W = wrap.clientWidth, H = wrap.clientHeight;
+  renderer.setSize(W, H);
+  camera.aspect = W/H;
+  camera.updateProjectionMatrix();
+}
+resize();
+window.addEventListener('resize', resize);
+
+const loading = document.getElementById('ld');
+const tooltip = document.getElementById('tip');
+let firstFrame = true;
+
+function animate(){
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+  if(firstFrame){
+    firstFrame = false;
+    loading.style.display = 'none';
+    setTimeout(()=>{ tooltip.style.opacity='0'; }, 5000);
+  }
+}
+animate();
+
 updateMailto();
 </script>
 </body>
