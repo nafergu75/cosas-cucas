@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Probador Virtual · Cosas Cucas | Indumentaria Valenciana</title>
+  <title>Probador de Telas · Cosas Cucas | Indumentaria Valenciana</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <style>
@@ -20,25 +20,18 @@
     --font-body:  'Space Grotesk', sans-serif;
     --font-disp:  'Playfair Display', serif;
     --radius:     3px;
-    /* Colores del traje — el SVG los lee directamente via fill:var(...) */
-    --c-falda:   #1B3A8A;
-    --c-corpino: #922020;
-    --c-zapatos: #3D2010;
-    --c-flores:  #D4388A;
-    --c-manton:  #C4A820;
-    --c-aderezo: #B5903A;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; overflow: hidden; }
   body {
     font-family: var(--font-body);
-    background: var(--bg);
+    background: var(--bg-dark);
     color: var(--text);
     -webkit-font-smoothing: antialiased;
     display: flex; flex-direction: column;
   }
 
-  /* ── HEADER ─────────────────────────────── */
+  /* ── HEADER ─────────────────────────────────────── */
   #header {
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 20px; height: 52px; flex-shrink: 0;
@@ -60,53 +53,63 @@
     transition:color .2s; white-space:nowrap; }
   .hdr-back:hover { color:var(--gold-light); }
 
-  /* ── LAYOUT 3 COLUMNAS ───────────────────── */
+  /* ── LAYOUT 3 COLUMNAS ──────────────────────────── */
   #main {
     flex: 1; display: grid;
-    grid-template-columns: 164px 1fr 252px;
+    grid-template-columns: 170px 1fr 256px;
     overflow: hidden; min-height: 0;
   }
 
-  /* ── PANEL IZQUIERDO ─────────────────────── */
+  /* ── PANEL IZQUIERDO ────────────────────────────── */
   #parts-panel {
     background: var(--white); border-right: 1px solid var(--border);
     display: flex; flex-direction: column; overflow-y: auto;
   }
-  .pp-section { padding: 14px 12px 0; border-bottom: 1px solid var(--border); }
-  .pp-section:last-child { border-bottom: none; padding-bottom: 14px; }
-  .pp-label { font-size:.58rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
-    color:var(--gold); display:block; margin-bottom:10px; }
+  .pp-section {
+    padding: 14px 12px 12px; border-bottom: 1px solid var(--border);
+  }
+  .pp-label {
+    font-size:.57rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--gold); display:block; margin-bottom:10px;
+  }
 
+  /* Part buttons */
   .part-btn {
-    display: flex; align-items: center; gap: 9px;
-    width: 100%; padding: 9px 8px; margin-bottom: 5px;
-    background: transparent; border: 1px solid transparent;
-    border-radius: var(--radius); cursor: pointer; transition: all .18s; text-align: left;
+    width:100%; display:flex; align-items:center; gap:8px;
+    padding:10px 8px; margin-bottom:5px;
+    background:transparent; border:1px solid transparent;
+    border-radius:var(--radius); cursor:pointer; transition:all .18s; text-align:left;
+    position: relative;
   }
-  .part-btn:hover { background: var(--bg-alt); border-color: var(--border); }
-  .part-btn.active { background: var(--bg); border-color: var(--gold); }
-  .part-btn.active .pb-name { color: var(--gold); font-weight: 700; }
-  .part-color-dot { width:20px; height:20px; border-radius:50%; flex-shrink:0;
-    border:2px solid rgba(0,0,0,.12); transition:background .4s; }
+  .part-btn:hover { background:var(--bg-alt); border-color:var(--border); }
+  .part-btn.active { background:var(--bg); border-color:var(--gold); }
+  .part-btn.active .pb-name { color:var(--gold); font-weight:700; }
+  .pb-icon { font-size:1.2rem; flex-shrink:0; }
   .pb-name { font-size:.72rem; font-weight:600; color:var(--text); }
-  .pb-sub  { font-size:.58rem; color:var(--muted); }
-
-  .comp-btn {
-    display: flex; align-items: center; gap: 9px;
-    width: 100%; padding: 8px 8px; margin-bottom: 6px;
-    background: transparent; border: 1px solid var(--border);
-    border-radius: var(--radius); cursor: pointer; transition: all .18s; text-align: left;
+  .pb-sel  { font-size:.6rem; color:var(--muted); margin-top:1px;
+    max-width:120px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .pb-sel.has-tela { color:var(--gold); font-weight:600; }
+  .pb-clear {
+    position:absolute; right:6px; top:50%; transform:translateY(-50%);
+    background:transparent; border:none; cursor:pointer;
+    color:var(--muted); font-size:.8rem; padding:2px 5px;
+    border-radius:2px; transition:color .15s, background .15s;
   }
-  .comp-btn:hover { border-color: var(--gold-light); }
-  .comp-btn.on { border-color: var(--gold); background: var(--bg); }
-  .toggle-pill { width:28px; height:16px; border-radius:8px; background:var(--border);
-    position:relative; flex-shrink:0; transition:background .2s; }
-  .toggle-pill::after { content:''; position:absolute; top:2px; left:2px; width:12px; height:12px;
-    border-radius:50%; background:white; transition:transform .2s; }
-  .comp-btn.on .toggle-pill { background:var(--gold); }
-  .comp-btn.on .toggle-pill::after { transform:translateX(12px); }
-  .cb-name { font-size:.7rem; font-weight:600; color:var(--text); }
+  .pb-clear:hover { color:#c00; background:rgba(200,0,0,.08); }
 
+  /* Compare button */
+  .compare-btn {
+    width:100%; padding:9px 10px;
+    background:var(--bg-alt); border:1px solid var(--border);
+    border-radius:var(--radius); cursor:pointer;
+    font-family:var(--font-body); font-size:.65rem; font-weight:600;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--muted);
+    transition:all .18s; user-select:none;
+  }
+  .compare-btn:hover { border-color:var(--gold); color:var(--text); }
+  .compare-btn.active { background:var(--bg-dark); color:var(--white); border-color:var(--bg-dark); }
+
+  /* Action buttons */
   .action-btn {
     display:block; width:100%; padding:9px 8px; font-family:var(--font-body);
     font-size:.62rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
@@ -118,89 +121,121 @@
   .btn-outline { background:transparent; color:var(--text); border:1px solid var(--border); }
   .btn-outline:hover { border-color:var(--gold); color:var(--gold); }
 
-  /* ── CENTRO: modelo SVG ──────────────────── */
-  #model-wrap {
-    display:flex; align-items:center; justify-content:center;
-    overflow:hidden; background:var(--bg-alt); position:relative; padding:10px;
+  /* Hint texto */
+  .hint-text {
+    font-size:.6rem; color:var(--muted); line-height:1.5;
+    padding:8px 0 0;
   }
-  #model-svg {
-    height:100%; max-height:calc(100vh - 52px);
-    width:auto; max-width:100%;
-    filter:drop-shadow(0 8px 32px rgba(26,23,20,.18));
-  }
-  .part-group { cursor:pointer; transition:filter .25s; }
-  .part-group:hover { filter:drop-shadow(0 0 6px rgba(181,144,58,.55)); }
-  .part-group.sel   { filter:drop-shadow(0 0 10px rgba(181,144,58,.8)); }
 
-  #model-hint {
+  /* ── CENTRO: Canvas ─────────────────────────────── */
+  #canvas-wrap {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; background: #0e0c0a;
+  }
+  #canvas {
+    max-height: 100%; max-width: 100%;
+    display: block; cursor: crosshair;
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  /* Loading */
+  #loading {
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:14px; background:#0e0c0a; color:rgba(253,250,243,.6);
+    font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+    z-index:10;
+  }
+  .spinner {
+    width:36px; height:36px; border:3px solid rgba(181,144,58,.25);
+    border-top-color:var(--gold); border-radius:50%;
+    animation:spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  /* Fabric-loading mini spinner on canvas */
+  #fabric-loading {
+    position:absolute; top:12px; right:12px;
+    width:28px; height:28px; border:2.5px solid rgba(181,144,58,.3);
+    border-top-color:var(--gold); border-radius:50%;
+    animation:spin .7s linear infinite;
+    display:none; z-index:5;
+  }
+
+  /* Tooltip sobre canvas */
+  #canvas-tooltip {
     position:absolute; bottom:14px; left:50%; transform:translateX(-50%);
-    background:rgba(26,23,20,.8); color:rgba(253,250,243,.85);
+    background:rgba(26,23,20,.82); color:rgba(253,250,243,.85);
     font-size:.62rem; letter-spacing:.08em; padding:6px 16px; border-radius:20px;
-    pointer-events:none; white-space:nowrap; transition:opacity .5s;
+    pointer-events:none; white-space:nowrap;
+    transition:opacity .4s; opacity:1;
   }
 
-  /* ── PANEL DERECHO: Telas ────────────────── */
+  /* ── PANEL DERECHO: Librería ────────────────────── */
   #telas-panel {
     background:var(--white); border-left:1px solid var(--border);
     display:flex; flex-direction:column; overflow:hidden;
   }
-  #telas-head { padding:14px 14px 10px; border-bottom:1px solid var(--border); flex-shrink:0; }
-  .tp-eyebrow { font-size:.58rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
-    color:var(--gold); display:block; margin-bottom:4px; }
-  .tp-title { font-family:var(--font-disp); font-size:1rem; font-style:italic; }
-  .tp-sub   { font-size:.65rem; color:var(--muted); margin-top:3px; }
-  #tp-active-part { font-weight:700; color:var(--gold); }
-
-  .tp-filters { display:flex; gap:4px; flex-wrap:wrap;
-    padding:10px 12px; border-bottom:1px solid var(--border); flex-shrink:0; }
-  .tp-filter {
-    font-size:.57rem; font-weight:600; letter-spacing:.07em; text-transform:uppercase;
-    padding:3px 9px; border-radius:20px; border:1px solid var(--border);
-    background:transparent; color:var(--muted); cursor:pointer; transition:all .18s;
+  #telas-head {
+    padding:14px 14px 10px; border-bottom:1px solid var(--border); flex-shrink:0;
   }
-  .tp-filter.active, .tp-filter:hover { background:var(--gold); border-color:var(--gold); color:var(--white); }
+  .tp-eyebrow { font-size:.57rem; font-weight:700; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--gold); display:block; margin-bottom:4px; }
+  .tp-title { font-family:var(--font-disp); font-size:1rem; font-style:italic; }
+  .tp-sub   { font-size:.64rem; color:var(--muted); margin-top:3px; }
+  #tp-editing { font-weight:700; color:var(--gold); }
 
   #telas-grid {
     flex:1; overflow-y:auto;
     display:grid; grid-template-columns:repeat(3,1fr);
-    gap:8px; padding:12px; align-content:start;
+    gap:6px; padding:10px; align-content:start;
   }
+
   .tela-card {
-    cursor:pointer; border-radius:var(--radius); border:2px solid transparent;
-    overflow:hidden; transition:border-color .18s, transform .18s;
+    cursor:pointer; border-radius:var(--radius);
+    border:2.5px solid transparent; overflow:hidden;
+    transition:border-color .16s, transform .16s;
+    background:var(--bg-alt);
   }
   .tela-card:hover { border-color:var(--gold-light); transform:translateY(-1px); }
   .tela-card.sel   { border-color:var(--gold); }
 
-  .tela-swatch { width:100%; aspect-ratio:1; position:relative; overflow:hidden; }
-  .tela-card[data-tipo="Seda"]       .tela-swatch { background-image:linear-gradient(135deg,rgba(255,255,255,.38) 0%,transparent 45%,rgba(0,0,0,.08) 100%); }
-  .tela-card[data-tipo="Terciopelo"] .tela-swatch { background-image:linear-gradient(135deg,rgba(0,0,0,.18) 0%,rgba(255,255,255,.06) 45%,rgba(0,0,0,.22) 100%); }
-  .tela-card[data-tipo="Tafetán"]    .tela-swatch { background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0,rgba(255,255,255,.05) 1px,transparent 1px,transparent 3px),repeating-linear-gradient(90deg,rgba(0,0,0,.03) 0,rgba(0,0,0,.03) 1px,transparent 1px,transparent 3px),linear-gradient(135deg,rgba(255,255,255,.22) 0%,transparent 60%); }
-  .tela-card[data-tipo="Raso"]       .tela-swatch { background-image:linear-gradient(120deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.48) 38%,rgba(255,255,255,.1) 52%,rgba(0,0,0,.07) 72%,rgba(255,255,255,.18) 100%); }
+  .tela-thumb {
+    width:100%; aspect-ratio:1; overflow:hidden; position:relative;
+    background:#ccc;
+  }
+  .tela-thumb img {
+    width:100%; height:100%; object-fit:cover; display:block;
+    transition:transform .2s;
+  }
+  .tela-card:hover .tela-thumb img { transform:scale(1.06); }
 
   .tela-check {
     position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-    background:rgba(181,144,58,.35); opacity:0; transition:opacity .18s;
+    background:rgba(181,144,58,.38); opacity:0; transition:opacity .16s;
   }
   .tela-card.sel .tela-check { opacity:1; }
-  .tela-name { font-size:.56rem; font-weight:600; color:var(--text);
-    padding:4px 5px 2px; background:var(--white); line-height:1.2; }
-  .tela-tipo { font-size:.5rem; color:var(--muted); padding:0 5px 4px; background:var(--white); }
+
+  .tela-name {
+    font-size:.55rem; font-weight:600; color:var(--text);
+    padding:4px 5px 5px; line-height:1.2; background:var(--white);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
   .tela-card.sel .tela-name { color:var(--gold); }
 
-  /* ── RESPONSIVE ─────────────────────────── */
+  /* ── RESPONSIVE ─────────────────────────────────── */
   @media (max-width:900px) {
-    html,body { overflow:auto; }
+    html, body { overflow:auto; }
     #main { grid-template-columns:1fr; overflow:visible; }
-    #parts-panel,#telas-panel { border:none; border-bottom:1px solid var(--border); }
-    #model-wrap { height:500px; }
+    #parts-panel, #telas-panel { border:none; border-bottom:1px solid var(--border); }
+    #canvas-wrap { height:60vw; min-height:380px; }
     #telas-grid { grid-template-columns:repeat(4,1fr); }
   }
   </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header id="header">
   <div class="hdr-left">
     <a class="hdr-brand" href="/">
@@ -221,242 +256,67 @@
 
 <main id="main">
 
-  <!-- ══ IZQUIERDA: Selector de parte ══ -->
+  <!-- ══ IZQUIERDA ══ -->
   <aside id="parts-panel">
 
     <div class="pp-section">
-      <span class="pp-label">① Parte del traje</span>
+      <span class="pp-label">① Parte a editar</span>
 
       <button class="part-btn active" data-part="falda" onclick="selectPart('falda')">
-        <div class="part-color-dot" id="dot-falda"></div>
-        <div><div class="pb-name">Falda</div><div class="pb-sub">Falda principal</div></div>
+        <span class="pb-icon">👗</span>
+        <div style="flex:1;min-width:0">
+          <div class="pb-name">Falda</div>
+          <div class="pb-sel" id="psel-falda">Sin tela elegida</div>
+        </div>
+        <button class="pb-clear" id="pclear-falda" onclick="event.stopPropagation();removeTela('falda')" style="display:none" title="Quitar">✕</button>
       </button>
 
       <button class="part-btn" data-part="corpino" onclick="selectPart('corpino')">
-        <div class="part-color-dot" id="dot-corpino"></div>
-        <div><div class="pb-name">Corpiño</div><div class="pb-sub">Cuerpo y mangas</div></div>
+        <span class="pb-icon">🎀</span>
+        <div style="flex:1;min-width:0">
+          <div class="pb-name">Corpiño</div>
+          <div class="pb-sel" id="psel-corpino">Sin tela elegida</div>
+        </div>
+        <button class="pb-clear" id="pclear-corpino" onclick="event.stopPropagation();removeTela('corpino')" style="display:none" title="Quitar">✕</button>
       </button>
 
-      <button class="part-btn" data-part="zapatos" onclick="selectPart('zapatos')">
-        <div class="part-color-dot" id="dot-zapatos"></div>
-        <div><div class="pb-name">Zapatos</div><div class="pb-sub">Calzado</div></div>
-      </button>
+      <p class="hint-text">Haz clic en una parte del traje o usa los botones de arriba, luego elige una tela.</p>
     </div>
 
     <div class="pp-section">
-      <span class="pp-label">② Añadir complementos</span>
-
-      <button class="comp-btn" id="comp-flores" onclick="toggleComplement('flores')">
-        <div class="toggle-pill"></div>
-        <div><div class="cb-name">🌸 Flores</div></div>
-      </button>
-
-      <button class="comp-btn" id="comp-manton" onclick="toggleComplement('manton')">
-        <div class="toggle-pill"></div>
-        <div><div class="cb-name">🧣 Mantón</div></div>
-      </button>
-
-      <button class="comp-btn" id="comp-aderezo" onclick="toggleComplement('aderezo')">
-        <div class="toggle-pill"></div>
-        <div><div class="cb-name">✨ Aderezo</div></div>
-      </button>
-
-      <button class="comp-btn" id="comp-peineta" onclick="toggleComplement('peineta')">
-        <div class="toggle-pill"></div>
-        <div><div class="cb-name">👑 Peineta</div></div>
+      <span class="pp-label">② Comparar</span>
+      <button class="compare-btn" id="compare-btn"
+        onmousedown="showOriginal(true)" onmouseup="showOriginal(false)"
+        ontouchstart="showOriginal(true)" ontouchend="showOriginal(false)">
+        ⏸ Mantén para ver original
       </button>
     </div>
 
-    <div class="pp-section" style="padding-bottom:14px; margin-top:auto;">
+    <div class="pp-section" style="margin-top:auto; padding-bottom:16px;">
       <span class="pp-label">③ Guardar</span>
-      <button class="action-btn btn-gold" onclick="downloadPNG()">⬇ Descargar</button>
-      <a class="action-btn btn-outline" id="btn-pedir"
-         href="mailto:info@cosascucas.es?subject=Consulta%20diseño%20traje">
-        ✉ Pedir este diseño
-      </a>
+      <button class="action-btn btn-gold" onclick="downloadPNG()">⬇ Descargar imagen</button>
+      <a class="action-btn btn-outline" id="btn-pedir" href="mailto:info@cosascucas.es">✉ Pedir este diseño</a>
     </div>
 
   </aside>
 
-  <!-- ══ CENTRO: Modelo SVG ══ -->
-  <div id="model-wrap">
-    <div id="model-hint">Elige una parte → selecciona una tela</div>
-
-    <svg id="model-svg" viewBox="0 0 320 720" xmlns="http://www.w3.org/2000/svg">
-      <rect width="320" height="720" fill="#FDFAF3" rx="6"/>
-
-      <!-- sombra suelo -->
-      <ellipse cx="160" cy="708" rx="108" ry="9" fill="rgba(26,23,20,.07)"/>
-
-      <!-- ══ FALDA ══ -->
-      <g id="gFalda" class="part-group sel" onclick="selectPart('falda')">
-        <path style="fill:var(--c-falda)" d="M118,320 Q66,435 14,668 L306,668 Q254,435 202,320 Z"/>
-        <!-- pliegues oscuros laterales -->
-        <path fill="rgba(0,0,0,.17)" d="M118,320 Q80,430 28,668 Q54,668 78,656 Q116,440 132,324 Z"/>
-        <path fill="rgba(0,0,0,.17)" d="M202,320 Q240,430 292,668 Q266,668 242,656 Q204,440 188,324 Z"/>
-        <!-- brillo central -->
-        <path fill="rgba(255,255,255,.13)" d="M152,322 Q148,472 146,668 L174,668 Q172,472 168,322 Z"/>
-        <!-- puntilla inferior -->
-        <path fill="rgba(255,255,255,.2)" d="M14,668 Q58,650 102,664 Q146,678 194,664 Q238,650 306,668 L306,672 Q238,654 194,668 Q146,682 102,668 Q58,654 14,672 Z"/>
-      </g>
-
-      <!-- ══ CORPIÑO + MANGAS ══ -->
-      <g id="gCorpino" class="part-group" onclick="selectPart('corpino')">
-        <!-- manga izq -->
-        <path style="fill:var(--c-corpino)" d="M90,167 Q44,176 34,217 Q28,246 47,262 Q68,272 88,257 Q97,241 92,183 Z"/>
-        <path fill="rgba(0,0,0,.2)" d="M90,167 Q53,176 40,212 Q62,210 82,210 Q88,196 90,167 Z"/>
-        <path fill="rgba(255,255,255,.14)" d="M60,258 Q48,248 44,234 Q38,218 42,208 Q38,228 40,250 Q50,268 66,270 Z"/>
-        <!-- manga dcha -->
-        <path style="fill:var(--c-corpino)" d="M230,167 Q276,176 286,217 Q292,246 273,262 Q252,272 232,257 Q223,241 228,183 Z"/>
-        <path fill="rgba(0,0,0,.2)" d="M230,167 Q267,176 280,212 Q258,210 238,210 Q232,196 230,167 Z"/>
-        <path fill="rgba(255,255,255,.14)" d="M260,258 Q272,248 276,234 Q282,218 278,208 Q282,228 280,250 Q270,268 254,270 Z"/>
-        <!-- cuerpo -->
-        <path style="fill:var(--c-corpino)"
-          d="M90,167 Q70,182 63,220 Q58,260 73,294 Q90,318 118,323 L202,323 Q230,318 247,294 Q262,260 257,220 Q250,182 230,167 Q210,151 190,147 Q170,151 150,153 Q128,153 110,160 Z"/>
-        <!-- sombras laterales -->
-        <path fill="rgba(0,0,0,.17)" d="M90,167 Q70,182 63,220 Q59,254 73,286 Q76,282 80,258 Q84,230 87,200 Q88,180 95,170 Z"/>
-        <path fill="rgba(0,0,0,.17)" d="M230,167 Q250,182 257,220 Q261,254 247,286 Q244,282 240,258 Q236,230 233,200 Q232,180 225,170 Z"/>
-        <!-- brillo central seda -->
-        <path fill="rgba(255,255,255,.12)" d="M150,152 Q152,222 153,321 L167,321 Q168,222 170,152 Z"/>
-        <!-- escote -->
-        <path fill="rgba(0,0,0,.1)"
-          d="M150,153 Q158,164 190,161 Q212,163 230,167 Q210,151 190,147 Q170,151 150,153 Z"/>
-      </g>
-
-      <!-- MANOS (piel) -->
-      <ellipse cx="44" cy="266" rx="13" ry="9" fill="#F0C090"/>
-      <ellipse cx="276" cy="266" rx="13" ry="9" fill="#F0C090"/>
-
-      <!-- CUELLO -->
-      <ellipse cx="160" cy="148" rx="16" ry="17" fill="#F0C090"/>
-
-      <!-- CARA -->
-      <ellipse cx="124" cy="91" rx="8" ry="10" fill="#EAB890"/>
-      <ellipse cx="196" cy="91" rx="8" ry="10" fill="#EAB890"/>
-      <ellipse cx="160" cy="84" rx="36" ry="46" fill="#F0C090"/>
-      <!-- cejas -->
-      <path d="M144,68 Q150,65 157,67" stroke="#5C3010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <path d="M163,67 Q170,65 176,68" stroke="#5C3010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <!-- ojos -->
-      <ellipse cx="150" cy="80" rx="5.5" ry="6.5" fill="#2C1600"/>
-      <ellipse cx="170" cy="80" rx="5.5" ry="6.5" fill="#2C1600"/>
-      <ellipse cx="151.5" cy="78.5" rx="2" ry="2" fill="white"/>
-      <ellipse cx="171.5" cy="78.5" rx="2" ry="2" fill="white"/>
-      <!-- nariz -->
-      <path d="M157,95 Q160,100 163,95" stroke="#C89070" stroke-width="1" fill="none"/>
-      <!-- boca -->
-      <path d="M152,107 Q160,113 168,107" fill="#D07878"/>
-      <path d="M152,107 Q160,110 168,107" stroke="#B86060" stroke-width=".8" fill="none"/>
-      <!-- colorete -->
-      <ellipse cx="138" cy="97" rx="9" ry="5" fill="#F0A090" opacity=".22"/>
-      <ellipse cx="182" cy="97" rx="9" ry="5" fill="#F0A090" opacity=".22"/>
-
-      <!-- PELO -->
-      <ellipse cx="160" cy="60" rx="46" ry="40" fill="#2C1600"/>
-      <ellipse cx="160" cy="42" rx="36" ry="28" fill="#2C1600"/>
-      <ellipse cx="160" cy="32" rx="26" ry="20" fill="#382800"/>
-      <ellipse cx="160" cy="27" rx="16" ry="12" fill="#2C1600"/>
-      <path d="M124,54 Q140,36 160,30" stroke="#4A3010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <path d="M196,54 Q180,36 160,30" stroke="#4A3010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <path d="M120,68 Q128,50 140,42" stroke="#4A3010" stroke-width="1" fill="none" stroke-linecap="round"/>
-      <path d="M200,68 Q192,50 180,42" stroke="#4A3010" stroke-width="1" fill="none" stroke-linecap="round"/>
-
-      <!-- ══ ZAPATOS ══ -->
-      <g id="gZapatos" class="part-group" onclick="selectPart('zapatos')">
-        <!-- izq -->
-        <path style="fill:var(--c-zapatos)"
-          d="M116,668 Q100,670 90,677 Q87,684 92,687 Q108,690 140,686 Q148,680 148,672 Z"/>
-        <path fill="rgba(255,255,255,.22)" d="M108,672 Q120,670 138,672 Q128,668 116,668 Q110,668 108,672 Z"/>
-        <rect style="fill:var(--c-zapatos)" x="89" y="685" width="7" height="9" rx="2" opacity=".85"/>
-        <!-- dcho -->
-        <path style="fill:var(--c-zapatos)"
-          d="M204,668 Q220,670 230,677 Q233,684 228,687 Q212,690 180,686 Q172,680 172,672 Z"/>
-        <path fill="rgba(255,255,255,.22)" d="M212,672 Q200,670 182,672 Q192,668 204,668 Q210,668 212,672 Z"/>
-        <rect style="fill:var(--c-zapatos)" x="224" y="685" width="7" height="9" rx="2" opacity=".85"/>
-      </g>
-
-      <!-- ══ COMPLEMENTO: FLORES ══ -->
-      <g id="gFlores" opacity="0" style="transition:opacity .35s">
-        <circle cx="132" cy="36" r="7"    style="fill:var(--c-flores)"/>
-        <ellipse cx="122" cy="29" rx="5" ry="3" style="fill:var(--c-flores)" transform="rotate(-35 122 29)"/>
-        <ellipse cx="143" cy="29" rx="5" ry="3" style="fill:var(--c-flores)" transform="rotate(35 143 29)"/>
-        <ellipse cx="128" cy="23" rx="5" ry="3" style="fill:var(--c-flores)" transform="rotate(-65 128 23)"/>
-        <ellipse cx="136" cy="47" rx="5" ry="3" style="fill:var(--c-flores)" transform="rotate(70 136 47)"/>
-        <circle cx="132" cy="36" r="4"    fill="rgba(255,255,255,.42)"/>
-        <circle cx="148" cy="23" r="6"    style="fill:var(--c-flores)"/>
-        <circle cx="148" cy="23" r="3.5"  fill="rgba(255,255,255,.38)"/>
-        <circle cx="116" cy="47" r="5"    style="fill:var(--c-flores)"/>
-        <circle cx="116" cy="47" r="3"    fill="rgba(255,255,255,.32)"/>
-        <circle cx="142" cy="49" r="3.5"  style="fill:var(--c-flores)" opacity=".9"/>
-        <circle cx="128" cy="19" r="3"    style="fill:var(--c-flores)" opacity=".8"/>
-        <path d="M132,42 Q130,50 128,55" stroke="#3A7A20" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-        <path d="M128,50 Q122,46 118,48" stroke="#3A7A20" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      </g>
-
-      <!-- ══ COMPLEMENTO: MANTÓN ══ -->
-      <g id="gManton" opacity="0" style="transition:opacity .35s">
-        <path style="fill:var(--c-manton)" opacity=".88"
-          d="M148,170 Q104,212 33,348 Q62,362 92,350 Q122,284 156,224 L160,214 L164,224 Q198,284 228,350 Q258,362 287,348 Q216,212 172,170 Z"/>
-        <path style="stroke:var(--c-manton)" stroke-width="3" fill="none" stroke-dasharray="5,4"
-          d="M33,348 Q62,364 92,350"/>
-        <path style="stroke:var(--c-manton)" stroke-width="3" fill="none" stroke-dasharray="5,4"
-          d="M287,348 Q258,364 228,350"/>
-        <path d="M148,170 Q104,212 33,348 Q62,362 92,350 Q122,284 156,224 L160,214 L164,224 Q198,284 228,350 Q258,362 287,348 Q216,212 172,170 Z"
-              fill="url(#manton-pat)" opacity=".18"/>
-      </g>
-
-      <!-- ══ COMPLEMENTO: ADEREZO ══ -->
-      <g id="gAderezo" opacity="0" style="transition:opacity .35s">
-        <path d="M148,160 Q160,173 172,160" style="stroke:var(--c-aderezo)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <circle cx="160" cy="173" r="4.5"  style="fill:var(--c-aderezo)"/>
-        <circle cx="153" cy="167" r="2.5"  style="fill:var(--c-aderezo)"/>
-        <circle cx="167" cy="167" r="2.5"  style="fill:var(--c-aderezo)"/>
-        <!-- pendiente izq -->
-        <circle cx="124" cy="99"  r="3.5"  style="fill:var(--c-aderezo)"/>
-        <line x1="124" y1="103" x2="124" y2="112" style="stroke:var(--c-aderezo)" stroke-width="1.5"/>
-        <circle cx="124" cy="114" r="3"    style="fill:var(--c-aderezo)"/>
-        <!-- pendiente dcho -->
-        <circle cx="196" cy="99"  r="3.5"  style="fill:var(--c-aderezo)"/>
-        <line x1="196" y1="103" x2="196" y2="112" style="stroke:var(--c-aderezo)" stroke-width="1.5"/>
-        <circle cx="196" cy="114" r="3"    style="fill:var(--c-aderezo)"/>
-      </g>
-
-      <!-- ══ COMPLEMENTO: PEINETA ══ -->
-      <g id="gPeineta" opacity="0" style="transition:opacity .35s">
-        <path d="M138,24 Q160,16 182,24 L180,33 Q160,27 140,33 Z" style="fill:var(--c-aderezo)"/>
-        <line x1="146" y1="23" x2="143" y2="10" style="stroke:var(--c-aderezo)" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="154" y1="21" x2="151" y2="7"  style="stroke:var(--c-aderezo)" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="162" y1="19" x2="160" y2="5"  style="stroke:var(--c-aderezo)" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="170" y1="21" x2="167" y2="7"  style="stroke:var(--c-aderezo)" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="178" y1="23" x2="175" y2="10" style="stroke:var(--c-aderezo)" stroke-width="2.5" stroke-linecap="round"/>
-        <circle cx="143" cy="9"  r="2.5" style="fill:var(--c-aderezo)"/>
-        <circle cx="151" cy="6"  r="2.5" style="fill:var(--c-aderezo)"/>
-        <circle cx="160" cy="4"  r="2.5" style="fill:var(--c-aderezo)"/>
-        <circle cx="167" cy="6"  r="2.5" style="fill:var(--c-aderezo)"/>
-        <circle cx="175" cy="9"  r="2.5" style="fill:var(--c-aderezo)"/>
-      </g>
-
-      <defs>
-        <pattern id="manton-pat" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
-          <path d="M0,11 Q5.5,0 11,11 Q16.5,22 22,11" stroke="rgba(255,255,255,.55)" stroke-width="1" fill="none"/>
-        </pattern>
-      </defs>
-    </svg>
+  <!-- ══ CENTRO: Foto de la modelo en canvas ══ -->
+  <div id="canvas-wrap">
+    <div id="loading">
+      <div class="spinner"></div>
+      <span>Cargando modelo…</span>
+    </div>
+    <div id="fabric-loading"></div>
+    <div id="canvas-tooltip">Haz clic en la falda o el corpiño para seleccionar · elige una tela →</div>
+    <canvas id="canvas"></canvas>
   </div>
 
-  <!-- ══ DERECHA: Librería de Telas ══ -->
+  <!-- ══ DERECHA: Librería de telas ══ -->
   <aside id="telas-panel">
     <div id="telas-head">
       <span class="tp-eyebrow">✦ Cosas Cucas</span>
       <div class="tp-title">Librería de telas</div>
-      <div class="tp-sub">Editando: <span id="tp-active-part">Falda</span></div>
-    </div>
-    <div class="tp-filters">
-      <button class="tp-filter active" data-tipo="Todas"       onclick="filterTelas('Todas')">Todas</button>
-      <button class="tp-filter"        data-tipo="Seda"        onclick="filterTelas('Seda')">Seda</button>
-      <button class="tp-filter"        data-tipo="Terciopelo"  onclick="filterTelas('Terciopelo')">Terciopelo</button>
-      <button class="tp-filter"        data-tipo="Tafetán"     onclick="filterTelas('Tafetán')">Tafetán</button>
-      <button class="tp-filter"        data-tipo="Raso"        onclick="filterTelas('Raso')">Raso</button>
+      <div class="tp-sub">Aplicando a: <strong id="tp-editing">Falda</strong></div>
     </div>
     <div id="telas-grid"></div>
   </aside>
@@ -464,240 +324,361 @@
 </main>
 
 <script>
-/* ══════════════════════════════════════════
-   DATOS: TELAS
-══════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════
+   CATÁLOGO DE TELAS — 35 imágenes reales de la tienda
+══════════════════════════════════════════════════════ */
 const TELAS = [
-  { id:'seda-carmin',    nombre:'Seda Carmín',       tipo:'Seda',        color:'#922020' },
-  { id:'seda-azul',      nombre:'Seda Azul Rey',     tipo:'Seda',        color:'#1B3A8A' },
-  { id:'seda-verde',     nombre:'Seda Esmeralda',    tipo:'Seda',        color:'#1A6B3C' },
-  { id:'seda-dorada',    nombre:'Seda Dorada',       tipo:'Seda',        color:'#B5903A' },
-  { id:'seda-rosa',      nombre:'Seda Rosa Antiguo', tipo:'Seda',        color:'#C4858B' },
-  { id:'seda-naranja',   nombre:'Seda Naranja',      tipo:'Seda',        color:'#C4631A' },
-  { id:'seda-lila',      nombre:'Seda Lila',         tipo:'Seda',        color:'#9070C0' },
-  { id:'seda-celeste',   nombre:'Seda Celeste',      tipo:'Seda',        color:'#4A90C8' },
-  { id:'tercio-negro',   nombre:'Terciopelo Negro',  tipo:'Terciopelo',  color:'#181512' },
-  { id:'tercio-granate', nombre:'Terciopelo Granate',tipo:'Terciopelo',  color:'#6B1A2A' },
-  { id:'tercio-morado',  nombre:'Terciopelo Morado', tipo:'Terciopelo',  color:'#4E1A70' },
-  { id:'tercio-verde',   nombre:'Terc. Botella',     tipo:'Terciopelo',  color:'#1A3E20' },
-  { id:'tercio-marino',  nombre:'Terc. Marino',      tipo:'Terciopelo',  color:'#1A2A4A' },
-  { id:'tercio-caoba',   nombre:'Terc. Caoba',       tipo:'Terciopelo',  color:'#5C2A10' },
-  { id:'taf-perla',      nombre:'Tafetán Perla',     tipo:'Tafetán',     color:'#EEE5C8' },
-  { id:'taf-celeste',    nombre:'Tafetán Celeste',   tipo:'Tafetán',     color:'#8AB8D8' },
-  { id:'taf-rosa',       nombre:'Tafetán Rosa',      tipo:'Tafetán',     color:'#E8A0A8' },
-  { id:'taf-amarillo',   nombre:'Tafetán Amarillo',  tipo:'Tafetán',     color:'#D4A820' },
-  { id:'taf-menta',      nombre:'Tafetán Menta',     tipo:'Tafetán',     color:'#70C8A0' },
-  { id:'raso-negro',     nombre:'Raso Negro',        tipo:'Raso',        color:'#1E1A18' },
-  { id:'raso-burdeos',   nombre:'Raso Burdeos',      tipo:'Raso',        color:'#7D1830' },
-  { id:'raso-verde',     nombre:'Raso Verde',        tipo:'Raso',        color:'#2A6040' },
-  { id:'raso-azul',      nombre:'Raso Azul Noche',   tipo:'Raso',        color:'#1A2A58' },
-  { id:'raso-bronce',    nombre:'Raso Bronce',       tipo:'Raso',        color:'#8A6A28' },
+  { src:'telas/7b262a97ab50be92a7f07e0a145d65be.jpg',  nombre:'Rojo Carmín'         },
+  { src:'telas/1aabc72fb1c575ed124c9ec55ad54cc5.jpg',  nombre:'Morado Floral'       },
+  { src:'telas/6e272e3e29e1fb91aac9889b4afc9b67.jpg',  nombre:'Verde Botella'       },
+  { src:'telas/316a2c6e9146f3d7767ca3b5f7ab9231.jpg',  nombre:'Verde Hunter'        },
+  { src:'telas/3be8546ee42550456027263c71963b91.jpg',  nombre:'Violeta Real'        },
+  { src:'telas/43c1d191299024a1616e859c74621158.jpg',  nombre:'Granate Floral'      },
+  { src:'telas/10d72799667cdfedd50b7db1e47de9af.jpg',  nombre:'Azul Marino'         },
+  { src:'telas/1c104dbe51d74631eb953edc5ad7f1d3.jpg',  nombre:'Azul Noche'          },
+  { src:'telas/2a31f651ecf3842456a80b9ec3e1ad41.jpg',  nombre:'Negro Dorado'        },
+  { src:'telas/f128eb84642f1b5f63030d4414c25d6f.jpg',  nombre:'Azul Marino Ramos'  },
+  { src:'telas/46f9778c7094d400c2df163ac0c372b7.jpg',  nombre:'Marrón Chocolate'    },
+  { src:'telas/479224d9440fb12613dd32bd4c356f9e.jpg',  nombre:'Burdeos Floral'      },
+  { src:'telas/aca0413455ec2e9b26a4c28d1e83162d.jpg',  nombre:'Fucsia Dorado'       },
+  { src:'telas/6bde24ac5b50d6ca8c0bcba837bdce7e.jpg',  nombre:'Verde Militar'       },
+  { src:'telas/3848be776d5cf49e63811df2a6d218ff.jpg',  nombre:'Rojo Brocado'        },
+  { src:'telas/856abd3cb99c1aac89ee8b16e961d07d.jpg',  nombre:'Gris Topo'           },
+  { src:'telas/b8d32343036b943fe22a944290846e90.jpg',  nombre:'Platino Floral'      },
+  { src:'telas/516090036d788e609211ff179f82799c.jpg',  nombre:'Malva Lavanda'       },
+  { src:'telas/bf2f4463dc8bcf74175903fa1445d6ab.jpg',  nombre:'Gris Perla'          },
+  { src:'telas/ce1329e103cace9e9bc268485eddc221.jpg',  nombre:'Dorado Mostaza'      },
+  { src:'telas/d510f515e384294a699a7f8f54060342.jpg',  nombre:'Turquesa Floral'     },
+  { src:'telas/647a511ff9eca426ac2669b2b46aaca4.jpg',  nombre:'Verde Sage'          },
+  { src:'telas/821924b765a779c2477ce691ec7ae18d.jpg',  nombre:'Rosa Blush'          },
+  { src:'telas/bc31b627cd74bee19c2227910368c329.jpg',  nombre:'Gris Plata'          },
+  { src:'telas/aeb47eca4eab818829a5fc16263b7b31.jpg',  nombre:'Azul Acero'          },
+  { src:'telas/d4b006080b3e62d38a9cc5c53ef2b259.jpg',  nombre:'Verde Menta'         },
+  { src:'telas/69ad14805a6b0e89be0e59404d2b23ae.jpg',  nombre:'Dorado Ocre'         },
+  { src:'telas/86d5708f02be2e59052db0d06b0c4d07.jpg',  nombre:'Blanco Bordado'      },
+  { src:'telas/fd5de3fbbe1c25725787571f58ba3a41.jpg',  nombre:'Crema Dorada'        },
+  { src:'telas/ffe32f5d31acce1ce39f233343a0bdb1.jpg',  nombre:'Champán Bordada'     },
+  { src:'telas/54bafcd345701df74a7dfb79e4eed63a.jpg',  nombre:'Blanco Peonías'      },
+  { src:'telas/e3854f6f869326e6512ee841f2f1edc3.jpg',  nombre:'Marfil Brocado'      },
+  { src:'telas/e0016a7759c718ff2eddec75fc8903d5.jpg',  nombre:'Colección Rollos A'  },
+  { src:'telas/4a9966182b5518d6852ecc5709b47be6.jpg',  nombre:'Colección Apilada'   },
+  { src:'telas/263301bf103659434f9942ceb2d54566.jpg',  nombre:'Colección Rollos B'  },
 ];
 
-/* ══════════════════════════════════════════
+/* ══════════════════════════════════════════════════════
+   MÁSCARAS (polígono en fracción 0-1 de ancho×alto)
+   Trazadas sobre "foto prueba.jpg" (portrait, ~535×895)
+
+   FALDA:  empieza en cintura ~49% desde arriba,
+           se abre hasta ocupar todo el ancho en el bajo.
+   CORPIÑO: el cuerpo oscuro encima de la falda,
+           desde debajo del encaje (~26%) hasta la cintura.
+══════════════════════════════════════════════════════ */
+const MASKS = {
+  falda: [
+    [0.26, 0.49],
+    [0.74, 0.49],
+    [0.90, 0.62],
+    [0.98, 0.80],
+    [1.00, 1.00],
+    [0.00, 1.00],
+    [0.02, 0.80],
+    [0.10, 0.62],
+  ],
+  corpino: [
+    [0.33, 0.26],
+    [0.67, 0.26],
+    [0.78, 0.35],
+    [0.76, 0.44],
+    [0.67, 0.49],
+    [0.33, 0.49],
+    [0.24, 0.44],
+    [0.22, 0.35],
+  ],
+};
+
+const PART_LABELS = { falda:'Falda', corpino:'Corpiño' };
+
+/* ══════════════════════════════════════════════════════
    ESTADO
-══════════════════════════════════════════ */
-const PART_MAP = {
-  falda:   { cssVar:'--c-falda',   svgId:'gFalda',   label:'Falda'   },
-  corpino: { cssVar:'--c-corpino', svgId:'gCorpino', label:'Corpiño' },
-  zapatos: { cssVar:'--c-zapatos', svgId:'gZapatos', label:'Zapatos' },
-  flores:  { cssVar:'--c-flores',  svgId:'gFlores',  label:'Flores'  },
-  manton:  { cssVar:'--c-manton',  svgId:'gManton',  label:'Mantón'  },
-  aderezo: { cssVar:'--c-aderezo', svgId:'gAderezo', label:'Aderezo' },
-  peineta: { cssVar:'--c-aderezo', svgId:'gPeineta', label:'Peineta' },
+══════════════════════════════════════════════════════ */
+let activePart  = 'falda';
+let comparing   = false;
+const selections = {};  // { falda: {src, nombre, img}, corpino: ... }
+const imgCache   = {};  // src → HTMLImageElement
+
+/* ══════════════════════════════════════════════════════
+   CANVAS
+══════════════════════════════════════════════════════ */
+const canvas   = document.getElementById('canvas');
+const ctx      = canvas.getContext('2d');
+const modelImg = new Image();
+
+modelImg.onload = () => {
+  canvas.width  = modelImg.naturalWidth;
+  canvas.height = modelImg.naturalHeight;
+  document.getElementById('loading').style.display = 'none';
+  redraw();
 };
-
-const state = {
-  part: 'falda',
-  filter: 'Todas',
-  selections: {
-    falda:   { id:'seda-azul',    color:'#1B3A8A', nombre:'Seda Azul Rey'     },
-    corpino: { id:'seda-carmin',  color:'#922020', nombre:'Seda Carmín'       },
-    zapatos: { id:'tercio-caoba', color:'#5C2A10', nombre:'Terciopelo Caoba'  },
-    flores:  { id:'seda-rosa',    color:'#C4858B', nombre:'Seda Rosa Antiguo' },
-    manton:  { id:'seda-dorada',  color:'#B5903A', nombre:'Seda Dorada'       },
-    aderezo: { id:'seda-dorada',  color:'#B5903A', nombre:'Seda Dorada'       },
-    peineta: { id:'seda-dorada',  color:'#B5903A', nombre:'Seda Dorada'       },
-  },
-  complements: { flores:false, manton:false, aderezo:false, peineta:false }
+modelImg.onerror = () => {
+  document.getElementById('loading').innerHTML =
+    '<span style="color:#c44">No se pudo cargar la foto de la modelo.</span>';
 };
+modelImg.src = 'pasarela/foto prueba.jpg';
 
-/* ══════════════════════════════════════════
-   SELECCIONAR PARTE
-══════════════════════════════════════════ */
-function selectPart(part) {
-  state.part = part;
+/* ── Dibujar canvas ─────────────────────────────── */
+function redraw() {
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha = 1;
+  ctx.drawImage(modelImg, 0, 0);
 
-  document.querySelectorAll('.part-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.part === part);
-  });
+  if (comparing) return; // comparar: sólo foto original
 
-  const lbl = PART_MAP[part]?.label || part;
-  document.getElementById('tp-active-part').textContent = lbl;
+  /* Aplicar telas seleccionadas */
+  for (const [part, data] of Object.entries(selections)) {
+    if (data?.img && MASKS[part]) {
+      applyFabric(data.img, MASKS[part], part === 'corpino');
+    }
+  }
 
-  // Resaltar en SVG
-  Object.keys(PART_MAP).forEach(p => {
-    const el = document.getElementById(PART_MAP[p].svgId);
-    if (el) el.classList.toggle('sel', p === part);
-  });
-
-  renderTelas();
-  hideHint();
+  /* Contorno de la parte activa */
+  if (MASKS[activePart]) drawOutline(MASKS[activePart]);
 }
 
-/* ══════════════════════════════════════════
-   SELECCIONAR TELA → aplicar color
-══════════════════════════════════════════ */
-function selectTela(tela) {
-  const part = state.part;
-  state.selections[part] = { id:tela.id, color:tela.color, nombre:tela.nombre };
+/* ── Aplicar tela con blend mode ────────────────── */
+function applyFabric(fabricImg, maskPts, isCorpino) {
+  ctx.save();
 
-  const cssVar = PART_MAP[part]?.cssVar;
-  if (cssVar) document.documentElement.style.setProperty(cssVar, tela.color);
+  const W = canvas.width, H = canvas.height;
 
-  // Actualizar dot del botón de parte
-  const dot = document.getElementById('dot-' + part);
-  if (dot) dot.style.background = tela.color;
+  /* 1. Clip al polígono de la prenda */
+  ctx.beginPath();
+  maskPts.forEach(([px, py], i) => {
+    const x = px * W, y = py * H;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.closePath();
+  ctx.clip();
 
-  renderTelas();
+  /* 2. Levantamiento de zonas oscuras (permite que las telas oscuras
+        sean visibles sobre el corpiño marrón oscuro) */
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha = isCorpino ? 0.42 : 0.18;
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0, 0, W, H);
+
+  /* 3. Tela con blend mode multiply:
+        · preserva sombras y pliegues del original
+        · mezcla el color/estampado de la tela      */
+  const scale = Math.max(W / fabricImg.naturalWidth, H / fabricImg.naturalHeight);
+  const fw = fabricImg.naturalWidth  * scale;
+  const fh = fabricImg.naturalHeight * scale;
+  const fx = (W - fw) / 2;
+  const fy = (H - fh) / 2;
+
+  ctx.globalCompositeOperation = 'multiply';
+  ctx.globalAlpha = isCorpino ? 0.92 : 0.88;
+  ctx.drawImage(fabricImg, fx, fy, fw, fh);
+
+  ctx.restore();
+}
+
+/* ── Contorno dorado de la parte activa ─────────── */
+function drawOutline(maskPts) {
+  const W = canvas.width, H = canvas.height;
+  ctx.save();
+  ctx.beginPath();
+  maskPts.forEach(([px, py], i) => {
+    const x = px * W, y = py * H;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.closePath();
+  ctx.strokeStyle = 'rgba(181,144,58,0.65)';
+  ctx.lineWidth = Math.max(W * 0.004, 3);
+  ctx.setLineDash([Math.max(W*0.012,8), Math.max(W*0.006,4)]);
+  ctx.stroke();
+  ctx.restore();
+}
+
+/* ── Clic en canvas → seleccionar parte ─────────── */
+canvas.addEventListener('click', (e) => {
+  const rect   = canvas.getBoundingClientRect();
+  const scaleX = canvas.width  / rect.width;
+  const scaleY = canvas.height / rect.height;
+  const px = ((e.clientX - rect.left) * scaleX) / canvas.width;
+  const py = ((e.clientY - rect.top)  * scaleY) / canvas.height;
+
+  for (const [part, mask] of Object.entries(MASKS)) {
+    if (pointInPoly(px, py, mask)) { selectPart(part); return; }
+  }
+});
+
+/* Ray-casting point-in-polygon */
+function pointInPoly(px, py, poly) {
+  let inside = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const [xi, yi] = poly[i], [xj, yj] = poly[j];
+    if (((yi > py) !== (yj > py)) &&
+        (px < (xj - xi) * (py - yi) / (yj - yi) + xi)) inside = !inside;
+  }
+  return inside;
+}
+
+/* ══════════════════════════════════════════════════════
+   SELECCIONAR PARTE
+══════════════════════════════════════════════════════ */
+function selectPart(part) {
+  activePart = part;
+
+  document.querySelectorAll('.part-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.part === part));
+
+  document.getElementById('tp-editing').textContent = PART_LABELS[part] || part;
+  renderGrid();
+  hideTooltip();
+  redraw();
+}
+
+/* ══════════════════════════════════════════════════════
+   SELECCIONAR TELA
+══════════════════════════════════════════════════════ */
+async function selectTela(tela) {
+  showFabricLoading(true);
+  try {
+    const img = await loadImg(tela.src);
+    selections[activePart] = { ...tela, img };
+    updatePartUI(activePart);
+    renderGrid();
+    redraw();
+    updateMailto();
+  } catch {
+    console.warn('No se pudo cargar la tela:', tela.src);
+  } finally {
+    showFabricLoading(false);
+  }
+}
+
+function removeTela(part) {
+  delete selections[part];
+  updatePartUI(part);
+  renderGrid();
+  redraw();
   updateMailto();
 }
 
-/* ══════════════════════════════════════════
-   TOGGLE COMPLEMENTO
-══════════════════════════════════════════ */
-function toggleComplement(comp) {
-  const on = !state.complements[comp];
-  state.complements[comp] = on;
-
-  const svgEl = document.getElementById(PART_MAP[comp]?.svgId);
-  if (svgEl) svgEl.style.opacity = on ? '1' : '0';
-
-  const btn = document.getElementById('comp-' + comp);
-  if (btn) btn.classList.toggle('on', on);
-
-  if (on) selectPart(comp);
-  hideHint();
+function showFabricLoading(show) {
+  document.getElementById('fabric-loading').style.display = show ? 'block' : 'none';
 }
 
-/* ══════════════════════════════════════════
-   RENDER GRID DE TELAS
-══════════════════════════════════════════ */
-function renderTelas() {
-  const grid = document.getElementById('telas-grid');
-  const activeSel = state.selections[state.part];
-  const lista = state.filter === 'Todas' ? TELAS : TELAS.filter(t => t.tipo === state.filter);
+/* ══════════════════════════════════════════════════════
+   CARGAR IMAGEN (con caché)
+══════════════════════════════════════════════════════ */
+function loadImg(src) {
+  if (imgCache[src]) return Promise.resolve(imgCache[src]);
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.onload  = () => { imgCache[src] = img; res(img); };
+    img.onerror = rej;
+    img.src = src;
+  });
+}
 
+/* ══════════════════════════════════════════════════════
+   ACTUALIZAR UI DE PARTE
+══════════════════════════════════════════════════════ */
+function updatePartUI(part) {
+  const sel   = selections[part];
+  const label = document.getElementById('psel-' + part);
+  const clear = document.getElementById('pclear-' + part);
+  if (label) {
+    label.textContent = sel ? sel.nombre : 'Sin tela elegida';
+    label.classList.toggle('has-tela', !!sel);
+  }
+  if (clear) clear.style.display = sel ? 'block' : 'none';
+}
+
+/* ══════════════════════════════════════════════════════
+   RENDER GRID DE TELAS
+══════════════════════════════════════════════════════ */
+function renderGrid() {
+  const grid   = document.getElementById('telas-grid');
+  const curSel = selections[activePart];
   grid.innerHTML = '';
-  lista.forEach(t => {
-    const sel = activeSel?.id === t.id;
+
+  TELAS.forEach(t => {
+    const sel  = curSel?.src === t.src;
     const card = document.createElement('div');
     card.className = 'tela-card' + (sel ? ' sel' : '');
-    card.dataset.tipo = t.tipo;
     card.innerHTML = `
-      <div class="tela-swatch" style="background:${t.color}">
+      <div class="tela-thumb">
+        <img src="${t.src}" alt="${t.nombre}" loading="lazy">
         <div class="tela-check">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M4 9l4 4 6-7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <path d="M5 11l5 5 7-9" stroke="white" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
       </div>
       <div class="tela-name">${t.nombre}</div>
-      <div class="tela-tipo">${t.tipo}</div>`;
+    `;
     card.addEventListener('click', () => selectTela(t));
     grid.appendChild(card);
   });
 }
 
-/* ══════════════════════════════════════════
-   FILTRO
-══════════════════════════════════════════ */
-function filterTelas(tipo) {
-  state.filter = tipo;
-  document.querySelectorAll('.tp-filter').forEach(b => b.classList.toggle('active', b.dataset.tipo === tipo));
-  renderTelas();
+/* ══════════════════════════════════════════════════════
+   COMPARAR (ver original)
+══════════════════════════════════════════════════════ */
+function showOriginal(show) {
+  comparing = show;
+  const btn = document.getElementById('compare-btn');
+  btn.classList.toggle('active', show);
+  if (modelImg.complete && canvas.width) redraw();
 }
 
-/* ══════════════════════════════════════════
+/* ══════════════════════════════════════════════════════
+   TOOLTIP
+══════════════════════════════════════════════════════ */
+function hideTooltip() {
+  const t = document.getElementById('canvas-tooltip');
+  if (t) { t.style.opacity = '0'; t.style.pointerEvents = 'none'; }
+}
+setTimeout(hideTooltip, 6000);
+
+/* ══════════════════════════════════════════════════════
    MAILTO dinámico
-══════════════════════════════════════════ */
+══════════════════════════════════════════════════════ */
 function updateMailto() {
-  const s = state.selections;
-  const comps = state.complements;
-  const body = `Hola, me gustaría información sobre un traje con estas telas:\n\n`
-    + `• Falda: ${s.falda?.nombre || '-'}\n`
-    + `• Corpiño: ${s.corpino?.nombre || '-'}\n`
-    + `• Zapatos: ${s.zapatos?.nombre || '-'}\n`
-    + (comps.flores  ? `• Flores: ${s.flores?.nombre || '-'}\n` : '')
-    + (comps.manton  ? `• Mantón: ${s.manton?.nombre || '-'}\n` : '')
-    + (comps.aderezo ? `• Aderezo: ${s.aderezo?.nombre || '-'}\n` : '')
-    + (comps.peineta ? `• Peineta: ${s.peineta?.nombre || '-'}\n` : '')
-    + `\nQuedo a su disposición para concertar una visita.`;
-  const link = document.getElementById('btn-pedir');
-  if (link) link.href = `mailto:info@cosascucas.es?subject=Consulta%20diseño%20traje&body=${encodeURIComponent(body)}`;
+  const s = selections;
+  const body = 'Hola, me gustaría información sobre un diseño con estas telas:\n\n'
+    + (s.falda   ? `• Falda: ${s.falda.nombre}\n`   : '')
+    + (s.corpino ? `• Corpiño: ${s.corpino.nombre}\n` : '')
+    + '\nQuedo a su disposición para concertar una visita. Muchas gracias.';
+  const a = document.getElementById('btn-pedir');
+  if (a) a.href = `mailto:info@cosascucas.es?subject=Consulta%20diseño%20traje%20fallera&body=${encodeURIComponent(body)}`;
 }
 
-/* ══════════════════════════════════════════
+/* ══════════════════════════════════════════════════════
    DESCARGAR PNG
-══════════════════════════════════════════ */
+══════════════════════════════════════════════════════ */
 function downloadPNG() {
-  const svg  = document.getElementById('model-svg');
-  const cs   = getComputedStyle(document.documentElement);
-  const clone = svg.cloneNode(true);
-
-  // Inline CSS variables → valores reales
-  function resolveVars(str) {
-    return str.replace(/var\(--c-([^)]+)\)/g, (_, name) =>
-      cs.getPropertyValue('--c-' + name).trim() || '#888'
-    );
-  }
-  clone.querySelectorAll('[style]').forEach(el => {
-    el.setAttribute('style', resolveVars(el.getAttribute('style')));
-  });
-  // Quitar hint si existe
-  clone.querySelector && clone.querySelector('#model-hint') && clone.querySelector('#model-hint').remove();
-
-  const data = new XMLSerializer().serializeToString(clone);
-  const blob = new Blob([data], { type:'image/svg+xml;charset=utf-8' });
-  const url  = URL.createObjectURL(blob);
-  const img  = new Image();
-  img.onload = () => {
-    const W = 640, H = Math.round(640 * 720 / 320);
-    const c = document.createElement('canvas');
-    c.width = W; c.height = H;
-    c.getContext('2d').drawImage(img, 0, 0, W, H);
-    URL.revokeObjectURL(url);
-    c.toBlob(png => {
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(png);
-      a.download = 'diseno-cosascucas.png';
-      a.click();
-    }, 'image/png');
-  };
-  img.src = url;
+  if (!canvas.width) return;
+  canvas.toBlob(blob => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'diseno-cosascucas.png';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  }, 'image/png');
 }
 
-function hideHint() {
-  const h = document.getElementById('model-hint');
-  if (h) { h.style.opacity = '0'; h.style.pointerEvents = 'none'; }
-}
-
-/* ══════════════════════════════════════════
-   INICIO
-══════════════════════════════════════════ */
-// Aplicar colores iniciales desde state
-Object.keys(state.selections).forEach(part => {
-  const cssVar = PART_MAP[part]?.cssVar;
-  if (cssVar) document.documentElement.style.setProperty(cssVar, state.selections[part].color);
-  const dot = document.getElementById('dot-' + part);
-  if (dot) dot.style.background = state.selections[part].color;
-});
-
-renderTelas();
+/* ══════════════════════════════════════════════════════
+   INICIALIZAR
+══════════════════════════════════════════════════════ */
+renderGrid();
 updateMailto();
-
-// Ocultar hint tras 6s
-setTimeout(hideHint, 6000);
 </script>
 </body>
 </html>
