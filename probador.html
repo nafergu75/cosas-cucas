@@ -7,104 +7,211 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <style>
-  :root{--bg:#F4EDD8;--bg-alt:#EDE5CE;--bg-dark:#1A1714;--gold:#B5903A;--gl:#D4B166;--text:#1A1714;--muted:#6B5D4F;--border:#D9CEB4;--white:#FDFAF3;--fb:'Space Grotesk',sans-serif;--fd:'Playfair Display',serif;--r:3px}
+  :root{
+    --bg:#F4EDD8;--bg-alt:#EDE5CE;--bg-dark:#1A1714;
+    --gold:#B5903A;--gl:#D4B166;--text:#1A1714;--muted:#6B5D4F;
+    --border:#D9CEB4;--white:#FDFAF3;
+    --fb:'Space Grotesk',sans-serif;--fd:'Playfair Display',serif;--r:3px;
+  }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%;overflow:hidden}
-  body{font-family:var(--fb);background:var(--bg-dark);color:var(--text);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+  body{font-family:var(--fb);background:var(--bg-dark);color:var(--text);
+    -webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
 
-  /* HEADER */
-  #hdr{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:52px;flex-shrink:0;background:var(--bg-dark);border-bottom:1px solid rgba(217,206,180,.15);gap:12px}
+  /* ─── HEADER ──────────────────────────── */
+  #hdr{display:flex;align-items:center;justify-content:space-between;
+    padding:0 20px;height:52px;flex-shrink:0;background:var(--bg-dark);
+    border-bottom:1px solid rgba(217,206,180,.15);gap:12px}
   .hl{display:flex;align-items:center;gap:14px}
   .hbr{display:flex;align-items:center;gap:9px;text-decoration:none}
   .hbr img{height:30px;width:auto;object-fit:contain}
   .hbn{font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gl);white-space:nowrap}
   .hsp{width:1px;height:22px;background:rgba(217,206,180,.2)}
   .htt{font-family:var(--fd);font-size:.95rem;font-style:italic;color:rgba(253,250,243,.7);white-space:nowrap}
-  .hbg{font-size:.57rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:var(--gold);color:var(--white);padding:3px 8px;border-radius:2px}
-  .hbk{font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(253,250,243,.5);text-decoration:none;display:flex;align-items:center;gap:5px;transition:color .2s;white-space:nowrap}
+  .hbg{font-size:.57rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--white);padding:3px 8px;border-radius:2px}
+  .hbk{font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+    color:rgba(253,250,243,.5);text-decoration:none;display:flex;align-items:center;
+    gap:5px;transition:color .2s;white-space:nowrap}
   .hbk:hover{color:var(--gl)}
 
-  /* MAIN */
-  #main{flex:1;display:grid;grid-template-columns:196px 1fr 264px;overflow:hidden;min-height:0}
+  /* ─── LAYOUT ──────────────────────────── */
+  #main{flex:1;display:grid;grid-template-columns:200px 1fr 268px;overflow:hidden;min-height:0}
 
-  /* LEFT PANEL */
-  #lp{background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto}
+  /* ─── LEFT PANEL ──────────────────────── */
+  #lp{background:var(--white);border-right:1px solid var(--border);
+    display:flex;flex-direction:column;overflow-y:auto}
   .sec{padding:12px 11px 10px;border-bottom:1px solid var(--border)}
   .sec:last-child{border-bottom:none;padding-bottom:14px;margin-top:auto}
-  .slbl{font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:9px}
+  .slbl{font-size:.54rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--gold);display:block;margin-bottom:9px}
 
-  /* Part buttons */
-  .pb{width:100%;display:flex;align-items:flex-start;gap:7px;padding:8px 8px;margin-bottom:4px;background:transparent;border:1px solid transparent;border-radius:var(--r);cursor:pointer;transition:all .15s;text-align:left;position:relative}
+  /* Mannequin upload zone */
+  .mq-zone{
+    border:2px dashed var(--border);border-radius:var(--r);
+    padding:14px 10px;text-align:center;cursor:pointer;
+    transition:border-color .2s,background .2s;margin-bottom:8px;
+    position:relative;
+  }
+  .mq-zone:hover,.mq-zone.drag{border-color:var(--gold);background:var(--bg-alt)}
+  .mq-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+  .mq-zone p{font-size:.63rem;color:var(--muted);line-height:1.5}
+  .mq-zone strong{color:var(--text)}
+  .mq-preview{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:2px;
+    display:none;border:1px solid var(--border);margin-bottom:6px}
+  .mq-preview.visible{display:block}
+  .mq-name{font-size:.6rem;color:var(--gold);font-weight:600;margin-bottom:6px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:none}
+  .mq-name.visible{display:block}
+
+  /* Part layer buttons */
+  .pb{width:100%;display:flex;align-items:flex-start;gap:7px;padding:8px;
+    margin-bottom:4px;background:transparent;border:1px solid transparent;
+    border-radius:var(--r);cursor:pointer;transition:all .15s;text-align:left;position:relative}
   .pb:hover{background:var(--bg-alt);border-color:var(--border)}
   .pb.act{background:var(--bg);border-color:var(--gold)}
   .pb.act .pbn{color:var(--gold);font-weight:700}
-  .pblyr{width:16px;height:16px;border-radius:50%;background:var(--border);color:var(--muted);font-size:.52rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
-  .pb.act .pblyr{background:var(--gold);color:#fff}
-  .pbth{width:32px;height:32px;border-radius:2px;flex-shrink:0;object-fit:cover;border:1.5px solid var(--border);background:var(--bg-alt);overflow:hidden}
-  .pbth img{width:100%;height:100%;object-fit:cover;display:block}
-  .pbth.empty{background:var(--bg-alt)}
+  .pbn-num{width:16px;height:16px;border-radius:50%;background:var(--border);
+    color:var(--muted);font-size:.52rem;font-weight:700;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+  .pb.act .pbn-num{background:var(--gold);color:#fff}
+  .pbth{width:34px;height:34px;border-radius:2px;flex-shrink:0;
+    background:var(--bg-alt);overflow:hidden;border:1.5px solid var(--border);
+    display:flex;align-items:center;justify-content:center}
+  .pbth img{width:100%;height:100%;object-fit:cover;display:none}
+  .pbth .empty-icon{font-size:.9rem;opacity:.4}
   .pbi{flex:1;min-width:0}
   .pbn{font-size:.7rem;font-weight:600;color:var(--text);line-height:1.2}
   .pbd{font-size:.56rem;color:var(--muted);margin-top:1px}
-  .pbs{font-size:.58rem;color:var(--gold);font-weight:600;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100px}
-  .pbx{position:absolute;right:3px;top:50%;transform:translateY(-50%);background:transparent;border:none;cursor:pointer;color:var(--muted);font-size:.72rem;padding:3px 5px;border-radius:2px;transition:color .15s,background .15s;line-height:1}
+  .pbs{font-size:.56rem;color:var(--gold);font-weight:600;margin-top:2px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:106px}
+  .pbx{position:absolute;right:3px;top:50%;transform:translateY(-50%);
+    background:transparent;border:none;cursor:pointer;color:var(--muted);
+    font-size:.72rem;padding:3px 5px;border-radius:2px;transition:all .15s;line-height:1}
   .pbx:hover{color:#c00;background:rgba(200,0,0,.08)}
 
-  /* Mannequin info */
-  .mq-info{font-size:.58rem;color:var(--muted);line-height:1.5;padding:7px 0 4px;border-top:1px solid var(--border);margin-top:6px}
-  .mq-info a{color:var(--gold)}
+  /* Opacity per layer */
+  .layer-opacity{padding:0 8px 8px;display:none}
+  .layer-opacity.visible{display:block}
+  .layer-opacity label{font-size:.56rem;color:var(--muted);display:flex;
+    align-items:center;justify-content:space-between;margin-bottom:3px}
+  .layer-opacity input[type=range]{width:100%;accent-color:var(--gold)}
+
+  /* Blend mode selector */
+  .blend-sel{font-size:.58rem;padding:3px 6px;border:1px solid var(--border);
+    border-radius:var(--r);background:var(--white);color:var(--text);
+    cursor:pointer;width:100%;margin-top:4px;font-family:var(--fb)}
+
+  /* Compare btn */
+  .cmp-btn{width:100%;padding:8px 10px;background:var(--bg-alt);border:1px solid var(--border);
+    border-radius:var(--r);cursor:pointer;font-family:var(--fb);font-size:.62rem;
+    font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+    transition:all .16s;user-select:none;margin-bottom:6px}
+  .cmp-btn:hover{border-color:var(--gold);color:var(--text)}
+  .cmp-btn.on{background:var(--bg-dark);color:var(--white);border-color:var(--bg-dark)}
 
   /* Action buttons */
-  .ab{display:block;width:100%;padding:9px 8px;font-family:var(--fb);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-align:center;border-radius:var(--r);cursor:pointer;transition:all .18s;margin-bottom:6px;text-decoration:none}
+  .ab{display:block;width:100%;padding:9px 8px;font-family:var(--fb);font-size:.6rem;
+    font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-align:center;
+    border-radius:var(--r);cursor:pointer;transition:all .18s;margin-bottom:6px;text-decoration:none}
   .ag{background:var(--gold);color:var(--white);border:none}.ag:hover{background:var(--gl)}
   .ao{background:transparent;color:var(--text);border:1px solid var(--border)}.ao:hover{border-color:var(--gold);color:var(--gold)}
 
-  /* CENTER */
-  #cw{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0e0b09}
-  #canvas{max-height:100%;max-width:100%;display:block;cursor:default}
-  #ld{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#0e0b09;color:rgba(253,250,243,.55);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;z-index:10;pointer-events:none}
-  .sp{width:34px;height:34px;border:3px solid rgba(181,144,58,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+  /* ─── CANVAS CENTER ───────────────────── */
+  #cw{position:relative;display:flex;align-items:center;justify-content:center;
+    overflow:hidden;background:#0e0b09}
+  #canvas{max-height:100%;max-width:100%;display:block}
+
+  #ld{position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:14px;background:#0e0b09;
+    color:rgba(253,250,243,.55);font-size:.68rem;letter-spacing:.1em;
+    text-transform:uppercase;z-index:10;pointer-events:none}
+  .sp{width:34px;height:34px;border:3px solid rgba(181,144,58,.2);
+    border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
-  #fab-sp{position:absolute;top:10px;right:10px;width:24px;height:24px;border:2.5px solid rgba(181,144,58,.25);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;display:none;z-index:5}
-  #tip{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(26,23,20,.82);color:rgba(253,250,243,.85);font-size:.59rem;letter-spacing:.07em;padding:5px 14px;border-radius:20px;pointer-events:none;white-space:nowrap;transition:opacity .5s}
 
-  /* Mannequin missing notice */
-  #mq-notice{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(26,23,20,.88);color:rgba(253,250,243,.85);padding:24px 28px;border-radius:6px;text-align:center;max-width:300px;display:none;z-index:20}
-  #mq-notice h3{font-family:var(--fd);font-size:1rem;font-style:italic;color:var(--gl);margin-bottom:10px}
-  #mq-notice p{font-size:.67rem;line-height:1.7;color:rgba(253,250,243,.7)}
-  #mq-notice code{background:rgba(181,144,58,.2);color:var(--gl);padding:2px 6px;border-radius:3px;font-size:.63rem}
+  #fab-sp{position:absolute;top:10px;right:10px;width:24px;height:24px;
+    border:2.5px solid rgba(181,144,58,.25);border-top-color:var(--gold);
+    border-radius:50%;animation:spin .7s linear infinite;display:none;z-index:5}
 
-  /* RIGHT PANEL */
-  #rp{background:var(--white);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+  #tip{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);
+    background:rgba(26,23,20,.82);color:rgba(253,250,243,.85);font-size:.59rem;
+    letter-spacing:.07em;padding:5px 14px;border-radius:20px;
+    pointer-events:none;white-space:nowrap;transition:opacity .5s}
+
+  /* Drop overlay for mannequin drag */
+  #drop-overlay{position:absolute;inset:0;background:rgba(181,144,58,.18);
+    border:3px dashed var(--gold);display:none;align-items:center;
+    justify-content:center;z-index:20;flex-direction:column;gap:12px}
+  #drop-overlay.show{display:flex}
+  #drop-overlay span{font-size:.8rem;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--gl)}
+
+  /* Empty state */
+  #empty-state{position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:16px;
+    pointer-events:none;display:none}
+  #empty-state.show{display:flex}
+  #empty-state p{font-family:var(--fd);font-size:1.1rem;font-style:italic;
+    color:rgba(253,250,243,.5);text-align:center;max-width:280px;line-height:1.6}
+
+  /* ─── RIGHT PANEL ─────────────────────── */
+  #rp{background:var(--white);border-left:1px solid var(--border);
+    display:flex;flex-direction:column;overflow:hidden}
   #rh{padding:12px 13px 9px;border-bottom:1px solid var(--border);flex-shrink:0}
-  .rey{font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:3px}
+  .rey{font-size:.54rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--gold);display:block;margin-bottom:3px}
   .rtt{font-family:var(--fd);font-size:.95rem;font-style:italic}
   .rsub{font-size:.62rem;color:var(--muted);margin-top:3px}
   #rcat{font-weight:700;color:var(--gold)}
 
-  /* Type filter tabs */
-  #rtabs{display:flex;gap:4px;padding:8px 11px;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap}
-  .rtab{font-size:.58rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s}
+  /* Filter tabs */
+  #rtabs{display:flex;gap:4px;padding:8px 10px;
+    border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap}
+  .rtab{font-size:.57rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+    padding:3px 9px;border-radius:20px;border:1px solid var(--border);
+    background:transparent;color:var(--muted);cursor:pointer;transition:all .15s}
   .rtab.on,.rtab:hover{background:var(--gold);border-color:var(--gold);color:var(--white)}
 
-  /* Gallery grid */
-  #rgrid{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(2,1fr);gap:7px;padding:10px;align-content:start}
-  .gc{cursor:pointer;border-radius:var(--r);border:2.5px solid transparent;overflow:hidden;transition:border-color .14s,transform .14s}
+  /* Upload custom garment */
+  #custom-upload-area{padding:8px 10px;border-bottom:1px solid var(--border);flex-shrink:0}
+  .custom-upload-btn{width:100%;padding:7px 10px;background:var(--bg-alt);
+    border:1px dashed var(--border);border-radius:var(--r);cursor:pointer;
+    font-family:var(--fb);font-size:.6rem;font-weight:600;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--muted);transition:all .16s;position:relative}
+  .custom-upload-btn:hover{border-color:var(--gold);color:var(--text)}
+  .custom-upload-btn input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+
+  /* Gallery */
+  #rgrid{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(2,1fr);
+    gap:7px;padding:10px;align-content:start}
+  .gc{cursor:pointer;border-radius:var(--r);border:2.5px solid transparent;
+    overflow:hidden;transition:border-color .14s,transform .13s;background:var(--bg-alt)}
   .gc:hover{border-color:var(--gl);transform:translateY(-1px)}
   .gc.sel{border-color:var(--gold)}
   .gci{width:100%;aspect-ratio:3/4;overflow:hidden;position:relative;background:#ccc}
   .gci img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s}
-  .gc:hover .gci img{transform:scale(1.05)}
-  .gck{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(181,144,58,.38);opacity:0;transition:opacity .14s}
+  .gc:hover .gci img{transform:scale(1.06)}
+  .gck{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    background:rgba(181,144,58,.38);opacity:0;transition:opacity .14s}
   .gc.sel .gck{opacity:1}
-  .gcn{font-size:.59rem;font-weight:600;color:var(--text);padding:5px 6px;background:var(--white);line-height:1.2}
+  .gcn{font-size:.58rem;font-weight:600;color:var(--text);
+    padding:5px 6px;background:var(--white);line-height:1.2}
   .gc.sel .gcn{color:var(--gold)}
 
-  @media(max-width:900px){html,body{overflow:auto}#main{grid-template-columns:1fr;overflow:visible}#lp,#rp{border:none;border-bottom:1px solid var(--border)}#cw{height:120vw;min-height:380px}#rgrid{grid-template-columns:repeat(3,1fr)}}
+  /* Responsive */
+  @media(max-width:900px){
+    html,body{overflow:auto}
+    #main{grid-template-columns:1fr;overflow:visible}
+    #lp,#rp{border:none;border-bottom:1px solid var(--border)}
+    #cw{height:120vw;min-height:380px}
+    #rgrid{grid-template-columns:repeat(3,1fr)}
+  }
   </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header id="hdr">
   <div class="hl">
     <a class="hbr" href="/"><img src="logo cosascucas.png" alt="Cosas Cucas"><span class="hbn">Cosas Cucas</span></a>
@@ -113,38 +220,89 @@
     <span class="hbg">Nuevo</span>
   </div>
   <a class="hbk" href="/">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
     Volver a la web
   </a>
 </header>
 
 <main id="main">
 
-  <!-- LEFT: control de capas -->
+  <!-- ══ LEFT: control de capas ══ -->
   <aside id="lp">
 
+    <!-- Maniquí base -->
     <div class="sec">
-      <span class="slbl">① Partes del traje</span>
-      <p style="font-size:.58rem;color:var(--muted);margin-bottom:9px;line-height:1.5">
-        Selecciona una parte y elige la prenda del catálogo →
+      <span class="slbl">① Maniquí base</span>
+
+      <img class="mq-preview" id="mq-preview" alt="Maniquí">
+      <div class="mq-name" id="mq-name"></div>
+
+      <div class="mq-zone" id="mq-zone"
+           ondragover="event.preventDefault();this.classList.add('drag')"
+           ondragleave="this.classList.remove('drag')"
+           ondrop="dropMannequin(event)">
+        <input type="file" id="mq-file" accept="image/*" onchange="loadMannequinFile(this.files[0])">
+        <p><strong>Sube el maniquí IA</strong><br>Arrastra o haz clic<br>
+        <span style="font-size:.55rem;opacity:.7">JPG/PNG, fondo neutro o blanco</span></p>
+      </div>
+    </div>
+
+    <!-- Capas del traje -->
+    <div class="sec">
+      <span class="slbl">② Partes del traje</span>
+      <p style="font-size:.57rem;color:var(--muted);margin-bottom:8px;line-height:1.5">
+        Capas en orden de vestido. Elige cada una →
       </p>
 
       <!-- FALDA -->
       <button class="pb act" data-k="falda" onclick="selType('falda')">
-        <div class="pblyr">1</div>
-        <div class="pbth empty" id="th-falda"><img id="thimg-falda" style="display:none"></div>
+        <div class="pbn-num">1</div>
+        <div class="pbth" id="th-falda"><span class="empty-icon">👗</span><img id="thimg-falda"></div>
         <div class="pbi">
           <div class="pbn">Falda</div>
-          <div class="pbd">Capa exterior</div>
+          <div class="pbd">Capa exterior, vuelo</div>
           <div class="pbs" id="pbs-falda"></div>
         </div>
         <button class="pbx" id="pbx-falda" onclick="event.stopPropagation();clearLayer('falda')" style="display:none">✕</button>
       </button>
+      <div class="layer-opacity" id="lop-falda">
+        <label>Opacidad <span id="lopval-falda">88%</span></label>
+        <input type="range" min="20" max="100" value="88" oninput="setOpacity('falda',this.value)">
+        <select class="blend-sel" id="blend-falda" onchange="setBlend('falda',this.value)">
+          <option value="multiply">Multiply (fondo claro)</option>
+          <option value="source-over">Normal (fondo oscuro)</option>
+          <option value="screen">Screen (invertir)</option>
+          <option value="overlay">Overlay</option>
+        </select>
+      </div>
+
+      <!-- DELANTAL -->
+      <button class="pb" data-k="delantal" onclick="selType('delantal')">
+        <div class="pbn-num">2</div>
+        <div class="pbth" id="th-delantal"><span class="empty-icon">🎭</span><img id="thimg-delantal"></div>
+        <div class="pbi">
+          <div class="pbn">Delantal / Pico</div>
+          <div class="pbd">Panel frontal + encaje</div>
+          <div class="pbs" id="pbs-delantal"></div>
+        </div>
+        <button class="pbx" id="pbx-delantal" onclick="event.stopPropagation();clearLayer('delantal')" style="display:none">✕</button>
+      </button>
+      <div class="layer-opacity" id="lop-delantal">
+        <label>Opacidad <span id="lopval-delantal">82%</span></label>
+        <input type="range" min="20" max="100" value="82" oninput="setOpacity('delantal',this.value)">
+        <select class="blend-sel" id="blend-delantal" onchange="setBlend('delantal',this.value)">
+          <option value="multiply">Multiply (fondo claro)</option>
+          <option value="source-over">Normal</option>
+          <option value="screen">Screen</option>
+        </select>
+      </div>
 
       <!-- CORPIÑO -->
       <button class="pb" data-k="corpino" onclick="selType('corpino')">
-        <div class="pblyr">2</div>
-        <div class="pbth empty" id="th-corpino"><img id="thimg-corpino" style="display:none"></div>
+        <div class="pbn-num">3</div>
+        <div class="pbth" id="th-corpino"><span class="empty-icon">🎀</span><img id="thimg-corpino"></div>
         <div class="pbi">
           <div class="pbn">Corpiño</div>
           <div class="pbd">Cuerpo + mangas</div>
@@ -152,325 +310,409 @@
         </div>
         <button class="pbx" id="pbx-corpino" onclick="event.stopPropagation();clearLayer('corpino')" style="display:none">✕</button>
       </button>
+      <div class="layer-opacity" id="lop-corpino">
+        <label>Opacidad <span id="lopval-corpino">90%</span></label>
+        <input type="range" min="20" max="100" value="90" oninput="setOpacity('corpino',this.value)">
+        <select class="blend-sel" id="blend-corpino" onchange="setBlend('corpino',this.value)">
+          <option value="multiply">Multiply (fondo claro)</option>
+          <option value="source-over">Normal</option>
+          <option value="screen">Screen</option>
+        </select>
+      </div>
 
-      <!-- CONJUNTO -->
+      <!-- CONJUNTO COMPLETO -->
       <button class="pb" data-k="completo" onclick="selType('completo')">
-        <div class="pblyr">✦</div>
-        <div class="pbth empty" id="th-completo"><img id="thimg-completo" style="display:none"></div>
+        <div class="pbn-num">✦</div>
+        <div class="pbth" id="th-completo"><span class="empty-icon">✨</span><img id="thimg-completo"></div>
         <div class="pbi">
           <div class="pbn">Conjunto completo</div>
-          <div class="pbd">Ver traje completo</div>
+          <div class="pbd">Vista de referencia</div>
           <div class="pbs" id="pbs-completo"></div>
         </div>
         <button class="pbx" id="pbx-completo" onclick="event.stopPropagation();clearLayer('completo')" style="display:none">✕</button>
       </button>
-
-      <div class="mq-info">
-        Para usar tu propio maniquí IA: guarda la imagen como <code>pasarela/maniqui.jpg</code>
+      <div class="layer-opacity" id="lop-completo">
+        <label>Opacidad <span id="lopval-completo">100%</span></label>
+        <input type="range" min="20" max="100" value="100" oninput="setOpacity('completo',this.value)">
+        <select class="blend-sel" id="blend-completo" onchange="setBlend('completo',this.value)">
+          <option value="source-over" selected>Normal (reemplaza)</option>
+          <option value="multiply">Multiply</option>
+          <option value="overlay">Overlay</option>
+        </select>
       </div>
     </div>
 
-    <div class="sec">
-      <span class="slbl">② Ver</span>
-      <button class="ab ao" id="cmpbtn"
-        onmousedown="compare(true)" onmouseup="compare(false)"
-        ontouchstart="compare(true)" ontouchend="compare(false)">
-        ⏸ Mantén: ver base
-      </button>
-    </div>
-
+    <!-- Acciones -->
     <div class="sec">
       <span class="slbl">③ Guardar</span>
-      <button class="ab ag" onclick="savePNG()">⬇ Descargar imagen</button>
+      <button class="cmp-btn" id="cmp-btn"
+        onmousedown="compare(true)" onmouseup="compare(false)"
+        ontouchstart="compare(true)" ontouchend="compare(false)">
+        ⏸ Mantén: ver maniquí solo
+      </button>
+      <button class="ab ag" onclick="savePNG()">⬇ Descargar diseño</button>
       <a class="ab ao" id="mailto-btn" href="mailto:info@cosascucas.es">✉ Pedir este diseño</a>
     </div>
 
   </aside>
 
-  <!-- CENTER: canvas compositor -->
-  <div id="cw">
-    <div id="ld"><div class="sp"></div><span>Cargando…</span></div>
+  <!-- ══ CENTER: canvas compositor ══ -->
+  <div id="cw"
+       ondragover="event.preventDefault();document.getElementById('drop-overlay').classList.add('show')"
+       ondragleave="document.getElementById('drop-overlay').classList.remove('show')"
+       ondrop="dropMannequin(event);document.getElementById('drop-overlay').classList.remove('show')">
+
+    <div id="ld"><div class="sp"></div><span>Preparando…</span></div>
     <div id="fab-sp"></div>
-    <div id="tip">← Selecciona una parte · elige del catálogo →</div>
-    <div id="mq-notice">
-      <h3>Maniquí no encontrado</h3>
-      <p>Guarda una imagen de maniquí IA en:<br><code>pasarela/maniqui.jpg</code><br><br>
-      Debe ser foto frontal de cuerpo completo con fondo claro o neutro.</p>
+    <div id="tip">← Sube el maniquí IA · selecciona partes · elige del catálogo →</div>
+
+    <!-- Drop overlay para arrastrar imagen al centro -->
+    <div id="drop-overlay">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+        <path d="M24 8v20M16 16l8-8 8 8" stroke="#D4B166" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="6" y="30" width="36" height="12" rx="3" stroke="#D4B166" stroke-width="2"/>
+      </svg>
+      <span>Suelta la imagen del maniquí</span>
     </div>
+
+    <!-- Empty state sin maniquí -->
+    <div id="empty-state">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" opacity=".3">
+        <ellipse cx="32" cy="12" rx="10" ry="12" stroke="#D4B166" stroke-width="2"/>
+        <path d="M18 24 Q14 30 14 38 Q14 44 18 48 H46 Q50 44 50 38 Q50 30 46 24 Q40 20 32 20 Q24 20 18 24Z"
+              stroke="#D4B166" stroke-width="2" fill="none"/>
+        <path d="M22 48 Q22 58 22 62 M42 48 Q42 58 42 62" stroke="#D4B166" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <p>Sube una imagen de maniquí IA en el panel izquierdo para empezar a vestirla</p>
+    </div>
+
     <canvas id="canvas"></canvas>
   </div>
 
-  <!-- RIGHT: catálogo de prendas -->
+  <!-- ══ RIGHT: catálogo de prendas ══ -->
   <aside id="rp">
     <div id="rh">
-      <span class="rey">✦ Cosas Cucas</span>
-      <div class="rtt">Catálogo de prendas</div>
+      <span class="rey">✦ Catálogo de prendas</span>
+      <div class="rtt">Librería Cosas Cucas</div>
       <div class="rsub">Seleccionando: <strong id="rcat">Falda</strong></div>
     </div>
     <div id="rtabs"></div>
+
+    <!-- Upload prenda personalizada -->
+    <div id="custom-upload-area">
+      <label class="custom-upload-btn">
+        <input type="file" id="custom-garment" accept="image/*" onchange="addCustomGarment(this)">
+        + Subir prenda propia
+      </label>
+    </div>
+
     <div id="rgrid"></div>
   </aside>
 
 </main>
 
 <script>
-/* ═══════════════════════════════════════════════════
-   CATÁLOGO COMPLETO DE PRENDAS
-   Organizado por tipo con sus parámetros de composición
-═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   CATÁLOGO DE PRENDAS
+   Cada parte tiene:
+   - area: zona relativa al maniquí (0-1)
+   - blend/alpha: modo de composición por defecto
+═══════════════════════════════════════════════ */
 const CATALOG = {
 
-  /* FALDAS — capa inferior desde cintura hasta el suelo */
   falda: {
-    label:  'Faldas',
-    icon:   '👗',
-    /* zona relativa al maniquí: fracción 0-1 del ancho×alto */
-    area:   { t:0.42, b:1.00, l:0.00, r:1.00 },
-    blend:  'multiply',
-    alpha:  0.88,
-    items: [
-      { src:'pasarela/prendas/falda  perpectiva.jpg', n:'Falda Carmín Floral' },
-      { src:'pasarela/prendas/falda2.jpg',            n:'Falda Marrón Floral' },
-      { src:'pasarela/prendas/falda3.jpg',            n:'Falda Verde Floral'  },
-      { src:'pasarela/prendas/falda vista lateral.jpg', n:'Falda Azul Brocado' },
-      { src:'pasarela/prendas/falda.jpg',             n:'Falda Blanca Encaje' },
-      { src:'pasarela/prendas/faldas/faldas.jfif',   n:'Colección Faldas'    },
+    label:'Faldas', icon:'👗',
+    /* zona del canvas que cubre la falda */
+    area:{ t:0.43, b:1.00, l:0.00, r:1.00 },
+    blend:'multiply', alpha:0.88,
+    items:[
+      {src:'pasarela/prendas/falda  perpectiva.jpg', n:'Falda Carmín Floral'},
+      {src:'pasarela/prendas/falda2.jpg',            n:'Falda Marrón Floral'},
+      {src:'pasarela/prendas/falda3.jpg',            n:'Falda Verde Floral'},
+      {src:'pasarela/prendas/falda vista lateral.jpg',n:'Falda Azul Brocado'},
+      {src:'pasarela/prendas/falda.jpg',             n:'Falda Blanca Encaje'},
+      {src:'pasarela/prendas/faldas/faldas.jfif',   n:'Colección Faldas'},
     ]
   },
 
-  /* CORPIÑOS — capa del tronco */
+  delantal: {
+    label:'Delantalesy Picos', icon:'🎭',
+    area:{ t:0.40, b:0.98, l:0.15, r:0.85 },
+    blend:'multiply', alpha:0.82,
+    items:[
+      {src:'pasarela/prendas/foto completa.jpg',  n:'Delantal Crema Brocado'},
+    ]
+  },
+
   corpino: {
-    label: 'Corpiños',
-    icon:  '🎀',
-    area:  { t:0.12, b:0.56, l:0.03, r:0.97 },
-    blend: 'multiply',
-    alpha: 0.90,
-    items: [
-      { src:'pasarela/prendas/corpiño.jpg',             n:'Corpiño Blanco Brocado'   },
-      { src:'pasarela/prendas/corpiño manga larga.jpg', n:'Corpiño Manga Larga Gris' },
-      { src:'pasarela/prendas/corpiño manga corta.jpg', n:'Corpiño Manga Corta Gris' },
-      { src:'pasarela/prendas/corpiño manga corta2.jpg',n:'Corpiño Manga Corta 2'    },
-      { src:'pasarela/prendas/corpiño delante2.jpg',    n:'Corpiño Negro Dorado'     },
-      { src:'pasarela/prendas/corpiño perspectiva.jpg', n:'Corpiño Amarillo Floral'  },
-      { src:'pasarela/prendas/corpiño delante.jpg',     n:'Corpiño Colorido'         },
-      { src:'pasarela/prendas/corpiño frontal.jpg',     n:'Corpiño Azul Floral'      },
+    label:'Corpiños', icon:'🎀',
+    area:{ t:0.12, b:0.57, l:0.03, r:0.97 },
+    blend:'multiply', alpha:0.90,
+    items:[
+      {src:'pasarela/prendas/corpiño.jpg',              n:'Corpiño Blanco Brocado'},
+      {src:'pasarela/prendas/corpiño manga larga.jpg',  n:'Corpiño Manga Larga Gris'},
+      {src:'pasarela/prendas/corpiño manga corta.jpg',  n:'Corpiño Manga Corta Gris'},
+      {src:'pasarela/prendas/corpiño manga corta2.jpg', n:'Corpiño Manga Corta 2'},
+      {src:'pasarela/prendas/corpiño delante2.jpg',     n:'Corpiño Negro Dorado'},
+      {src:'pasarela/prendas/corpiño perspectiva.jpg',  n:'Corpiño Amarillo Floral'},
+      {src:'pasarela/prendas/corpiño delante.jpg',      n:'Corpiño Colorido'},
+      {src:'pasarela/prendas/corpiño frontal.jpg',      n:'Corpiño Azul Floral'},
+      {src:'pasarela/prendas/corpiño atras.jpg',        n:'Corpiño Vista Trasera'},
     ]
   },
 
-  /* CONJUNTOS — imagen completa de referencia */
   completo: {
-    label: 'Conjuntos',
-    icon:  '✨',
-    area:  { t:0.00, b:1.00, l:0.00, r:1.00 },
-    blend: 'source-over',
-    alpha: 1.00,
-    items: [
-      { src:'pasarela/prendas/foto completa.jpg',       n:'Conjunto Crema Brocado' },
-      { src:'pasarela/prendas/toto completa trasera.jpg', n:'Conjunto Trasera'    },
+    label:'Conjuntos', icon:'✨',
+    area:{ t:0.00, b:1.00, l:0.00, r:1.00 },
+    blend:'source-over', alpha:1.00,
+    items:[
+      {src:'pasarela/prendas/foto completa.jpg',         n:'Conjunto Crema Frontal'},
+      {src:'pasarela/prendas/toto completa trasera.jpg', n:'Conjunto Crema Trasera'},
+      {src:'pasarela/prendas/falda  perpectiva.jpg',     n:'Ref. Falda Carmín'},
     ]
   },
 };
 
-/* ═══════════════════════════════════════════════════
-   BASE MANIQUÍ
-   1º intenta pasarela/maniqui.jpg (imagen IA del usuario)
-   2º cae a pasarela/prendas/foto completa.jpg
-═══════════════════════════════════════════════════ */
-const MQ_SOURCES = [
-  'pasarela/maniqui.jpg',
-  'pasarela/prendas/foto completa.jpg',
-];
+/* ═══════════════════════════════════════════════
+   ESTADO GLOBAL
+═══════════════════════════════════════════════ */
+let activeType = 'falda';
+let comparing  = false;
+let mqImg      = null;   // HTMLImageElement del maniquí
+let mqLabel    = '';
 
-/* ═══════════════════════════════════════════════════
-   ESTADO
-═══════════════════════════════════════════════════ */
-let activeType  = 'falda';
-let comparing   = false;
-const layers    = {};    // type → { src, n, img }
-const imgCache  = {};    // src → HTMLImageElement
+/* Capas activas: tipo → {src, n, img, alpha, blend} */
+const layers  = {};
+const imgCache = {};
 
-/* ═══════════════════════════════════════════════════
+/* Override de alpha/blend por tipo (desde los sliders/selects) */
+const overrides = {
+  falda:    { alpha:0.88, blend:'multiply' },
+  delantal: { alpha:0.82, blend:'multiply' },
+  corpino:  { alpha:0.90, blend:'multiply' },
+  completo: { alpha:1.00, blend:'source-over' },
+};
+
+/* ═══════════════════════════════════════════════
    CANVAS
-═══════════════════════════════════════════════════ */
+═══════════════════════════════════════════════ */
 const canvas = document.getElementById('canvas');
 const ctx    = canvas.getContext('2d');
-let   mq     = null;   // mannequin HTMLImageElement
 
-/* carga el primer maniquí disponible */
-(async () => {
-  for (const src of MQ_SOURCES) {
-    try {
-      mq = await loadImg(src);
-      break;
-    } catch { /* try next */ }
-  }
-  if (!mq) {
-    document.getElementById('ld').style.display = 'none';
-    document.getElementById('mq-notice').style.display = 'block';
-    return;
-  }
-  canvas.width  = mq.naturalWidth;
-  canvas.height = mq.naturalHeight;
-  document.getElementById('ld').style.display = 'none';
-  redraw();
-  setTimeout(hideTooltip, 5500);
-})();
-
-/* ─── Redibuja todo ───────────────────────────── */
 function redraw() {
-  if (!mq || !canvas.width) return;
+  if (!mqImg || !canvas.width) return;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.globalCompositeOperation = 'source-over';
   ctx.globalAlpha = 1;
-
-  // 1. Maniquí base
-  ctx.drawImage(mq, 0, 0);
+  ctx.drawImage(mqImg, 0, 0);
 
   if (comparing) return;
 
-  // 2. Capas en orden: falda → corpino → completo
-  const DRAW_ORDER = ['falda', 'corpino', 'completo'];
+  /* Orden de capas: falda → delantal → corpino → completo */
+  const DRAW_ORDER = ['falda', 'delantal', 'corpino', 'completo'];
   for (const type of DRAW_ORDER) {
-    const layer = layers[type];
-    if (!layer?.img) continue;
-    const cat = CATALOG[type];
-    drawLayer(layer.img, cat.area, cat.blend, cat.alpha);
+    const L = layers[type];
+    if (!L?.img) continue;
+    const ov = overrides[type];
+    drawLayer(L.img, CATALOG[type].area, ov.blend, ov.alpha);
   }
 }
 
-/* ─── Componer una capa sobre el canvas ────────── */
 function drawLayer(img, area, blend, alpha) {
   const W = canvas.width, H = canvas.height;
+  const ax = area.l * W,  ay = area.t * H;
+  const aw = (area.r - area.l) * W;
+  const ah = (area.b - area.t) * H;
 
-  const areaX = area.l * W;
-  const areaY = area.t * H;
-  const areaW = (area.r - area.l) * W;
-  const areaH = (area.b - area.t) * H;
-
-  /* Escalar la imagen para CUBRIR la zona (object-fit: cover) */
-  const imgAspect  = img.naturalWidth / img.naturalHeight;
-  const areaAspect = areaW / areaH;
-  let drawW, drawH, drawX, drawY;
-
-  if (imgAspect > areaAspect) {
-    drawH = areaH;
-    drawW = drawH * imgAspect;
-  } else {
-    drawW = areaW;
-    drawH = drawW / imgAspect;
-  }
-  drawX = areaX + (areaW - drawW) / 2;
-  drawY = areaY + (areaH - drawH) / 2;
+  /* object-fit: cover centrado en el área */
+  const ia = img.naturalWidth / img.naturalHeight;
+  const aa = aw / ah;
+  let dw, dh;
+  if (ia > aa) { dh = ah; dw = dh * ia; }
+  else         { dw = aw; dh = dw / ia; }
+  const dx = ax + (aw - dw) / 2;
+  const dy = ay + (ah - dh) / 2;
 
   ctx.save();
-
-  /* Clip: la prenda no se sale de su zona corporal */
   ctx.beginPath();
-  ctx.rect(areaX, areaY, areaW, areaH);
+  ctx.rect(ax, ay, aw, ah);
   ctx.clip();
-
   ctx.globalCompositeOperation = blend;
   ctx.globalAlpha = alpha;
-  ctx.drawImage(img, drawX, drawY, drawW, drawH);
-
+  ctx.drawImage(img, dx, dy, dw, dh);
   ctx.restore();
 }
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
+   CARGAR MANIQUÍ
+═══════════════════════════════════════════════ */
+async function setMannequin(src, label) {
+  showSpinner(true);
+  try {
+    const img = await loadImg(src);
+    mqImg  = img;
+    mqLabel = label;
+    canvas.width  = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    document.getElementById('ld').style.display = 'none';
+    document.getElementById('empty-state').classList.remove('show');
+    // Mostrar preview en panel
+    const prev = document.getElementById('mq-preview');
+    const name = document.getElementById('mq-name');
+    prev.src = src; prev.classList.add('visible');
+    name.textContent = label; name.classList.add('visible');
+    // Ocultar zone de upload
+    document.getElementById('mq-zone').style.display = 'none';
+    hideTooltip();
+    redraw();
+  } catch(e) {
+    console.warn('Error cargando maniquí:', src, e);
+    document.getElementById('ld').style.display = 'none';
+    document.getElementById('empty-state').classList.add('show');
+  }
+  showSpinner(false);
+}
+
+function loadMannequinFile(file) {
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  setMannequin(url, file.name.replace(/\.[^.]+$/, ''));
+}
+
+function dropMannequin(e) {
+  e.preventDefault();
+  document.getElementById('mq-zone').classList.remove('drag');
+  const file = e.dataTransfer?.files?.[0];
+  if (file && file.type.startsWith('image/')) loadMannequinFile(file);
+}
+
+/* Intenta cargar maniquí desde disco automáticamente */
+(async () => {
+  for (const src of ['pasarela/maniqui.jpg','pasarela/maniqui.png']) {
+    try {
+      await setMannequin(src, 'Maniquí');
+      return;
+    } catch {}
+  }
+  /* Si no hay maniquí, mostrar estado vacío */
+  document.getElementById('ld').style.display = 'none';
+  document.getElementById('empty-state').classList.add('show');
+})();
+
+/* ═══════════════════════════════════════════════
    SELECCIÓN DE TIPO
-═══════════════════════════════════════════════════ */
+═══════════════════════════════════════════════ */
 window.selType = function(type) {
   activeType = type;
-
-  /* Resaltar botón activo */
   document.querySelectorAll('.pb').forEach(b =>
     b.classList.toggle('act', b.dataset.k === type));
-
-  /* Actualizar cabecera derecha */
+  /* mostrar/ocultar opciones de opacidad del activo */
+  document.querySelectorAll('.layer-opacity').forEach(el => el.classList.remove('visible'));
+  const lop = document.getElementById('lop-' + type);
+  if (layers[type]?.img && lop) lop.classList.add('visible');
   document.getElementById('rcat').textContent = CATALOG[type].label;
-
-  renderTabs();
-  renderGrid(type);
-  hideTooltip();
+  renderTabs(); renderGrid(type); hideTooltip();
 };
 
-/* ═══════════════════════════════════════════════════
-   SELECCIÓN DE PRENDA
-═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   CONTROLES DE CAPA (opacidad, blend)
+═══════════════════════════════════════════════ */
+window.setOpacity = function(type, val) {
+  overrides[type].alpha = val / 100;
+  const lbl = document.getElementById('lopval-' + type);
+  if (lbl) lbl.textContent = val + '%';
+  redraw();
+};
+
+window.setBlend = function(type, val) {
+  overrides[type].blend = val;
+  redraw();
+};
+
+/* ═══════════════════════════════════════════════
+   SELECCIONAR PRENDA DEL CATÁLOGO
+═══════════════════════════════════════════════ */
 async function selectItem(type, item) {
-  showSpin(true);
+  showSpinner(true);
   try {
     const img = await loadImg(item.src);
     layers[type] = { ...item, img };
+    overrides[type].blend = CATALOG[type].blend;
+    overrides[type].alpha = CATALOG[type].alpha;
     updateLayerUI(type, item);
     renderGrid(type);
     redraw();
     updateMailto();
-  } catch (e) {
-    console.warn('No se pudo cargar:', item.src, e);
-  } finally {
-    showSpin(false);
-  }
+  } catch(e) { console.warn('Error cargando prenda:', item.src, e); }
+  showSpinner(false);
 }
 
 window.clearLayer = function(type) {
   delete layers[type];
   updateLayerUI(type, null);
-  renderGrid(type);
-  redraw();
-  updateMailto();
+  document.getElementById('lop-' + type)?.classList.remove('visible');
+  renderGrid(type); redraw(); updateMailto();
 };
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
+   SUBIR PRENDA PROPIA
+═══════════════════════════════════════════════ */
+window.addCustomGarment = function(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const url  = URL.createObjectURL(file);
+  const name = file.name.replace(/\.[^.]+$/, '');
+  const item = { src:url, n:'★ ' + name, custom:true };
+  /* Añadir al catálogo del tipo activo */
+  CATALOG[activeType].items.unshift(item);
+  selectItem(activeType, item);
+  input.value = '';
+};
+
+/* ═══════════════════════════════════════════════
    ACTUALIZAR UI DEL BOTÓN DE CAPA
-═══════════════════════════════════════════════════ */
+═══════════════════════════════════════════════ */
 function updateLayerUI(type, item) {
   const th    = document.getElementById('th-' + type);
   const thImg = document.getElementById('thimg-' + type);
   const pbs   = document.getElementById('pbs-' + type);
   const pbx   = document.getElementById('pbx-' + type);
-
+  const lop   = document.getElementById('lop-' + type);
   if (item) {
-    th.classList.remove('empty');
-    thImg.src   = item.src;
-    thImg.style.display = 'block';
+    th.querySelector('.empty-icon').style.display = 'none';
+    thImg.src = item.src; thImg.style.display = 'block';
     if (pbs) pbs.textContent = item.n;
     if (pbx) pbx.style.display = 'block';
+    if (lop) lop.classList.add('visible');
   } else {
-    th.classList.add('empty');
+    th.querySelector('.empty-icon').style.display = '';
     thImg.style.display = 'none';
     if (pbs) pbs.textContent = '';
     if (pbx) pbx.style.display = 'none';
+    if (lop) lop.classList.remove('visible');
   }
 }
 
-/* ═══════════════════════════════════════════════════
-   RENDER PESTAÑAS
-═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   RENDER TABS + GRID
+═══════════════════════════════════════════════ */
 function renderTabs() {
   const tabs = document.getElementById('rtabs');
   tabs.innerHTML = '';
-  for (const [key, cat] of Object.entries(CATALOG)) {
+  for (const [k, cat] of Object.entries(CATALOG)) {
     const btn = document.createElement('button');
-    btn.className = 'rtab' + (key === activeType ? ' on' : '');
+    btn.className = 'rtab' + (k === activeType ? ' on' : '');
     btn.textContent = cat.icon + ' ' + cat.label;
-    btn.addEventListener('click', () => {
-      selType(key);
-      renderTabs();
-    });
+    btn.addEventListener('click', () => { selType(k); });
     tabs.appendChild(btn);
   }
 }
 
-/* ═══════════════════════════════════════════════════
-   RENDER CATÁLOGO DE PRENDAS
-═══════════════════════════════════════════════════ */
 function renderGrid(type) {
   const grid = document.getElementById('rgrid');
   const cat  = CATALOG[type];
   const cur  = layers[type];
   grid.innerHTML = '';
-
   cat.items.forEach(item => {
     const sel  = cur?.src === item.src;
     const card = document.createElement('div');
@@ -480,7 +722,8 @@ function renderGrid(type) {
         <img src="${item.src}" alt="${item.n}" loading="lazy">
         <div class="gck">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M5 12l5 5 9-9" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5 12l5 5 9-9" stroke="white" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
       </div>
@@ -490,18 +733,15 @@ function renderGrid(type) {
   });
 }
 
-/* ═══════════════════════════════════════════════════
-   COMPARAR (ver maniquí base)
-═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   COMPARAR / GUARDAR / MAILTO
+═══════════════════════════════════════════════ */
 window.compare = function(on) {
   comparing = on;
-  document.getElementById('cmpbtn').classList.toggle('on', on);
+  document.getElementById('cmp-btn').classList.toggle('on', on);
   if (canvas.width) redraw();
 };
 
-/* ═══════════════════════════════════════════════════
-   DESCARGAR PNG
-═══════════════════════════════════════════════════ */
 window.savePNG = function() {
   if (!canvas.width) return;
   canvas.toBlob(blob => {
@@ -513,26 +753,22 @@ window.savePNG = function() {
   }, 'image/png');
 };
 
-/* ═══════════════════════════════════════════════════
-   MAILTO
-═══════════════════════════════════════════════════ */
 function updateMailto() {
-  const LABELS = { falda:'Falda', corpino:'Corpiño', completo:'Conjunto' };
+  const LBL = { falda:'Falda', delantal:'Delantal', corpino:'Corpiño', completo:'Conjunto' };
   const lines = Object.entries(layers)
-    .filter(([,v]) => v)
-    .map(([k,v]) => `• ${LABELS[k]||k}: ${v.n}`);
+    .filter(([,v]) => v?.n).map(([k,v]) => `• ${LBL[k]||k}: ${v.n}`);
   const body = lines.length
     ? 'Hola, me gustaría información sobre este diseño:\n\n'
-      + lines.join('\n')
-      + '\n\nQuedo a su disposición para concertar una cita.'
-    : 'Hola, me gustaría información sobre sus trajes de fallera.';
+      + lines.join('\n') + '\n\nQuedo a su disposición para concertar una visita.'
+    : 'Hola, me gustaría información sobre los trajes de fallera.';
   const a = document.getElementById('mailto-btn');
-  if (a) a.href = `mailto:info@cosascucas.es?subject=Consulta%20probador%20virtual&body=${encodeURIComponent(body)}`;
+  if (a) a.href =
+    `mailto:info@cosascucas.es?subject=Consulta%20probador%20virtual&body=${encodeURIComponent(body)}`;
 }
 
-/* ═══════════════════════════════════════════════════
-   CARGAR IMAGEN (con caché)
-═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════════ */
 function loadImg(src) {
   if (imgCache[src]) return Promise.resolve(imgCache[src]);
   return new Promise((res, rej) => {
@@ -542,17 +778,7 @@ function loadImg(src) {
     img.src = src;
   });
 }
-
-/* ═══════════════════════════════════════════════════
-   CANVAS RESIZE
-═══════════════════════════════════════════════════ */
-const ro = new ResizeObserver(() => redraw());
-ro.observe(document.getElementById('cw'));
-
-/* ═══════════════════════════════════════════════════
-   HELPERS
-═══════════════════════════════════════════════════ */
-function showSpin(on) {
+function showSpinner(on) {
   document.getElementById('fab-sp').style.display = on ? 'block' : 'none';
 }
 function hideTooltip() {
@@ -560,12 +786,13 @@ function hideTooltip() {
   if (t) { t.style.opacity = '0'; t.style.pointerEvents = 'none'; }
 }
 
-/* ═══════════════════════════════════════════════════
-   INICIALIZAR UI
-═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   INICIALIZAR
+═══════════════════════════════════════════════ */
 renderTabs();
 renderGrid('falda');
 updateMailto();
+setTimeout(hideTooltip, 7000);
 </script>
 </body>
 </html>
