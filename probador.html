@@ -367,33 +367,42 @@ const TELAS = [
 
 /* ══════════════════════════════════════════════════════
    MÁSCARAS (polígono en fracción 0-1 de ancho×alto)
-   Trazadas sobre "foto prueba.jpg" (portrait, ~535×895)
+   Calibradas sobre "prendas/foto completa.jpg"
+   (portrait ~690×960, fondo neutro gris claro)
 
-   FALDA:  empieza en cintura ~49% desde arriba,
-           se abre hasta ocupar todo el ancho en el bajo.
-   CORPIÑO: el cuerpo oscuro encima de la falda,
-           desde debajo del encaje (~26%) hasta la cintura.
+   CORPIÑO: incluye cuerpo y mangas largas
+   FALDA:   desde cintura hasta el bajo, muy ancha
 ══════════════════════════════════════════════════════ */
 const MASKS = {
   falda: [
-    [0.26, 0.49],
-    [0.74, 0.49],
-    [0.90, 0.62],
-    [0.98, 0.80],
-    [1.00, 1.00],
-    [0.00, 1.00],
-    [0.02, 0.80],
-    [0.10, 0.62],
+    [0.31, 0.47],   // cintura izq
+    [0.69, 0.47],   // cintura dcha
+    [0.94, 0.63],   // lateral dcha alto
+    [0.99, 0.82],   // lateral dcha bajo
+    [1.00, 1.00],   // esquina inferior dcha
+    [0.00, 1.00],   // esquina inferior izq
+    [0.01, 0.82],   // lateral izq bajo
+    [0.06, 0.63],   // lateral izq alto
   ],
   corpino: [
-    [0.33, 0.26],
-    [0.67, 0.26],
-    [0.78, 0.35],
-    [0.76, 0.44],
-    [0.67, 0.49],
-    [0.33, 0.49],
-    [0.24, 0.44],
-    [0.22, 0.35],
+    // muñeca izquierda → manga → hombro → escote → hombro → manga → muñeca derecha → cintura
+    [0.07, 0.44],   // muñeca izq
+    [0.12, 0.39],   // antebrazo izq
+    [0.18, 0.34],   // codo izq
+    [0.24, 0.27],   // brazo izq
+    [0.30, 0.22],   // hombro izq
+    [0.38, 0.20],   // cuello izq
+    [0.50, 0.23],   // escote centro
+    [0.62, 0.20],   // cuello dcho
+    [0.70, 0.22],   // hombro dcho
+    [0.76, 0.27],   // brazo dcho
+    [0.82, 0.34],   // codo dcho
+    [0.88, 0.39],   // antebrazo dcho
+    [0.93, 0.44],   // muñeca dcha
+    [0.90, 0.47],   // cintura dcha ext
+    [0.65, 0.48],   // cintura dcha centro
+    [0.35, 0.48],   // cintura izq centro
+    [0.10, 0.47],   // cintura izq ext
   ],
 };
 
@@ -424,7 +433,7 @@ modelImg.onerror = () => {
   document.getElementById('loading').innerHTML =
     '<span style="color:#c44">No se pudo cargar la foto de la modelo.</span>';
 };
-modelImg.src = 'pasarela/foto prueba.jpg';
+modelImg.src = 'pasarela/prendas/foto completa.jpg';
 
 /* ── Dibujar canvas ─────────────────────────────── */
 function redraw() {
@@ -439,7 +448,7 @@ function redraw() {
   /* Aplicar telas seleccionadas */
   for (const [part, data] of Object.entries(selections)) {
     if (data?.img && MASKS[part]) {
-      applyFabric(data.img, MASKS[part], part === 'corpino');
+      applyFabric(data.img, MASKS[part]);
     }
   }
 
@@ -448,7 +457,7 @@ function redraw() {
 }
 
 /* ── Aplicar tela con blend mode ────────────────── */
-function applyFabric(fabricImg, maskPts, isCorpino) {
+function applyFabric(fabricImg, maskPts) {
   ctx.save();
 
   const W = canvas.width, H = canvas.height;
@@ -462,16 +471,16 @@ function applyFabric(fabricImg, maskPts, isCorpino) {
   ctx.closePath();
   ctx.clip();
 
-  /* 2. Levantamiento de zonas oscuras (permite que las telas oscuras
-        sean visibles sobre el corpiño marrón oscuro) */
+  /* 2. La foto tiene vestido crema/claro — multiply funciona directamente.
+        Pequeño lift solo para garantizar visibilidad en pliegues oscuros. */
   ctx.globalCompositeOperation = 'source-over';
-  ctx.globalAlpha = isCorpino ? 0.42 : 0.18;
+  ctx.globalAlpha = 0.08;
   ctx.fillStyle = '#FFFFFF';
   ctx.fillRect(0, 0, W, H);
 
   /* 3. Tela con blend mode multiply:
-        · preserva sombras y pliegues del original
-        · mezcla el color/estampado de la tela      */
+        · preserva sombras, pliegues y volumen del vestido original
+        · superpone el color y estampado de la tela elegida          */
   const scale = Math.max(W / fabricImg.naturalWidth, H / fabricImg.naturalHeight);
   const fw = fabricImg.naturalWidth  * scale;
   const fh = fabricImg.naturalHeight * scale;
@@ -479,7 +488,7 @@ function applyFabric(fabricImg, maskPts, isCorpino) {
   const fy = (H - fh) / 2;
 
   ctx.globalCompositeOperation = 'multiply';
-  ctx.globalAlpha = isCorpino ? 0.92 : 0.88;
+  ctx.globalAlpha = 0.90;
   ctx.drawImage(fabricImg, fx, fy, fw, fh);
 
   ctx.restore();
