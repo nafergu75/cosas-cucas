@@ -21,215 +21,204 @@
     --font-disp:  'Playfair Display', serif;
     --radius:     3px;
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; overflow: hidden; }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html, body { height:100%; overflow:hidden; }
   body {
-    font-family: var(--font-body);
-    background: var(--bg-dark);
-    color: var(--text);
-    -webkit-font-smoothing: antialiased;
-    display: flex; flex-direction: column;
+    font-family:var(--font-body); background:var(--bg-dark);
+    color:var(--text); -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column;
   }
 
-  /* ── HEADER ─────────────────────────────────────── */
+  /* ── HEADER ────────────────────────────── */
   #header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 20px; height: 52px; flex-shrink: 0;
-    background: var(--bg-dark);
-    border-bottom: 1px solid rgba(217,206,180,.15); gap: 12px;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 20px; height:52px; flex-shrink:0;
+    background:var(--bg-dark);
+    border-bottom:1px solid rgba(217,206,180,.15); gap:12px;
   }
-  .hdr-left { display: flex; align-items: center; gap: 14px; }
-  .hdr-brand { display: flex; align-items: center; gap: 9px; text-decoration: none; }
-  .hdr-brand img { height: 30px; width: auto; object-fit: contain; }
+  .hdr-left { display:flex; align-items:center; gap:14px; }
+  .hdr-brand { display:flex; align-items:center; gap:9px; text-decoration:none; }
+  .hdr-brand img { height:30px; width:auto; object-fit:contain; }
   .hdr-brand-name { font-size:.68rem; font-weight:700; letter-spacing:.18em;
     text-transform:uppercase; color:var(--gold-light); white-space:nowrap; }
   .hdr-sep { width:1px; height:22px; background:rgba(217,206,180,.2); }
   .hdr-title { font-family:var(--font-disp); font-size:.95rem; font-style:italic;
     color:rgba(253,250,243,.7); white-space:nowrap; }
-  .hdr-badge { font-size:.58rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
-    background:var(--gold); color:var(--white); padding:3px 8px; border-radius:2px; }
-  .hdr-back { font-size:.65rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
-    color:rgba(253,250,243,.5); text-decoration:none; display:flex; align-items:center; gap:5px;
-    transition:color .2s; white-space:nowrap; }
+  .hdr-badge { font-size:.57rem; font-weight:700; letter-spacing:.14em;
+    text-transform:uppercase; background:var(--gold); color:var(--white);
+    padding:3px 8px; border-radius:2px; }
+  .hdr-back { font-size:.65rem; font-weight:600; letter-spacing:.1em;
+    text-transform:uppercase; color:rgba(253,250,243,.5); text-decoration:none;
+    display:flex; align-items:center; gap:5px; transition:color .2s; white-space:nowrap; }
   .hdr-back:hover { color:var(--gold-light); }
 
-  /* ── LAYOUT 3 COLUMNAS ──────────────────────────── */
+  /* ── LAYOUT 3 COLUMNAS ─────────────────── */
   #main {
-    flex: 1; display: grid;
-    grid-template-columns: 170px 1fr 256px;
-    overflow: hidden; min-height: 0;
+    flex:1; display:grid;
+    grid-template-columns: 192px 1fr 264px;
+    overflow:hidden; min-height:0;
   }
 
-  /* ── PANEL IZQUIERDO ────────────────────────────── */
+  /* ── PANEL IZQUIERDO ───────────────────── */
   #parts-panel {
-    background: var(--white); border-right: 1px solid var(--border);
-    display: flex; flex-direction: column; overflow-y: auto;
+    background:var(--white); border-right:1px solid var(--border);
+    display:flex; flex-direction:column; overflow-y:auto;
   }
-  .pp-section {
-    padding: 14px 12px 12px; border-bottom: 1px solid var(--border);
-  }
+  .pp-sec { padding:13px 12px 10px; border-bottom:1px solid var(--border); }
+  .pp-sec:last-child { border-bottom:none; padding-bottom:14px; margin-top:auto; }
   .pp-label {
-    font-size:.57rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
-    color:var(--gold); display:block; margin-bottom:10px;
+    font-size:.56rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--gold); display:block; margin-bottom:9px;
   }
 
-  /* Part buttons */
   .part-btn {
-    width:100%; display:flex; align-items:center; gap:8px;
-    padding:10px 8px; margin-bottom:5px;
+    width:100%; display:flex; align-items:flex-start; gap:8px;
+    padding:8px 8px; margin-bottom:4px;
     background:transparent; border:1px solid transparent;
-    border-radius:var(--radius); cursor:pointer; transition:all .18s; text-align:left;
-    position: relative;
+    border-radius:var(--radius); cursor:pointer; transition:all .16s; text-align:left;
+    position:relative;
   }
   .part-btn:hover { background:var(--bg-alt); border-color:var(--border); }
   .part-btn.active { background:var(--bg); border-color:var(--gold); }
   .part-btn.active .pb-name { color:var(--gold); font-weight:700; }
-  .pb-icon { font-size:1.2rem; flex-shrink:0; }
+
+  .pb-swatch {
+    width:22px; height:22px; border-radius:3px; flex-shrink:0;
+    border:1.5px solid rgba(0,0,0,.12);
+    background-size:cover; background-position:center;
+    margin-top:1px;
+    transition:all .3s;
+  }
+  .pb-swatch.empty { background:var(--bg-alt); }
+
+  .pb-info { flex:1; min-width:0; }
   .pb-name { font-size:.72rem; font-weight:600; color:var(--text); }
-  .pb-sel  { font-size:.6rem; color:var(--muted); margin-top:1px;
-    max-width:120px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .pb-sel.has-tela { color:var(--gold); font-weight:600; }
+  .pb-desc { font-size:.58rem; color:var(--muted); margin-top:1px; line-height:1.3; }
+  .pb-sel  { font-size:.6rem; color:var(--gold); font-weight:600; margin-top:2px;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:130px; }
+
   .pb-clear {
-    position:absolute; right:6px; top:50%; transform:translateY(-50%);
+    position:absolute; right:4px; top:50%; transform:translateY(-50%);
     background:transparent; border:none; cursor:pointer;
-    color:var(--muted); font-size:.8rem; padding:2px 5px;
-    border-radius:2px; transition:color .15s, background .15s;
+    color:var(--muted); font-size:.75rem; padding:3px 5px;
+    border-radius:2px; transition:color .15s, background .15s; line-height:1;
   }
   .pb-clear:hover { color:#c00; background:rgba(200,0,0,.08); }
 
-  /* Compare button */
+  /* Indicador de número de orden */
+  .layer-num {
+    width:16px; height:16px; border-radius:50%; background:var(--border);
+    color:var(--muted); font-size:.55rem; font-weight:700;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:3px;
+  }
+  .part-btn.active .layer-num { background:var(--gold); color:white; }
+
+  /* Compare */
   .compare-btn {
-    width:100%; padding:9px 10px;
+    width:100%; padding:8px 10px;
     background:var(--bg-alt); border:1px solid var(--border);
     border-radius:var(--radius); cursor:pointer;
-    font-family:var(--font-body); font-size:.65rem; font-weight:600;
+    font-family:var(--font-body); font-size:.62rem; font-weight:600;
     letter-spacing:.08em; text-transform:uppercase; color:var(--muted);
-    transition:all .18s; user-select:none;
+    transition:all .16s; user-select:none; margin-bottom:7px;
   }
   .compare-btn:hover { border-color:var(--gold); color:var(--text); }
   .compare-btn.active { background:var(--bg-dark); color:var(--white); border-color:var(--bg-dark); }
 
   /* Action buttons */
-  .action-btn {
-    display:block; width:100%; padding:9px 8px; font-family:var(--font-body);
-    font-size:.62rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  .act-btn {
+    display:block; width:100%; padding:9px 8px;
+    font-family:var(--font-body); font-size:.61rem; font-weight:700;
+    letter-spacing:.12em; text-transform:uppercase;
     text-align:center; border-radius:var(--radius); cursor:pointer;
-    transition:all .2s; margin-bottom:7px; text-decoration:none;
+    transition:all .18s; margin-bottom:6px; text-decoration:none;
   }
   .btn-gold    { background:var(--gold); color:var(--white); border:none; }
   .btn-gold:hover { background:var(--gold-light); }
   .btn-outline { background:transparent; color:var(--text); border:1px solid var(--border); }
   .btn-outline:hover { border-color:var(--gold); color:var(--gold); }
 
-  /* Hint texto */
-  .hint-text {
-    font-size:.6rem; color:var(--muted); line-height:1.5;
-    padding:8px 0 0;
+  /* Capas info */
+  .layers-hint {
+    font-size:.58rem; color:var(--muted); line-height:1.55;
+    padding:8px 0 2px; border-top:1px solid var(--border); margin-top:4px;
   }
 
-  /* ── CENTRO: Canvas ─────────────────────────────── */
+  /* ── CANVAS CENTRO ─────────────────────── */
   #canvas-wrap {
-    position: relative;
-    display: flex; align-items: center; justify-content: center;
-    overflow: hidden; background: #0e0c0a;
+    position:relative; display:flex; align-items:center; justify-content:center;
+    overflow:hidden; background:#0d0b09;
   }
   #canvas {
-    max-height: 100%; max-width: 100%;
-    display: block; cursor: crosshair;
-    image-rendering: -webkit-optimize-contrast;
+    max-height:100%; max-width:100%; display:block;
+    cursor:crosshair; image-rendering:-webkit-optimize-contrast;
   }
-
-  /* Loading */
   #loading {
-    position:absolute; inset:0;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:14px; background:#0e0c0a; color:rgba(253,250,243,.6);
-    font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
-    z-index:10;
+    position:absolute; inset:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:14px;
+    background:#0d0b09; color:rgba(253,250,243,.55);
+    font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; z-index:10;
   }
   .spinner {
-    width:36px; height:36px; border:3px solid rgba(181,144,58,.25);
+    width:36px; height:36px; border:3px solid rgba(181,144,58,.2);
     border-top-color:var(--gold); border-radius:50%;
     animation:spin .8s linear infinite;
   }
   @keyframes spin { to { transform:rotate(360deg); } }
-
-  /* Fabric-loading mini spinner on canvas */
-  #fabric-loading {
-    position:absolute; top:12px; right:12px;
-    width:28px; height:28px; border:2.5px solid rgba(181,144,58,.3);
-    border-top-color:var(--gold); border-radius:50%;
-    animation:spin .7s linear infinite;
-    display:none; z-index:5;
+  #fab-spin {
+    position:absolute; top:10px; right:10px; width:26px; height:26px;
+    border:2.5px solid rgba(181,144,58,.25); border-top-color:var(--gold);
+    border-radius:50%; animation:spin .7s linear infinite; display:none; z-index:5;
   }
-
-  /* Tooltip sobre canvas */
-  #canvas-tooltip {
+  #tooltip {
     position:absolute; bottom:14px; left:50%; transform:translateX(-50%);
     background:rgba(26,23,20,.82); color:rgba(253,250,243,.85);
-    font-size:.62rem; letter-spacing:.08em; padding:6px 16px; border-radius:20px;
-    pointer-events:none; white-space:nowrap;
-    transition:opacity .4s; opacity:1;
+    font-size:.6rem; letter-spacing:.08em; padding:6px 16px; border-radius:20px;
+    pointer-events:none; white-space:nowrap; transition:opacity .5s;
   }
 
-  /* ── PANEL DERECHO: Librería ────────────────────── */
+  /* ── PANEL DERECHO ─────────────────────── */
   #telas-panel {
     background:var(--white); border-left:1px solid var(--border);
     display:flex; flex-direction:column; overflow:hidden;
   }
-  #telas-head {
-    padding:14px 14px 10px; border-bottom:1px solid var(--border); flex-shrink:0;
-  }
-  .tp-eyebrow { font-size:.57rem; font-weight:700; letter-spacing:.2em;
-    text-transform:uppercase; color:var(--gold); display:block; margin-bottom:4px; }
-  .tp-title { font-family:var(--font-disp); font-size:1rem; font-style:italic; }
-  .tp-sub   { font-size:.64rem; color:var(--muted); margin-top:3px; }
-  #tp-editing { font-weight:700; color:var(--gold); }
+  #telas-head { padding:13px 13px 9px; border-bottom:1px solid var(--border); flex-shrink:0; }
+  .tp-ey  { font-size:.56rem; font-weight:700; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--gold); display:block; margin-bottom:3px; }
+  .tp-ttl { font-family:var(--font-disp); font-size:.98rem; font-style:italic; }
+  .tp-sub { font-size:.63rem; color:var(--muted); margin-top:3px; }
+  #tp-part { font-weight:700; color:var(--gold); }
 
   #telas-grid {
     flex:1; overflow-y:auto;
     display:grid; grid-template-columns:repeat(3,1fr);
-    gap:6px; padding:10px; align-content:start;
+    gap:5px; padding:9px; align-content:start;
   }
-
-  .tela-card {
+  .tc {
     cursor:pointer; border-radius:var(--radius);
-    border:2.5px solid transparent; overflow:hidden;
-    transition:border-color .16s, transform .16s;
-    background:var(--bg-alt);
+    border:2px solid transparent; overflow:hidden;
+    transition:border-color .15s, transform .14s;
   }
-  .tela-card:hover { border-color:var(--gold-light); transform:translateY(-1px); }
-  .tela-card.sel   { border-color:var(--gold); }
-
-  .tela-thumb {
-    width:100%; aspect-ratio:1; overflow:hidden; position:relative;
-    background:#ccc;
-  }
-  .tela-thumb img {
-    width:100%; height:100%; object-fit:cover; display:block;
-    transition:transform .2s;
-  }
-  .tela-card:hover .tela-thumb img { transform:scale(1.06); }
-
-  .tela-check {
+  .tc:hover { border-color:var(--gold-light); transform:translateY(-1px); }
+  .tc.sel   { border-color:var(--gold); }
+  .tc-img { width:100%; aspect-ratio:1; overflow:hidden; position:relative; background:#ccc; }
+  .tc-img img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .18s; }
+  .tc:hover .tc-img img { transform:scale(1.07); }
+  .tc-chk {
     position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-    background:rgba(181,144,58,.38); opacity:0; transition:opacity .16s;
+    background:rgba(181,144,58,.4); opacity:0; transition:opacity .15s;
   }
-  .tela-card.sel .tela-check { opacity:1; }
+  .tc.sel .tc-chk { opacity:1; }
+  .tc-name { font-size:.54rem; font-weight:600; color:var(--text); padding:3px 4px 4px;
+    background:var(--white); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .tc.sel .tc-name { color:var(--gold); }
 
-  .tela-name {
-    font-size:.55rem; font-weight:600; color:var(--text);
-    padding:4px 5px 5px; line-height:1.2; background:var(--white);
-    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  }
-  .tela-card.sel .tela-name { color:var(--gold); }
-
-  /* ── RESPONSIVE ─────────────────────────────────── */
+  /* ── RESPONSIVE ────────────────────────── */
   @media (max-width:900px) {
-    html, body { overflow:auto; }
+    html,body { overflow:auto; }
     #main { grid-template-columns:1fr; overflow:visible; }
     #parts-panel, #telas-panel { border:none; border-bottom:1px solid var(--border); }
-    #canvas-wrap { height:60vw; min-height:380px; }
+    #canvas-wrap { height:65vw; min-height:360px; }
     #telas-grid { grid-template-columns:repeat(4,1fr); }
   }
   </style>
@@ -256,67 +245,105 @@
 
 <main id="main">
 
-  <!-- ══ IZQUIERDA ══ -->
+  <!-- ══ IZQUIERDA: partes del traje ══ -->
   <aside id="parts-panel">
 
-    <div class="pp-section">
-      <span class="pp-label">① Parte a editar</span>
+    <div class="pp-sec">
+      <span class="pp-label">① Elige la parte</span>
+      <p style="font-size:.59rem;color:var(--muted);margin-bottom:9px;line-height:1.5;">
+        Las capas se aplican por orden de vestido (de interior a exterior).
+      </p>
 
+      <!-- FALDA -->
       <button class="part-btn active" data-part="falda" onclick="selectPart('falda')">
-        <span class="pb-icon">👗</span>
-        <div style="flex:1;min-width:0">
+        <div class="layer-num">1</div>
+        <div class="pb-swatch empty" id="sw-falda"></div>
+        <div class="pb-info">
           <div class="pb-name">Falda</div>
-          <div class="pb-sel" id="psel-falda">Sin tela elegida</div>
+          <div class="pb-desc">Capa exterior, gran vuelo</div>
+          <div class="pb-sel" id="sel-falda"></div>
         </div>
-        <button class="pb-clear" id="pclear-falda" onclick="event.stopPropagation();removeTela('falda')" style="display:none" title="Quitar">✕</button>
+        <button class="pb-clear" id="clr-falda" style="display:none"
+          onclick="event.stopPropagation();removePart('falda')" title="Quitar">✕</button>
       </button>
 
+      <!-- DELANTAL -->
+      <button class="part-btn" data-part="delantal" onclick="selectPart('delantal')">
+        <div class="layer-num">2</div>
+        <div class="pb-swatch empty" id="sw-delantal"></div>
+        <div class="pb-info">
+          <div class="pb-name">Delantal / Faldeta</div>
+          <div class="pb-desc">Panel frontal sobre la falda</div>
+          <div class="pb-sel" id="sel-delantal"></div>
+        </div>
+        <button class="pb-clear" id="clr-delantal" style="display:none"
+          onclick="event.stopPropagation();removePart('delantal')" title="Quitar">✕</button>
+      </button>
+
+      <!-- CORPIÑO -->
       <button class="part-btn" data-part="corpino" onclick="selectPart('corpino')">
-        <span class="pb-icon">🎀</span>
-        <div style="flex:1;min-width:0">
-          <div class="pb-name">Corpiño</div>
-          <div class="pb-sel" id="psel-corpino">Sin tela elegida</div>
+        <div class="layer-num">3</div>
+        <div class="pb-swatch empty" id="sw-corpino"></div>
+        <div class="pb-info">
+          <div class="pb-name">Corpiño y Mangas</div>
+          <div class="pb-desc">Cuerpo ajustado con manga larga</div>
+          <div class="pb-sel" id="sel-corpino"></div>
         </div>
-        <button class="pb-clear" id="pclear-corpino" onclick="event.stopPropagation();removeTela('corpino')" style="display:none" title="Quitar">✕</button>
+        <button class="pb-clear" id="clr-corpino" style="display:none"
+          onclick="event.stopPropagation();removePart('corpino')" title="Quitar">✕</button>
       </button>
 
-      <p class="hint-text">Haz clic en una parte del traje o usa los botones de arriba, luego elige una tela.</p>
+      <!-- PICO / MANTONCILLO -->
+      <button class="part-btn" data-part="pico" onclick="selectPart('pico')">
+        <div class="layer-num">4</div>
+        <div class="pb-swatch empty" id="sw-pico"></div>
+        <div class="pb-info">
+          <div class="pb-name">Pico / Mantoncillo</div>
+          <div class="pb-desc">Encaje sobre hombros y escote</div>
+          <div class="pb-sel" id="sel-pico"></div>
+        </div>
+        <button class="pb-clear" id="clr-pico" style="display:none"
+          onclick="event.stopPropagation();removePart('pico')" title="Quitar">✕</button>
+      </button>
+
+      <p class="layers-hint">
+        Haz clic en una parte del traje en la foto para seleccionarla directamente.
+      </p>
     </div>
 
-    <div class="pp-section">
+    <div class="pp-sec">
       <span class="pp-label">② Comparar</span>
-      <button class="compare-btn" id="compare-btn"
-        onmousedown="showOriginal(true)" onmouseup="showOriginal(false)"
-        ontouchstart="showOriginal(true)" ontouchend="showOriginal(false)">
+      <button class="compare-btn" id="cmp-btn"
+        onmousedown="compare(true)" onmouseup="compare(false)"
+        ontouchstart="compare(true)" ontouchend="compare(false)">
         ⏸ Mantén para ver original
       </button>
     </div>
 
-    <div class="pp-section" style="margin-top:auto; padding-bottom:16px;">
+    <div class="pp-sec">
       <span class="pp-label">③ Guardar</span>
-      <button class="action-btn btn-gold" onclick="downloadPNG()">⬇ Descargar imagen</button>
-      <a class="action-btn btn-outline" id="btn-pedir" href="mailto:info@cosascucas.es">✉ Pedir este diseño</a>
+      <button class="act-btn btn-gold" onclick="downloadPNG()">⬇ Descargar diseño</button>
+      <a class="act-btn btn-outline" id="btn-pedir" href="mailto:info@cosascucas.es">
+        ✉ Pedir este diseño
+      </a>
     </div>
 
   </aside>
 
-  <!-- ══ CENTRO: Foto de la modelo en canvas ══ -->
+  <!-- ══ CENTRO: canvas ══ -->
   <div id="canvas-wrap">
-    <div id="loading">
-      <div class="spinner"></div>
-      <span>Cargando modelo…</span>
-    </div>
-    <div id="fabric-loading"></div>
-    <div id="canvas-tooltip">Haz clic en la falda o el corpiño para seleccionar · elige una tela →</div>
+    <div id="loading"><div class="spinner"></div><span>Cargando modelo…</span></div>
+    <div id="fab-spin"></div>
+    <div id="tooltip">Haz clic en una parte del traje para seleccionarla · elige tela →</div>
     <canvas id="canvas"></canvas>
   </div>
 
-  <!-- ══ DERECHA: Librería de telas ══ -->
+  <!-- ══ DERECHA: librería de telas ══ -->
   <aside id="telas-panel">
     <div id="telas-head">
-      <span class="tp-eyebrow">✦ Cosas Cucas</span>
-      <div class="tp-title">Librería de telas</div>
-      <div class="tp-sub">Aplicando a: <strong id="tp-editing">Falda</strong></div>
+      <span class="tp-ey">✦ Cosas Cucas</span>
+      <div class="tp-ttl">Librería de telas</div>
+      <div class="tp-sub">Aplicando a: <strong id="tp-part">Falda</strong></div>
     </div>
     <div id="telas-grid"></div>
   </aside>
@@ -324,101 +351,160 @@
 </main>
 
 <script>
-/* ══════════════════════════════════════════════════════
-   CATÁLOGO DE TELAS — 35 imágenes reales de la tienda
-══════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════
+   DATOS: 35 telas reales de la tienda
+════════════════════════════════════════════════ */
 const TELAS = [
-  { src:'telas/7b262a97ab50be92a7f07e0a145d65be.jpg',  nombre:'Rojo Carmín'         },
-  { src:'telas/1aabc72fb1c575ed124c9ec55ad54cc5.jpg',  nombre:'Morado Floral'       },
-  { src:'telas/6e272e3e29e1fb91aac9889b4afc9b67.jpg',  nombre:'Verde Botella'       },
-  { src:'telas/316a2c6e9146f3d7767ca3b5f7ab9231.jpg',  nombre:'Verde Hunter'        },
-  { src:'telas/3be8546ee42550456027263c71963b91.jpg',  nombre:'Violeta Real'        },
-  { src:'telas/43c1d191299024a1616e859c74621158.jpg',  nombre:'Granate Floral'      },
-  { src:'telas/10d72799667cdfedd50b7db1e47de9af.jpg',  nombre:'Azul Marino'         },
-  { src:'telas/1c104dbe51d74631eb953edc5ad7f1d3.jpg',  nombre:'Azul Noche'          },
-  { src:'telas/2a31f651ecf3842456a80b9ec3e1ad41.jpg',  nombre:'Negro Dorado'        },
-  { src:'telas/f128eb84642f1b5f63030d4414c25d6f.jpg',  nombre:'Azul Marino Ramos'  },
-  { src:'telas/46f9778c7094d400c2df163ac0c372b7.jpg',  nombre:'Marrón Chocolate'    },
-  { src:'telas/479224d9440fb12613dd32bd4c356f9e.jpg',  nombre:'Burdeos Floral'      },
-  { src:'telas/aca0413455ec2e9b26a4c28d1e83162d.jpg',  nombre:'Fucsia Dorado'       },
-  { src:'telas/6bde24ac5b50d6ca8c0bcba837bdce7e.jpg',  nombre:'Verde Militar'       },
-  { src:'telas/3848be776d5cf49e63811df2a6d218ff.jpg',  nombre:'Rojo Brocado'        },
-  { src:'telas/856abd3cb99c1aac89ee8b16e961d07d.jpg',  nombre:'Gris Topo'           },
-  { src:'telas/b8d32343036b943fe22a944290846e90.jpg',  nombre:'Platino Floral'      },
-  { src:'telas/516090036d788e609211ff179f82799c.jpg',  nombre:'Malva Lavanda'       },
-  { src:'telas/bf2f4463dc8bcf74175903fa1445d6ab.jpg',  nombre:'Gris Perla'          },
-  { src:'telas/ce1329e103cace9e9bc268485eddc221.jpg',  nombre:'Dorado Mostaza'      },
-  { src:'telas/d510f515e384294a699a7f8f54060342.jpg',  nombre:'Turquesa Floral'     },
-  { src:'telas/647a511ff9eca426ac2669b2b46aaca4.jpg',  nombre:'Verde Sage'          },
-  { src:'telas/821924b765a779c2477ce691ec7ae18d.jpg',  nombre:'Rosa Blush'          },
-  { src:'telas/bc31b627cd74bee19c2227910368c329.jpg',  nombre:'Gris Plata'          },
-  { src:'telas/aeb47eca4eab818829a5fc16263b7b31.jpg',  nombre:'Azul Acero'          },
-  { src:'telas/d4b006080b3e62d38a9cc5c53ef2b259.jpg',  nombre:'Verde Menta'         },
-  { src:'telas/69ad14805a6b0e89be0e59404d2b23ae.jpg',  nombre:'Dorado Ocre'         },
-  { src:'telas/86d5708f02be2e59052db0d06b0c4d07.jpg',  nombre:'Blanco Bordado'      },
-  { src:'telas/fd5de3fbbe1c25725787571f58ba3a41.jpg',  nombre:'Crema Dorada'        },
-  { src:'telas/ffe32f5d31acce1ce39f233343a0bdb1.jpg',  nombre:'Champán Bordada'     },
-  { src:'telas/54bafcd345701df74a7dfb79e4eed63a.jpg',  nombre:'Blanco Peonías'      },
-  { src:'telas/e3854f6f869326e6512ee841f2f1edc3.jpg',  nombre:'Marfil Brocado'      },
-  { src:'telas/e0016a7759c718ff2eddec75fc8903d5.jpg',  nombre:'Colección Rollos A'  },
-  { src:'telas/4a9966182b5518d6852ecc5709b47be6.jpg',  nombre:'Colección Apilada'   },
-  { src:'telas/263301bf103659434f9942ceb2d54566.jpg',  nombre:'Colección Rollos B'  },
+  { src:'telas/7b262a97ab50be92a7f07e0a145d65be.jpg',  n:'Rojo Carmín'         },
+  { src:'telas/3848be776d5cf49e63811df2a6d218ff.jpg',  n:'Rojo Brocado'        },
+  { src:'telas/aca0413455ec2e9b26a4c28d1e83162d.jpg',  n:'Fucsia Dorado'       },
+  { src:'telas/1aabc72fb1c575ed124c9ec55ad54cc5.jpg',  n:'Morado Floral'       },
+  { src:'telas/3be8546ee42550456027263c71963b91.jpg',  n:'Violeta Real'        },
+  { src:'telas/43c1d191299024a1616e859c74621158.jpg',  n:'Granate Floral'      },
+  { src:'telas/479224d9440fb12613dd32bd4c356f9e.jpg',  n:'Burdeos Floral'      },
+  { src:'telas/10d72799667cdfedd50b7db1e47de9af.jpg',  n:'Azul Marino'         },
+  { src:'telas/1c104dbe51d74631eb953edc5ad7f1d3.jpg',  n:'Azul Noche'          },
+  { src:'telas/f128eb84642f1b5f63030d4414c25d6f.jpg',  n:'Azul Marino Ramos'   },
+  { src:'telas/d510f515e384294a699a7f8f54060342.jpg',  n:'Turquesa Floral'     },
+  { src:'telas/6e272e3e29e1fb91aac9889b4afc9b67.jpg',  n:'Verde Botella'       },
+  { src:'telas/316a2c6e9146f3d7767ca3b5f7ab9231.jpg',  n:'Verde Hunter'        },
+  { src:'telas/6bde24ac5b50d6ca8c0bcba837bdce7e.jpg',  n:'Verde Militar'       },
+  { src:'telas/d4b006080b3e62d38a9cc5c53ef2b259.jpg',  n:'Verde Menta'         },
+  { src:'telas/647a511ff9eca426ac2669b2b46aaca4.jpg',  n:'Verde Sage'          },
+  { src:'telas/2a31f651ecf3842456a80b9ec3e1ad41.jpg',  n:'Negro Dorado'        },
+  { src:'telas/46f9778c7094d400c2df163ac0c372b7.jpg',  n:'Marrón Chocolate'    },
+  { src:'telas/856abd3cb99c1aac89ee8b16e961d07d.jpg',  n:'Gris Topo'           },
+  { src:'telas/bf2f4463dc8bcf74175903fa1445d6ab.jpg',  n:'Gris Perla'          },
+  { src:'telas/b8d32343036b943fe22a944290846e90.jpg',  n:'Platino Floral'      },
+  { src:'telas/516090036d788e609211ff179f82799c.jpg',  n:'Malva Lavanda'       },
+  { src:'telas/821924b765a779c2477ce691ec7ae18d.jpg',  n:'Rosa Blush'          },
+  { src:'telas/aeb47eca4eab818829a5fc16263b7b31.jpg',  n:'Azul Acero'          },
+  { src:'telas/bc31b627cd74bee19c2227910368c329.jpg',  n:'Gris Plata Brocado'  },
+  { src:'telas/ce1329e103cace9e9bc268485eddc221.jpg',  n:'Dorado Mostaza'      },
+  { src:'telas/69ad14805a6b0e89be0e59404d2b23ae.jpg',  n:'Dorado Ocre'         },
+  { src:'telas/86d5708f02be2e59052db0d06b0c4d07.jpg',  n:'Blanco Bordado'      },
+  { src:'telas/fd5de3fbbe1c25725787571f58ba3a41.jpg',  n:'Crema Dorada'        },
+  { src:'telas/ffe32f5d31acce1ce39f233343a0bdb1.jpg',  n:'Champán Bordada'     },
+  { src:'telas/54bafcd345701df74a7dfb79e4eed63a.jpg',  n:'Blanco Peonías'      },
+  { src:'telas/e3854f6f869326e6512ee841f2f1edc3.jpg',  n:'Marfil Brocado'      },
+  { src:'telas/e0016a7759c718ff2eddec75fc8903d5.jpg',  n:'Colección Rollos A'  },
+  { src:'telas/4a9966182b5518d6852ecc5709b47be6.jpg',  n:'Colección Apilada'   },
+  { src:'telas/263301bf103659434f9942ceb2d54566.jpg',  n:'Colección Rollos B'  },
 ];
 
-/* ══════════════════════════════════════════════════════
-   MÁSCARAS (polígono en fracción 0-1 de ancho×alto)
-   Calibradas sobre "prendas/foto completa.jpg"
-   (portrait ~690×960, fondo neutro gris claro)
+/* ════════════════════════════════════════════════
+   PARTES DEL TRAJE — configuración
 
-   CORPIÑO: incluye cuerpo y mangas largas
-   FALDA:   desde cintura hasta el bajo, muy ancha
-══════════════════════════════════════════════════════ */
-const MASKS = {
-  falda: [
-    [0.31, 0.47],   // cintura izq
-    [0.69, 0.47],   // cintura dcha
-    [0.94, 0.63],   // lateral dcha alto
-    [0.99, 0.82],   // lateral dcha bajo
-    [1.00, 1.00],   // esquina inferior dcha
-    [0.00, 1.00],   // esquina inferior izq
-    [0.01, 0.82],   // lateral izq bajo
-    [0.06, 0.63],   // lateral izq alto
-  ],
-  corpino: [
-    // muñeca izquierda → manga → hombro → escote → hombro → manga → muñeca derecha → cintura
-    [0.07, 0.44],   // muñeca izq
-    [0.12, 0.39],   // antebrazo izq
-    [0.18, 0.34],   // codo izq
-    [0.24, 0.27],   // brazo izq
-    [0.30, 0.22],   // hombro izq
-    [0.38, 0.20],   // cuello izq
-    [0.50, 0.23],   // escote centro
-    [0.62, 0.20],   // cuello dcho
-    [0.70, 0.22],   // hombro dcho
-    [0.76, 0.27],   // brazo dcho
-    [0.82, 0.34],   // codo dcho
-    [0.88, 0.39],   // antebrazo dcho
-    [0.93, 0.44],   // muñeca dcha
-    [0.90, 0.47],   // cintura dcha ext
-    [0.65, 0.48],   // cintura dcha centro
-    [0.35, 0.48],   // cintura izq centro
-    [0.10, 0.47],   // cintura izq ext
-  ],
-};
+   Masks calibradas sobre:
+   "pasarela/prendas/foto completa.jpg"
+   (~690 × 960 px, portrait, fondo gris neutro)
 
-const PART_LABELS = { falda:'Falda', corpino:'Corpiño' };
+   ORDEN DE DIBUJO (interior → exterior):
+   1. falda      → falda exterior, gran vuelo
+   2. delantal   → panel frontal sobre la falda
+   3. corpino    → corpiño ajustado + mangas largas
+   4. pico       → mantoncillo / pico sobre hombros
+════════════════════════════════════════════════ */
+const PARTS = [
+  {
+    id: 'falda',
+    label: 'Falda',
+    desc: 'Capa exterior',
+    // Cubre toda la falda de cintura al suelo, gran vuelo lateral
+    mask: [
+      [0.29, 0.47],  // cintura izq
+      [0.71, 0.47],  // cintura dcha
+      [0.93, 0.62],  // lateral dcha alto
+      [0.99, 0.81],  // lateral dcha bajo
+      [1.00, 1.00],  // esquina inf dcha
+      [0.00, 1.00],  // esquina inf izq
+      [0.01, 0.81],  // lateral izq bajo
+      [0.07, 0.62],  // lateral izq alto
+    ],
+    blendAlpha: 0.88,
+  },
+  {
+    id: 'delantal',
+    label: 'Delantal / Faldeta',
+    desc: 'Panel frontal',
+    // Panel central delantero — se dibuja ENCIMA de la falda
+    mask: [
+      [0.27, 0.47],  // cintura izq
+      [0.73, 0.47],  // cintura dcha
+      [0.74, 0.53],  // bajada dcha
+      [0.76, 0.70],  // lateral dcha
+      [0.72, 0.89],  // inferior dcha
+      [0.62, 0.95],  // abajo dcha
+      [0.50, 0.96],  // centro bajo
+      [0.38, 0.95],  // abajo izq
+      [0.28, 0.89],  // inferior izq
+      [0.24, 0.70],  // lateral izq
+      [0.26, 0.53],  // bajada izq
+    ],
+    blendAlpha: 0.82,
+  },
+  {
+    id: 'corpino',
+    label: 'Corpiño y Mangas',
+    desc: 'Cuerpo + manga larga',
+    // Cubre el cuerpo ajustado + las dos mangas largas hasta la muñeca
+    mask: [
+      [0.07, 0.44],  // muñeca izq
+      [0.12, 0.39],  // antebrazo izq
+      [0.17, 0.33],  // codo izq
+      [0.23, 0.27],  // brazo izq
+      [0.29, 0.22],  // hombro izq
+      [0.37, 0.20],  // cuello izq
+      [0.50, 0.24],  // escote centro
+      [0.63, 0.20],  // cuello dcho
+      [0.71, 0.22],  // hombro dcho
+      [0.77, 0.27],  // brazo dcho
+      [0.83, 0.33],  // codo dcho
+      [0.88, 0.39],  // antebrazo dcho
+      [0.93, 0.44],  // muñeca dcha
+      [0.90, 0.47],  // cintura dcha ext
+      [0.65, 0.48],  // cintura dcha
+      [0.35, 0.48],  // cintura izq
+      [0.10, 0.47],  // cintura izq ext
+    ],
+    blendAlpha: 0.90,
+  },
+  {
+    id: 'pico',
+    label: 'Pico / Mantoncillo',
+    desc: 'Encaje hombros/escote',
+    // Pequeño triángulo de encaje alrededor del escote y hombros
+    mask: [
+      [0.24, 0.17],  // hombro izq ext
+      [0.31, 0.17],  // hombro izq
+      [0.40, 0.19],  // cuello izq
+      [0.50, 0.22],  // escote centro
+      [0.60, 0.19],  // cuello dcho
+      [0.69, 0.17],  // hombro dcho
+      [0.76, 0.17],  // hombro dcho ext
+      [0.74, 0.22],  // hombro dcho bajo
+      [0.67, 0.30],  // lateral dcho
+      [0.60, 0.37],  // escote dcho bajo
+      [0.50, 0.40],  // punta V
+      [0.40, 0.37],  // escote izq bajo
+      [0.33, 0.30],  // lateral izq
+      [0.26, 0.22],  // hombro izq bajo
+    ],
+    blendAlpha: 0.80,
+  },
+];
 
-/* ══════════════════════════════════════════════════════
-   ESTADO
-══════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════
+   ESTADO GLOBAL
+════════════════════════════════════════════════ */
 let activePart  = 'falda';
 let comparing   = false;
-const selections = {};  // { falda: {src, nombre, img}, corpino: ... }
-const imgCache   = {};  // src → HTMLImageElement
+const selected  = {};   // partId → { src, n, img }
+const imgCache  = {};   // src → HTMLImageElement
 
-/* ══════════════════════════════════════════════════════
-   CANVAS
-══════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════
+   CANVAS + MODELO
+════════════════════════════════════════════════ */
 const canvas   = document.getElementById('canvas');
 const ctx      = canvas.getContext('2d');
 const modelImg = new Image();
@@ -431,11 +517,11 @@ modelImg.onload = () => {
 };
 modelImg.onerror = () => {
   document.getElementById('loading').innerHTML =
-    '<span style="color:#c44">No se pudo cargar la foto de la modelo.</span>';
+    '<span style="color:#e55">No se pudo cargar la foto modelo.</span>';
 };
 modelImg.src = 'pasarela/prendas/foto completa.jpg';
 
-/* ── Dibujar canvas ─────────────────────────────── */
+/* ── Redibuja todo el canvas ─────────────────── */
 function redraw() {
   const W = canvas.width, H = canvas.height;
   ctx.clearRect(0, 0, W, H);
@@ -443,89 +529,81 @@ function redraw() {
   ctx.globalAlpha = 1;
   ctx.drawImage(modelImg, 0, 0);
 
-  if (comparing) return; // comparar: sólo foto original
+  if (comparing) return;
 
-  /* Aplicar telas seleccionadas */
-  for (const [part, data] of Object.entries(selections)) {
-    if (data?.img && MASKS[part]) {
-      applyFabric(data.img, MASKS[part]);
-    }
+  // Aplica telas en orden de capas (interior → exterior)
+  for (const part of PARTS) {
+    const data = selected[part.id];
+    if (data?.img) applyLayer(data.img, part.mask, part.blendAlpha);
   }
 
-  /* Contorno de la parte activa */
-  if (MASKS[activePart]) drawOutline(MASKS[activePart]);
+  // Contorno dorado de la parte activa
+  const ap = PARTS.find(p => p.id === activePart);
+  if (ap) drawOutline(ap.mask);
 }
 
-/* ── Aplicar tela con blend mode ────────────────── */
-function applyFabric(fabricImg, maskPts) {
+/* ── Aplica tela a una zona via blend multiply ─ */
+function applyLayer(fabricImg, mask, alpha) {
+  const W = canvas.width, H = canvas.height;
   ctx.save();
 
-  const W = canvas.width, H = canvas.height;
-
-  /* 1. Clip al polígono de la prenda */
+  // 1. Clip al polígono de la prenda
   ctx.beginPath();
-  maskPts.forEach(([px, py], i) => {
+  mask.forEach(([px, py], i) => {
     const x = px * W, y = py * H;
     i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
   });
   ctx.closePath();
   ctx.clip();
 
-  /* 2. La foto tiene vestido crema/claro — multiply funciona directamente.
-        Pequeño lift solo para garantizar visibilidad en pliegues oscuros. */
+  // 2. Muy pequeño lift blanco para garantizar visibilidad de telas oscuras
   ctx.globalCompositeOperation = 'source-over';
-  ctx.globalAlpha = 0.08;
-  ctx.fillStyle = '#FFFFFF';
+  ctx.globalAlpha = 0.07;
+  ctx.fillStyle = '#fff';
   ctx.fillRect(0, 0, W, H);
 
-  /* 3. Tela con blend mode multiply:
-        · preserva sombras, pliegues y volumen del vestido original
-        · superpone el color y estampado de la tela elegida          */
-  const scale = Math.max(W / fabricImg.naturalWidth, H / fabricImg.naturalHeight);
-  const fw = fabricImg.naturalWidth  * scale;
-  const fh = fabricImg.naturalHeight * scale;
-  const fx = (W - fw) / 2;
-  const fy = (H - fh) / 2;
-
+  // 3. Tela con multiply: preserva pliegues y sombras del vestido original
+  const sc = Math.max(W / fabricImg.naturalWidth, H / fabricImg.naturalHeight);
+  const fw = fabricImg.naturalWidth  * sc;
+  const fh = fabricImg.naturalHeight * sc;
   ctx.globalCompositeOperation = 'multiply';
-  ctx.globalAlpha = 0.90;
-  ctx.drawImage(fabricImg, fx, fy, fw, fh);
+  ctx.globalAlpha = alpha;
+  ctx.drawImage(fabricImg, (W - fw) / 2, (H - fh) / 2, fw, fh);
 
   ctx.restore();
 }
 
-/* ── Contorno dorado de la parte activa ─────────── */
-function drawOutline(maskPts) {
+/* ── Contorno animado de la parte activa ─────── */
+function drawOutline(mask) {
   const W = canvas.width, H = canvas.height;
   ctx.save();
   ctx.beginPath();
-  maskPts.forEach(([px, py], i) => {
+  mask.forEach(([px, py], i) => {
     const x = px * W, y = py * H;
     i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
   });
   ctx.closePath();
-  ctx.strokeStyle = 'rgba(181,144,58,0.65)';
-  ctx.lineWidth = Math.max(W * 0.004, 3);
-  ctx.setLineDash([Math.max(W*0.012,8), Math.max(W*0.006,4)]);
+  ctx.strokeStyle = 'rgba(181,144,58,0.7)';
+  ctx.lineWidth   = Math.max(W * 0.0045, 3);
+  ctx.setLineDash([Math.max(W * 0.014, 9), Math.max(W * 0.007, 5)]);
   ctx.stroke();
   ctx.restore();
 }
 
-/* ── Clic en canvas → seleccionar parte ─────────── */
-canvas.addEventListener('click', (e) => {
-  const rect   = canvas.getBoundingClientRect();
-  const scaleX = canvas.width  / rect.width;
-  const scaleY = canvas.height / rect.height;
-  const px = ((e.clientX - rect.left) * scaleX) / canvas.width;
-  const py = ((e.clientY - rect.top)  * scaleY) / canvas.height;
+/* ── Clic en canvas → detectar parte ──────────── */
+canvas.addEventListener('click', e => {
+  const r  = canvas.getBoundingClientRect();
+  const px = ((e.clientX - r.left)  * (canvas.width  / r.width )) / canvas.width;
+  const py = ((e.clientY - r.top)   * (canvas.height / r.height)) / canvas.height;
 
-  for (const [part, mask] of Object.entries(MASKS)) {
-    if (pointInPoly(px, py, mask)) { selectPart(part); return; }
+  // Recorre partes en orden inverso (exterior primero para tener prioridad)
+  for (let i = PARTS.length - 1; i >= 0; i--) {
+    if (pip(px, py, PARTS[i].mask)) { selectPart(PARTS[i].id); return; }
   }
 });
 
 /* Ray-casting point-in-polygon */
-function pointInPoly(px, py, poly) {
+function pip(px, py, poly) {
   let inside = false;
   for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
     const [xi, yi] = poly[i], [xj, yj] = poly[j];
@@ -535,55 +613,110 @@ function pointInPoly(px, py, poly) {
   return inside;
 }
 
-/* ══════════════════════════════════════════════════════
+/* ════════════════════════════════════════════════
    SELECCIONAR PARTE
-══════════════════════════════════════════════════════ */
-function selectPart(part) {
-  activePart = part;
+════════════════════════════════════════════════ */
+function selectPart(id) {
+  activePart = id;
+  const part = PARTS.find(p => p.id === id);
 
+  // Actualizar botones izquierda
   document.querySelectorAll('.part-btn').forEach(b =>
-    b.classList.toggle('active', b.dataset.part === part));
+    b.classList.toggle('active', b.dataset.part === id));
 
-  document.getElementById('tp-editing').textContent = PART_LABELS[part] || part;
+  // Actualizar label derecha
+  document.getElementById('tp-part').textContent = part?.label || id;
+
   renderGrid();
   hideTooltip();
   redraw();
 }
 
-/* ══════════════════════════════════════════════════════
-   SELECCIONAR TELA
-══════════════════════════════════════════════════════ */
-async function selectTela(tela) {
-  showFabricLoading(true);
+/* ════════════════════════════════════════════════
+   SELECCIONAR TELA → aplicar
+════════════════════════════════════════════════ */
+async function selectTela(t) {
+  showSpin(true);
   try {
-    const img = await loadImg(tela.src);
-    selections[activePart] = { ...tela, img };
-    updatePartUI(activePart);
+    const img = await loadImg(t.src);
+    selected[activePart] = { ...t, img };
+    updatePartUI(activePart, t);
     renderGrid();
     redraw();
     updateMailto();
-  } catch {
-    console.warn('No se pudo cargar la tela:', tela.src);
-  } finally {
-    showFabricLoading(false);
-  }
+  } catch { /* imagen no disponible */ }
+  finally { showSpin(false); }
 }
 
-function removeTela(part) {
-  delete selections[part];
-  updatePartUI(part);
+function removePart(id) {
+  delete selected[id];
+  updatePartUI(id, null);
   renderGrid();
   redraw();
   updateMailto();
 }
 
-function showFabricLoading(show) {
-  document.getElementById('fabric-loading').style.display = show ? 'block' : 'none';
+/* ════════════════════════════════════════════════
+   ACTUALIZAR UI DE PARTE (dot + nombre)
+════════════════════════════════════════════════ */
+function updatePartUI(id, tela) {
+  const sw  = document.getElementById('sw-'  + id);
+  const sel = document.getElementById('sel-' + id);
+  const clr = document.getElementById('clr-' + id);
+
+  if (tela) {
+    sw.classList.remove('empty');
+    sw.style.backgroundImage = `url('${tela.src}')`;
+    if (sel) sel.textContent = tela.n;
+    if (clr) clr.style.display = 'block';
+  } else {
+    sw.classList.add('empty');
+    sw.style.backgroundImage = '';
+    if (sel) sel.textContent = '';
+    if (clr) clr.style.display = 'none';
+  }
 }
 
-/* ══════════════════════════════════════════════════════
+/* ════════════════════════════════════════════════
+   RENDER GRID DE TELAS
+════════════════════════════════════════════════ */
+function renderGrid() {
+  const grid = document.getElementById('telas-grid');
+  const cur  = selected[activePart];
+  grid.innerHTML = '';
+
+  TELAS.forEach(t => {
+    const sel  = cur?.src === t.src;
+    const card = document.createElement('div');
+    card.className = 'tc' + (sel ? ' sel' : '');
+    card.innerHTML = `
+      <div class="tc-img">
+        <img src="${t.src}" alt="${t.n}" loading="lazy">
+        <div class="tc-chk">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <path d="M5 11l5 5 7-9" stroke="white" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="tc-name">${t.n}</div>`;
+    card.addEventListener('click', () => selectTela(t));
+    grid.appendChild(card);
+  });
+}
+
+/* ════════════════════════════════════════════════
+   COMPARAR (ver original sin telas)
+════════════════════════════════════════════════ */
+function compare(on) {
+  comparing = on;
+  document.getElementById('cmp-btn').classList.toggle('active', on);
+  if (canvas.width) redraw();
+}
+
+/* ════════════════════════════════════════════════
    CARGAR IMAGEN (con caché)
-══════════════════════════════════════════════════════ */
+════════════════════════════════════════════════ */
 function loadImg(src) {
   if (imgCache[src]) return Promise.resolve(imgCache[src]);
   return new Promise((res, rej) => {
@@ -594,84 +727,28 @@ function loadImg(src) {
   });
 }
 
-/* ══════════════════════════════════════════════════════
-   ACTUALIZAR UI DE PARTE
-══════════════════════════════════════════════════════ */
-function updatePartUI(part) {
-  const sel   = selections[part];
-  const label = document.getElementById('psel-' + part);
-  const clear = document.getElementById('pclear-' + part);
-  if (label) {
-    label.textContent = sel ? sel.nombre : 'Sin tela elegida';
-    label.classList.toggle('has-tela', !!sel);
-  }
-  if (clear) clear.style.display = sel ? 'block' : 'none';
-}
-
-/* ══════════════════════════════════════════════════════
-   RENDER GRID DE TELAS
-══════════════════════════════════════════════════════ */
-function renderGrid() {
-  const grid   = document.getElementById('telas-grid');
-  const curSel = selections[activePart];
-  grid.innerHTML = '';
-
-  TELAS.forEach(t => {
-    const sel  = curSel?.src === t.src;
-    const card = document.createElement('div');
-    card.className = 'tela-card' + (sel ? ' sel' : '');
-    card.innerHTML = `
-      <div class="tela-thumb">
-        <img src="${t.src}" alt="${t.nombre}" loading="lazy">
-        <div class="tela-check">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <path d="M5 11l5 5 7-9" stroke="white" stroke-width="2.5"
-              stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </div>
-      <div class="tela-name">${t.nombre}</div>
-    `;
-    card.addEventListener('click', () => selectTela(t));
-    grid.appendChild(card);
-  });
-}
-
-/* ══════════════════════════════════════════════════════
-   COMPARAR (ver original)
-══════════════════════════════════════════════════════ */
-function showOriginal(show) {
-  comparing = show;
-  const btn = document.getElementById('compare-btn');
-  btn.classList.toggle('active', show);
-  if (modelImg.complete && canvas.width) redraw();
-}
-
-/* ══════════════════════════════════════════════════════
-   TOOLTIP
-══════════════════════════════════════════════════════ */
-function hideTooltip() {
-  const t = document.getElementById('canvas-tooltip');
-  if (t) { t.style.opacity = '0'; t.style.pointerEvents = 'none'; }
-}
-setTimeout(hideTooltip, 6000);
-
-/* ══════════════════════════════════════════════════════
-   MAILTO dinámico
-══════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════
+   MAILTO — incluye telas elegidas
+════════════════════════════════════════════════ */
 function updateMailto() {
-  const s = selections;
-  const body = 'Hola, me gustaría información sobre un diseño con estas telas:\n\n'
-    + (s.falda   ? `• Falda: ${s.falda.nombre}\n`   : '')
-    + (s.corpino ? `• Corpiño: ${s.corpino.nombre}\n` : '')
-    + '\nQuedo a su disposición para concertar una visita. Muchas gracias.';
+  const lines = PARTS
+    .filter(p => selected[p.id])
+    .map(p => `• ${p.label}: ${selected[p.id].n}`);
+
+  const body = lines.length
+    ? 'Hola, me gustaría información sobre un diseño con estas telas:\n\n'
+      + lines.join('\n')
+      + '\n\nQuedo a su disposición para concertar una visita. Gracias.'
+    : 'Hola, me gustaría información sobre sus trajes de fallera.';
+
   const a = document.getElementById('btn-pedir');
-  if (a) a.href = `mailto:info@cosascucas.es?subject=Consulta%20diseño%20traje%20fallera&body=${encodeURIComponent(body)}`;
+  if (a) a.href =
+    `mailto:info@cosascucas.es?subject=Consulta%20diseño%20traje%20fallera&body=${encodeURIComponent(body)}`;
 }
 
-/* ══════════════════════════════════════════════════════
+/* ════════════════════════════════════════════════
    DESCARGAR PNG
-══════════════════════════════════════════════════════ */
+════════════════════════════════════════════════ */
 function downloadPNG() {
   if (!canvas.width) return;
   canvas.toBlob(blob => {
@@ -683,9 +760,21 @@ function downloadPNG() {
   }, 'image/png');
 }
 
-/* ══════════════════════════════════════════════════════
-   INICIALIZAR
-══════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════
+   HELPERS
+════════════════════════════════════════════════ */
+function showSpin(on) {
+  document.getElementById('fab-spin').style.display = on ? 'block' : 'none';
+}
+function hideTooltip() {
+  const t = document.getElementById('tooltip');
+  if (t) { t.style.opacity = '0'; t.style.pointerEvents = 'none'; }
+}
+setTimeout(hideTooltip, 6000);
+
+/* ════════════════════════════════════════════════
+   INICIO
+════════════════════════════════════════════════ */
 renderGrid();
 updateMailto();
 </script>
