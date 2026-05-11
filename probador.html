@@ -244,6 +244,47 @@
   .ig-btn-no{background:transparent;color:var(--muted);border:1px solid var(--border)}
   .ig-btn-no:hover{border-color:var(--text);color:var(--text)}
 
+  /* ── Navegación de Telas: Fibra → Tipo ── */
+  #telas-nav { flex-shrink:0; background:var(--bg-alt); border-bottom:1px solid var(--border); }
+  .tela-row  { display:flex; gap:3px; padding:6px 8px 0; }
+  .tela-row:last-child { padding-bottom:6px; }
+  .tela-row-label {
+    font-size:.47rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--muted); padding:0 8px 3px; display:block;
+  }
+  /* Fibra: Seda / Rayón */
+  .tf-btn {
+    flex:1; padding:7px 6px; border:1.5px solid var(--border); border-radius:var(--r);
+    background:transparent; color:var(--muted); font-family:var(--fb);
+    font-size:.56rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    cursor:pointer; transition:all .15s; text-align:center; line-height:1.2;
+  }
+  .tf-btn:hover { border-color:var(--gl); color:var(--gl); }
+  .tf-btn.on { border-color:var(--gold); background:var(--gold); color:#fff; }
+  .tf-btn .tf-sub { font-size:.44rem; font-weight:400; opacity:.75; display:block; margin-top:2px; }
+  /* Tipo: Todos / Damascos / Brocateles */
+  .tt-btn {
+    flex:1; padding:5px 4px; border:1px solid var(--border); border-radius:var(--r);
+    background:transparent; color:var(--muted); font-family:var(--fb);
+    font-size:.51rem; font-weight:600; letter-spacing:.04em; text-transform:uppercase;
+    cursor:pointer; transition:all .15s; text-align:center;
+  }
+  .tt-btn:hover { border-color:var(--text); color:var(--text); }
+  .tt-btn.on { border-color:var(--text); background:var(--text); color:var(--white); }
+  /* Badge D/B en la tarjeta de tela */
+  .gc-badge {
+    position:absolute; top:4px; right:4px;
+    font-size:.48rem; font-weight:700; letter-spacing:.04em;
+    padding:2px 5px; border-radius:2px; line-height:1;
+    pointer-events:none; z-index:2;
+  }
+  .gc-badge.brocatel { background:rgba(181,144,58,.85); color:#fff; }
+  .gc-badge.damasco  { background:rgba(26,23,20,.75);   color:var(--gl); }
+  .tela-empty {
+    grid-column:1/-1; text-align:center;
+    padding:24px 10px; font-size:.65rem; color:var(--muted); font-style:italic;
+  }
+
   /* ── Toast ── */
   #send-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--gold);color:#fff;padding:14px 28px;border-radius:30px;font-size:.78rem;font-weight:600;box-shadow:0 6px 32px rgba(0,0,0,.35);z-index:9999;display:none;text-align:center;max-width:90vw}
   #send-toast.show{display:block;animation:toastIn .3s ease}
@@ -472,6 +513,9 @@
       </label>
     </div>
 
+    <!-- Navegación Seda/Rayón → Damasco/Brocatel (visible solo en pestaña Telas) -->
+    <div id="telas-nav" style="display:none"></div>
+
     <div id="rgrid"></div>
   </aside>
 
@@ -566,39 +610,64 @@ const CATALOG = {
   },
 
   /* ═══ TELAS DE COSAS CUCAS ═══
-     Se aplican sobre la parte activa seleccionada en el panel izquierdo.
-     Fondo claro → blend multiply → la tela se ve sobre la silueta del maniquí.
+     Estructura jerárquica: Fibra (Seda / Rayón) → Tipo (Brocatel / Damasco)
+     La propiedad `items` (plana) se genera dinámicamente desde `categories`.
   */
   telas: {
     label:'Telas', icon:'🎨',
-    area: null,           // Usa el área de la parte activa (falda, corpiño…)
+    area: null,
     blend:'multiply', alpha:0.86,
-    items:[
-      { src:'telas/probador digital/calanda.jpeg',                                    n:'Calanda'        },
-      { src:'telas/probador digital/san manuel.jpeg',                                 n:'San Manuel'     },
-      { src:'telas/probador digital/san manuel2.jpeg',                                n:'San Manuel 2'   },
-      { src:'telas/probador digital/cestas.jpeg',                                     n:'Cestas'         },
-      { src:'telas/probador digital/genoveva.jpeg',                                   n:'Genoveva'       },
-      { src:'telas/probador digital/santa genoveva.jpeg',                             n:'Santa Genoveva' },
-      { src:'telas/probador digital/sinfonia.jpeg',                                   n:'Sinfonía'       },
-      { src:'telas/probador digital/guadalquivir.jpeg',                               n:'Guadalquivir'   },
-      { src:'telas/probador digital/tela blanca.jpeg',                                n:'Blanca Clásica' },
-      { src:'telas/probador digital/tela blanca2.jpeg',                               n:'Blanca Ramos'   },
-      { src:'telas/probador digital/blanca3.jpeg',                                    n:'Blanca Rosa'    },
-      { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 11.54.12.jpeg',      n:'Verde Salvia'   },
-      { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 11.57.48.jpeg',      n:'Turquesa'       },
-      { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 12.17.10.jpeg',      n:'Azul Noche'     },
-      { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 12.29.35.jpeg',      n:'Crema Dorada'   },
-      { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 12.31.03.jpeg',      n:'Azul Pizarra'   },
-    ]
+    /* ── SEDA ── */
+    categories: {
+      seda: {
+        brocateles: [
+          { src:'telas/probador digital/san manuel.jpeg',  n:'San Manuel'  },
+          { src:'telas/probador digital/cestas.jpeg',      n:'Cestas'      },
+          { src:'telas/probador digital/sinfonia.jpeg',    n:'Sinfonía'    },
+          { src:'telas/probador digital/guadalquivir.jpeg',n:'Guadalquivir'},
+        ],
+        damascos: [
+          { src:'telas/probador digital/tela blanca2.jpeg',n:'Blanca Ramos'},
+          { src:'telas/probador digital/blanca3.jpeg',     n:'Blanca Rosa' },
+        ],
+      },
+      /* ── RAYÓN ── */
+      rayon: {
+        brocateles: [
+          { src:'telas/probador digital/calanda.jpeg',                                   n:'Calanda'       },
+          { src:'telas/probador digital/genoveva.jpeg',                                  n:'Genoveva'      },
+          { src:'telas/probador digital/santa genoveva.jpeg',                            n:'Santa Genoveva'},
+          { src:'telas/probador digital/san manuel2.jpeg',                               n:'San Manuel 2'  },
+          { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 11.54.12.jpeg',     n:'Verde Salvia'  },
+          { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 11.57.48.jpeg',     n:'Turquesa'      },
+          { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 12.17.10.jpeg',     n:'Azul Noche'    },
+          { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 12.31.03.jpeg',     n:'Azul Pizarra'  },
+        ],
+        damascos: [
+          { src:'telas/probador digital/tela blanca.jpeg',                               n:'Blanca Clásica'},
+          { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 12.29.35.jpeg',     n:'Crema Dorada'  },
+        ],
+      },
+    },
+    get items() {
+      /* Propiedad computada: devuelve TODAS las telas aplanadas (compatibilidad) */
+      const c = this.categories;
+      return [
+        ...c.seda.brocateles,   ...c.seda.damascos,
+        ...c.rayon.brocateles,  ...c.rayon.damascos,
+      ];
+    },
   },
 };
 
 /* ═══════════════════════════════════════════════
    ESTADO GLOBAL
 ═══════════════════════════════════════════════ */
-let activeType = 'falda';
-let comparing  = false;
+let activeType  = 'falda';
+let comparing   = false;
+/* ── Filtros de Telas ── */
+let telaFibra = 'seda';   /* 'seda' | 'rayon' */
+let telaTipo  = 'todos';  /* 'todos' | 'brocateles' | 'damascos' */
 let mqImg      = null;   // HTMLImageElement del maniquí
 let mqLabel    = '';
 
@@ -871,12 +940,132 @@ function renderTabs() {
   }
 }
 
+/* ── Obtener items de telas según filtros activos ── */
+function getTelaItems() {
+  const cats = CATALOG.telas.categories;
+  const fibCat = cats[telaFibra] || { brocateles:[], damascos:[] };
+  if (telaTipo === 'brocateles') return fibCat.brocateles.map(i => ({...i, _tipo:'brocatel'}));
+  if (telaTipo === 'damascos')   return fibCat.damascos.map(i   => ({...i, _tipo:'damasco'}));
+  /* todos */
+  return [
+    ...fibCat.brocateles.map(i => ({...i, _tipo:'brocatel'})),
+    ...fibCat.damascos.map(i   => ({...i, _tipo:'damasco'})),
+  ];
+}
+
+/* ── Renderizar navegación Seda/Rayón → Damasco/Brocatel ── */
+function renderTelaNav() {
+  const nav = document.getElementById('telas-nav');
+  nav.style.display = '';
+
+  const fibras = [
+    { k:'seda',  label:'Seda',  sub:'Natural · brillo suave' },
+    { k:'rayon', label:'Rayón', sub:'Sintético · brillo vivo' },
+  ];
+  const tipos = [
+    { k:'todos',      label:'Todas'      },
+    { k:'brocateles', label:'Brocateles' },
+    { k:'damascos',   label:'Damascos'   },
+  ];
+
+  /* Contar por categoría para mostrar badge numérico */
+  const cats = CATALOG.telas.categories;
+  const counts = {
+    seda:  { brocateles: cats.seda.brocateles.length,  damascos: cats.seda.damascos.length  },
+    rayon: { brocateles: cats.rayon.brocateles.length, damascos: cats.rayon.damascos.length },
+  };
+  const totalFib = f => counts[f].brocateles + counts[f].damascos;
+
+  nav.innerHTML = `
+    <span class="tela-row-label">Fibra</span>
+    <div class="tela-row">
+      ${fibras.map(f => `
+        <button class="tf-btn ${telaFibra === f.k ? 'on' : ''}" data-f="${f.k}">
+          ${f.label}
+          <span class="tf-sub">${f.sub} · ${totalFib(f.k)} telas</span>
+        </button>`).join('')}
+    </div>
+    <span class="tela-row-label" style="margin-top:4px">Tipo</span>
+    <div class="tela-row">
+      ${tipos.map(t => {
+        const cnt = t.k === 'todos'
+          ? totalFib(telaFibra)
+          : (counts[telaFibra][t.k] || 0);
+        return `<button class="tt-btn ${telaTipo === t.k ? 'on' : ''}" data-t="${t.k}">
+          ${t.label} <span style="opacity:.65">(${cnt})</span>
+        </button>`;
+      }).join('')}
+    </div>`;
+
+  /* Eventos fibra */
+  nav.querySelectorAll('.tf-btn').forEach(btn =>
+    btn.addEventListener('click', () => {
+      telaFibra = btn.dataset.f;
+      telaTipo  = 'todos';
+      renderTelaNav();
+      renderGridTelas();
+    })
+  );
+  /* Eventos tipo */
+  nav.querySelectorAll('.tt-btn').forEach(btn =>
+    btn.addEventListener('click', () => {
+      telaTipo = btn.dataset.t;
+      renderTelaNav();
+      renderGridTelas();
+    })
+  );
+}
+
+/* ── Render específico de telas con badges D/B ── */
+function renderGridTelas() {
+  const grid = document.getElementById('rgrid');
+  const targetPart = (activeType !== 'telas') ? activeType : 'falda';
+  const cur  = telaOverlay[targetPart];
+  const items = getTelaItems();
+  grid.innerHTML = '';
+
+  if (!items.length) {
+    const empty = document.createElement('div');
+    empty.className = 'tela-empty';
+    empty.textContent = 'No hay telas en esta categoría aún.';
+    grid.appendChild(empty);
+    return;
+  }
+
+  items.forEach(item => {
+    const sel  = cur?.src === item.src;
+    const card = document.createElement('div');
+    card.className = 'gc' + (sel ? ' sel' : '');
+    card.style.position = 'relative';
+    card.innerHTML = `
+      <div class="gci">
+        <img src="${item.src}" alt="${item.n}" loading="lazy">
+        <div class="gck">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12l5 5 9-9" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <span class="gc-badge ${item._tipo}">${item._tipo === 'brocatel' ? 'B' : 'D'}</span>
+      <div class="gcn">${item.n}</div>`;
+    card.addEventListener('click', () => selectItem('telas', item));
+    grid.appendChild(card);
+  });
+}
+
 function renderGrid(type) {
+  /* Para telas, usar el render especializado con navegación */
+  if (type === 'telas') {
+    renderTelaNav();
+    renderGridTelas();
+    return;
+  }
+  /* Ocultar navegación de telas cuando no es telas */
+  document.getElementById('telas-nav').style.display = 'none';
+
   const grid = document.getElementById('rgrid');
   const cat  = CATALOG[type];
-  /* Para telas: la "selección actual" viene de telaOverlay de la parte activa */
-  const targetPart = (type === 'telas' && activeType !== 'telas') ? activeType : type;
-  const cur = (type === 'telas') ? telaOverlay[targetPart] : layers[type];
+  const cur  = layers[type];
   grid.innerHTML = '';
   cat.items.forEach(item => {
     const sel  = cur?.src === item.src;
