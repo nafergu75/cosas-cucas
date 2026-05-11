@@ -340,9 +340,110 @@
         display: none;
       }
     }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       CLIPPED GOEY GALLERY — traducción del componente React
+       Las fotos se recortan con formas SVG; al hacer hover el padding
+       se reduce y la imagen escala → efecto "reventar el marco"
+    ═══════════════════════════════════════════════════════════════════════ */
+    /* SVG de definiciones oculto */
+    .goey-svg {
+      position: absolute; top: -9999px; left: -9999px;
+      width: 0; height: 0; overflow: hidden;
+    }
+
+    /* Grid de 3 columnas */
+    .goey-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    /* Figura con degradado y padding que se encoge en hover */
+    .goey-figure {
+      padding: 28px;               /* equiv. Tailwind p-7 */
+      border-radius: 14px;
+      cursor: pointer;
+      transition: padding 0.22s ease, box-shadow 0.22s ease;
+      position: relative;
+    }
+    .goey-figure:hover {
+      padding: 12px;               /* "destapa" más imagen */
+      box-shadow: 0 12px 40px rgba(0,0,0,0.28);
+    }
+
+    /* Contenedor del clip-path */
+    .goey-clip {
+      overflow: visible;           /* el clip-path se encarga de recortar */
+    }
+
+    /* Imagen dentro del clip: cuadrada, escala al hacer hover */
+    .goey-img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      object-position: center top;
+      transition: transform 0.3s ease;
+      vertical-align: bottom;
+    }
+    .goey-figure:hover .goey-img {
+      transform: scale(1.12);      /* zoom suave al pasar el ratón */
+    }
+
+    /* 6 variantes de degradado — paleta cálida valenciana */
+    .goey-grad-1 { background: linear-gradient(to bottom, #c9ad66, #9b6e18); }  /* oro */
+    .goey-grad-2 { background: linear-gradient(to top,    #8c8a57, #5a5e3a); }  /* oliva */
+    .goey-grad-3 { background: linear-gradient(to top,    #c24445, #e07060); }  /* rojo coral */
+    .goey-grad-4 { background: linear-gradient(to top,    #a03010, #f0c850); }  /* naranja-dorado */
+    .goey-grad-5 { background: linear-gradient(to bottom, #133050, #2e6070); }  /* azul profundo */
+    .goey-grad-6 { background: linear-gradient(to bottom, #324644, #708a78); }  /* verde pizarra */
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .goey-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+      .goey-figure { padding: 20px; }
+      .goey-figure:hover { padding: 10px; }
+    }
+    @media (max-width: 600px) {
+      .goey-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .goey-figure { padding: 16px; }
+      .goey-figure:hover { padding: 8px; }
+    }
   </style>
 </head>
 <body>
+
+<!-- SVG clip-paths para ClippedGoeyGallery (invisible) -->
+<svg class="goey-svg" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- Estrella de 12 puntas -->
+    <clipPath id="clip-goey1" clipPathUnits="objectBoundingBox">
+      <path d="M0.475097 0.0206081C0.480612 -0.00686926 0.519388 -0.00686941 0.524903 0.0206079L0.571269 0.251605C0.575051 0.270448 0.597161 0.278588 0.61201 0.266604L0.793792 0.119895C0.815436 0.102427 0.845153 0.127617 0.83198 0.152266L0.721096 0.359768C0.712075 0.37665 0.723822 0.397229 0.742771 0.397739L0.975238 0.403995C1.00289 0.404739 1.00963 0.443354 0.983905 0.453651L0.767467 0.540292C0.74985 0.547345 0.745772 0.570735 0.75994 0.58347L0.93413 0.740035C0.954822 0.758634 0.935419 0.792584 0.909186 0.783681L0.688795 0.708892C0.670805 0.702787 0.652793 0.718074 0.655584 0.737078L0.689853 0.970393C0.693926 0.998124 0.657484 1.01152 0.643038 0.987606L0.521679 0.786683C0.511768 0.770275 0.488232 0.770275 0.478321 0.786683L0.356962 0.987606C0.342516 1.01152 0.306074 0.998123 0.310147 0.970393L0.344416 0.737078C0.347207 0.718074 0.329195 0.702787 0.311205 0.708892L0.0908143 0.783681C0.0645805 0.792584 0.0451779 0.758634 0.0658702 0.740035L0.24006 0.58347C0.254228 0.570735 0.25015 0.547345 0.232533 0.540292L0.016095 0.453651C-0.00962926 0.443354 -0.00288931 0.404739 0.0247622 0.403995L0.257229 0.397739C0.276178 0.397229 0.287925 0.37665 0.278904 0.359768L0.16802 0.152266C0.154848 0.127617 0.184564 0.102427 0.206208 0.119895L0.38799 0.266604C0.402839 0.278588 0.424949 0.270448 0.428731 0.251605L0.475097 0.0206081Z"/>
+    </clipPath>
+    <!-- Rombo / diamante -->
+    <clipPath id="clip-goey2" clipPathUnits="objectBoundingBox">
+      <path d="M0.524367 0.0169408C0.516013 -0.00564697 0.483987 -0.00564692 0.475633 0.0169409L0.355942 0.340559C0.353318 0.347653 0.347718 0.35325 0.340612 0.355881L0.0169359 0.47571C-0.00564523 0.48407 -0.00564523 0.51593 0.0169359 0.52429L0.340612 0.644119C0.347718 0.64675 0.353318 0.652347 0.355942 0.659441L0.475633 0.983059C0.483987 1.00565 0.516013 1.00565 0.524367 0.983059L0.644058 0.659441C0.646682 0.652347 0.652282 0.64675 0.659388 0.644119L0.983064 0.52429C1.00565 0.51593 1.00565 0.48407 0.983064 0.47571L0.659389 0.355881C0.652282 0.35325 0.646682 0.347653 0.644058 0.340559L0.524367 0.0169408Z"/>
+    </clipPath>
+    <!-- Semicírculo invertido -->
+    <clipPath id="clip-goey3" clipPathUnits="objectBoundingBox">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 0.566745C0.5 0.25374 0.276142 0 0 0V0.433255C0 0.74626 0.223858 1 0.5 1C0.776142 1 1 0.74626 1 0.433255V0H0.5V0.566745Z"/>
+    </clipPath>
+    <!-- Cuarto de círculo -->
+    <clipPath id="clip-goey4" clipPathUnits="objectBoundingBox">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M0.499366 0H0V1H0.5V0.55597H0.509506C0.780398 0.55597 1 0.307054 1 0H0.5H0.499366Z"/>
+    </clipPath>
+    <!-- Rectángulo escalonado -->
+    <clipPath id="clip-goey5" clipPathUnits="objectBoundingBox">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M0.0249688 0C0.0111789 0 0 0.0112775 0 0.0251889V0.851385C0 0.865297 0.0111789 0.876574 0.0249688 0.876574H0.179775V0.974811C0.179775 0.988723 0.190954 1 0.204744 1H0.975031C0.988821 1 1 0.988723 1 0.974811V0.157431C1 0.143519 0.988821 0.132242 0.975031 0.132242H0.810237V0.0251889C0.810237 0.0112775 0.799058 0 0.785268 0H0.0249688Z"/>
+    </clipPath>
+    <!-- D invertida / media luna -->
+    <clipPath id="clip-goey6" clipPathUnits="objectBoundingBox">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M1 0H0V0.5L3.31881e-08 1H0.489388C0.771391 1 1 0.776142 1 0.5H0.489388C0.771391 0.5 1 0.276142 1 0Z"/>
+    </clipPath>
+  </defs>
+</svg>
 
 <!-- CABECERA -->
 <header class="g-header">
@@ -370,6 +471,12 @@
 <section class="g-section" id="sec-instagram" style="display:none;">
   <p class="g-section-title">Instagram · @cosascucas</p>
   <div class="g-grid" id="grid-instagram"></div>
+</section>
+
+<!-- SECCIÓN: MOMENTOS EN TIENDA — ClippedGoeyGallery -->
+<section class="g-section" id="sec-galeria" style="background: var(--color-bg-alt);">
+  <p class="g-section-title">Nuestra Tienda · Momentos y Creaciones</p>
+  <div class="goey-grid" id="grid-galeria"></div>
 </section>
 
 <!-- LIGHTBOX -->
@@ -414,6 +521,41 @@
     /* Ejemplo: { img: 'fotos/foto1.jpg', caption: 'Fallera Mayor · Cosas Cucas' }, */
   ];
 
+  /* ── GALERÍA TIENDA: 27 fotos de la carpeta /galeria ── */
+  const GALERIA_TIENDA = [
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.02.59_db5bbd11.jpg', caption: 'Indumentaria valenciana artesanal' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.02.59_39f86f7f.jpg', caption: 'Bordados a mano · Cosas Cucas' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_6b8a4b5f.jpg', caption: 'Detalle de seda valenciana' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_b3a2c16e.jpg', caption: 'Cotilla artesanal a medida' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_0eac70d9.jpg', caption: 'Colección Falles · nuestra tienda' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_e930437b.jpg', caption: 'Elegancia tradicional valenciana' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_fc060f99.jpg', caption: 'Aderezo y complementos de gala' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.01_57d65e9d.jpg', caption: 'Manteleta bordada con hilo de oro' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_91962d31.jpg', caption: 'Taller artesanal · Cosas Cucas' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_26d8c283.jpg', caption: 'Tejidos de seda exclusivos' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_43ecfe2c.jpg', caption: 'Indumentaria Fallera Mayor' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_6c752940.jpg', caption: 'Pañuelo de cuello artesanal' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_1956fae1.jpg', caption: 'Falda y delantal siglo XVIII' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_eb1c275e.jpg', caption: 'Joya de la indumentaria valenciana' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_da119054.jpg', caption: 'Confección exclusiva desde 1982' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_81f8afaa.jpg', caption: 'Bordado en hilo de plata y oro' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_1e8705c9.jpg', caption: 'Tela de damasco valenciano' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_07930a16.jpg', caption: 'Detalle de pedrería y encaje' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.04.38_0d991970.jpg', caption: 'Nuestra tienda · C/ Grabador Esteve' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.34.19_9aca2793.jpg', caption: 'Corte de Honor artesanal' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.34.35_c730d5ed.jpg', caption: 'Preparativos para la Cremà' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.35.23_654c46b7.jpg', caption: 'Últimos detalles de confección' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.20_5fc7902b.jpg', caption: 'Tradición y arte valenciano' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.43_39b3a58f.jpg', caption: 'Colores de la huerta valenciana' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.54_d6860bf6.jpg', caption: 'Bordados florentinos artesanales' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.37.20_6f6d149b.jpg', caption: 'Falles · indumentaria completa' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 23.20.06_0ff828d8.jpg', caption: 'El legado textil de Valencia' },
+  ];
+
+  /* ── Shapes y degradados para ClippedGoeyGallery ── */
+  const GOEY_CLIPS  = ['clip-goey1','clip-goey2','clip-goey3','clip-goey4','clip-goey5','clip-goey6'];
+  const GOEY_GRADS  = ['goey-grad-1','goey-grad-2','goey-grad-3','goey-grad-4','goey-grad-5','goey-grad-6'];
+
   /* ── Lightbox ── */
   let allItems = [];
   let lbIdx = 0;
@@ -453,7 +595,50 @@
     if (e.key === 'ArrowRight')  navLb(1);
   });
 
-  /* ── Render grid ── */
+  /* ── Render GOEY grid (ClippedGoeyGallery) ──
+     Cada figura tiene:
+       • degradado de fondo (6 variantes en ciclo)
+       • clip-path SVG para la forma artística
+       • padding que se encoge en :hover → imagen "se hincha"
+       • imagen escala ×1.12 en :hover
+     Al hacer clic se abre el lightbox.
+  ── */
+  function renderGoeyGrid(containerId, items) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    el.innerHTML = items.map((it, i) => {
+      const s = i % 6;
+      /* Ruta con espacios URL-encodeados para máxima compatibilidad */
+      const src = it.img.replace(/ /g, '%20');
+      return `<figure
+          class="goey-figure ${GOEY_GRADS[s]}"
+          data-goey-idx="${i}"
+          tabindex="0"
+          role="button"
+          aria-label="${it.caption}">
+        <div class="goey-clip" style="clip-path:url(#${GOEY_CLIPS[s]})">
+          <img class="goey-img"
+               src="${src}"
+               alt="${it.caption}"
+               loading="lazy" />
+        </div>
+      </figure>`;
+    }).join('');
+
+    /* Click → lightbox */
+    el.addEventListener('click', e => {
+      const fig = e.target.closest('.goey-figure');
+      if (fig) openLb(items, +fig.dataset.goeyIdx);
+    });
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        const fig = e.target.closest('.goey-figure');
+        if (fig) { e.preventDefault(); openLb(items, +fig.dataset.goeyIdx); }
+      }
+    });
+  }
+
+  /* ── Render grid (cuadrícula clásica) ── */
   function renderGrid(containerId, items) {
     const el = document.getElementById(containerId);
     el.innerHTML = items.map((it, i) => `
@@ -478,6 +663,8 @@
     document.getElementById('sec-instagram').style.display = '';
     renderGrid('grid-instagram', INSTAGRAM);
   }
+  /* ClippedGoeyGallery — fotos de la carpeta /galeria */
+  renderGoeyGrid('grid-galeria', GALERIA_TIENDA);
 </script>
 </body>
 </html>
