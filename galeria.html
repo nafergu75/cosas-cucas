@@ -420,7 +420,8 @@
     .flip-hide { display: none !important; }
 
     /* Durante la animación GSAP Flip se deshabilitan las transiciones de hover */
-    .goey-grid.is-flipping .goey-figure { transition: none; }
+    .g-grid.is-flipping .g-cell img,
+    .g-grid.is-flipping .g-cell__overlay { transition: none; }
 
     /* Grupo de botones de filtro — replica el ToggleGroup de shadcn */
     .flip-filters {
@@ -497,36 +498,6 @@
 </head>
 <body>
 
-<!-- SVG clip-paths para ClippedGoeyGallery (invisible) -->
-<svg class="goey-svg" aria-hidden="true" focusable="false">
-  <defs>
-    <!-- Estrella de 12 puntas -->
-    <clipPath id="clip-goey1" clipPathUnits="objectBoundingBox">
-      <path d="M0.475097 0.0206081C0.480612 -0.00686926 0.519388 -0.00686941 0.524903 0.0206079L0.571269 0.251605C0.575051 0.270448 0.597161 0.278588 0.61201 0.266604L0.793792 0.119895C0.815436 0.102427 0.845153 0.127617 0.83198 0.152266L0.721096 0.359768C0.712075 0.37665 0.723822 0.397229 0.742771 0.397739L0.975238 0.403995C1.00289 0.404739 1.00963 0.443354 0.983905 0.453651L0.767467 0.540292C0.74985 0.547345 0.745772 0.570735 0.75994 0.58347L0.93413 0.740035C0.954822 0.758634 0.935419 0.792584 0.909186 0.783681L0.688795 0.708892C0.670805 0.702787 0.652793 0.718074 0.655584 0.737078L0.689853 0.970393C0.693926 0.998124 0.657484 1.01152 0.643038 0.987606L0.521679 0.786683C0.511768 0.770275 0.488232 0.770275 0.478321 0.786683L0.356962 0.987606C0.342516 1.01152 0.306074 0.998123 0.310147 0.970393L0.344416 0.737078C0.347207 0.718074 0.329195 0.702787 0.311205 0.708892L0.0908143 0.783681C0.0645805 0.792584 0.0451779 0.758634 0.0658702 0.740035L0.24006 0.58347C0.254228 0.570735 0.25015 0.547345 0.232533 0.540292L0.016095 0.453651C-0.00962926 0.443354 -0.00288931 0.404739 0.0247622 0.403995L0.257229 0.397739C0.276178 0.397229 0.287925 0.37665 0.278904 0.359768L0.16802 0.152266C0.154848 0.127617 0.184564 0.102427 0.206208 0.119895L0.38799 0.266604C0.402839 0.278588 0.424949 0.270448 0.428731 0.251605L0.475097 0.0206081Z"/>
-    </clipPath>
-    <!-- Rombo / diamante -->
-    <clipPath id="clip-goey2" clipPathUnits="objectBoundingBox">
-      <path d="M0.524367 0.0169408C0.516013 -0.00564697 0.483987 -0.00564692 0.475633 0.0169409L0.355942 0.340559C0.353318 0.347653 0.347718 0.35325 0.340612 0.355881L0.0169359 0.47571C-0.00564523 0.48407 -0.00564523 0.51593 0.0169359 0.52429L0.340612 0.644119C0.347718 0.64675 0.353318 0.652347 0.355942 0.659441L0.475633 0.983059C0.483987 1.00565 0.516013 1.00565 0.524367 0.983059L0.644058 0.659441C0.646682 0.652347 0.652282 0.64675 0.659388 0.644119L0.983064 0.52429C1.00565 0.51593 1.00565 0.48407 0.983064 0.47571L0.659389 0.355881C0.652282 0.35325 0.646682 0.347653 0.644058 0.340559L0.524367 0.0169408Z"/>
-    </clipPath>
-    <!-- Semicírculo invertido -->
-    <clipPath id="clip-goey3" clipPathUnits="objectBoundingBox">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 0.566745C0.5 0.25374 0.276142 0 0 0V0.433255C0 0.74626 0.223858 1 0.5 1C0.776142 1 1 0.74626 1 0.433255V0H0.5V0.566745Z"/>
-    </clipPath>
-    <!-- Cuarto de círculo -->
-    <clipPath id="clip-goey4" clipPathUnits="objectBoundingBox">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M0.499366 0H0V1H0.5V0.55597H0.509506C0.780398 0.55597 1 0.307054 1 0H0.5H0.499366Z"/>
-    </clipPath>
-    <!-- Rectángulo escalonado -->
-    <clipPath id="clip-goey5" clipPathUnits="objectBoundingBox">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M0.0249688 0C0.0111789 0 0 0.0112775 0 0.0251889V0.851385C0 0.865297 0.0111789 0.876574 0.0249688 0.876574H0.179775V0.974811C0.179775 0.988723 0.190954 1 0.204744 1H0.975031C0.988821 1 1 0.988723 1 0.974811V0.157431C1 0.143519 0.988821 0.132242 0.975031 0.132242H0.810237V0.0251889C0.810237 0.0112775 0.799058 0 0.785268 0H0.0249688Z"/>
-    </clipPath>
-    <!-- D invertida / media luna -->
-    <clipPath id="clip-goey6" clipPathUnits="objectBoundingBox">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M1 0H0V0.5L3.31881e-08 1H0.489388C0.771391 1 1 0.776142 1 0.5H0.489388C0.771391 0.5 1 0.276142 1 0Z"/>
-    </clipPath>
-  </defs>
-</svg>
-
 <!-- CABECERA -->
 <header class="g-header">
   <a href="index.html" class="g-header__logo">Cosas Cucas</a>
@@ -592,7 +563,7 @@
 
   </div>
 
-  <div class="goey-grid" id="grid-galeria"></div>
+  <div class="g-grid" id="grid-galeria"></div>
 </section>
 
 <!-- LIGHTBOX -->
@@ -641,38 +612,38 @@
     /* Ejemplo: { img: 'fotos/foto1.jpg', caption: 'Fallera Mayor · Cosas Cucas' }, */
   ];
 
-  /* ── GALERÍA TIENDA: 27 fotos con categoría (mujer · hombre · nino) ──
-     Distribución: Mujer × 11 · Hombre × 9 · Niño/a × 7 = 27
-     cat usa la clave data-flip del componente FlipReveal
+  /* ── GALERÍA TIENDA: 27 fotos — categorías identificadas visualmente ──
+     mujer × 14 · nino × 12 · hombre × 1
+     (única foto con traje masculino visible es la pareja llauradora)
   ── */
   const GALERIA_TIENDA = [
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.02.59_db5bbd11.jpg', caption: 'Indumentaria de mujer · artesanal', cat: 'mujer'  },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.02.59_39f86f7f.jpg', caption: 'Bordados a mano · dama valenciana',   cat: 'mujer'  },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_6b8a4b5f.jpg', caption: 'Indumentaria masculina tradicional',  cat: 'hombre' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_b3a2c16e.jpg', caption: 'Cotilla artesanal · señora',          cat: 'mujer'  },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_0eac70d9.jpg', caption: 'Indumentaria infantil · Falles',      cat: 'nino'   },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_e930437b.jpg', caption: 'Elegancia de dama valenciana',        cat: 'mujer'  },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_fc060f99.jpg', caption: 'Aderezo masculino de gala',           cat: 'hombre' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.01_57d65e9d.jpg', caption: 'Manteleta bordada · señora',          cat: 'mujer'  },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_91962d31.jpg', caption: 'Vestit de llauradora · xiqueta',      cat: 'nino'   },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_26d8c283.jpg', caption: 'Tejidos de seda · mujer',             cat: 'mujer'  },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_43ecfe2c.jpg', caption: 'Traje de llaurador · hombre',         cat: 'hombre' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_6c752940.jpg', caption: 'Pañuelo de cuello · niño',            cat: 'nino'   },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_1956fae1.jpg', caption: 'Falda y delantal · dama siglo XVIII', cat: 'mujer'  },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_eb1c275e.jpg', caption: 'Joia de la indumentaria · hombre',    cat: 'hombre' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_da119054.jpg', caption: 'Confección exclusiva · señora',       cat: 'mujer'  },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_81f8afaa.jpg', caption: 'Bordado en oro · xiqueta',            cat: 'nino'   },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_1e8705c9.jpg', caption: 'Tela de damasco · hombre',            cat: 'hombre' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_07930a16.jpg', caption: 'Pedrería y encaje · dama',            cat: 'mujer'  },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.04.38_0d991970.jpg', caption: 'Indumentaria completa · hombre',      cat: 'hombre' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.34.19_9aca2793.jpg', caption: 'Corte de Honor · xiqueta',            cat: 'nino'   },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.34.35_c730d5ed.jpg', caption: 'Indumentaria Fallera Mayor',          cat: 'mujer'  },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.35.23_654c46b7.jpg', caption: 'Traje de llaurador · jove',           cat: 'hombre' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.20_5fc7902b.jpg', caption: 'Vestit de llauradora · menuda',       cat: 'nino'   },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.43_39b3a58f.jpg', caption: 'Colores de la huerta · xiqueta',      cat: 'nino'   },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.54_d6860bf6.jpg', caption: 'Bordados florentinos · dama',         cat: 'mujer'  },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.37.20_6f6d149b.jpg', caption: 'Falles · indumentaria masculina',     cat: 'hombre' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 23.20.06_0ff828d8.jpg', caption: 'Legado textil de Valencia · hombre',  cat: 'hombre' },
+    /* 1  */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.02.59_db5bbd11.jpg', caption: 'Fallera Mayor · indumentaria de gala',       cat: 'mujer'  },
+    /* 2  */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.02.59_39f86f7f.jpg', caption: 'Fallera infantil · traje floral verd',        cat: 'nino'   },
+    /* 3  */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_6b8a4b5f.jpg', caption: 'Falleres en l\'Ofrena de Flors',              cat: 'mujer'  },
+    /* 4  */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_b3a2c16e.jpg', caption: 'Fallera jove · delantal bordado',              cat: 'mujer'  },
+    /* 5  */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_0eac70d9.jpg', caption: 'Ofrena nocturna · indumentaria completa',      cat: 'mujer'  },
+    /* 6  */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_e930437b.jpg', caption: 'Manteleta de encaix · perfil',                 cat: 'mujer'  },
+    /* 7  */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_fc060f99.jpg', caption: 'Fallera infantil en l\'Ofrena',                cat: 'nino'   },
+    /* 8  */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.01_57d65e9d.jpg', caption: 'Pareja llauradora · indumentaria valenciana',  cat: 'hombre' },
+    /* 9  */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_91962d31.jpg', caption: 'Fallera Major · tafetà verd blaví',            cat: 'mujer'  },
+    /* 10 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_26d8c283.jpg', caption: 'Col·lecció teal · cos entero',                 cat: 'mujer'  },
+    /* 11 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_43ecfe2c.jpg', caption: 'Fallera de gala · vestit verd',                cat: 'mujer'  },
+    /* 12 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_6c752940.jpg', caption: 'Llauradora jove · casa tradicional',           cat: 'nino'   },
+    /* 13 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_1956fae1.jpg', caption: 'Indumentaria llauradora · xiqueta',            cat: 'nino'   },
+    /* 14 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_eb1c275e.jpg', caption: 'Últims ajustos en tenda · xiqueta',            cat: 'nino'   },
+    /* 15 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_da119054.jpg', caption: 'Fallera infantil blava · Cosas Cucas',         cat: 'nino'   },
+    /* 16 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_81f8afaa.jpg', caption: 'Fallera infantil · trau daurat i blau',        cat: 'nino'   },
+    /* 17 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_1e8705c9.jpg', caption: 'Xiqueta fallera · posado exterior',            cat: 'nino'   },
+    /* 18 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_07930a16.jpg', caption: 'Indumentaria infantil · detall esquena',       cat: 'nino'   },
+    /* 19 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.04.38_0d991970.jpg', caption: 'Fallera Major · preparatius amb flors',        cat: 'mujer'  },
+    /* 20 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.34.19_9aca2793.jpg', caption: 'Fallera Major de Valencia · foto Tamayo',      cat: 'mujer'  },
+    /* 21 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.34.35_c730d5ed.jpg', caption: 'Confecció en tenda · Cosas Cucas',             cat: 'mujer'  },
+    /* 22 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.35.23_654c46b7.jpg', caption: 'Entrega de banda · celebració',                cat: 'mujer'  },
+    /* 23 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.20_5fc7902b.jpg', caption: 'Mare i filla · indumentaria valenciana',       cat: 'mujer'  },
+    /* 24 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.43_39b3a58f.jpg', caption: 'Vestint a la xiqueta · moments de tenda',      cat: 'nino'   },
+    /* 25 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.54_d6860bf6.jpg', caption: 'Xiqueta i mare · pati tradicional',            cat: 'nino'   },
+    /* 26 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.37.20_6f6d149b.jpg', caption: 'Llauradora · cotilla negra i delantal brodat', cat: 'mujer'  },
+    /* 27 */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 23.20.06_0ff828d8.jpg', caption: 'Fallera infantil · vestit rosa i encaix',      cat: 'nino'   },
   ];
 
   /* ── Shapes y degradados para ClippedGoeyGallery ── */
@@ -718,46 +689,45 @@
     if (e.key === 'ArrowRight')  navLb(1);
   });
 
-  /* ── Render GOEY grid (ClippedGoeyGallery) ──
-     Cada figura tiene:
-       • degradado de fondo (6 variantes en ciclo)
-       • clip-path SVG para la forma artística
-       • padding que se encoge en :hover → imagen "se hincha"
-       • imagen escala ×1.12 en :hover
-     Al hacer clic se abre el lightbox.
+  /* ── Render galería de tienda: fotos limpias sin efectos ──
+     Usa el mismo .g-cell que la sección de pasarela.
+     Añade data-flip="${it.cat}" para que GSAP Flip pueda filtrar.
   ── */
   function renderGoeyGrid(containerId, items) {
     const el = document.getElementById(containerId);
     if (!el) return;
+
     el.innerHTML = items.map((it, i) => {
-      const s = i % 6;
-      /* Ruta con espacios URL-encodeados para máxima compatibilidad */
       const src = it.img.replace(/ /g, '%20');
-      return `<figure
-          class="goey-figure ${GOEY_GRADS[s]}"
-          data-goey-idx="${i}"
-          data-flip="${it.cat || 'all'}"
-          tabindex="0"
-          role="button"
-          aria-label="${it.caption}">
-        <div class="goey-clip" style="clip-path:url(#${GOEY_CLIPS[s]})">
-          <img class="goey-img"
-               src="${src}"
-               alt="${it.caption}"
-               loading="lazy" />
+      return `<div class="g-cell"
+            data-idx="${i}"
+            data-flip="${it.cat}"
+            tabindex="0" role="button"
+            aria-label="${it.caption}">
+        <img src="${src}" alt="${it.caption}" loading="lazy" />
+        <div class="g-cell__overlay">
+          <div class="g-cell__zoom">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="7"/>
+              <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+              <line x1="11" y1="8"   x2="11" y2="14"/>
+              <line x1="8"  y1="11"  x2="14" y2="11"/>
+            </svg>
+          </div>
+          <span class="g-cell__caption">${it.caption}</span>
         </div>
-      </figure>`;
+      </div>`;
     }).join('');
 
-    /* Click → lightbox */
+    /* Click / tecla → lightbox */
     el.addEventListener('click', e => {
-      const fig = e.target.closest('.goey-figure');
-      if (fig) openLb(items, +fig.dataset.goeyIdx);
+      const cell = e.target.closest('.g-cell');
+      if (cell) openLb(items, +cell.dataset.idx);
     });
     el.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
-        const fig = e.target.closest('.goey-figure');
-        if (fig) { e.preventDefault(); openLb(items, +fig.dataset.goeyIdx); }
+        const cell = e.target.closest('.g-cell');
+        if (cell) { e.preventDefault(); openLb(items, +cell.dataset.idx); }
       }
     });
   }
