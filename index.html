@@ -2620,7 +2620,6 @@
       <ul class="probador-features" id="probador-features"></ul>
       <div class="probador-cta-row">
         <button class="btn-probador btn-probador-primary" id="btn-open-probador"></button>
-        <a class="btn-probador btn-probador-secondary" href="probador.html" target="_blank" id="btn-probador-nueva-pestana"></a>
       </div>
     </div>
   </div>
@@ -4383,8 +4382,7 @@ function buildProbador() {
   document.getElementById('probador-features').innerHTML  = p.features.map(f =>
     `<li class="probador-feature"><span class="probador-feature-dot"></span>${f}</li>`
   ).join('');
-  document.getElementById('btn-open-probador').textContent        = p.ctaPrimary;
-  document.getElementById('btn-probador-nueva-pestana').textContent = p.ctaSecondary;
+  document.getElementById('btn-open-probador').textContent = p.ctaPrimary;
 }
 
 function buildZapatillas() {
