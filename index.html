@@ -496,6 +496,19 @@
       font-size: .55rem; top: 3px;
     }
     .dh-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+    /* Falleras históricas */
+    .dh-fm-hist { margin: 48px 0; padding: 36px; background: var(--color-bg); border-radius: 8px; border: 1px solid var(--color-border); }
+    .dh-fm-hist-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .dh-fm-item { display: flex; flex-direction: column; gap: 4px; padding: 16px; border-left: 3px solid var(--color-gold); }
+    .dh-fm-name { font-family: var(--font-display); font-size: 1rem; font-style: italic; color: var(--color-text); }
+    .dh-fm-detail { font-size: .72rem; color: var(--color-text-muted); letter-spacing: .04em; }
+    @media (max-width: 768px) {
+      .dh-fm-hist-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .dh-fm-hist-grid { grid-template-columns: 1fr; }
+      .dh-fm-hist { padding: 20px; }
+    }
     /* Fila taller */
     .dh-workshop-row {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
@@ -2811,63 +2824,63 @@
 <section id="dossier-historia">
   <div class="container">
 
+    <!-- CABECERA -->
     <div class="dh-header">
-      <span class="dh-eyebrow">✦ Dossier · Cosas Cucas desde 1982</span>
-      <h2 class="dh-title">Cuarenta años<br>cosiendo tradición</h2>
+      <span class="dh-eyebrow">✦ Memoria Descriptiva · Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana</span>
+      <h2 class="dh-title">Nuestra Historia</h2>
       <p class="dh-lead">
-        En 1982, Paquita Martorell abrió Cosas Cucas en el barrio del Cabañal de Valencia con una misión clara:
-        tratar la indumentaria valenciana con el respeto y la dedicación que merece.
-        Hoy, sus hijas Noelia, María y Paqui continúan ese legado en el taller de la calle Grabador Esteve,
-        vistiendo Falleras Mayores, Cortes de Honor y a todas las que sienten que llevar la indumentaria
-        es mucho más que un vestido — es identidad.
+        Desde su fundación en 1982 en los pintorescos poblados marítimos, <strong>Cosas Cucas</strong> ha sido un faro de tradición
+        y elegancia en el mundo de la indumentaria valenciana. Inspirada por su profundo vínculo con el estudio y la pasión
+        por la indumentaria, nuestra fundadora <strong>Paquita Martorell</strong> abrió las puertas de nuestra primera tienda
+        en el entrañable barrio del Cabañal. Desde entonces, hemos tenido el honor de vestir a numerosas Falleras Mayores de
+        Valencia e infantiles, cortes de honor, reinas de las fiestas de la comarca y distinguidas personalidades de la sociedad valenciana.
       </p>
     </div>
 
+    <!-- GRID PRINCIPAL -->
     <div class="dh-grid">
 
-      <!-- Columna izquierda: imagen tienda -->
       <div class="dh-img-main">
         <img src="historia/cosascucas_1.jpg" alt="Interior tienda Cosas Cucas · Telas y confección desde 1982" loading="lazy">
-        <div class="dh-img-caption">Interior de la tienda · C/ Grabador Esteve 30, Valencia</div>
+        <div class="dh-img-caption">Tienda de Cosas Cucas — C/ Grabador Esteve 30, Valencia · Desde 1982</div>
       </div>
 
-      <!-- Columna derecha: texto del dossier -->
       <div class="dh-content">
 
         <div class="dh-block">
-          <h3 class="dh-block-title">Quiénes somos</h3>
+          <h3 class="dh-block-title">La segunda generación</h3>
           <p class="dh-block-text">
-            Cosas Cucas es una empresa familiar especializada en la <strong>confección artesanal de indumentaria valenciana</strong>
-            desde 1982. Somos miembros del <em>Gremio Artesano de Sastres y Modistas de Valencia</em>,
-            certificación que avala nuestra trayectoria y compromiso con la tradición.
+            Las hijas de Paquita Martorell, <strong>Noelia y María</strong>, son una parte fundamental del legado y la continuidad
+            de Cosas Cucas. Como parte de la segunda generación, han heredado la pasión por la indumentaria valenciana y han dedicado
+            su vida al negocio familiar. Desde que se unieron al taller dirigido por su madre, han aportado su experiencia y
+            habilidades para mantener los altos estándares de calidad y artesanía que caracterizan a <strong>Cosas Cucas</strong>.
           </p>
           <p class="dh-block-text">
-            Contamos con dos tiendas-taller en Valencia donde atendemos a nuestras clientas de forma personalizada,
-            asesorándolas en la elección de telas, colores y complementos para cada ocasión.
+            Han desempeñado un papel importante en la expansión y modernización de la empresa, participando en la elaboración de
+            nuevos dibujos exclusivos y en la introducción de innovaciones en el proceso de confección. Su compromiso con la
+            tradición y su visión para el futuro han sido fundamentales para mantener a Cosas Cucas como un referente en el mundo
+            de la indumentaria valenciana.
           </p>
         </div>
 
         <div class="dh-block">
-          <h3 class="dh-block-title">Nuestros servicios</h3>
+          <h3 class="dh-block-title">Nuestro compromiso</h3>
+          <p class="dh-block-text">
+            Con más de cuatro décadas de dedicación y pasión por este arte, <strong>Cosas Cucas</strong> se ha distinguido por
+            la calidad y el detalle de cada prenda, convirtiéndonos en un referente en el sector. Nuestra participación
+            en la vida fallera no solo representa una oportunidad para vestir a figuras emblemáticas, sino también un homenaje
+            a nuestra historia y a la belleza de nuestra cultura.
+          </p>
+        </div>
+
+        <div class="dh-block">
+          <h3 class="dh-block-title">Artesanas colaboradoras</h3>
           <ul class="dh-list">
-            <li>Confección a medida de trajes de fallera y llauradora</li>
-            <li>Bordados artesanales en hilo de oro y plata</li>
-            <li>Asesoramiento personalizado de indumentaria</li>
-            <li>Selección de más de 35 telas exclusivas a metro</li>
-            <li>Aderezos, peinetas y complementos artesanales</li>
-            <li>Decoración e interiorismo con tejidos valencianos</li>
+            <li><strong>Manteletas:</strong> Hijas de Carmen Esteve · Art i Disseny · Artesanía Valencia</li>
+            <li><strong>Ahuecadores:</strong> Margarita Verger · Cancan Enpac</li>
+            <li><strong>Calcetines:</strong> Bordadora Admiración Rodríguez · desde 1975</li>
+            <li><strong>Puntillas y encajes:</strong> Bordados Valencia · Santos Textil · Eusebio Sánchez Zaplana</li>
           </ul>
-        </div>
-
-        <div class="dh-block">
-          <h3 class="dh-block-title">Especialidad: Falleras Mayores</h3>
-          <p class="dh-block-text">
-            Vestir a una Fallera Mayor es el mayor honor para una casa de indumentaria.
-            A lo largo de cuatro décadas, hemos tenido el privilegio de confeccionar y perfilar
-            los trajes de las Falleras Mayores de Valencia y de decenas de comisiones de toda la ciudad.
-            Cada pieza es única: creada a medida, con los materiales más nobles y el rigor
-            artesanal que la ocasión exige.
-          </p>
         </div>
 
         <div class="dh-cta-row">
@@ -2878,11 +2891,24 @@
       </div>
     </div>
 
-    <!-- Fila de imágenes del taller -->
+    <!-- FALLERAS MAYORES HISTÓRICAS (del dossier) -->
+    <div class="dh-fm-hist">
+      <h3 class="dh-block-title" style="margin-bottom:24px">Falleras Mayores que hemos vestido</h3>
+      <div class="dh-fm-hist-grid">
+        <div class="dh-fm-item"><span class="dh-fm-name">Monica Palmer</span><span class="dh-fm-detail">Fallera Mayor de Valencia · 1992</span></div>
+        <div class="dh-fm-item"><span class="dh-fm-name">Maria Asensi</span><span class="dh-fm-detail">Corte FM Infantil de Valencia · 1993</span></div>
+        <div class="dh-fm-item"><span class="dh-fm-name">Ana Belén Chardí</span><span class="dh-fm-detail">Fallera Mayor Infantil de Valencia · 1995</span></div>
+        <div class="dh-fm-item"><span class="dh-fm-name">Carmen Serrano</span><span class="dh-fm-detail">Fallera Mayor Infantil de Valencia · 1998 y 2012</span></div>
+        <div class="dh-fm-item"><span class="dh-fm-name">Adriana Polo</span><span class="dh-fm-detail">Fallera Mayor de Valencia · 2001</span></div>
+        <div class="dh-fm-item"><span class="dh-fm-name">Cortes de Honor</span><span class="dh-fm-detail">Valencia 1994 · 1995 · 1997 · 2012 · 2013 · 2015</span></div>
+      </div>
+    </div>
+
+    <!-- FILA DE IMÁGENES + CITA -->
     <div class="dh-workshop-row">
       <div class="dh-workshop-img">
         <img src="historia/CocasCucas-02.jpg" alt="Vistiendo a una fallera en el taller de Cosas Cucas" loading="lazy">
-        <p class="dh-workshop-cap">El arte de vestir — taller de Cosas Cucas</p>
+        <p class="dh-workshop-cap">El arte de vestir — taller Cosas Cucas</p>
       </div>
       <div class="dh-workshop-img">
         <img src="historia/cosascucas_5-1030x1030.jpg" alt="Detalle artesanal en el ajuste del corpiño" loading="lazy">
@@ -2890,10 +2916,10 @@
       </div>
       <div class="dh-workshop-img dh-workshop-text-card">
         <blockquote class="dh-quote">
-          "Vestimos la tradición con el amor que merece Valencia."
+          "Ganar la confianza de nuestras clientas sería más que un éxito comercial; sería un reconocimiento a nuestra pasión, dedicación y contribución al patrimonio cultural valenciano."
         </blockquote>
-        <cite class="dh-quote-author">— Paquita Martorell, fundadora</cite>
-        <p class="dh-quote-sub">Cosas Cucas · Valencia desde 1982</p>
+        <cite class="dh-quote-author">— Cosas Cucas · Memoria Descriptiva</cite>
+        <p class="dh-quote-sub">Miembro del Gremio Artesano de Sastres y Modistas · Fundado en 1247</p>
       </div>
     </div>
 
