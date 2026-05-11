@@ -440,6 +440,25 @@
       color: var(--color-gold);
       border-color: var(--color-gold);
     }
+    /* ── Detalle de colección (antes sección #products) ── */
+    .collection-detail {
+      margin-top: 60px;
+      padding-top: 52px;
+      border-top: 2px solid var(--color-border);
+    }
+    .collection-detail .section-header { margin-bottom: 32px; }
+    /* Tarjeta de colección activa en el archivo */
+    .archive-card.active .archive-card__label {
+      color: var(--color-gold);
+      border-color: var(--color-gold);
+    }
+    .archive-card.active .archive-card__img-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      border: 2.5px solid var(--color-gold);
+      pointer-events: none;
+    }
+
     /* ── Filtros Telas & Bordados ── */
     #telas-filtros {
       margin-bottom: 32px;
@@ -2502,50 +2521,51 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
-     PRODUCTOS DEL DROP ACTIVO
-═══════════════════════════════════════════════════════════════════════════ -->
-<section id="products">
-  <div class="container">
-    <div class="section-header">
-      <div>
-        <h2 class="section-title" id="products-title">Colección</h2>
-        <p class="section-subtitle" id="products-subtitle"></p>
-      </div>
-      <a class="btn" id="products-cta" href="#">Ver Todo</a>
-    </div>
-
-    <!-- TABS de drops -->
-    <div class="drops-tabs" id="drops-tabs"></div>
-
-    <!-- Filtros Telas: Fibra (Seda / Rayón) → Tipo (Brocateles / Damascos) -->
-    <div id="telas-filtros">
-      <div class="telas-f-grupo">
-        <span class="telas-f-label">Fibra</span>
-        <div class="telas-f-row" id="tf-fibra"></div>
-      </div>
-      <div class="telas-f-grupo">
-        <span class="telas-f-label">Tipo</span>
-        <div class="telas-f-row" id="tf-tipo"></div>
-      </div>
-    </div>
-
-    <!-- GRID de productos -->
-    <div class="products-grid" id="products-grid"></div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     DROPS ARCHIVE
+     COLECCIONES (archive + detalle inline — antes "Tienda" era sección aparte)
 ═══════════════════════════════════════════════════════════════════════════ -->
 <section id="drops-archive">
   <div class="container">
+
+    <!-- Cabecera de la sección (dinámica vía buildArchive) -->
     <div class="section-header">
       <div>
-        <h2 class="section-title">Totes les Col·leccions</h2>
-        <p class="section-subtitle">Falles, comunió, teles i bordats — cada col·lecció, un tros de tradició valenciana.</p>
+        <h2 class="section-title"></h2>
+        <p class="section-subtitle"></p>
       </div>
     </div>
+
+    <!-- Thumbnails de todas las colecciones -->
     <div class="drops-archive-grid" id="drops-archive-grid"></div>
+
+    <!-- Detalle inline: tabs + filtros telas + grid de productos -->
+    <div class="collection-detail" id="collection-detail">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title" id="products-title"></h2>
+          <p class="section-subtitle" id="products-subtitle"></p>
+        </div>
+        <a class="btn" id="products-cta" href="#">Ver Todo</a>
+      </div>
+
+      <!-- TABS de drops -->
+      <div class="drops-tabs" id="drops-tabs"></div>
+
+      <!-- Filtros Telas: Fibra (Seda / Rayón) → Tipo (Brocateles / Damascos) -->
+      <div id="telas-filtros">
+        <div class="telas-f-grupo">
+          <span class="telas-f-label">Fibra</span>
+          <div class="telas-f-row" id="tf-fibra"></div>
+        </div>
+        <div class="telas-f-grupo">
+          <span class="telas-f-label">Tipo</span>
+          <div class="telas-f-row" id="tf-tipo"></div>
+        </div>
+      </div>
+
+      <!-- GRID de productos -->
+      <div class="products-grid" id="products-grid"></div>
+    </div>
+
   </div>
 </section>
 
@@ -3118,7 +3138,6 @@ const translations = {
   es: {
     about: 'Más de cuarenta años cosiendo con las manos lo que ninguna máquina puede igualar. Cada pieza que sale de nuestro taller es única: confeccionada a medida, bordada con paciencia y tejida con el alma que Paquita Martorell puso en esta casa en 1982. Hoy, sus hijas siguen ese mismo camino —hilo a hilo, puntada a puntada— para que la indumentaria valenciana siga viva y tan hermosa como siempre.',
     nav: [
-      { label: 'Tienda',       href: '#products'      },
       { label: 'Colecciones',  href: '#drops-archive' },
       { label: 'Deportivas Fallera', href: '#zapatillas' },
       { label: 'Historia',     href: '#historia'      },
@@ -3141,7 +3160,7 @@ const translations = {
         id: 'falles-2027-mujer', title: 'Mujer · Falles 2027', subtitle: 'La Luz de la Tradición',
         description: 'Nuestra colección más completa para las Fallas de 2027. Manteletas bordadas a mano, telas de seda valenciana, cotillas artesanales y aderezos exclusivos. Cada pieza, una ceremonia. Cada detalle, una herencia.',
         heroImage: IMG.portada, archiveImage: IMG.archive1, badge: 'Disponible Ahora',
-        ctaPrimary: { label: 'Ver la colección', href: '#products' },
+        ctaPrimary: { label: 'Ver la colección', href: '#drops-archive' },
         ctaSecondary: { label: 'Pedir cita', href: 'mailto:info@cosascucas.es' },
         products: [
           { id:'p1',  name:'Manteleta Bordada a Mano',     desc:'Seda natural con bordado floral exclusivo. Diseño siglo XVIII.',               price:'Consultar', image:IMG.p1,  tag:'new', tagLabel:'Nueva' },
@@ -3158,7 +3177,7 @@ const translations = {
         id: 'hombre-2027', title: 'Hombre · Falles 2027', subtitle: 'Indumentaria Masculina Valenciana',
         description: 'Indumentaria tradicional masculina valenciana para las Fallas de 2027. Jubones de seda, calzas, fajas bordadas y complementos artesanales. Todo confeccionado a medida en nuestro taller de Valencia, con los mismos materiales exclusivos que nuestra línea de mujer.',
         heroImage: IMG.hHero, archiveImage: IMG.hArchive, badge: 'Colección 2027',
-        ctaPrimary: { label: 'Ver la colección', href: '#products' },
+        ctaPrimary: { label: 'Ver la colección', href: '#drops-archive' },
         ctaSecondary: { label: 'Pedir cita', href: 'mailto:info@cosascucas.es' },
         products: [
           { id:'h1',  name:'Jubón Paisley Gris Plata — Padre e Hijo',         desc:'Jubón de paisley gris plata sobre negro con faja de seda lila, calzas negras y medias blancas con vuelta bordada. Botones dorados y morrió en azul y rojo. Conjunto confeccionado a medida para adulto y niño.',                              price:'A medida',  image:IMG.h1,  tag:'new', tagLabel:'Destacado' },
@@ -3179,7 +3198,7 @@ const translations = {
         id: 'aderezos-peinetas', title: 'Aderezos & Peinetas', subtitle: 'El Complemento Perfecto',
         description: 'Nuestra selección de aderezos, peinetas y complementos para completar cualquier indumentaria valenciana. Joyas de plata dorada, peinetas artesanales y accesorios exclusivos que realzan el valor de cada conjunto.',
         heroImage: IMG.aderezo, archiveImage: IMG.aderezo, badge: 'Exclusivos',
-        ctaPrimary: { label: 'Ver aderezos', href: '#products' },
+        ctaPrimary: { label: 'Ver aderezos', href: '#drops-archive' },
         ctaSecondary: { label: 'Pedir asesoramiento', href: 'mailto:info@cosascucas.es' },
         products: [
           { id:'a1',  name:'Peinetas de Carey con Grabado Dorado',                        desc:'Dos peinetas valencianas artesanales: peineta pequeña en metal dorado con motivos florales grabados y cinta de raso blanco, y peineta grande de carey marrón con decoración dorada de figuras, guirnaldas y racimos de uvas. Orfebrería tradicional valenciana.',                                        price:'Consultar', image:IMG.a1,  tag:'new', tagLabel:'Exclusivo' },
@@ -3203,7 +3222,7 @@ const translations = {
         id: 'telas-bordados', title: 'Telas & Bordados', subtitle: 'El Corazón de la Indumentaria',
         description: 'Diseños exclusivos de brocado valenciano para indumentaria fallera: sedas, jacquards y espolinas con nombres propios de nuestra colección. Disponibles a metro. Ven a nuestro taller y te asesoramos sin compromiso.',
         heroImage: IMG.tPortada, archiveImage: IMG.tPortada, badge: 'Siempre Disponible',
-        ctaPrimary: { label: 'Ver telas', href: '#products' },
+        ctaPrimary: { label: 'Ver telas', href: '#drops-archive' },
         ctaSecondary: { label: 'Asesoramiento gratuito', href: 'mailto:info@cosascucas.es' },
         products: [
           { id:'t1',  fibra:'rayon', tipo:'brocatel', name:'Calanda',         desc:'Brocado en fondo blanco perla con composición simétrica de gran medallón floral: crisantemos azul cobalto, peonías fucsia y rojas, flores lilas y detalles en hilo dorado. Rameado barroco de acanto dorado enmarca la composición. Un diseño de extraordinaria luminosidad y elegancia clásica valenciana.',                                                                          price:'Consultar', image:IMG.t1,  tag:'new', tagLabel:'Exclusivo' },
@@ -3228,7 +3247,7 @@ const translations = {
         id: 'semana-santa', title: 'Semana Santa', subtitle: 'Devoción y Elegancia',
         description: 'La indumentaria de Semana Santa elaborada con la misma pasión artesanal que nos define desde 1982. Mantillas de encaje negro, mantos bordados y túnicas confeccionadas a medida en nuestro taller de Valencia. Cada pieza, un acto de devoción y elegancia que honra la tradición.',
         heroImage: IMG.ss13, archiveImage: IMG.ss1, badge: 'Disponible',
-        ctaPrimary:   { label: 'Ver la colección', href: '#products' },
+        ctaPrimary:   { label: 'Ver la colección', href: '#drops-archive' },
         ctaSecondary: { label: 'Pedir cita',        href: 'mailto:info@cosascucas.es' },
         products: [
           { id:'ss1',  name:'Vestal Romana — Estola de Lino Blanco con Velo Celeste',
@@ -3503,7 +3522,6 @@ const translations = {
   ca: {
     about: "Més de quaranta anys cosint amb les mans allò que cap màquina pot igualar. Cada peça que ix del nostre taller és única: confeccionada a mida, brodada amb paciència i teixida amb l'ànima que Paquita Martorell va posar en esta casa el 1982. Avui, les seues filles seguixen aquell mateix camí —fil a fil, puntada a puntada— perquè la indumentària valenciana continue viva i tan bella com sempre.",
     nav: [
-      { label: 'Tienda',        href: '#products'      },
       { label: "Col·leccions",  href: '#drops-archive' },
       { label: 'Deportives Fallera', href: '#zapatillas' },
       { label: "Història",      href: '#historia'      },
@@ -3526,7 +3544,7 @@ const translations = {
         id: 'falles-2027-dona', title: 'Dona · Falles 2027', subtitle: 'La Llum de la Tradició',
         description: "La nostra col·lecció més completa per a les Falles de 2027. Manteletes brodades a mà, teles de seda valenciana, cotilles artesanals i adreços exclusius. Cada peça, una cerimònia. Cada detall, una herència.",
         heroImage: IMG.portada, archiveImage: IMG.archive1, badge: 'Disponible Ara',
-        ctaPrimary: { label: "Veure la col·lecció", href: '#products' },
+        ctaPrimary: { label: "Veure la col·lecció", href: '#drops-archive' },
         ctaSecondary: { label: 'Demanar cita', href: 'mailto:info@cosascucas.es' },
         products: [
           { id:'p1',  name:"Manteleta Brodada a Mà",        desc:'Seda natural amb brodat floral exclusiu. Disseny siglo XVIII.',               price:'Consultar', image:IMG.p1,  tag:'new', tagLabel:'Nova' },
@@ -3543,7 +3561,7 @@ const translations = {
         id: 'home-2027', title: 'Home · Falles 2027', subtitle: 'Indumentària Masculina Valenciana',
         description: "Indumentària tradicional masculina valenciana per a les Falles del 2027. Jubons de seda, calces, faixes brodades i complements artesanals. Tot confeccionat a mida al nostre taller de València, amb els mateixos materials exclusius que la nostra línia de dona.",
         heroImage: IMG.hHero, archiveImage: IMG.hArchive, badge: "Col·lecció 2027",
-        ctaPrimary: { label: "Veure la col·lecció", href: '#products' },
+        ctaPrimary: { label: "Veure la col·lecció", href: '#drops-archive' },
         ctaSecondary: { label: 'Demanar cita', href: 'mailto:info@cosascucas.es' },
         products: [
           { id:'h1',  name:'Jubó Paisley Gris Plata — Pare i Fill',            desc:"Jubó de paisley gris plata sobre negre amb faixa de seda lila, calces negres i mitges blanques amb volta brodada. Botons daurats i morrió en blau i roig. Conjunt confeccionat a mida per a adult i xiquet.",                              price:'A mida',    image:IMG.h1,  tag:'new', tagLabel:'Destacat' },
@@ -3564,7 +3582,7 @@ const translations = {
         id: 'adrecos-peinetes', title: 'Adreços & Peinetes', subtitle: 'El Complement Perfecte',
         description: "La nostra selecció d'adreços, peinetes i complements per a completar qualsevol indumentària valenciana. Joies de plata daurada, peinetes artesanals i accessoris exclusius que realcen el valor de cada conjunt.",
         heroImage: IMG.aderezo, archiveImage: IMG.aderezo, badge: 'Exclusius',
-        ctaPrimary: { label: "Veure adreços", href: '#products' },
+        ctaPrimary: { label: "Veure adreços", href: '#drops-archive' },
         ctaSecondary: { label: "Demanar assessorament", href: 'mailto:info@cosascucas.es' },
         products: [
           { id:'a1',  name:"Peinetes de Carey amb Gravat Daurat",                          desc:"Dues peinetes valencianes artesanals: peineta menuda en metall daurat amb motius florals gravats i cinta de ras blanc, i peineta gran de carey marró amb decoració daurada de figures, garlandes i raïms. Orfebreria tradicional valenciana.",                                                        price:'Consultar', image:IMG.a1,  tag:'new', tagLabel:'Exclusiu' },
@@ -3588,7 +3606,7 @@ const translations = {
         id: 'teles-brodats', title: 'Teles & Brodats', subtitle: "El Cor de la Indumentària",
         description: "Més de 35 brocats i sedes exclusives per a indumentària valenciana: jacquards, damasquinats, velluts i teixits tradicionals en tots els colors. Disponibles a metre. Vine al nostre taller i t'assessorem sense compromís.",
         heroImage: IMG.tPortada, archiveImage: IMG.tPortada, badge: 'Sempre Disponible',
-        ctaPrimary: { label: 'Veure teles', href: '#products' },
+        ctaPrimary: { label: 'Veure teles', href: '#drops-archive' },
         ctaSecondary: { label: 'Assessorament gratuït', href: 'mailto:info@cosascucas.es' },
         products: [
           { id:'p13', name:'Brocat Fosc — Crisantems Lila i Peonies Fúcsia',       desc:'Brocat en fons negre-bordeus amb composició vertical de grans flors: crisantems en lila-lavanda, peonies en fúcsia i rosa intensa, flors blaves i tocs daurats. Fulles en verd intens. Teixit de gran riquesa per a indumentària de gala.',              price:'Consultar', image:IMG.p13, tag:'new', tagLabel:'Exclusiu' },
@@ -3635,7 +3653,7 @@ const translations = {
         id: 'setmana-santa', title: 'Setmana Santa', subtitle: 'Devoció i Elegància',
         description: "La indumentària de Setmana Santa elaborada amb la mateixa passió artesanal que ens defineix des de 1982. Mantelletes d'encaix negre, mants brodats i túniques confeccionades a mida al nostre taller de València. Cada peça, un acte de devoció i elegància que honra la tradició.",
         heroImage: IMG.ss13, archiveImage: IMG.ss1, badge: 'Disponible',
-        ctaPrimary:   { label: "Veure la col·lecció", href: '#products' },
+        ctaPrimary:   { label: "Veure la col·lecció", href: '#drops-archive' },
         ctaSecondary: { label: 'Demanar cita',         href: 'mailto:info@cosascucas.es' },
         products: [
           { id:'ss1',  name:"Mantellina Espanyola d'Encaix Negre",
@@ -4188,10 +4206,12 @@ function buildTabs() {
 
 function buildArchive() {
   const ft = t().footer;
+  /* Cabecera dinámica de la sección Colecciones */
   document.querySelector('#drops-archive .section-title').textContent    = ft.archiveTitle;
   document.querySelector('#drops-archive .section-subtitle').textContent = ft.archiveSubtitle;
+
   document.getElementById('drops-archive-grid').innerHTML = t().drops.map((d, i) => `
-    <article class="archive-card" data-drop-index="${i}">
+    <article class="archive-card${i === activeDropIndex ? ' active' : ''}" data-drop-index="${i}">
       <span class="archive-card__label">${d.title}</span>
       <div class="archive-card__img-wrap">
         <img src="${d.archiveImage}" alt="${d.title}" loading="lazy" />
@@ -4201,9 +4221,23 @@ function buildArchive() {
         </div>
       </div>
     </article>`).join('');
+
   document.getElementById('drops-archive-grid').addEventListener('click', e => {
     const card = e.target.closest('.archive-card');
-    if (card) openCollectionModal(t().drops[+card.dataset.dropIndex]);
+    if (!card) return;
+
+    /* Marcar tarjeta activa */
+    document.querySelectorAll('.archive-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+
+    /* Actualizar índice y renderizar colección en el detalle inline */
+    activeDropIndex = +card.dataset.dropIndex;
+    renderProducts(t().drops[activeDropIndex]);
+    buildTabs();
+
+    /* Scroll suave al detalle de la colección */
+    document.getElementById('collection-detail')
+      .scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 }
 
