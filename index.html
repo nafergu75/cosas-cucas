@@ -440,6 +440,61 @@
       color: var(--color-gold);
       border-color: var(--color-gold);
     }
+    /* ── Filtros Telas & Bordados ── */
+    #telas-filtros {
+      margin-bottom: 32px;
+      padding: 20px 24px;
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      display: none;  /* se muestra solo en la colección telas */
+    }
+    #telas-filtros.visible { display: block; }
+    .telas-f-grupo { margin-bottom: 14px; }
+    .telas-f-grupo:last-child { margin-bottom: 0; }
+    .telas-f-label {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--color-gold);
+      display: block; margin-bottom: 8px;
+    }
+    .telas-f-row { display: flex; gap: 7px; flex-wrap: wrap; }
+    .telas-f-btn {
+      padding: 7px 16px;
+      border: 1.5px solid var(--color-border);
+      border-radius: 3px;
+      background: transparent;
+      color: var(--color-text-muted);
+      font-family: var(--font-body);
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.18s;
+    }
+    .telas-f-btn:hover { border-color: var(--color-gold); color: var(--color-text); }
+    .telas-f-btn.on {
+      background: var(--color-text);
+      border-color: var(--color-text);
+      color: var(--color-bg);
+    }
+    .telas-f-btn.on.seda   { background: var(--color-gold); border-color: var(--color-gold); color: var(--color-white); }
+    .telas-f-btn.on.rayon  { background: var(--color-text-muted); border-color: var(--color-text-muted); color: var(--color-white); }
+    /* Badge fibra/tipo en cada tarjeta */
+    .product-card__fibra {
+      position: absolute; bottom: 8px; left: 8px;
+      font-size: 0.56rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 3px 7px; border-radius: 2px;
+      pointer-events: none;
+    }
+    .product-card__fibra.seda   { background: rgba(181,144,58,.85); color: #fff; }
+    .product-card__fibra.rayon  { background: rgba(107,93,79,.75);  color: #fff; }
+    .product-card__tipo {
+      position: absolute; bottom: 8px; right: 8px;
+      font-size: 0.56rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 3px 7px; border-radius: 2px;
+      pointer-events: none;
+    }
+    .product-card__tipo.brocatel { background: rgba(26,23,20,.7); color: var(--color-gold-light); }
+    .product-card__tipo.damasco  { background: rgba(253,250,243,.85); color: var(--color-text); }
+
     /* PRODUCT GRID */
     .products-grid {
       display: grid;
@@ -2462,6 +2517,18 @@
     <!-- TABS de drops -->
     <div class="drops-tabs" id="drops-tabs"></div>
 
+    <!-- Filtros Telas: Fibra (Seda / Rayón) → Tipo (Brocateles / Damascos) -->
+    <div id="telas-filtros">
+      <div class="telas-f-grupo">
+        <span class="telas-f-label">Fibra</span>
+        <div class="telas-f-row" id="tf-fibra"></div>
+      </div>
+      <div class="telas-f-grupo">
+        <span class="telas-f-label">Tipo</span>
+        <div class="telas-f-row" id="tf-tipo"></div>
+      </div>
+    </div>
+
     <!-- GRID de productos -->
     <div class="products-grid" id="products-grid"></div>
   </div>
@@ -3139,22 +3206,22 @@ const translations = {
         ctaPrimary: { label: 'Ver telas', href: '#products' },
         ctaSecondary: { label: 'Asesoramiento gratuito', href: 'mailto:info@cosascucas.es' },
         products: [
-          { id:'t1',  name:'Calanda',         desc:'Brocado en fondo blanco perla con composición simétrica de gran medallón floral: crisantemos azul cobalto, peonías fucsia y rojas, flores lilas y detalles en hilo dorado. Rameado barroco de acanto dorado enmarca la composición. Un diseño de extraordinaria luminosidad y elegancia clásica valenciana.',                                                                          price:'Consultar', image:IMG.t1,  tag:'new', tagLabel:'Exclusivo' },
-          { id:'t2',  name:'San Manuel',      desc:'Brocado en fondo burdeos-granate intenso con exuberante composición floral vertical: peonías en rosa fucsia y lila, flores azules y naranjas, hojas en verde intenso. Cada motivo irradia vida sobre el fondo oscuro con un contraste cromático propio de la tradición valenciana de gala.',                                                                                             price:'Consultar', image:IMG.t2,  tag:null },
-          { id:'t3',  name:'San Manuel 2',    desc:'Brocado en fondo blanco-crema con composición floral simétrica de tulipanes, peonías y flores silvestres en multicolor: rojo, azul, rosa, naranja y lila. Diseño de gran alegría cromática y luminosidad, ideal para indumentaria festiva y trajes de primera Ofrena.',                                                                                                               price:'Consultar', image:IMG.t3,  tag:null },
-          { id:'t4',  name:'Cestas',          desc:'Brocado en fondo burdeos oscuro con composición central de cesta floral rebosante: flores turquesa intenso, naranja quemado, lilas y rosas sobre fondo de gran profundidad. Diseño de inspiración historicista con motivos de cestas y guirnaldas del siglo XVIII valenciano.',                                                                                                         price:'Consultar', image:IMG.t4,  tag:null },
-          { id:'t5',  name:'Genoveva',        desc:'Brocado en fondo blanco-crema con ramo floral simétrico multicolor de gran formato: crisantemos, peonías y flores menudas en rosa, azul, lila y naranja. Rameado dorado de acanto enmarca la composición en óvalo. Tejido de gran elegancia y versatilidad para todo tipo de indumentaria valenciana.',                                                                               price:'Consultar', image:IMG.t5,  tag:null },
-          { id:'t6',  name:'Santa Genoveva',  desc:'Brocado en fondo gris plata-perla con delicada composición floral: flores en mint, azul aciano, rosa suave y detalles en hilo dorado oliva. Diseño de gran sutileza y refinamiento, ideal para cotillas de novia, manteletas y trajes de Fallera Mayor de perfil clásico.',                                                                                                          price:'Consultar', image:IMG.t6,  tag:null },
-          { id:'t7',  name:'Sinfonía',        desc:'Brocado en fondo azul pizarra-noche profundo con composición floral de gran riqueza: flores rojas vivas y turquesa intenso sobre el fondo oscuro. El contraste cromático es de extraordinaria fuerza visual. Un diseño para trajes de gala de máximo impacto, perfecto para Falleras Mayores y Cortes de Honor.',                                                                    price:'Consultar', image:IMG.t7,  tag:'new', tagLabel:'Destacada' },
-          { id:'t8',  name:'Guadalquivir',    desc:'Brocado en azul noche profundo con gran ramo floral central: flores rojas, turquesa, rosas y amarillas sobre el fondo marino intenso. Rameado dorado que estructura la composición en medallones simétricos. Tejido de altísima riqueza cromática para indumentaria de máxima ceremonia.',                                                                                             price:'Consultar', image:IMG.t8,  tag:null },
-          { id:'t9',  name:'Blanca Clásica',  desc:'Brocado en fondo blanco puro con composición floral clásica simétrica: flores multicolor en rosa, azul, rojo y lila con follaje verde sobre el fondo blanco luminoso. Rameado dorado barroco de acanto enmarca la pieza. Tejido de máxima luminosidad, ideal para novias y Falleras Mayores.',                                                                                       price:'Consultar', image:IMG.t9,  tag:null },
-          { id:'t10', name:'Blanca Ramos',    desc:'Brocado en fondo blanco con ramos florales dispersos en rosa fucsia, azul cobalto y rojo coral, con follaje verde y detalles en hilo dorado. Diseño de composición ligera y festiva, con gran luminosidad. Perfecto para trajes de primavera, primera Ofrena y indumentaria de niña.',                                                                                               price:'Consultar', image:IMG.t10, tag:null },
-          { id:'t11', name:'Blanca Rosa',     desc:'Brocado en fondo blanco-crema con peonías y crisantemos en rosa y gris plata, flores menudas en burdeos y motivos de cesta en hilo plateado. Diseño de gran elegancia y romanticismo. Una tela de identidad propia que combina la luminosidad del fondo blanco con la riqueza del brocado tradicional valenciano.',                                                                   price:'Consultar', image:IMG.t11, tag:null },
-          { id:'t12', name:'Verde Salvia',    desc:'Brocado en fondo verde salvia-oliva con composición floral festiva: grandes flores fucsia, lilas y rosas sobre el fondo verde naturalista. Rameado en hilo dorado-plata que enmarca cada ramo en medallón simétrico. Tejido de viveza cromática excepcional para indumentaria de Fallas y trajes de celebración.',                                                                   price:'Consultar', image:IMG.t12, tag:null },
-          { id:'t13', name:'Turquesa',        desc:'Brocado en turquesa intenso con exuberante composición floral: flores naranjas quemadas, rosas fucsia, lilas y rojas sobre el luminoso fondo turquesa. Rameado dorado de gran elegancia. Un diseño de fuerte personalidad cromática, inconfundiblemente valenciano y perfecto para trajes festivos de gran impacto.',                                                                price:'Consultar', image:IMG.t13, tag:null },
-          { id:'t14', name:'Azul Noche',      desc:'Brocado en azul marino profundo con gran jarrón floral central: rosas rojas y rosas, flores turquesa, lilas y amarillas en composición de gran riqueza. Rameado de hojas doradas que asciende verticalmente por la tela. Tejido de máxima elegancia para indumentaria de gala y Falleras Mayores de Distrito.',                                                                    price:'Consultar', image:IMG.t14, tag:null },
-          { id:'t15', name:'Crema Dorada',    desc:'Brocado en fondo crema-taupé con flores en rosa, coral, azul grisáceo y naranja suave. Rameado en hilo dorado envejecido con motivos de acanto y follaje en hilo natural. Composición de gran refinamiento y sobriedad elegante. Ideal para cotillas, jubones y trajes de Fallera Mayor de perfil historicista.',                                                                   price:'Consultar', image:IMG.t15, tag:null },
-          { id:'t16', name:'Azul Pizarra',    desc:'Brocado en azul pizarra-slate con composición floral de gran riqueza: flores rojas, turquesa, lilas, naranjas y rosas sobre el fondo azul profundo. Rameado dorado barroco de gran detalle. Un tejido de personalidad propia que combina la profundidad del azul con la exuberancia floral tradicional valenciana.',                                                                price:'Consultar', image:IMG.t16, tag:null },
+          { id:'t1',  fibra:'rayon', tipo:'brocatel', name:'Calanda',         desc:'Brocado en fondo blanco perla con composición simétrica de gran medallón floral: crisantemos azul cobalto, peonías fucsia y rojas, flores lilas y detalles en hilo dorado. Rameado barroco de acanto dorado enmarca la composición. Un diseño de extraordinaria luminosidad y elegancia clásica valenciana.',                                                                          price:'Consultar', image:IMG.t1,  tag:'new', tagLabel:'Exclusivo' },
+          { id:'t2',  fibra:'seda',  tipo:'brocatel', name:'San Manuel',      desc:'Brocado de seda en fondo burdeos-granate intenso con exuberante composición floral vertical: peonías en rosa fucsia y lila, flores azules y naranjas, hojas en verde intenso. Cada motivo irradia vida sobre el fondo oscuro con un contraste cromático propio de la tradición valenciana de gala.',                                                                                         price:'Consultar', image:IMG.t2,  tag:null },
+          { id:'t3',  fibra:'rayon', tipo:'brocatel', name:'San Manuel 2',    desc:'Brocado en fondo blanco-crema con composición floral simétrica de tulipanes, peonías y flores silvestres en multicolor: rojo, azul, rosa, naranja y lila. Diseño de gran alegría cromática y luminosidad, ideal para indumentaria festiva y trajes de primera Ofrena.',                                                                                                               price:'Consultar', image:IMG.t3,  tag:null },
+          { id:'t4',  fibra:'seda',  tipo:'brocatel', name:'Cestas',          desc:'Brocado de seda en fondo burdeos oscuro con composición central de cesta floral rebosante: flores turquesa intenso, naranja quemado, lilas y rosas sobre fondo de gran profundidad. Diseño de inspiración historicista con motivos de cestas y guirnaldas del siglo XVIII valenciano.',                                                                                                     price:'Consultar', image:IMG.t4,  tag:null },
+          { id:'t5',  fibra:'rayon', tipo:'brocatel', name:'Genoveva',        desc:'Brocado en fondo blanco-crema con ramo floral simétrico multicolor de gran formato: crisantemos, peonías y flores menudas en rosa, azul, lila y naranja. Rameado dorado de acanto enmarca la composición en óvalo. Tejido de gran elegancia y versatilidad para todo tipo de indumentaria valenciana.',                                                                               price:'Consultar', image:IMG.t5,  tag:null },
+          { id:'t6',  fibra:'rayon', tipo:'brocatel', name:'Santa Genoveva',  desc:'Brocado en fondo gris plata-perla con delicada composición floral: flores en mint, azul aciano, rosa suave y detalles en hilo dorado oliva. Diseño de gran sutileza y refinamiento, ideal para cotillas de novia, manteletas y trajes de Fallera Mayor de perfil clásico.',                                                                                                          price:'Consultar', image:IMG.t6,  tag:null },
+          { id:'t7',  fibra:'seda',  tipo:'brocatel', name:'Sinfonía',        desc:'Brocado de seda en fondo azul pizarra-noche profundo con composición floral de gran riqueza: flores rojas vivas y turquesa intenso sobre el fondo oscuro. El contraste cromático es de extraordinaria fuerza visual. Un diseño para trajes de gala de máximo impacto, perfecto para Falleras Mayores y Cortes de Honor.',                                                              price:'Consultar', image:IMG.t7,  tag:'new', tagLabel:'Destacada' },
+          { id:'t8',  fibra:'seda',  tipo:'brocatel', name:'Guadalquivir',    desc:'Brocado de seda en azul noche profundo con gran ramo floral central: flores rojas, turquesa, rosas y amarillas sobre el fondo marino intenso. Rameado dorado que estructura la composición en medallones simétricos. Tejido de altísima riqueza cromática para indumentaria de máxima ceremonia.',                                                                                     price:'Consultar', image:IMG.t8,  tag:null },
+          { id:'t9',  fibra:'rayon', tipo:'damasco',  name:'Blanca Clásica',  desc:'Damasco en fondo blanco puro con fondo tejido en relieve y composición floral clásica simétrica: flores multicolor en rosa, azul, rojo y lila con follaje verde. Rameado dorado barroco de acanto. Tejido de máxima luminosidad, ideal para novias y Falleras Mayores.',                                                                                                          price:'Consultar', image:IMG.t9,  tag:null },
+          { id:'t10', fibra:'seda',  tipo:'damasco',  name:'Blanca Ramos',    desc:'Damasco de seda en fondo blanco con ramos florales dispersos en rosa fucsia, azul cobalto y rojo coral, con follaje verde y detalles en hilo dorado. Fondo auto-tejido en relieve de gran elegancia. Perfecto para trajes de primavera, primera Ofrena y indumentaria de niña.',                                                                                                   price:'Consultar', image:IMG.t10, tag:null },
+          { id:'t11', fibra:'seda',  tipo:'damasco',  name:'Blanca Rosa',     desc:'Damasco de seda en fondo blanco-crema con peonías y crisantemos en rosa y gris plata, flores menudas en burdeos y motivos de cesta en hilo plateado. Fondo con tejido en relieve. Una tela de identidad propia que combina la luminosidad del fondo blanco con la riqueza del damasco tradicional valenciano.',                                                                    price:'Consultar', image:IMG.t11, tag:null },
+          { id:'t12', fibra:'rayon', tipo:'brocatel', name:'Verde Salvia',    desc:'Brocado en fondo verde salvia-oliva con composición floral festiva: grandes flores fucsia, lilas y rosas sobre el fondo verde naturalista. Rameado en hilo dorado-plata que enmarca cada ramo en medallón simétrico. Tejido de viveza cromática excepcional para indumentaria de Fallas y trajes de celebración.',                                                                   price:'Consultar', image:IMG.t12, tag:null },
+          { id:'t13', fibra:'rayon', tipo:'brocatel', name:'Turquesa',        desc:'Brocado en turquesa intenso con exuberante composición floral: flores naranjas quemadas, rosas fucsia, lilas y rojas sobre el luminoso fondo turquesa. Rameado dorado de gran elegancia. Un diseño de fuerte personalidad cromática, inconfundiblemente valenciano y perfecto para trajes festivos de gran impacto.',                                                                price:'Consultar', image:IMG.t13, tag:null },
+          { id:'t14', fibra:'rayon', tipo:'brocatel', name:'Azul Noche',      desc:'Brocado en azul marino profundo con gran jarrón floral central: rosas rojas y rosas, flores turquesa, lilas y amarillas en composición de gran riqueza. Rameado de hojas doradas que asciende verticalmente por la tela. Tejido de máxima elegancia para indumentaria de gala y Falleras Mayores de Distrito.',                                                                    price:'Consultar', image:IMG.t14, tag:null },
+          { id:'t15', fibra:'rayon', tipo:'damasco',  name:'Crema Dorada',    desc:'Damasco en fondo crema-taupé con fondo auto-tejido en relieve y flores en rosa, coral, azul grisáceo y naranja suave. Rameado en hilo dorado envejecido con motivos de acanto y follaje en hilo natural. Composición de gran refinamiento y sobriedad elegante. Ideal para cotillas, jubones y trajes de Fallera Mayor de perfil historicista.',                                     price:'Consultar', image:IMG.t15, tag:null },
+          { id:'t16', fibra:'rayon', tipo:'brocatel', name:'Azul Pizarra',    desc:'Brocado en azul pizarra-slate con composición floral de gran riqueza: flores rojas, turquesa, lilas, naranjas y rosas sobre el fondo azul profundo. Rameado dorado barroco de gran detalle. Un tejido de personalidad propia que combina la profundidad del azul con la exuberancia floral tradicional valenciana.',                                                                price:'Consultar', image:IMG.t16, tag:null },
         ],
       },
       {
@@ -4024,24 +4091,82 @@ function initHeroSlider() {
   }, INTERVAL);
 }
 
+/* ── Estado filtros Telas (Colecciones → Telas & Bordados) ── */
+let telaFiltFibra = 'todas';
+let telaFiltTipo  = 'todos';
+
+function renderProductCard(p) {
+  const tagHtml   = p.tag ? `<span class="product-card__tag product-card__tag--${p.tag}">${p.tagLabel || p.tag}</span>` : '';
+  const priceHtml = p.originalPrice ? `<span class="product-card__price--original">${p.originalPrice}</span>${p.price}` : p.price;
+  const fibraHtml = p.fibra ? `<span class="product-card__fibra ${p.fibra}">${p.fibra === 'seda' ? 'Seda' : 'Rayón'}</span>` : '';
+  const tipoHtml  = p.tipo  ? `<span class="product-card__tipo ${p.tipo}">${p.tipo === 'brocatel' ? 'Brocatel' : 'Damasco'}</span>` : '';
+  return `<article class="product-card">
+      <div class="product-card__img-wrap" style="position:relative">
+        <img src="${p.image}" alt="${p.name}" loading="lazy" />
+        ${tagHtml}${fibraHtml}${tipoHtml}
+        <span class="product-card__quick-add">${t().footer.viewProduct}</span>
+      </div>
+      <h3 class="product-card__name">${p.name}</h3>
+      <p class="product-card__desc">${p.desc}</p>
+      <span class="product-card__price">${priceHtml}</span>
+    </article>`;
+}
+
+function renderTelasFiltros(drop) {
+  const bar = document.getElementById('telas-filtros');
+  if (drop.id !== 'telas-bordados') { bar.classList.remove('visible'); return; }
+  bar.classList.add('visible');
+
+  const prods = drop.products.filter(p => p.fibra);
+  const byFib = f => prods.filter(p => p.fibra === f).length;
+  const byTip = tip =>
+    prods.filter(p => p.tipo === tip && (telaFiltFibra === 'todas' || p.fibra === telaFiltFibra)).length;
+  const fibTotal = telaFiltFibra === 'todas' ? prods.length : byFib(telaFiltFibra);
+
+  const FIBRAS = [
+    { k:'todas', label:'Todas',   n: prods.length },
+    { k:'seda',  label:'🌸 Seda', n: byFib('seda')  },
+    { k:'rayon', label:'⚡ Rayón',n: byFib('rayon') },
+  ];
+  const TIPOS = [
+    { k:'todos',    label:'Todos',      n: fibTotal },
+    { k:'brocatel', label:'Brocateles', n: byTip('brocatel') },
+    { k:'damasco',  label:'Damascos',   n: byTip('damasco')  },
+  ];
+
+  document.getElementById('tf-fibra').innerHTML = FIBRAS.map(f =>
+    `<button class="telas-f-btn${telaFiltFibra === f.k ? ' on ' + f.k : ''}" data-fib="${f.k}">
+       ${f.label}&nbsp;<span style="opacity:.55;font-weight:400">(${f.n})</span>
+     </button>`).join('');
+
+  document.getElementById('tf-tipo').innerHTML = TIPOS.map(f =>
+    `<button class="telas-f-btn${telaFiltTipo === f.k ? ' on' : ''}" data-tip="${f.k}">
+       ${f.label}&nbsp;<span style="opacity:.55;font-weight:400">(${f.n})</span>
+     </button>`).join('');
+
+  document.querySelectorAll('[data-fib]').forEach(btn =>
+    btn.addEventListener('click', () => { telaFiltFibra = btn.dataset.fib; renderProducts(drop); })
+  );
+  document.querySelectorAll('[data-tip]').forEach(btn =>
+    btn.addEventListener('click', () => { telaFiltTipo = btn.dataset.tip; renderProducts(drop); })
+  );
+}
+
 function renderProducts(drop) {
   document.getElementById('products-title').textContent    = drop.title + ' — ' + drop.subtitle;
   document.getElementById('products-subtitle').textContent = drop.description;
   document.getElementById('products-cta').textContent      = t().footer.viewAll + ' · ' + drop.title;
-  document.getElementById('products-grid').innerHTML = drop.products.map(p => {
-    const tagHtml   = p.tag ? `<span class="product-card__tag product-card__tag--${p.tag}">${p.tagLabel || p.tag}</span>` : '';
-    const priceHtml = p.originalPrice ? `<span class="product-card__price--original">${p.originalPrice}</span>${p.price}` : p.price;
-    return `<article class="product-card">
-        <div class="product-card__img-wrap">
-          <img src="${p.image}" alt="${p.name}" loading="lazy" />
-          ${tagHtml}
-          <span class="product-card__quick-add">${t().footer.viewProduct}</span>
-        </div>
-        <h3 class="product-card__name">${p.name}</h3>
-        <p class="product-card__desc">${p.desc}</p>
-        <span class="product-card__price">${priceHtml}</span>
-      </article>`;
-  }).join('');
+
+  renderTelasFiltros(drop);
+
+  /* Aplicar filtros solo en la colección Telas */
+  let productos = drop.products;
+  if (drop.id === 'telas-bordados') {
+    if (telaFiltFibra !== 'todas') productos = productos.filter(p => p.fibra === telaFiltFibra);
+    if (telaFiltTipo  !== 'todos') productos = productos.filter(p => p.tipo  === telaFiltTipo);
+  }
+
+  document.getElementById('products-grid').innerHTML = productos.map(renderProductCard).join('');
 }
 
 function buildTabs() {
