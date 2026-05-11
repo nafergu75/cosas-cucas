@@ -1730,26 +1730,171 @@
       color: var(--color-gold); opacity: 0.8;
     }
 
+    /* ═══════════════════════════════════════════════════════════════════════════
+       RESEÑAS — ClientsSection (testimonial-card.tsx traducido a vanilla)
+       Layout: col-izq sticky (stats + título + CTA) · col-dcha stacking cards
+    ═══════════════════════════════════════════════════════════════════════════ */
     #resenas { padding: 90px 0; background: var(--color-bg); }
-    .resenas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
-    .resena-card {
-      background: var(--color-white); padding: 36px 32px 32px;
-      border: 1px solid var(--color-border); position: relative; transition: box-shadow 0.3s;
+
+    /* Grid dos columnas — equivale a lg:grid-cols-2 gap-20 */
+    .res-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: start;
     }
-    .resena-card:hover { box-shadow: 0 8px 40px rgba(26,23,20,0.09); }
-    .resena-card::before {
-      content: '\201C'; position: absolute; top: 10px; right: 22px;
-      font-family: var(--font-display); font-size: 5rem; color: var(--color-border); line-height: 1;
+
+    /* Columna izquierda: sticky (lg:sticky lg:top-20) */
+    .res-left {
+      position: sticky;
+      top: calc(var(--header-h) + 24px);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
-    .resena-stars { color: var(--color-gold); font-size: 1rem; letter-spacing: 3px; margin-bottom: 18px; }
-    .resena-body {
+
+    /* Tag pill — "Más de 500 clientes satisfechos" con punto verde */
+    .res-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      align-self: flex-start;
+      padding: 4px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-alt);
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+    }
+    .res-tag__dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+    }
+
+    /* Título y descripción */
+    .res-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+      font-weight: 400; line-height: 1.1; margin: 0;
+    }
+    .res-desc {
+      font-size: 1rem; color: var(--color-text-muted); line-height: 1.7; margin: 0;
+    }
+
+    /* Stats grid — 3 columnas, sin revenue */
+    .res-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .res-stat-card {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 14px 10px;
+      text-align: center;
+    }
+    .res-stat-val {
+      font-family: var(--font-display);
+      font-size: 1.7rem; font-weight: 600;
+      color: var(--color-text); line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .res-stat-label {
+      font-size: 0.67rem;
+      color: var(--color-text-muted);
+      letter-spacing: 0.04em;
+      line-height: 1.3;
+    }
+
+    /* CTA botones */
+    .res-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    /* ── Columna derecha: sticky-stacking cards ─────────────────────────────── */
+    /* height se calcula vía JS: calc(100vh + N*100px) */
+    .res-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+    }
+
+    /* Wrapper de cada tarjeta — position:sticky con top creciente (DOM-order z) */
+    .res-card-wrap {
+      position: sticky;
+      width: 100%;
+    }
+
+    /* La tarjeta en sí — equivale al StickyTestimonialCard */
+    .res-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      padding: 26px 28px;
+      box-shadow: 0 4px 28px rgba(26,23,20,0.07);
+      transition: box-shadow 0.3s;
+    }
+    .res-card:hover { box-shadow: 0 10px 48px rgba(26,23,20,0.13); }
+
+    /* Avatar + nombre + plataforma */
+    .res-card__top {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 16px;
+    }
+    .res-avatar {
+      width: 56px; height: 56px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 1.5rem; font-weight: 600;
+      color: var(--color-white); flex-shrink: 0;
+    }
+    .res-name {
+      font-weight: 600; font-size: 1rem; color: var(--color-text);
+    }
+    .res-platform {
+      font-size: 0.72rem; color: var(--color-text-muted); margin-top: 2px;
+    }
+
+    /* Valoración: número + estrellas */
+    .res-rating {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
+    }
+    .res-rating__num {
+      font-weight: 700; font-size: 0.92rem; color: var(--color-text);
+    }
+    .res-rating__stars {
+      color: var(--color-gold); font-size: 0.88rem; letter-spacing: 2px;
+    }
+
+    /* Texto de la cita */
+    .res-quote {
       font-family: var(--font-display); font-style: italic;
-      font-size: 1rem; line-height: 1.78; color: var(--color-text); margin-bottom: 24px;
+      font-size: 0.97rem; line-height: 1.78;
+      color: var(--color-text-muted);
+      margin: 0;
     }
-    .resena-author { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text); }
-    .resena-platform { font-size: 0.68rem; color: var(--color-gold); letter-spacing: 0.06em; margin-top: 3px; }
-    @media (max-width: 1024px) { .resenas-grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 600px) { .resenas-grid { grid-template-columns: 1fr; } }
+
+    /* ── Responsive ──────────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .res-layout { grid-template-columns: 1fr; gap: 40px; }
+      .res-left   { position: static; }
+      /* Sin stacking en móvil — tarjetas en flujo normal */
+      .res-stack  { height: auto !important; }
+      .res-card-wrap { position: static !important; top: auto !important; }
+      .res-stats  { grid-template-columns: repeat(3,1fr); }
+    }
+    @media (max-width: 500px) {
+      .res-stats  { grid-template-columns: 1fr 1fr; }
+      .res-stat-val { font-size: 1.4rem; }
+    }
 
     /* ═══════════════════════════════════════════════════════════════════════════
        DECORACIÓN E INTERIORISMO
@@ -2660,13 +2805,28 @@
 ═══════════════════════════════════════════════════════════════════════════ -->
 <section id="resenas">
   <div class="container">
-    <div class="section-header">
-      <div>
-        <h2 class="section-title" id="res-title"></h2>
-        <p class="section-subtitle" id="res-sub"></p>
+    <div class="res-layout">
+
+      <!-- Columna izquierda — sticky (lg:sticky lg:top-20) -->
+      <div class="res-left">
+        <!-- Tag pill con punto verde -->
+        <div class="res-tag">
+          <span class="res-tag__dot"></span>
+          <span id="res-tag-label"></span>
+        </div>
+        <!-- Título y descripción -->
+        <h2 class="res-heading" id="res-title"></h2>
+        <p class="res-desc"   id="res-sub"></p>
+        <!-- Stats: solo 3 tarjetas (sin revenue) -->
+        <div class="res-stats" id="res-stats"></div>
+        <!-- CTAs -->
+        <div class="res-actions" id="res-actions"></div>
       </div>
+
+      <!-- Columna derecha — stacking sticky cards -->
+      <div class="res-stack" id="res-stack"></div>
+
     </div>
-    <div class="resenas-grid" id="resenas-grid"></div>
   </div>
 </section>
 
@@ -3369,8 +3529,15 @@ const translations = {
       ],
     },
     resenas: {
-      title: 'Lo que dicen de nosotras',
+      tag:      'Más de 500 clientas satisfechas',
+      title:    'Lo que dicen de nosotras',
       subtitle: 'Cuatro décadas vistiendo familias valencianas. La confianza de nuestras clientas es el mayor reconocimiento.',
+      stats: [
+        { value: '+500',  label: 'Clientas satisfechas' },
+        { value: '+40',   label: 'Años de experiencia' },
+        { value: '4.9 ★', label: 'Valoración media' },
+      ],
+      cta: { primary: 'Pedir cita', secondary: 'Ver galería' },
       items: [
         { stars: 5, body: 'Llevamos tres generaciones viniendo a Cosas Cucas. Paquita vistió a mi madre, Noelia me vistió a mí, y ahora María ha vestido a mi hija para su primera Ofrena. Una familia de verdad.', author: 'Carmen R.', platform: 'Google · Valencia' },
         { stars: 5, body: 'La atención es excepcional. No solo confeccionan: te asesoran, te explican cada detalle del traje, y el resultado es siempre perfecto. Mi indumentaria de este año ha sido la más bonita que he llevado.', author: 'Amparo M.', platform: 'Google · Valencia' },
@@ -3769,8 +3936,15 @@ const translations = {
       ],
     },
     resenas: {
-      title: 'El que diuen de nosaltres',
+      tag:      'Més de 500 clients satisfets',
+      title:    'El que diuen de nosaltres',
       subtitle: "Quatre dècades vestint famílies valencianes. La confiança de les nostres clientes és el major reconeixement.",
+      stats: [
+        { value: '+500',  label: 'Clients satisfets' },
+        { value: '+40',   label: "Anys d'experiència" },
+        { value: '4.9 ★', label: 'Valoració mitjana' },
+      ],
+      cta: { primary: 'Demanar cita', secondary: 'Veure galeria' },
       items: [
         { stars: 5, body: "Portem tres generacions venint a Cosas Cucas. Paquita va vestir la meua mare, Noelia em va vestir a mi, i ara María ha vestit la meua filla per a la seua primera Ofrena. Una família de debò.", author: 'Carmen R.', platform: 'Google · València' },
         { stars: 5, body: "L'atenció és excepcional. No sols confeccionen: t'assessoren, t'expliquen cada detall del vestit, i el resultat és sempre perfecte. La meua indumentària d'enguany ha sigut la més bonica que he portat.", author: 'Amparo M.', platform: 'Google · València' },
@@ -4348,17 +4522,84 @@ function buildVideos() {
     </a>`).join('');
 }
 
+/* ══════════════════════════════════════════════════════════════════════════
+   buildResenas — traducción de ClientsSection / testimonial-card.tsx
+   ─────────────────────────────────────────────────────────────────────────
+   Left col:   tag pill · título · descripción · stats (sin revenue) · CTAs
+   Right col:  sticky-stacking cards — cada tarjeta tiene position:sticky
+               con top creciente (+ 24px por card) → efecto "mazo de cartas"
+               z-index por orden DOM: la última siempre encima.
+══════════════════════════════════════════════════════════════════════════ */
 function buildResenas() {
   const r = t().resenas;
-  document.getElementById('res-title').textContent = r.title;
-  document.getElementById('res-sub').textContent   = r.subtitle;
-  document.getElementById('resenas-grid').innerHTML = r.items.map(item =>
-    `<div class="resena-card">
-      <div class="resena-stars">${'★'.repeat(item.stars)}</div>
-      <p class="resena-body">${item.body}</p>
-      <div class="resena-author">${item.author}</div>
-      <div class="resena-platform">${item.platform}</div>
-    </div>`).join('');
+
+  /* ── Columna izquierda ─────────────────────────────────────────────── */
+  document.getElementById('res-tag-label').textContent = r.tag;
+  document.getElementById('res-title').textContent     = r.title;
+  document.getElementById('res-sub').textContent       = r.subtitle;
+
+  /* Stats — equivale a <StatCard> con grid-cols-3, SIN revenue */
+  document.getElementById('res-stats').innerHTML = r.stats.map(s =>
+    `<div class="res-stat-card">
+      <div class="res-stat-val">${s.value}</div>
+      <div class="res-stat-label">${s.label}</div>
+    </div>`
+  ).join('');
+
+  /* CTAs — primaryActionLabel + secondaryActionLabel */
+  document.getElementById('res-actions').innerHTML = `
+    <a class="btn btn--cita"
+       href="https://wa.me/34667775501?text=Hola%2C%20me%20gustar%C3%ADa%20pedir%20cita."
+       target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+           stroke-width="2" style="margin-right:6px;vertical-align:middle">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3.09 4.18 2 2 0 0 1 5.07 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L9.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/>
+      </svg>
+      ${r.cta.primary}
+    </a>
+    <a class="btn" href="galeria.html" target="_blank" rel="noopener">
+      ${r.cta.secondary}
+    </a>`;
+
+  /* ── Columna derecha: sticky-stacking cards ────────────────────────── */
+  const stack  = document.getElementById('res-stack');
+  const N      = r.items.length;
+  const HDR    = 72;   /* --header-h en desktop */
+  const BASE_TOP = HDR + 20; /* top del primer card */
+  const STEP   = 24;   /* offset vertical por cada card adicional */
+
+  /* Altura del contenedor: calc(100vh + N*100px) como en el componente React */
+  stack.style.height = `calc(100vh + ${N * 100}px)`;
+
+  /* Colores del avatar (variaciones del oro de la marca) */
+  const AVATAR_COLORS = ['#B5903A','#9B7A35','#C9A962','#8A6C2B','#D4B166','#7A5C28'];
+
+  stack.innerHTML = r.items.map((item, i) => {
+    const top     = BASE_TOP + i * STEP;
+    const initial = item.author.charAt(0).toUpperCase();
+    const color   = AVATAR_COLORS[i % AVATAR_COLORS.length];
+    const stars   = '★'.repeat(item.stars) + '☆'.repeat(5 - item.stars);
+
+    return `<div class="res-card-wrap" style="top:${top}px; z-index:${i + 1}">
+      <div class="res-card">
+        <!-- Avatar inicial + nombre — equivale a StickyTestimonialCard top section -->
+        <div class="res-card__top">
+          <div class="res-avatar" style="background-color:${color}">${initial}</div>
+          <div>
+            <div class="res-name">${item.author}</div>
+            <div class="res-platform">${item.platform}</div>
+          </div>
+        </div>
+        <!-- Rating — equivale a la sección de Stars del componente -->
+        <div class="res-rating">
+          <span class="res-rating__num">${item.stars}.0</span>
+          <span class="res-rating__stars" aria-label="${item.stars} estrellas">${stars}</span>
+        </div>
+        <!-- Cita — equivale a testimonial.quote -->
+        <p class="res-quote">«${item.body}»</p>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 function renderAll() {
