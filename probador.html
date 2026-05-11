@@ -720,27 +720,124 @@
   /* Sin resultados */
   .telas-empty { grid-column: 1/-1; text-align: center; font-size: .75rem; color: var(--muted); padding: 24px; font-style: italic; }
 
-  /* ── RESPONSIVE ──────────────────────────────────────────────────── */
+  /* ════════════════════════════════════════════════════════
+     RESPONSIVE — MÓVIL
+  ════════════════════════════════════════════════════════ */
+
+  /* ── Tablet / móvil grande (≤900px) ── */
   @media (max-width: 900px) {
-    #prob-main { grid-template-columns: 1fr; }
-    .col-izq { border-right: none; border-bottom: 1px solid rgba(217,206,180,.15); }
-    .col-der { padding-bottom: 140px; }
-    .styles-grid { grid-template-columns: repeat(3, 1fr); }
+
+    /* Layout principal: columnas apiladas */
+    #prob-main {
+      grid-template-columns: 1fr;
+      min-height: auto;          /* quita el cálculo fijo que cortaba contenido */
+      overflow: visible;
+    }
+
+    /* Columna izquierda */
+    .col-izq {
+      border-right: none;
+      border-bottom: 1px solid rgba(217,206,180,.15);
+      padding: 24px 20px;
+      overflow-y: visible;       /* sin doble scrollbar */
+    }
+
+    /* Columna derecha */
+    .col-der {
+      padding: 24px 20px 180px; /* espacio para sticky bar en 2 líneas */
+      overflow-y: visible;
+    }
+
+    /* Header: ocultar texto "Volver a la web" en tablet */
+    .ph-back span { display: none; }
+
+    /* Estilos: 3 columnas compactas */
+    .styles-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+    /* Swatches: 4 por fila */
     .swatches-grid { grid-template-columns: repeat(4, 1fr); }
-    #sticky-bar { flex-direction: column; gap: 12px; padding: 14px 20px; }
+
+    /* Telas: 4 por fila */
+    .telas-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+
+    /* Sticky bar: columna */
+    #sticky-bar {
+      flex-direction: column;
+      gap: 10px;
+      padding: 12px 16px;
+    }
     .btn-solicitar { width: 100%; justify-content: center; }
+    .summary-chips { justify-content: center; }
+
+    /* Chat: encima de la sticky bar extendida */
+    #prob-chat-fab   { bottom: 140px; right: 16px; }
+    #prob-chat-panel { bottom: 200px; right: 8px; width: calc(100vw - 16px); }
   }
+
+  /* ── Móvil (≤600px) ── */
   @media (max-width: 600px) {
-    .modal-box { padding: 32px 24px 28px; }
-    .styles-grid { grid-template-columns: 1fr 1fr; }
+
+    /* Header compacto */
+    #prob-header { padding: 0 14px; }
+    .ph-logo     { font-size: .95rem; }
+    .ph-badge    { display: none; }   /* ocultar badge "Probador Virtual" */
+    .ph-back     { font-size: 0; }    /* solo el icono SVG */
+    .ph-back svg { display: block; }
+
+    /* Modal registro */
+    .modal-box   { padding: 28px 18px 24px; }
+    .modal-title { font-size: 1.5rem; }
+
+    /* Pantalla Instagram */
+    .ig-title { font-size: 1.5rem; }
+
+    /* Columnas */
+    .col-izq { padding: 20px 16px; }
+    .col-der { padding: 20px 16px 180px; }
+
+    /* Upload zone */
+    .upload-zone { padding: 22px 14px; }
+
+    /* Estilos: 1 columna + descripción oculta en móvil */
+    .styles-grid { grid-template-columns: 1fr; max-width: 320px; margin: 0 auto; }
+    .style-desc  { display: none; }   /* más limpio sin descripciones largas */
+
+    /* Swatches: 3 por fila */
     .swatches-grid { grid-template-columns: repeat(3, 1fr); }
+    .swatch-color  { width: 46px; height: 46px; }
+
+    /* Telas: 3 por fila */
     .telas-grid  { grid-template-columns: repeat(3, 1fr); }
-    .col-der { padding: 24px 18px 140px; }
-    .col-izq { padding: 24px 18px; }
+
+    /* Filtros telas: botones más pequeños */
+    .tela-filter-btn { font-size: .58rem; padding: 4px 9px; }
+
+    /* Acordeón: fuente más pequeña */
+    .accord-name { font-size: .78rem; }
+
+    /* Ejemplos clientas: 2 columnas */
+    .clientas-grid { grid-template-columns: 1fr 1fr; }
+    .clienta-desc  { font-size: .64rem; }
+
+    /* Bloque de ayuda */
+    .help-steps li strong { font-size: .76rem; }
+
+    /* Sticky bar */
+    #sticky-bar { padding: 10px 14px; gap: 8px; }
+    .btn-solicitar { font-size: .7rem; padding: 12px; }
+
+    /* Chat */
+    #prob-chat-fab   { width: 46px; height: 46px; bottom: 150px; right: 12px; }
+    #prob-chat-panel { width: calc(100vw - 16px); right: 8px; bottom: 208px; }
   }
-  @media (max-width: 380px) {
+
+  /* ── Móvil muy pequeño (≤375px) ── */
+  @media (max-width: 375px) {
     .swatches-grid { grid-template-columns: repeat(3, 1fr); }
-    .swatch-color { width: 44px; height: 44px; }
+    .swatch-color  { width: 40px; height: 40px; }
+    .telas-grid    { grid-template-columns: repeat(2, 1fr); }
+    .clientas-grid { grid-template-columns: 1fr 1fr; }
+    .modal-box     { padding: 24px 14px 20px; }
   }
   </style>
 </head>

@@ -1405,11 +1405,18 @@
       .hero-actions    { flex-direction: column; gap: 10px; }
       .hero-actions .btn { width: 100%; text-align: center; display: block; }
 
-      /* PRODUCTS */
+      /* PRODUCTS — Telas */
       .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      /* Filtros de telas: scroll horizontal en móvil */
+      #telas-filtros { padding: 16px; margin-bottom: 20px; }
+      .telas-f-row   { flex-wrap: wrap; gap: 5px; }
+      .telas-f-btn   { font-size: .6rem; padding: 5px 10px; }
+      /* Colección detail */
+      .collection-detail { margin-top: 32px; padding-top: 28px; }
+      .collection-detail .section-header { margin-bottom: 20px; }
 
-      /* ARCHIVE */
-      .drops-archive-grid { grid-template-columns: 1fr; }
+      /* ARCHIVE — 2 cols en lugar de 1 */
+      .drops-archive-grid { grid-template-columns: repeat(2, 1fr); gap: 2px; }
 
       /* HISTORIA */
       .fm-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1427,6 +1434,13 @@
       /* FOOTER */
       .footer-grid { grid-template-columns: 1fr; }
       .footer-social { gap: 12px; }
+
+      /* CHATBOT — encima del WA en móvil */
+      #chat-fab   { bottom: 90px; right: 14px; width: 50px; height: 50px; }
+      #chat-panel { bottom: 155px; right: 8px; left: 8px; width: auto; }
+
+      /* RESEÑAS */
+      #res-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
     }
 
     /* ═══════════════════════════════════════════════════════════════════════════
