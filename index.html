@@ -5248,9 +5248,12 @@ function updateCitaBtn() {
       aderezo, calzado, mantilla, ramillete + tienda, precios)
 ════════════════════════════════════════════════════════════════════════ -->
 <style>
-  /* ── FAB flotante (izquierda para no chocar con WhatsApp) ── */
+  /* ── FAB flotante — encima del botón WhatsApp (bottom-right) ── */
   #chat-fab {
-    position: fixed; bottom: 28px; left: 28px; z-index: 2100;
+    position: fixed;
+    bottom: 98px;   /* 28px (WA) + 58px (WA btn) + 12px (gap) */
+    right: 28px;
+    z-index: 2100;
     width: 58px; height: 58px; border-radius: 50%;
     background: var(--color-bg-dark);
     border: 2px solid var(--color-gold);
@@ -5264,14 +5267,18 @@ function updateCitaBtn() {
   .chat-badge {
     position: absolute; top: 1px; right: 1px;
     width: 13px; height: 13px; border-radius: 50%;
-    background: #22c55e; border: 2.5px solid var(--color-bg-dark);
+    background: #e53e3e;                          /* rojo — igual que el de la web */
+    border: 2.5px solid var(--color-bg-dark);
   }
 
-  /* ── Panel del chat ── */
+  /* ── Panel del chat — se abre hacia arriba-izquierda desde el FAB ── */
   #chat-panel {
-    position: fixed; bottom: 100px; left: 28px; z-index: 2099;
+    position: fixed;
+    bottom: 168px;  /* 98px (FAB bottom) + 58px (FAB) + 12px (gap) */
+    right: 28px;
+    z-index: 2099;
     width: 340px;
-    max-height: min(530px, calc(100svh - 120px));
+    max-height: min(530px, calc(100svh - 190px));
     display: flex; flex-direction: column;
     background: var(--color-bg-dark);
     border: 1px solid rgba(181,144,58,.35);
@@ -5309,7 +5316,7 @@ function updateCitaBtn() {
     display: flex; align-items: center; gap: 5px;
     font-size: .61rem; color: rgba(253,250,243,.45); margin-top: 2px;
   }
-  .ch-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; }
+  .ch-dot { width: 6px; height: 6px; border-radius: 50%; background: #e53e3e; }
   .ch-close {
     background: none; border: none; cursor: pointer;
     color: rgba(253,250,243,.35); padding: 5px; border-radius: 6px;
@@ -5415,8 +5422,9 @@ function updateCitaBtn() {
   .ch-send svg { width: 14px; height: 14px; fill: var(--color-bg-dark); }
 
   @media (max-width: 480px) {
-    #chat-panel { left: 12px; right: 12px; width: auto; bottom: 86px; }
-    #chat-fab   { bottom: 20px; left: 18px; }
+    /* WA móvil: bottom 20px right 18px, botón 52px → chat FAB: bottom 84px */
+    #chat-fab   { bottom: 84px; right: 18px; width: 52px; height: 52px; }
+    #chat-panel { right: 12px; left: 12px; width: auto; bottom: 148px; max-height: min(480px, calc(100svh - 170px)); }
   }
 </style>
 
