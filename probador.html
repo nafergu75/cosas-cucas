@@ -3,1250 +3,1149 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Probador Virtual · Cosas Cucas | Indumentaria Valenciana</title>
+  <title>Probador Virtual · Cosas Cucas | Diseña tu indumentaria valenciana</title>
+  <meta name="description" content="Diseña tu traje de fallera a medida con el Probador Virtual de Cosas Cucas. Elige telas, estilo y complementos. Solicita presupuesto sin compromiso.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  <!-- EmailJS SDK — gratis 200 emails/mes · https://www.emailjs.com -->
+  <!-- EmailJS SDK — gratis 200 emails/mes -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
-  :root{
-    --bg:#F4EDD8;--bg-alt:#EDE5CE;--bg-dark:#1A1714;
-    --gold:#B5903A;--gl:#D4B166;--text:#1A1714;--muted:#6B5D4F;
-    --border:#D9CEB4;--white:#FDFAF3;
-    --fb:'Space Grotesk',sans-serif;--fd:'Playfair Display',serif;--r:3px;
+  /* ── TOKENS ──────────────────────────────────────────────────────── */
+  :root {
+    --bg:      #F4EDD8; --bg-alt:  #EDE5CE; --bg-dark: #1A1714;
+    --gold:    #B5903A; --gl:      #D4B166; --gld:     #8A6C2B;
+    --text:    #1A1714; --muted:   #6B5D4F; --border:  #D9CEB4;
+    --white:   #FDFAF3; --error:   #c0392b; --success: #27ae60;
+    --fb: 'Space Grotesk', sans-serif;
+    --fd: 'Playfair Display', serif;
+    --r: 4px; --r2: 8px; --r3: 14px;
+    --shadow: 0 4px 24px rgba(26,23,20,.12);
+    --shadow-lg: 0 12px 48px rgba(26,23,20,.2);
   }
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%;overflow:hidden}
-  body{font-family:var(--fb);background:var(--bg-dark);color:var(--text);
-    -webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--fb); background: var(--bg); color: var(--text);
+    -webkit-font-smoothing: antialiased; min-height: 100vh; }
 
-  /* ─── HEADER ──────────────────────────── */
-  #hdr{display:flex;align-items:center;justify-content:space-between;
-    padding:0 20px;height:52px;flex-shrink:0;background:var(--bg-dark);
-    border-bottom:1px solid rgba(217,206,180,.15);gap:12px}
-  .hl{display:flex;align-items:center;gap:14px}
-  .hbr{display:flex;align-items:center;gap:9px;text-decoration:none}
-  .hbr img{height:30px;width:auto;object-fit:contain}
-  .hbn{font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gl);white-space:nowrap}
-  .hsp{width:1px;height:22px;background:rgba(217,206,180,.2)}
-  .htt{font-family:var(--fd);font-size:.95rem;font-style:italic;color:rgba(253,250,243,.7);white-space:nowrap}
-  .hbg{font-size:.57rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-    background:var(--gold);color:var(--white);padding:3px 8px;border-radius:2px}
-  .hbk{font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-    color:rgba(253,250,243,.5);text-decoration:none;display:flex;align-items:center;
-    gap:5px;transition:color .2s;white-space:nowrap}
-  .hbk:hover{color:var(--gl)}
+  /* ── UTILIDADES ──────────────────────────────────────────────────── */
+  .hidden { display: none !important; }
+  .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
 
-  /* ─── LAYOUT ──────────────────────────── */
-  #main{flex:1;display:grid;grid-template-columns:200px 1fr 268px;overflow:hidden;min-height:0}
-
-  /* ─── LEFT PANEL ──────────────────────── */
-  #lp{background:var(--white);border-right:1px solid var(--border);
-    display:flex;flex-direction:column;overflow-y:auto}
-  .sec{padding:12px 11px 10px;border-bottom:1px solid var(--border)}
-  .sec:last-child{border-bottom:none;padding-bottom:14px;margin-top:auto}
-  .slbl{font-size:.54rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
-    color:var(--gold);display:block;margin-bottom:9px}
-
-  /* Mannequin upload zone */
-  .mq-zone{
-    border:2px dashed var(--border);border-radius:var(--r);
-    padding:14px 10px;text-align:center;cursor:pointer;
-    transition:border-color .2s,background .2s;margin-bottom:8px;
-    position:relative;
+  /* ── OVERLAY MODAL ───────────────────────────────────────────────── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(26,23,20,.72);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(6px);
+    opacity: 0; pointer-events: none;
+    transition: opacity .35s ease;
   }
-  .mq-zone:hover,.mq-zone.drag{border-color:var(--gold);background:var(--bg-alt)}
-  .mq-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-  .mq-zone p{font-size:.63rem;color:var(--muted);line-height:1.5}
-  .mq-zone strong{color:var(--text)}
-  .mq-preview{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:2px;
-    display:none;border:1px solid var(--border);margin-bottom:6px}
-  .mq-preview.visible{display:block}
-  .mq-name{font-size:.6rem;color:var(--gold);font-weight:600;margin-bottom:6px;
-    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:none}
-  .mq-name.visible{display:block}
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal-box {
+    background: var(--white); border-radius: 18px;
+    padding: 44px 40px 40px;
+    width: 100%; max-width: 440px;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(20px) scale(.97);
+    transition: transform .35s ease;
+    position: relative;
+  }
+  .modal-overlay.open .modal-box { transform: translateY(0) scale(1); }
+  .modal-eyebrow {
+    font-size: .65rem; font-weight: 700; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 10px;
+  }
+  .modal-title {
+    font-family: var(--fd); font-size: 1.9rem;
+    font-weight: 400; line-height: 1.15; color: var(--text); margin-bottom: 8px;
+  }
+  .modal-sub { font-size: .85rem; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
 
-  /* Part layer buttons */
-  .pb{width:100%;display:flex;align-items:flex-start;gap:7px;padding:8px;
-    margin-bottom:4px;background:transparent;border:1px solid transparent;
-    border-radius:var(--r);cursor:pointer;transition:all .15s;text-align:left;position:relative}
-  .pb:hover{background:var(--bg-alt);border-color:var(--border)}
-  .pb.act{background:var(--bg);border-color:var(--gold)}
-  .pb.act .pbn{color:var(--gold);font-weight:700}
-  .pbn-num{width:16px;height:16px;border-radius:50%;background:var(--border);
-    color:var(--muted);font-size:.52rem;font-weight:700;
-    display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
-  .pb.act .pbn-num{background:var(--gold);color:#fff}
-  .pbth{width:34px;height:34px;border-radius:2px;flex-shrink:0;
-    background:var(--bg-alt);overflow:hidden;border:1.5px solid var(--border);
-    display:flex;align-items:center;justify-content:center}
-  .pbth img{width:100%;height:100%;object-fit:cover;display:none}
-  .pbth .empty-icon{font-size:.9rem;opacity:.4}
-  .pbi{flex:1;min-width:0}
-  .pbn{font-size:.7rem;font-weight:600;color:var(--text);line-height:1.2}
-  .pbd{font-size:.56rem;color:var(--muted);margin-top:1px}
-  .pbs{font-size:.56rem;color:var(--gold);font-weight:600;margin-top:2px;
-    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:106px}
-  .pbx{position:absolute;right:3px;top:50%;transform:translateY(-50%);
-    background:transparent;border:none;cursor:pointer;color:var(--muted);
-    font-size:.72rem;padding:3px 5px;border-radius:2px;transition:all .15s;line-height:1}
-  .pbx:hover{color:#c00;background:rgba(200,0,0,.08)}
+  /* ── FORMULARIO ──────────────────────────────────────────────────── */
+  .form-group { margin-bottom: 16px; }
+  .form-label {
+    display: block; font-size: .72rem; font-weight: 600;
+    letter-spacing: .06em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%; padding: 12px 14px;
+    border: 1.5px solid var(--border); border-radius: var(--r);
+    font-family: var(--fb); font-size: .9rem; color: var(--text);
+    background: var(--bg); outline: none;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .form-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(181,144,58,.15); }
+  .form-input.error { border-color: var(--error); }
+  .form-err {
+    font-size: .68rem; color: var(--error); margin-top: 4px; display: none;
+  }
+  .form-err.show { display: block; }
 
-  /* Opacity per layer */
-  .layer-opacity{padding:0 8px 8px;display:none}
-  .layer-opacity.visible{display:block}
-  .layer-opacity label{font-size:.56rem;color:var(--muted);display:flex;
-    align-items:center;justify-content:space-between;margin-bottom:3px}
-  .layer-opacity input[type=range]{width:100%;accent-color:var(--gold)}
+  /* Checkbox privacidad */
+  .check-row {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-bottom: 24px;
+  }
+  .check-row input[type=checkbox] {
+    width: 18px; height: 18px; accent-color: var(--gold);
+    flex-shrink: 0; margin-top: 2px; cursor: pointer;
+  }
+  .check-row label { font-size: .82rem; color: var(--muted); line-height: 1.5; cursor: pointer; }
+  .check-row a { color: var(--gold); }
 
-  /* Blend mode selector */
-  .blend-sel{font-size:.58rem;padding:3px 6px;border:1px solid var(--border);
-    border-radius:var(--r);background:var(--white);color:var(--text);
-    cursor:pointer;width:100%;margin-top:4px;font-family:var(--fb)}
+  /* Botones */
+  .btn-primary {
+    width: 100%; padding: 15px; background: var(--gold); color: var(--white);
+    border: none; border-radius: var(--r); font-family: var(--fb);
+    font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    cursor: pointer; transition: background .2s, transform .15s;
+  }
+  .btn-primary:hover { background: var(--gl); }
+  .btn-primary:active { transform: scale(.98); }
+  .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+  .btn-outline {
+    width: 100%; padding: 13px; background: transparent;
+    border: 1.5px solid var(--border); border-radius: var(--r);
+    font-family: var(--fb); font-size: .8rem; font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+    cursor: pointer; transition: all .2s; margin-top: 10px;
+  }
+  .btn-outline:hover { border-color: var(--text); color: var(--text); }
 
-  /* Compare btn */
-  .cmp-btn{width:100%;padding:8px 10px;background:var(--bg-alt);border:1px solid var(--border);
-    border-radius:var(--r);cursor:pointer;font-family:var(--fb);font-size:.62rem;
-    font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
-    transition:all .16s;user-select:none;margin-bottom:6px}
-  .cmp-btn:hover{border-color:var(--gold);color:var(--text)}
-  .cmp-btn.on{background:var(--bg-dark);color:var(--white);border-color:var(--bg-dark)}
+  /* ── PANTALLA INSTAGRAM ──────────────────────────────────────────── */
+  #screen-instagram {
+    position: fixed; inset: 0; z-index: 900;
+    background: var(--bg-dark);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 40px 24px;
+    text-align: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity .4s ease;
+  }
+  #screen-instagram.open { opacity: 1; pointer-events: all; }
+  .ig-logo {
+    width: 72px; height: 72px; margin: 0 auto 28px;
+    background: linear-gradient(135deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+    border-radius: 18px; display: flex; align-items: center; justify-content: center;
+  }
+  .ig-logo svg { width: 42px; height: 42px; fill: white; }
+  .ig-eyebrow {
+    font-size: .65rem; font-weight: 700; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--gl); margin-bottom: 14px;
+  }
+  .ig-title {
+    font-family: var(--fd); font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--white); font-weight: 400; line-height: 1.15; margin-bottom: 14px;
+  }
+  .ig-sub {
+    font-size: .95rem; color: rgba(253,250,243,.55); max-width: 420px; line-height: 1.7;
+    margin: 0 auto 36px;
+  }
+  .ig-handle {
+    font-size: 1.1rem; font-weight: 700; color: var(--gl); margin-bottom: 32px;
+    letter-spacing: .06em;
+  }
+  .btn-ig {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 32px; border-radius: 40px;
+    background: linear-gradient(135deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+    color: white; font-family: var(--fb); font-size: .82rem;
+    font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    text-decoration: none; transition: opacity .2s, transform .15s;
+    margin-bottom: 14px;
+  }
+  .btn-ig:hover { opacity: .88; transform: translateY(-1px); }
+  .btn-ig-skip {
+    display: block; padding: 12px 28px; border-radius: 40px;
+    border: 1.5px solid rgba(253,250,243,.25); color: rgba(253,250,243,.6);
+    font-family: var(--fb); font-size: .78rem; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase;
+    cursor: pointer; background: none;
+    transition: border-color .2s, color .2s;
+  }
+  .btn-ig-skip:hover { border-color: rgba(253,250,243,.6); color: var(--white); }
 
-  /* Action buttons */
-  .ab{display:block;width:100%;padding:9px 8px;font-family:var(--fb);font-size:.6rem;
-    font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-align:center;
-    border-radius:var(--r);cursor:pointer;transition:all .18s;margin-bottom:6px;text-decoration:none}
-  .ag{background:var(--gold);color:var(--white);border:none}.ag:hover{background:var(--gl)}
-  .ao{background:transparent;color:var(--text);border:1px solid var(--border)}.ao:hover{border-color:var(--gold);color:var(--gold)}
+  /* ── CABECERA PROBADOR ───────────────────────────────────────────── */
+  #prob-header {
+    background: var(--bg-dark);
+    padding: 0 32px;
+    height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+    border-bottom: 1px solid rgba(217,206,180,.15);
+  }
+  .ph-logo {
+    font-family: var(--fd); font-size: 1.15rem;
+    color: var(--gl); text-decoration: none; letter-spacing: .04em;
+  }
+  .ph-badge {
+    font-size: .58rem; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; background: var(--gold); color: var(--white);
+    padding: 3px 9px; border-radius: 2px;
+  }
+  .ph-back {
+    display: flex; align-items: center; gap: 6px;
+    color: rgba(253,250,243,.5); text-decoration: none;
+    font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    transition: color .2s;
+  }
+  .ph-back:hover { color: var(--gl); }
 
-  /* ─── CANVAS CENTER ───────────────────── */
-  #cw{position:relative;display:flex;align-items:center;justify-content:center;
-    overflow:hidden;background:#0e0b09}
-  #canvas{max-height:100%;max-width:100%;display:block}
-
-  #ld{position:absolute;inset:0;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;gap:14px;background:#0e0b09;
-    color:rgba(253,250,243,.55);font-size:.68rem;letter-spacing:.1em;
-    text-transform:uppercase;z-index:10;pointer-events:none}
-  .sp{width:34px;height:34px;border:3px solid rgba(181,144,58,.2);
-    border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
-  @keyframes spin{to{transform:rotate(360deg)}}
-
-  #fab-sp{position:absolute;top:10px;right:10px;width:24px;height:24px;
-    border:2.5px solid rgba(181,144,58,.25);border-top-color:var(--gold);
-    border-radius:50%;animation:spin .7s linear infinite;display:none;z-index:5}
-
-  #tip{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);
-    background:rgba(26,23,20,.82);color:rgba(253,250,243,.85);font-size:.59rem;
-    letter-spacing:.07em;padding:5px 14px;border-radius:20px;
-    pointer-events:none;white-space:nowrap;transition:opacity .5s}
-
-  /* Drop overlay for mannequin drag */
-  #drop-overlay{position:absolute;inset:0;background:rgba(181,144,58,.18);
-    border:3px dashed var(--gold);display:none;align-items:center;
-    justify-content:center;z-index:20;flex-direction:column;gap:12px}
-  #drop-overlay.show{display:flex}
-  #drop-overlay span{font-size:.8rem;font-weight:700;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--gl)}
-
-  /* Empty state */
-  #empty-state{position:absolute;inset:0;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;gap:16px;
-    pointer-events:none;display:none}
-  #empty-state.show{display:flex}
-  #empty-state p{font-family:var(--fd);font-size:1.1rem;font-style:italic;
-    color:rgba(253,250,243,.5);text-align:center;max-width:280px;line-height:1.6}
-
-  /* ─── RIGHT PANEL ─────────────────────── */
-  #rp{background:var(--white);border-left:1px solid var(--border);
-    display:flex;flex-direction:column;overflow:hidden}
-  #rh{padding:12px 13px 9px;border-bottom:1px solid var(--border);flex-shrink:0}
-  .rey{font-size:.54rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
-    color:var(--gold);display:block;margin-bottom:3px}
-  .rtt{font-family:var(--fd);font-size:.95rem;font-style:italic}
-  .rsub{font-size:.62rem;color:var(--muted);margin-top:3px}
-  #rcat{font-weight:700;color:var(--gold)}
-
-  /* Filter tabs */
-  #rtabs{display:flex;gap:4px;padding:8px 10px;
-    border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap}
-  .rtab{font-size:.57rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
-    padding:3px 9px;border-radius:20px;border:1px solid var(--border);
-    background:transparent;color:var(--muted);cursor:pointer;transition:all .15s}
-  .rtab.on,.rtab:hover{background:var(--gold);border-color:var(--gold);color:var(--white)}
-
-  /* Upload custom garment */
-  #custom-upload-area{padding:8px 10px;border-bottom:1px solid var(--border);flex-shrink:0}
-  .custom-upload-btn{width:100%;padding:7px 10px;background:var(--bg-alt);
-    border:1px dashed var(--border);border-radius:var(--r);cursor:pointer;
-    font-family:var(--fb);font-size:.6rem;font-weight:600;letter-spacing:.08em;
-    text-transform:uppercase;color:var(--muted);transition:all .16s;position:relative}
-  .custom-upload-btn:hover{border-color:var(--gold);color:var(--text)}
-  .custom-upload-btn input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-
-  /* Gallery */
-  #rgrid{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(2,1fr);
-    gap:7px;padding:10px;align-content:start}
-  .gc{cursor:pointer;border-radius:var(--r);border:2.5px solid transparent;
-    overflow:hidden;transition:border-color .14s,transform .13s;background:var(--bg-alt)}
-  .gc:hover{border-color:var(--gl);transform:translateY(-1px)}
-  .gc.sel{border-color:var(--gold)}
-  .gci{width:100%;aspect-ratio:3/4;overflow:hidden;position:relative;background:#ccc}
-  .gci img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s}
-  .gc:hover .gci img{transform:scale(1.06)}
-  .gck{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-    background:rgba(181,144,58,.38);opacity:0;transition:opacity .14s}
-  .gc.sel .gck{opacity:1}
-  .gcn{font-size:.58rem;font-weight:600;color:var(--text);
-    padding:5px 6px;background:var(--white);line-height:1.2}
-  .gc.sel .gcn{color:var(--gold)}
-
-  /* Responsive */
-  @media(max-width:900px){
-    html,body{overflow:auto}
-    #main{grid-template-columns:1fr;overflow:visible}
-    #lp,#rp{border:none;border-bottom:1px solid var(--border)}
-    #cw{height:120vw;min-height:380px}
-    #rgrid{grid-template-columns:repeat(3,1fr)}
+  /* ── LAYOUT PRINCIPAL ─────────────────────────────────────────────── */
+  #prob-main {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    min-height: calc(100vh - 60px - 88px); /* header + sticky bar */
   }
 
-  /* ── PASO 1: Datos de clienta ── */
-  .user-field{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:var(--r);font-family:var(--fb);font-size:.62rem;background:var(--bg-alt);color:var(--text);outline:none;transition:border-color .2s;margin-bottom:4px;display:block}
-  .user-field:focus{border-color:var(--gold)}
-  .user-field::placeholder{color:var(--muted)}
-
-  /* ── PASO 2: Estilo histórico ── */
-  .style-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:8px}
-  .style-opt{padding:7px 4px;border:1.5px solid var(--border);border-radius:var(--r);background:transparent;color:var(--muted);font-family:var(--fb);font-size:.5rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:all .15s;text-align:center;line-height:1.3}
-  .style-opt:hover{border-color:var(--gl);color:var(--gl)}
-  .style-opt.on{border-color:var(--gold);background:var(--gold);color:#fff}
-  .desc-field{width:100%;min-height:64px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r);font-family:var(--fb);font-size:.62rem;color:var(--text);background:var(--bg-alt);outline:none;resize:vertical;transition:border-color .2s}
-  .desc-field:focus{border-color:var(--gold)}
-
-  /* ── PASO 4: Botón Enviar Diseño ── */
-  #send-bar{background:var(--bg-dark);border-top:1px solid rgba(217,206,180,.18);padding:10px 16px;flex-shrink:0;display:none}
-  #send-bar.visible{display:block}
-  #btn-enviar{width:100%;padding:13px;background:var(--gold);color:#fff;border:none;border-radius:var(--r);font-family:var(--fb);font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s}
-  #btn-enviar:hover{background:var(--gl)}
-  .send-hint{font-size:.56rem;color:rgba(253,250,243,.4);text-align:center;margin-top:6px;letter-spacing:.06em}
-
-  /* ── Modal Instagram ── */
-  #ig-modal{position:fixed;inset:0;background:rgba(10,8,6,.9);z-index:9000;display:none;align-items:center;justify-content:center;padding:20px}
-  #ig-modal.open{display:flex}
-  .ig-box{background:var(--white);border-radius:16px;padding:32px 28px;max-width:360px;width:100%;text-align:center}
-  .ig-box h3{font-family:var(--fd);font-size:1.15rem;color:var(--text);margin-bottom:8px}
-  .ig-box p{font-size:.8rem;color:var(--muted);margin-bottom:20px;line-height:1.65}
-  .ig-link{display:block;background:#e1306c;color:#fff;padding:11px;border-radius:8px;text-decoration:none;font-weight:700;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;transition:opacity .2s}
-  .ig-link:hover{opacity:.85}
-  .ig-btn-yes,.ig-btn-no{width:100%;padding:12px;border-radius:var(--r);border:none;font-family:var(--fb);font-size:.7rem;font-weight:700;cursor:pointer;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;transition:all .2s}
-  .ig-btn-yes{background:var(--gold);color:#fff}
-  .ig-btn-yes:hover{background:var(--gl)}
-  .ig-btn-no{background:transparent;color:var(--muted);border:1px solid var(--border)}
-  .ig-btn-no:hover{border-color:var(--text);color:var(--text)}
-
-  /* ── Navegación de Telas: Fibra → Tipo ── */
-  #telas-nav { flex-shrink:0; background:var(--bg-alt); border-bottom:1px solid var(--border); }
-  .tela-row  { display:flex; gap:3px; padding:6px 8px 0; }
-  .tela-row:last-child { padding-bottom:6px; }
-  .tela-row-label {
-    font-size:.47rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
-    color:var(--muted); padding:0 8px 3px; display:block;
+  /* ── COLUMNA IZQUIERDA ────────────────────────────────────────────── */
+  .col-izq {
+    background: var(--bg-dark);
+    padding: 36px 28px;
+    border-right: 1px solid rgba(217,206,180,.15);
+    overflow-y: auto;
   }
-  /* Fibra: Seda / Rayón */
-  .tf-btn {
-    flex:1; padding:7px 6px; border:1.5px solid var(--border); border-radius:var(--r);
-    background:transparent; color:var(--muted); font-family:var(--fb);
-    font-size:.56rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
-    cursor:pointer; transition:all .15s; text-align:center; line-height:1.2;
+  .col-section { margin-bottom: 36px; }
+  .col-section:last-child { margin-bottom: 0; }
+  .col-eyebrow {
+    font-size: .58rem; font-weight: 700; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 10px;
   }
-  .tf-btn:hover { border-color:var(--gl); color:var(--gl); }
-  .tf-btn.on { border-color:var(--gold); background:var(--gold); color:#fff; }
-  .tf-btn .tf-sub { font-size:.44rem; font-weight:400; opacity:.75; display:block; margin-top:2px; }
-  /* Tipo: Todos / Damascos / Brocateles */
-  .tt-btn {
-    flex:1; padding:5px 4px; border:1px solid var(--border); border-radius:var(--r);
-    background:transparent; color:var(--muted); font-family:var(--fb);
-    font-size:.51rem; font-weight:600; letter-spacing:.04em; text-transform:uppercase;
-    cursor:pointer; transition:all .15s; text-align:center;
-  }
-  .tt-btn:hover { border-color:var(--text); color:var(--text); }
-  .tt-btn.on { border-color:var(--text); background:var(--text); color:var(--white); }
-  /* Badge D/B en la tarjeta de tela */
-  .gc-badge {
-    position:absolute; top:4px; right:4px;
-    font-size:.48rem; font-weight:700; letter-spacing:.04em;
-    padding:2px 5px; border-radius:2px; line-height:1;
-    pointer-events:none; z-index:2;
-  }
-  .gc-badge.brocatel { background:rgba(181,144,58,.85); color:#fff; }
-  .gc-badge.damasco  { background:rgba(26,23,20,.75);   color:var(--gl); }
-  .tela-empty {
-    grid-column:1/-1; text-align:center;
-    padding:24px 10px; font-size:.65rem; color:var(--muted); font-style:italic;
+  .col-title {
+    font-family: var(--fd); font-size: 1.05rem; font-style: italic;
+    color: var(--white); margin-bottom: 16px;
   }
 
-  /* ── Toast ── */
-  #send-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--gold);color:#fff;padding:14px 28px;border-radius:30px;font-size:.78rem;font-weight:600;box-shadow:0 6px 32px rgba(0,0,0,.35);z-index:9999;display:none;text-align:center;max-width:90vw}
-  #send-toast.show{display:block;animation:toastIn .3s ease}
-  @keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+  /* Upload zone */
+  .upload-zone {
+    border: 2px dashed rgba(217,206,180,.3); border-radius: var(--r2);
+    padding: 32px 20px; text-align: center; cursor: pointer;
+    transition: border-color .2s, background .2s;
+    position: relative; background: rgba(253,250,243,.03);
+  }
+  .upload-zone:hover, .upload-zone.drag { border-color: var(--gold); background: rgba(181,144,58,.06); }
+  .upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+  .upload-silhouette { margin: 0 auto 16px; opacity: .35; }
+  .upload-label { font-size: .8rem; color: rgba(253,250,243,.7); line-height: 1.6; }
+  .upload-label strong { color: var(--gl); }
+  .upload-hint { font-size: .65rem; color: rgba(253,250,243,.3); margin-top: 6px; }
+
+  /* Preview foto */
+  .upload-preview {
+    position: relative; border-radius: var(--r2); overflow: hidden;
+    aspect-ratio: 3/4; max-height: 320px; display: none;
+  }
+  .upload-preview.show { display: block; }
+  .upload-preview img { width: 100%; height: 100%; object-fit: cover; }
+  .upload-preview-change {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: rgba(26,23,20,.82); padding: 10px;
+    text-align: center; font-size: .68rem; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--gl);
+    cursor: pointer; transition: background .2s;
+  }
+  .upload-preview-change:hover { background: rgba(26,23,20,.95); }
+
+  /* Textarea descripción */
+  .desc-textarea {
+    width: 100%; min-height: 140px; padding: 14px;
+    border: 1.5px solid rgba(217,206,180,.2); border-radius: var(--r);
+    background: rgba(253,250,243,.05); color: var(--white);
+    font-family: var(--fb); font-size: .88rem; resize: vertical;
+    outline: none; transition: border-color .2s; line-height: 1.7;
+  }
+  .desc-textarea:focus { border-color: var(--gold); }
+  .desc-textarea::placeholder { color: rgba(253,250,243,.3); }
+  .char-counter {
+    text-align: right; font-size: .65rem; color: rgba(253,250,243,.35);
+    margin-top: 5px;
+  }
+  .char-counter.ok { color: var(--success); }
+  .char-counter.warn { color: #e67e22; }
+
+  /* ── COLUMNA DERECHA ─────────────────────────────────────────────── */
+  .col-der {
+    background: var(--bg);
+    padding: 36px 32px 120px;
+    overflow-y: auto;
+  }
+  .block-title {
+    font-family: var(--fd); font-size: 1.25rem; font-weight: 400;
+    color: var(--text); margin-bottom: 6px;
+  }
+  .block-sub {
+    font-size: .8rem; color: var(--muted); margin-bottom: 20px; line-height: 1.6;
+  }
+  .block-divider {
+    border: none; border-top: 1px solid var(--border);
+    margin: 32px 0;
+  }
+  .block-label {
+    font-size: .6rem; font-weight: 700; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 10px;
+  }
+
+  /* Swatches de color */
+  .swatches-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+    margin-bottom: 8px;
+  }
+  .swatch {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 6px; cursor: pointer;
+  }
+  .swatch-color {
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 2.5px solid transparent;
+    position: relative; transition: transform .15s, border-color .15s;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  }
+  .swatch:hover .swatch-color { transform: scale(1.08); }
+  .swatch.selected .swatch-color {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(181,144,58,.3);
+  }
+  .swatch-tick {
+    position: absolute; inset: 0; display: flex;
+    align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .15s;
+  }
+  .swatch.selected .swatch-tick { opacity: 1; }
+  .swatch-tick svg { width: 18px; height: 18px; }
+  .swatch-name {
+    font-size: .6rem; font-weight: 600; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--muted); text-align: center;
+    line-height: 1.3;
+  }
+  .swatch.selected .swatch-name { color: var(--text); }
+
+  /* Cards de estilo */
+  .styles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .style-card {
+    border: 2px solid var(--border); border-radius: var(--r2);
+    overflow: hidden; cursor: pointer; transition: border-color .2s, box-shadow .2s;
+    background: var(--bg-alt);
+  }
+  .style-card:hover { border-color: var(--gl); box-shadow: 0 4px 20px rgba(181,144,58,.15); }
+  .style-card.selected { border-color: var(--gold); box-shadow: 0 4px 24px rgba(181,144,58,.25); }
+  .style-img {
+    width: 100%; aspect-ratio: 2/3;
+    object-fit: cover; object-position: center top; display: block;
+    background: var(--bg);
+  }
+  .style-img-placeholder {
+    width: 100%; aspect-ratio: 2/3;
+    background: linear-gradient(160deg, var(--bg-alt) 0%, var(--border) 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 8px;
+  }
+  .style-img-placeholder svg { width: 40px; height: 40px; stroke: var(--muted); fill: none; stroke-width: 1.5; }
+  .style-body { padding: 12px; }
+  .style-name {
+    font-family: var(--fd); font-size: .88rem;
+    color: var(--text); margin-bottom: 4px;
+  }
+  .style-desc { font-size: .68rem; color: var(--muted); line-height: 1.5; margin-bottom: 10px; }
+  .style-radio {
+    display: flex; align-items: center; gap: 6px;
+    font-size: .68rem; font-weight: 600; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .style-card.selected .style-radio { color: var(--gold); }
+  .style-radio-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2px solid var(--border); flex-shrink: 0;
+    transition: border-color .2s, background .2s;
+  }
+  .style-card.selected .style-radio-dot { border-color: var(--gold); background: var(--gold); }
+
+  /* Acordeón complementos */
+  .accord-item {
+    border: 1.5px solid var(--border); border-radius: var(--r2);
+    margin-bottom: 10px; overflow: hidden;
+    transition: border-color .2s;
+  }
+  .accord-item.open { border-color: var(--gl); }
+  .accord-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px; cursor: pointer; user-select: none;
+    background: var(--bg-alt); transition: background .2s;
+  }
+  .accord-head:hover { background: var(--border); }
+  .accord-left { display: flex; align-items: center; gap: 12px; }
+  .accord-check {
+    width: 20px; height: 20px; border-radius: 4px;
+    border: 2px solid var(--border); background: var(--bg);
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    transition: all .15s;
+  }
+  .accord-item.open .accord-check { background: var(--gold); border-color: var(--gold); }
+  .accord-check svg { width: 12px; height: 12px; stroke: white; fill: none; stroke-width: 2.5; opacity: 0; transition: opacity .15s; }
+  .accord-item.open .accord-check svg { opacity: 1; }
+  .accord-name {
+    font-size: .82rem; font-weight: 600; color: var(--text);
+  }
+  .accord-arrow {
+    width: 20px; height: 20px; stroke: var(--muted); fill: none;
+    stroke-width: 2; transition: transform .25s;
+  }
+  .accord-item.open .accord-arrow { transform: rotate(180deg); }
+  .accord-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height .3s ease, padding .3s ease;
+    padding: 0 16px;
+  }
+  .accord-item.open .accord-body { max-height: 200px; padding: 14px 16px 18px; }
+  .accord-desc { font-size: .78rem; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+  .metal-group { display: flex; gap: 20px; }
+  .metal-opt {
+    display: flex; align-items: center; gap: 8px;
+    font-size: .8rem; font-weight: 600; cursor: pointer;
+    color: var(--muted); transition: color .15s;
+  }
+  .metal-opt.active { color: var(--text); }
+  .metal-radio {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid var(--border); flex-shrink: 0;
+    position: relative; transition: border-color .15s;
+  }
+  .metal-opt.active .metal-radio { border-color: var(--gold); }
+  .metal-radio::after {
+    content: ''; position: absolute; inset: 3px;
+    border-radius: 50%; background: var(--gold);
+    opacity: 0; transition: opacity .15s;
+  }
+  .metal-opt.active .metal-radio::after { opacity: 1; }
+  .metal-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+  /* ── STICKY BAR ──────────────────────────────────────────────────── */
+  #sticky-bar {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+    background: var(--bg-dark);
+    border-top: 1px solid rgba(217,206,180,.2);
+    padding: 14px 32px;
+    display: flex; align-items: center; gap: 24px;
+    box-shadow: 0 -8px 32px rgba(0,0,0,.3);
+  }
+  .summary-chips {
+    flex: 1; display: flex; flex-wrap: wrap; gap: 6px; min-height: 28px;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 10px; border-radius: 20px;
+    background: rgba(181,144,58,.18); border: 1px solid rgba(181,144,58,.35);
+    font-size: .65rem; font-weight: 600; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--gl);
+  }
+  .chip-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .summary-empty {
+    font-size: .72rem; color: rgba(253,250,243,.3);
+    font-style: italic;
+  }
+  .btn-solicitar {
+    flex-shrink: 0;
+    padding: 14px 28px;
+    background: var(--gold); color: var(--white);
+    border: none; border-radius: var(--r); font-family: var(--fb);
+    font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    cursor: pointer; white-space: nowrap;
+    transition: background .2s, transform .15s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .btn-solicitar:hover { background: var(--gl); }
+  .btn-solicitar:active { transform: scale(.98); }
+  .btn-solicitar svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  /* ── MODAL ÉXITO ─────────────────────────────────────────────────── */
+  .modal-exito-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: rgba(39,174,96,.15); display: flex;
+    align-items: center; justify-content: center; margin: 0 auto 20px;
+  }
+  .modal-exito-icon svg { width: 32px; height: 32px; stroke: var(--success); fill: none; stroke-width: 2; }
+  .modal-exito-title { font-family: var(--fd); font-size: 1.6rem; text-align: center; margin-bottom: 12px; }
+  .modal-exito-msg { font-size: .88rem; color: var(--muted); text-align: center; line-height: 1.7; margin-bottom: 28px; }
+
+  /* ── RESPONSIVE ──────────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    #prob-main { grid-template-columns: 1fr; }
+    .col-izq { border-right: none; border-bottom: 1px solid rgba(217,206,180,.15); }
+    .col-der { padding-bottom: 140px; }
+    .styles-grid { grid-template-columns: repeat(3, 1fr); }
+    .swatches-grid { grid-template-columns: repeat(4, 1fr); }
+    #sticky-bar { flex-direction: column; gap: 12px; padding: 14px 20px; }
+    .btn-solicitar { width: 100%; justify-content: center; }
+  }
+  @media (max-width: 600px) {
+    .modal-box { padding: 32px 24px 28px; }
+    .styles-grid { grid-template-columns: 1fr 1fr; }
+    .swatches-grid { grid-template-columns: repeat(3, 1fr); }
+    .col-der { padding: 24px 18px 140px; }
+    .col-izq { padding: 24px 18px; }
+  }
+  @media (max-width: 380px) {
+    .swatches-grid { grid-template-columns: repeat(3, 1fr); }
+    .swatch-color { width: 44px; height: 44px; }
+  }
   </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header id="hdr">
-  <div class="hl">
-    <a class="hbr" href="/"><img src="logo cosascucas.png" alt="Cosas Cucas"><span class="hbn">Cosas Cucas</span></a>
-    <div class="hsp"></div>
-    <span class="htt">Probador Virtual</span>
-    <span class="hbg">Nuevo</span>
+<!-- ════════════════════════════════════════════════════════════════════
+     PASO 1 — MODAL DE REGISTRO
+════════════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay open" id="modal-registro" role="dialog" aria-modal="true" aria-labelledby="mod-title">
+  <div class="modal-box">
+    <span class="modal-eyebrow">✦ Probador Virtual · Cosas Cucas</span>
+    <h1 class="modal-title" id="mod-title">Accede al<br>Probador Virtual</h1>
+    <p class="modal-sub">Diseña tu traje de fallera a medida y recibe un presupuesto personalizado en menos de 24 horas.</p>
+
+    <form id="form-registro" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="reg-name">Nombre completo</label>
+        <input class="form-input" id="reg-name" type="text" placeholder="María García Martínez" autocomplete="name" />
+        <p class="form-err" id="err-name">Introduce tu nombre completo</p>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="reg-phone">Teléfono</label>
+        <input class="form-input" id="reg-phone" type="tel" placeholder="600 000 000" autocomplete="tel" />
+        <p class="form-err" id="err-phone">Introduce un teléfono válido</p>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="reg-email">Email</label>
+        <input class="form-input" id="reg-email" type="email" placeholder="tu@email.com" autocomplete="email" />
+        <p class="form-err" id="err-email">Introduce un email válido</p>
+      </div>
+      <div class="check-row">
+        <input type="checkbox" id="reg-privacy" />
+        <label for="reg-privacy">
+          Acepto la <a href="politica-privacidad.html" target="_blank">política de privacidad</a> y el uso de mis datos para recibir el presupuesto y comunicaciones de Cosas Cucas.
+        </label>
+      </div>
+      <p class="form-err" id="err-privacy">Debes aceptar la política de privacidad</p>
+      <button type="submit" class="btn-primary" id="btn-acceder">
+        Acceder al Probador →
+      </button>
+    </form>
   </div>
-  <a class="hbk" href="/">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     PASO 2 — PANTALLA SÍGUENOS EN INSTAGRAM
+════════════════════════════════════════════════════════════════════ -->
+<div id="screen-instagram" role="main">
+  <div class="ig-logo">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
     </svg>
-    Volver a la web
+  </div>
+  <p class="ig-eyebrow">Antes de entrar</p>
+  <h2 class="ig-title">¡Síguenos para inspirarte<br>cada día!</h2>
+  <p class="ig-sub">En nuestro Instagram publicamos los diseños más exclusivos, looks de Fallera Mayor y los bordados artesanales de nuestro taller. ¡No te pierdas nada!</p>
+  <p class="ig-handle">@cosascucas</p>
+  <a class="btn-ig" href="https://instagram.com/cosascucas" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    Seguir en Instagram
   </a>
-</header>
-
-<main id="main">
-
-  <!-- ══ LEFT: control de capas ══ -->
-  <aside id="lp">
-
-    <!-- PASO 1: Datos de la clienta -->
-    <div class="sec">
-      <span class="slbl">① Tus datos</span>
-      <input class="user-field" id="u-name"  type="text"  placeholder="Nombre y apellidos *" />
-      <input class="user-field" id="u-email" type="email" placeholder="Email de contacto *" />
-      <input class="user-field" id="u-phone" type="tel"   placeholder="Teléfono (opcional)"  />
-    </div>
-
-    <!-- Maniquí base -->
-    <div class="sec">
-      <span class="slbl">② Tu foto</span>
-
-      <img class="mq-preview" id="mq-preview" alt="Maniquí">
-      <div class="mq-name" id="mq-name"></div>
-
-      <div class="mq-zone" id="mq-zone"
-           ondragover="event.preventDefault();this.classList.add('drag')"
-           ondragleave="this.classList.remove('drag')"
-           ondrop="dropMannequin(event)">
-        <input type="file" id="mq-file" accept="image/*" onchange="loadMannequinFile(this.files[0])">
-        <p><strong>Sube el maniquí IA</strong><br>Arrastra o haz clic<br>
-        <span style="font-size:.55rem;opacity:.7">JPG/PNG, fondo neutro o blanco</span></p>
-      </div>
-    </div>
-
-    <!-- Capas del traje -->
-    <div class="sec">
-      <span class="slbl">② Partes del traje</span>
-      <p style="font-size:.57rem;color:var(--muted);margin-bottom:8px;line-height:1.5">
-        Capas en orden de vestido. Elige cada una →
-      </p>
-
-      <!-- FALDA -->
-      <button class="pb act" data-k="falda" onclick="selType('falda')">
-        <div class="pbn-num">1</div>
-        <div class="pbth" id="th-falda"><span class="empty-icon">👗</span><img id="thimg-falda"></div>
-        <div class="pbi">
-          <div class="pbn">Falda
-            <span id="tela-chip-falda" style="display:none;margin-left:5px;font-size:.5rem;background:var(--gold);color:#fff;padding:1px 5px;border-radius:10px;vertical-align:middle">🎨 tela</span>
-          </div>
-          <div class="pbd">Capa exterior, vuelo</div>
-          <div class="pbs" id="pbs-falda"></div>
-        </div>
-        <button class="pbx" id="pbx-falda" onclick="event.stopPropagation();clearLayer('falda')" style="display:none">✕</button>
-      </button>
-      <div class="layer-opacity" id="lop-falda">
-        <label>Opacidad <span id="lopval-falda">88%</span></label>
-        <input type="range" min="20" max="100" value="88" oninput="setOpacity('falda',this.value)">
-        <select class="blend-sel" id="blend-falda" onchange="setBlend('falda',this.value)">
-          <option value="multiply">Multiply (fondo claro)</option>
-          <option value="source-over">Normal (fondo oscuro)</option>
-          <option value="screen">Screen (invertir)</option>
-          <option value="overlay">Overlay</option>
-        </select>
-      </div>
-
-      <!-- DELANTAL -->
-      <button class="pb" data-k="delantal" onclick="selType('delantal')">
-        <div class="pbn-num">2</div>
-        <div class="pbth" id="th-delantal"><span class="empty-icon">🎭</span><img id="thimg-delantal"></div>
-        <div class="pbi">
-          <div class="pbn">Delantal / Pico
-            <span id="tela-chip-delantal" style="display:none;margin-left:5px;font-size:.5rem;background:var(--gold);color:#fff;padding:1px 5px;border-radius:10px;vertical-align:middle">🎨 tela</span>
-          </div>
-          <div class="pbd">Panel frontal + encaje</div>
-          <div class="pbs" id="pbs-delantal"></div>
-        </div>
-        <button class="pbx" id="pbx-delantal" onclick="event.stopPropagation();clearLayer('delantal')" style="display:none">✕</button>
-      </button>
-      <div class="layer-opacity" id="lop-delantal">
-        <label>Opacidad <span id="lopval-delantal">82%</span></label>
-        <input type="range" min="20" max="100" value="82" oninput="setOpacity('delantal',this.value)">
-        <select class="blend-sel" id="blend-delantal" onchange="setBlend('delantal',this.value)">
-          <option value="multiply">Multiply (fondo claro)</option>
-          <option value="source-over">Normal</option>
-          <option value="screen">Screen</option>
-        </select>
-      </div>
-
-      <!-- CORPIÑO -->
-      <button class="pb" data-k="corpino" onclick="selType('corpino')">
-        <div class="pbn-num">3</div>
-        <div class="pbth" id="th-corpino"><span class="empty-icon">🎀</span><img id="thimg-corpino"></div>
-        <div class="pbi">
-          <div class="pbn">Corpiño
-            <span id="tela-chip-corpino" style="display:none;margin-left:5px;font-size:.5rem;background:var(--gold);color:#fff;padding:1px 5px;border-radius:10px;vertical-align:middle">🎨 tela</span>
-          </div>
-          <div class="pbd">Cuerpo + mangas</div>
-          <div class="pbs" id="pbs-corpino"></div>
-        </div>
-        <button class="pbx" id="pbx-corpino" onclick="event.stopPropagation();clearLayer('corpino')" style="display:none">✕</button>
-      </button>
-      <div class="layer-opacity" id="lop-corpino">
-        <label>Opacidad <span id="lopval-corpino">90%</span></label>
-        <input type="range" min="20" max="100" value="90" oninput="setOpacity('corpino',this.value)">
-        <select class="blend-sel" id="blend-corpino" onchange="setBlend('corpino',this.value)">
-          <option value="multiply">Multiply (fondo claro)</option>
-          <option value="source-over">Normal</option>
-          <option value="screen">Screen</option>
-        </select>
-      </div>
-
-      <!-- CONJUNTO COMPLETO -->
-      <button class="pb" data-k="completo" onclick="selType('completo')">
-        <div class="pbn-num">✦</div>
-        <div class="pbth" id="th-completo"><span class="empty-icon">✨</span><img id="thimg-completo"></div>
-        <div class="pbi">
-          <div class="pbn">Conjunto completo</div>
-          <div class="pbd">Vista de referencia</div>
-          <div class="pbs" id="pbs-completo"></div>
-        </div>
-        <button class="pbx" id="pbx-completo" onclick="event.stopPropagation();clearLayer('completo')" style="display:none">✕</button>
-      </button>
-      <div class="layer-opacity" id="lop-completo">
-        <label>Opacidad <span id="lopval-completo">100%</span></label>
-        <input type="range" min="20" max="100" value="100" oninput="setOpacity('completo',this.value)">
-        <select class="blend-sel" id="blend-completo" onchange="setBlend('completo',this.value)">
-          <option value="source-over" selected>Normal (reemplaza)</option>
-          <option value="multiply">Multiply</option>
-          <option value="overlay">Overlay</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- Acciones -->
-    <div class="sec">
-      <span class="slbl">③ Guardar</span>
-      <button class="cmp-btn" id="cmp-btn"
-        onmousedown="compare(true)" onmouseup="compare(false)"
-        ontouchstart="compare(true)" ontouchend="compare(false)">
-        ⏸ Mantén: ver maniquí solo
-      </button>
-      <button class="ab ag" onclick="savePNG()">⬇ Descargar diseño</button>
-      <a class="ab ao" id="mailto-btn" href="mailto:info@cosascucas.es">✉ Pedir este diseño</a>
-    </div>
-
-  </aside>
-
-  <!-- ══ CENTER: canvas compositor ══ -->
-  <div id="cw"
-       ondragover="event.preventDefault();document.getElementById('drop-overlay').classList.add('show')"
-       ondragleave="document.getElementById('drop-overlay').classList.remove('show')"
-       ondrop="dropMannequin(event);document.getElementById('drop-overlay').classList.remove('show')">
-
-    <div id="ld"><div class="sp"></div><span>Preparando…</span></div>
-    <div id="fab-sp"></div>
-    <div id="tip">← Sube el maniquí IA · selecciona partes · elige del catálogo →</div>
-
-    <!-- Drop overlay para arrastrar imagen al centro -->
-    <div id="drop-overlay">
-      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-        <path d="M24 8v20M16 16l8-8 8 8" stroke="#D4B166" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        <rect x="6" y="30" width="36" height="12" rx="3" stroke="#D4B166" stroke-width="2"/>
-      </svg>
-      <span>Suelta la imagen del maniquí</span>
-    </div>
-
-    <!-- Empty state sin maniquí -->
-    <div id="empty-state">
-      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" opacity=".3">
-        <ellipse cx="32" cy="12" rx="10" ry="12" stroke="#D4B166" stroke-width="2"/>
-        <path d="M18 24 Q14 30 14 38 Q14 44 18 48 H46 Q50 44 50 38 Q50 30 46 24 Q40 20 32 20 Q24 20 18 24Z"
-              stroke="#D4B166" stroke-width="2" fill="none"/>
-        <path d="M22 48 Q22 58 22 62 M42 48 Q42 58 42 62" stroke="#D4B166" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      <p>Sube una imagen de maniquí IA en el panel izquierdo para empezar a vestirla</p>
-    </div>
-
-    <canvas id="canvas"></canvas>
-  </div>
-
-  <!-- ══ RIGHT: catálogo de prendas ══ -->
-  <aside id="rp">
-    <div id="rh">
-      <span class="rey">✦ Catálogo de prendas</span>
-      <div class="rtt">Librería Cosas Cucas</div>
-      <div class="rsub">Seleccionando: <strong id="rcat">Falda</strong></div>
-    </div>
-    <!-- PASO 2: Estilo histórico + descripción -->
-    <div style="padding:8px 10px;border-bottom:1px solid var(--border);flex-shrink:0">
-      <span style="font-size:.54rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px">Estilo histórico</span>
-      <div class="style-grid">
-        <button class="style-opt on" data-s="S. XVIII">S. XVIII<br><span style="font-weight:400;font-size:.45rem">Panier · corsé</span></button>
-        <button class="style-opt"    data-s="S. XIX" >S. XIX<br><span style="font-weight:400;font-size:.45rem">Victoriano</span></button>
-        <button class="style-opt"    data-s="L'Antiga">L'Antiga<br><span style="font-weight:400;font-size:.45rem">Fallera</span></button>
-      </div>
-      <textarea class="desc-field" id="u-desc" placeholder="Describe tu traje ideal: corte, colores, bordados, mangas, escote, accesorios…"></textarea>
-    </div>
-
-    <div id="rtabs"></div>
-
-    <!-- Upload prenda personalizada -->
-    <div id="custom-upload-area">
-      <label class="custom-upload-btn">
-        <input type="file" id="custom-garment" accept="image/*" onchange="addCustomGarment(this)">
-        + Subir prenda propia
-      </label>
-    </div>
-
-    <!-- Navegación Seda/Rayón → Damasco/Brocatel (visible solo en pestaña Telas) -->
-    <div id="telas-nav" style="display:none"></div>
-
-    <div id="rgrid"></div>
-  </aside>
-
-</main>
-
-<!-- PASO 4: Botón Enviar Diseño (aparece cuando hay diseño en el canvas) -->
-<div id="send-bar">
-  <button id="btn-enviar">
-    ✦ Enviar diseño · Quiero presupuesto
-  </button>
-  <p class="send-hint">Recibirás respuesta con presupuesto en menos de 24 h</p>
+  <button class="btn-ig-skip" id="btn-skip-ig">Continuar al Probador</button>
 </div>
 
-<!-- Modal validación Instagram -->
-<div id="ig-modal" role="dialog">
-  <div class="ig-box">
-    <h3>¡Un paso más! 🌸</h3>
-    <p>Síguenos en Instagram <strong>@cosascucas</strong> para desbloquear el envío y recibir cada día inspiración de trajes únicos.</p>
-    <a class="ig-link" href="https://instagram.com/cosascucas" target="_blank" rel="noopener">
-      Abrir @cosascucas en Instagram →
+<!-- ════════════════════════════════════════════════════════════════════
+     PASO 3 — INTERFAZ PRINCIPAL DEL PROBADOR
+════════════════════════════════════════════════════════════════════ -->
+<div id="app-probador" class="hidden">
+
+  <!-- Cabecera -->
+  <header id="prob-header">
+    <a class="ph-logo" href="index.html">Cosas Cucas</a>
+    <span class="ph-badge">Probador Virtual</span>
+    <a class="ph-back" href="index.html">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Volver a la web
     </a>
-    <button class="ig-btn-yes" id="ig-confirm">✓ Ya os sigo · Enviar diseño ahora</button>
-    <button class="ig-btn-no"  id="ig-cancel" >Quizá más tarde</button>
+  </header>
+
+  <!-- Layout principal -->
+  <main id="prob-main">
+
+    <!-- ══ COLUMNA IZQUIERDA: Tu foto + descripción ══ -->
+    <aside class="col-izq">
+
+      <!-- Sección: Foto -->
+      <div class="col-section">
+        <span class="col-eyebrow">① Tu foto</span>
+        <p class="col-title">Sube una foto de cuerpo entero</p>
+
+        <!-- Preview (oculto hasta subir) -->
+        <div class="upload-preview" id="upload-preview">
+          <img id="preview-img" src="" alt="Tu foto" />
+          <div class="upload-preview-change" id="btn-change-photo">
+            ↺ Cambiar foto
+          </div>
+        </div>
+
+        <!-- Zona de upload -->
+        <div class="upload-zone" id="upload-zone">
+          <input type="file" id="photo-input" accept="image/jpeg,image/png,image/webp" />
+          <svg class="upload-silhouette" width="48" height="80" viewBox="0 0 48 80" fill="none" stroke="rgba(212,177,102,.4)" stroke-width="1.5">
+            <ellipse cx="24" cy="10" rx="7" ry="8"/>
+            <path d="M10 22 Q8 30 8 38 Q8 44 12 48 H36 Q40 44 40 38 Q40 30 38 22 Q32 18 24 18 Q16 18 10 22Z"/>
+            <path d="M14 48 Q14 62 14 76 M34 48 Q34 62 34 76"/>
+            <line x1="8" y1="30" x2="4" y2="44"/><line x1="40" y1="30" x2="44" y2="44"/>
+          </svg>
+          <p class="upload-label">
+            <strong>Arrastra tu foto aquí</strong><br>
+            o haz clic para seleccionarla<br>
+            <span style="font-size:.68rem;opacity:.7">De frente, de pies a cabeza</span>
+          </p>
+          <p class="upload-hint">JPG · PNG · WEBP — máx 10 MB</p>
+        </div>
+        <p class="form-err" id="err-photo" style="color:rgba(192,57,43,.8);margin-top:6px">Sube una foto para continuar</p>
+      </div>
+
+      <!-- Sección: Descripción -->
+      <div class="col-section">
+        <span class="col-eyebrow">② Descripción</span>
+        <p class="col-title">Cuéntanos qué quieres</p>
+        <textarea
+          class="desc-textarea"
+          id="desc-input"
+          maxlength="1200"
+          placeholder="Ej: Quiero un traje de fallera major con falda en azul marino, mandil bordado en oro con motivos florales, cuerpo de terciopelo negro con mangas francesas..."
+        ></textarea>
+        <p class="char-counter" id="char-counter">0 / 1200 caracteres — mínimo 50</p>
+        <p class="form-err" id="err-desc" style="color:rgba(192,57,43,.8);margin-top:4px">Describe tu traje (mínimo 50 caracteres)</p>
+      </div>
+
+    </aside>
+
+    <!-- ══ COLUMNA DERECHA: Biblioteca de opciones ══ -->
+    <div class="col-der">
+
+      <!-- ── BLOQUE A: Colores de tela ── -->
+      <p class="block-label">Bloque A</p>
+      <h2 class="block-title">Colores de tela</h2>
+      <p class="block-sub">Selecciona uno o varios colores. Puedes combinarlos para distintas partes del traje.</p>
+
+      <span class="block-label" style="margin-bottom:8px">Sedes y Terciopelos</span>
+      <div class="swatches-grid" id="swatches-sedes"></div>
+
+      <span class="block-label" style="margin-top:20px;margin-bottom:8px">Tejidos Ligeros</span>
+      <div class="swatches-grid" id="swatches-ligeros"></div>
+
+      <hr class="block-divider">
+
+      <!-- ── BLOQUE B: Estilo del modelo ── -->
+      <p class="block-label">Bloque B</p>
+      <h2 class="block-title">Estilo del traje</h2>
+      <p class="block-sub">Elige el corte y la época que mejor refleja tu visión.</p>
+
+      <div class="styles-grid" id="styles-grid"></div>
+
+      <hr class="block-divider">
+
+      <!-- ── BLOQUE C: Complements ── -->
+      <p class="block-label">Bloque C</p>
+      <h2 class="block-title">Complements</h2>
+      <p class="block-sub">Añade los complementos artesanales que completarán tu indumentaria. Elige el metal para cada uno.</p>
+
+      <div id="accord-container"></div>
+
+    </div>
+  </main>
+
+  <!-- Sticky bar inferior -->
+  <div id="sticky-bar">
+    <div class="summary-chips" id="summary-chips">
+      <span class="summary-empty">Selecciona colores, estilo y complementos para ver el resumen</span>
+    </div>
+    <button class="btn-solicitar" id="btn-solicitar">
+      Solicitar presupuesto sin compromiso
+      <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     MODAL DE ÉXITO
+════════════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-exito" role="dialog" aria-modal="true">
+  <div class="modal-box" style="text-align:center;max-width:420px">
+    <div class="modal-exito-icon">
+      <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+    </div>
+    <h2 class="modal-exito-title">¡Solicitud enviada!</h2>
+    <p class="modal-exito-msg">
+      Hemos recibido tu diseño. En breve recibirás en tu email el presupuesto personalizado.
+      Nuestro equipo se pondrá en contacto contigo para confirmar todos los detalles.
+    </p>
+    <button class="btn-primary" id="btn-exito-close" style="max-width:280px;margin:0 auto">
+      Volver al inicio
+    </button>
   </div>
 </div>
 
-<!-- Toast de confirmación -->
-<div id="send-toast">
-  🌸 ¡Diseño enviado!<br>
-  <span style="font-weight:400;font-size:.72rem">Os contactamos en 24 h con vuestro presupuesto personalizado.</span>
-</div>
-
+<!-- ════════════════════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════════════════════ -->
 <script>
-/* ═══════════════════════════════════════════════
-   CATÁLOGO DE PRENDAS
-   Cada parte tiene:
-   - area: zona relativa al maniquí (0-1)
-   - blend/alpha: modo de composición por defecto
-═══════════════════════════════════════════════ */
-const CATALOG = {
-
-  falda: {
-    label:'Faldas', icon:'👗',
-    /* zona del canvas que cubre la falda */
-    area:{ t:0.43, b:1.00, l:0.00, r:1.00 },
-    blend:'multiply', alpha:0.88,
-    items:[
-      {src:'pasarela/prendas/falda  perpectiva.jpg', n:'Falda Carmín Floral'},
-      {src:'pasarela/prendas/falda2.jpg',            n:'Falda Marrón Floral'},
-      {src:'pasarela/prendas/falda3.jpg',            n:'Falda Verde Floral'},
-      {src:'pasarela/prendas/falda vista lateral.jpg',n:'Falda Azul Brocado'},
-      {src:'pasarela/prendas/falda.jpg',             n:'Falda Blanca Encaje'},
-      {src:'pasarela/prendas/faldas/faldas.jfif',   n:'Colección Faldas'},
-    ]
-  },
-
-  delantal: {
-    label:'Delantalesy Picos', icon:'🎭',
-    area:{ t:0.40, b:0.98, l:0.15, r:0.85 },
-    blend:'multiply', alpha:0.82,
-    items:[
-      {src:'pasarela/prendas/foto completa.jpg',  n:'Delantal Crema Brocado'},
-    ]
-  },
-
-  corpino: {
-    label:'Corpiños', icon:'🎀',
-    area:{ t:0.12, b:0.57, l:0.03, r:0.97 },
-    blend:'multiply', alpha:0.90,
-    items:[
-      {src:'pasarela/prendas/corpiño.jpg',              n:'Corpiño Blanco Brocado'},
-      {src:'pasarela/prendas/corpiño manga larga.jpg',  n:'Corpiño Manga Larga Gris'},
-      {src:'pasarela/prendas/corpiño manga corta.jpg',  n:'Corpiño Manga Corta Gris'},
-      {src:'pasarela/prendas/corpiño manga corta2.jpg', n:'Corpiño Manga Corta 2'},
-      {src:'pasarela/prendas/corpiño delante2.jpg',     n:'Corpiño Negro Dorado'},
-      {src:'pasarela/prendas/corpiño perspectiva.jpg',  n:'Corpiño Amarillo Floral'},
-      {src:'pasarela/prendas/corpiño delante.jpg',      n:'Corpiño Colorido'},
-      {src:'pasarela/prendas/corpiño frontal.jpg',      n:'Corpiño Azul Floral'},
-      {src:'pasarela/prendas/corpiño atras.jpg',        n:'Corpiño Vista Trasera'},
-    ]
-  },
-
-  completo: {
-    label:'Conjuntos', icon:'✨',
-    area:{ t:0.00, b:1.00, l:0.00, r:1.00 },
-    blend:'source-over', alpha:1.00,
-    items:[
-      {src:'pasarela/prendas/foto completa.jpg',         n:'Conjunto Crema Frontal'},
-      {src:'pasarela/prendas/toto completa trasera.jpg', n:'Conjunto Crema Trasera'},
-      {src:'pasarela/prendas/falda  perpectiva.jpg',     n:'Ref. Falda Carmín'},
-    ]
-  },
-
-  /* ═══ TELAS DE COSAS CUCAS ═══
-     Estructura jerárquica: Fibra (Seda / Rayón) → Tipo (Brocatel / Damasco)
-     La propiedad `items` (plana) se genera dinámicamente desde `categories`.
-  */
-  telas: {
-    label:'Telas', icon:'🎨',
-    area: null,
-    blend:'multiply', alpha:0.86,
-    /* ── SEDA ── */
-    categories: {
-      seda: {
-        brocateles: [
-          { src:'telas/probador digital/san manuel.jpeg',  n:'San Manuel'  },
-          { src:'telas/probador digital/cestas.jpeg',      n:'Cestas'      },
-          { src:'telas/probador digital/sinfonia.jpeg',    n:'Sinfonía'    },
-          { src:'telas/probador digital/guadalquivir.jpeg',n:'Guadalquivir'},
-        ],
-        damascos: [
-          { src:'telas/probador digital/tela blanca2.jpeg',n:'Blanca Ramos'},
-          { src:'telas/probador digital/blanca3.jpeg',     n:'Blanca Rosa' },
-        ],
-      },
-      /* ── RAYÓN ── */
-      rayon: {
-        brocateles: [
-          { src:'telas/probador digital/calanda.jpeg',                                   n:'Calanda'       },
-          { src:'telas/probador digital/genoveva.jpeg',                                  n:'Genoveva'      },
-          { src:'telas/probador digital/santa genoveva.jpeg',                            n:'Santa Genoveva'},
-          { src:'telas/probador digital/san manuel2.jpeg',                               n:'San Manuel 2'  },
-          { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 11.54.12.jpeg',     n:'Verde Salvia'  },
-          { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 11.57.48.jpeg',     n:'Turquesa'      },
-          { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 12.17.10.jpeg',     n:'Azul Noche'    },
-          { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 12.31.03.jpeg',     n:'Azul Pizarra'  },
-        ],
-        damascos: [
-          { src:'telas/probador digital/tela blanca.jpeg',                               n:'Blanca Clásica'},
-          { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 12.29.35.jpeg',     n:'Crema Dorada'  },
-        ],
-      },
-    },
-    get items() {
-      /* Propiedad computada: devuelve TODAS las telas aplanadas (compatibilidad) */
-      const c = this.categories;
-      return [
-        ...c.seda.brocateles,   ...c.seda.damascos,
-        ...c.rayon.brocateles,  ...c.rayon.damascos,
-      ];
-    },
-  },
-};
-
-/* ═══════════════════════════════════════════════
-   ESTADO GLOBAL
-═══════════════════════════════════════════════ */
-let activeType  = 'falda';
-let comparing   = false;
-/* ── Filtros de Telas ── */
-let telaFibra = 'seda';   /* 'seda' | 'rayon' */
-let telaTipo  = 'todos';  /* 'todos' | 'brocateles' | 'damascos' */
-let mqImg      = null;   // HTMLImageElement del maniquí
-let mqLabel    = '';
-
-/* Capas activas de prendas: tipo → {src, n, img} */
-const layers  = {};
-const imgCache = {};
-
-/* Telas aplicadas sobre cada parte: tipo → {src, n, img} */
-const telaOverlay = {};
-
-/* Override de alpha/blend por tipo (desde los sliders/selects) */
-const overrides = {
-  falda:    { alpha:0.88, blend:'multiply' },
-  delantal: { alpha:0.82, blend:'multiply' },
-  corpino:  { alpha:0.90, blend:'multiply' },
-  completo: { alpha:1.00, blend:'source-over' },
-};
-
-/* ═══════════════════════════════════════════════
-   CANVAS
-═══════════════════════════════════════════════ */
-const canvas = document.getElementById('canvas');
-const ctx    = canvas.getContext('2d');
-
-function redraw() {
-  if (!mqImg || !canvas.width) return;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.globalCompositeOperation = 'source-over';
-  ctx.globalAlpha = 1;
-  ctx.drawImage(mqImg, 0, 0);
-
-  if (comparing) return;
-
-  /* Orden de capas: falda → delantal → corpino → completo.
-     Después de cada prenda se pinta la tela seleccionada (si la hay). */
-  const DRAW_ORDER = ['falda', 'delantal', 'corpino', 'completo'];
-  for (const type of DRAW_ORDER) {
-    const L  = layers[type];
-    const ov = overrides[type];
-    if (L?.img) drawLayer(L.img, CATALOG[type].area, ov.blend, ov.alpha);
-
-    // Tela encima de la prenda (multiply sobre la zona de la prenda)
-    const T = telaOverlay[type];
-    if (T?.img) drawLayer(T.img, CATALOG[type].area, 'multiply', 0.86);
-  }
-}
-
-function drawLayer(img, area, blend, alpha) {
-  const W = canvas.width, H = canvas.height;
-  const ax = area.l * W,  ay = area.t * H;
-  const aw = (area.r - area.l) * W;
-  const ah = (area.b - area.t) * H;
-
-  /* object-fit: cover centrado en el área */
-  const ia = img.naturalWidth / img.naturalHeight;
-  const aa = aw / ah;
-  let dw, dh;
-  if (ia > aa) { dh = ah; dw = dh * ia; }
-  else         { dw = aw; dh = dw / ia; }
-  const dx = ax + (aw - dw) / 2;
-  const dy = ay + (ah - dh) / 2;
-
-  ctx.save();
-  ctx.beginPath();
-  ctx.rect(ax, ay, aw, ah);
-  ctx.clip();
-  ctx.globalCompositeOperation = blend;
-  ctx.globalAlpha = alpha;
-  ctx.drawImage(img, dx, dy, dw, dh);
-  ctx.restore();
-}
-
-/* ═══════════════════════════════════════════════
-   CARGAR MANIQUÍ
-═══════════════════════════════════════════════ */
-async function setMannequin(src, label) {
-  showSpinner(true);
-  try {
-    const img = await loadImg(src);
-    mqImg  = img;
-    mqLabel = label;
-    canvas.width  = img.naturalWidth;
-    canvas.height = img.naturalHeight;
-    document.getElementById('ld').style.display = 'none';
-    document.getElementById('empty-state').classList.remove('show');
-    // Mostrar preview en panel
-    const prev = document.getElementById('mq-preview');
-    const name = document.getElementById('mq-name');
-    prev.src = src; prev.classList.add('visible');
-    name.textContent = label; name.classList.add('visible');
-    // Ocultar zone de upload
-    document.getElementById('mq-zone').style.display = 'none';
-    hideTooltip();
-    redraw();
-  } catch(e) {
-    console.warn('Error cargando maniquí:', src, e);
-    document.getElementById('ld').style.display = 'none';
-    document.getElementById('empty-state').classList.add('show');
-  }
-  showSpinner(false);
-}
-
-function loadMannequinFile(file) {
-  if (!file) return;
-  const url = URL.createObjectURL(file);
-  setMannequin(url, file.name.replace(/\.[^.]+$/, ''));
-}
-
-function dropMannequin(e) {
-  e.preventDefault();
-  document.getElementById('mq-zone').classList.remove('drag');
-  const file = e.dataTransfer?.files?.[0];
-  if (file && file.type.startsWith('image/')) loadMannequinFile(file);
-}
-
-/* Intenta cargar maniquí desde disco automáticamente */
-(async () => {
-  for (const src of ['pasarela/maniqui.jpg','pasarela/maniqui.png']) {
-    try {
-      await setMannequin(src, 'Maniquí');
-      return;
-    } catch {}
-  }
-  /* Si no hay maniquí, mostrar estado vacío */
-  document.getElementById('ld').style.display = 'none';
-  document.getElementById('empty-state').classList.add('show');
-})();
-
-/* ═══════════════════════════════════════════════
-   SELECCIÓN DE TIPO
-═══════════════════════════════════════════════ */
-window.selType = function(type) {
-  activeType = type;
-  document.querySelectorAll('.pb').forEach(b =>
-    b.classList.toggle('act', b.dataset.k === type));
-  /* mostrar/ocultar opciones de opacidad del activo */
-  document.querySelectorAll('.layer-opacity').forEach(el => el.classList.remove('visible'));
-  const lop = document.getElementById('lop-' + type);
-  if (layers[type]?.img && lop) lop.classList.add('visible');
-
-  /* Cabecera del panel derecho */
-  const LABELS = { falda:'Falda', delantal:'Delantal', corpino:'Corpiño',
-                   completo:'Conjunto', telas:'Telas' };
-  const rcatEl = document.getElementById('rcat');
-  if (type === 'telas') {
-    const activePart = activeType !== 'telas' ? LABELS[activeType] : 'Falda';
-    rcatEl.textContent = `Telas → aplica sobre ${activePart}`;
-  } else {
-    rcatEl.textContent = CATALOG[type].label;
-  }
-
-  renderTabs(); renderGrid(type); hideTooltip();
-};
-
-/* ═══════════════════════════════════════════════
-   CONTROLES DE CAPA (opacidad, blend)
-═══════════════════════════════════════════════ */
-window.setOpacity = function(type, val) {
-  overrides[type].alpha = val / 100;
-  const lbl = document.getElementById('lopval-' + type);
-  if (lbl) lbl.textContent = val + '%';
-  redraw();
-};
-
-window.setBlend = function(type, val) {
-  overrides[type].blend = val;
-  redraw();
-};
-
-/* ═══════════════════════════════════════════════
-   SELECCIONAR PRENDA DEL CATÁLOGO
-═══════════════════════════════════════════════ */
-async function selectItem(type, item) {
-  showSpinner(true);
-  try {
-    const img = await loadImg(item.src);
-
-    if (type === 'telas') {
-      /* La tela se aplica sobre la parte activa en el panel izquierdo.
-         Si el activo es 'telas' (sin parte seleccionada), aplica a falda por defecto. */
-      const target = (activeType !== 'telas') ? activeType : 'falda';
-      telaOverlay[target] = { ...item, img };
-      updateTelaChip(target, item);
-    } else {
-      layers[type] = { ...item, img };
-      overrides[type].blend = CATALOG[type].blend;
-      overrides[type].alpha = CATALOG[type].alpha;
-      updateLayerUI(type, item);
-    }
-
-    renderGrid(type);
-    redraw();
-    updateMailto();
-  } catch(e) { console.warn('Error cargando prenda/tela:', item.src, e); }
-  showSpinner(false);
-}
-
-window.clearLayer = function(type) {
-  delete layers[type];
-  delete telaOverlay[type];
-  updateLayerUI(type, null);
-  updateTelaChip(type, null);
-  document.getElementById('lop-' + type)?.classList.remove('visible');
-  renderGrid(activeType); redraw(); updateMailto();
-};
-
-/* Muestra la tela elegida como chip pequeño en el botón de parte */
-function updateTelaChip(partType, tela) {
-  const el = document.getElementById('tela-chip-' + partType);
-  if (!el) return;
-  if (tela) {
-    el.style.display = 'inline-flex';
-    el.title = 'Tela: ' + tela.n;
-  } else {
-    el.style.display = 'none';
-  }
-}
-
-/* ═══════════════════════════════════════════════
-   SUBIR PRENDA PROPIA
-═══════════════════════════════════════════════ */
-window.addCustomGarment = function(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const url  = URL.createObjectURL(file);
-  const name = file.name.replace(/\.[^.]+$/, '');
-  const item = { src:url, n:'★ ' + name, custom:true };
-  /* Añadir al catálogo del tipo activo */
-  CATALOG[activeType].items.unshift(item);
-  selectItem(activeType, item);
-  input.value = '';
-};
-
-/* ═══════════════════════════════════════════════
-   ACTUALIZAR UI DEL BOTÓN DE CAPA
-═══════════════════════════════════════════════ */
-function updateLayerUI(type, item) {
-  const th    = document.getElementById('th-' + type);
-  const thImg = document.getElementById('thimg-' + type);
-  const pbs   = document.getElementById('pbs-' + type);
-  const pbx   = document.getElementById('pbx-' + type);
-  const lop   = document.getElementById('lop-' + type);
-  if (item) {
-    th.querySelector('.empty-icon').style.display = 'none';
-    thImg.src = item.src; thImg.style.display = 'block';
-    if (pbs) pbs.textContent = item.n;
-    if (pbx) pbx.style.display = 'block';
-    if (lop) lop.classList.add('visible');
-  } else {
-    th.querySelector('.empty-icon').style.display = '';
-    thImg.style.display = 'none';
-    if (pbs) pbs.textContent = '';
-    if (pbx) pbx.style.display = 'none';
-    if (lop) lop.classList.remove('visible');
-  }
-}
-
-/* ═══════════════════════════════════════════════
-   RENDER TABS + GRID
-═══════════════════════════════════════════════ */
-function renderTabs() {
-  const tabs = document.getElementById('rtabs');
-  tabs.innerHTML = '';
-  for (const [k, cat] of Object.entries(CATALOG)) {
-    const btn = document.createElement('button');
-    btn.className = 'rtab' + (k === activeType ? ' on' : '');
-    btn.textContent = cat.icon + ' ' + cat.label;
-    btn.addEventListener('click', () => { selType(k); });
-    tabs.appendChild(btn);
-  }
-}
-
-/* ── Obtener items de telas según filtros activos ── */
-function getTelaItems() {
-  const cats = CATALOG.telas.categories;
-  const fibCat = cats[telaFibra] || { brocateles:[], damascos:[] };
-  if (telaTipo === 'brocateles') return fibCat.brocateles.map(i => ({...i, _tipo:'brocatel'}));
-  if (telaTipo === 'damascos')   return fibCat.damascos.map(i   => ({...i, _tipo:'damasco'}));
-  /* todos */
-  return [
-    ...fibCat.brocateles.map(i => ({...i, _tipo:'brocatel'})),
-    ...fibCat.damascos.map(i   => ({...i, _tipo:'damasco'})),
-  ];
-}
-
-/* ── Renderizar navegación Seda/Rayón → Damasco/Brocatel ── */
-function renderTelaNav() {
-  const nav = document.getElementById('telas-nav');
-  nav.style.display = '';
-
-  const fibras = [
-    { k:'seda',  label:'Seda',  sub:'Natural · brillo suave' },
-    { k:'rayon', label:'Rayón', sub:'Sintético · brillo vivo' },
-  ];
-  const tipos = [
-    { k:'todos',      label:'Todas'      },
-    { k:'brocateles', label:'Brocateles' },
-    { k:'damascos',   label:'Damascos'   },
-  ];
-
-  /* Contar por categoría para mostrar badge numérico */
-  const cats = CATALOG.telas.categories;
-  const counts = {
-    seda:  { brocateles: cats.seda.brocateles.length,  damascos: cats.seda.damascos.length  },
-    rayon: { brocateles: cats.rayon.brocateles.length, damascos: cats.rayon.damascos.length },
-  };
-  const totalFib = f => counts[f].brocateles + counts[f].damascos;
-
-  nav.innerHTML = `
-    <span class="tela-row-label">Fibra</span>
-    <div class="tela-row">
-      ${fibras.map(f => `
-        <button class="tf-btn ${telaFibra === f.k ? 'on' : ''}" data-f="${f.k}">
-          ${f.label}
-          <span class="tf-sub">${f.sub} · ${totalFib(f.k)} telas</span>
-        </button>`).join('')}
-    </div>
-    <span class="tela-row-label" style="margin-top:4px">Tipo</span>
-    <div class="tela-row">
-      ${tipos.map(t => {
-        const cnt = t.k === 'todos'
-          ? totalFib(telaFibra)
-          : (counts[telaFibra][t.k] || 0);
-        return `<button class="tt-btn ${telaTipo === t.k ? 'on' : ''}" data-t="${t.k}">
-          ${t.label} <span style="opacity:.65">(${cnt})</span>
-        </button>`;
-      }).join('')}
-    </div>`;
-
-  /* Eventos fibra */
-  nav.querySelectorAll('.tf-btn').forEach(btn =>
-    btn.addEventListener('click', () => {
-      telaFibra = btn.dataset.f;
-      telaTipo  = 'todos';
-      renderTelaNav();
-      renderGridTelas();
-    })
-  );
-  /* Eventos tipo */
-  nav.querySelectorAll('.tt-btn').forEach(btn =>
-    btn.addEventListener('click', () => {
-      telaTipo = btn.dataset.t;
-      renderTelaNav();
-      renderGridTelas();
-    })
-  );
-}
-
-/* ── Render específico de telas con badges D/B ── */
-function renderGridTelas() {
-  const grid = document.getElementById('rgrid');
-  const targetPart = (activeType !== 'telas') ? activeType : 'falda';
-  const cur  = telaOverlay[targetPart];
-  const items = getTelaItems();
-  grid.innerHTML = '';
-
-  if (!items.length) {
-    const empty = document.createElement('div');
-    empty.className = 'tela-empty';
-    empty.textContent = 'No hay telas en esta categoría aún.';
-    grid.appendChild(empty);
-    return;
-  }
-
-  items.forEach(item => {
-    const sel  = cur?.src === item.src;
-    const card = document.createElement('div');
-    card.className = 'gc' + (sel ? ' sel' : '');
-    card.style.position = 'relative';
-    card.innerHTML = `
-      <div class="gci">
-        <img src="${item.src}" alt="${item.n}" loading="lazy">
-        <div class="gck">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M5 12l5 5 9-9" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </div>
-      <span class="gc-badge ${item._tipo}">${item._tipo === 'brocatel' ? 'B' : 'D'}</span>
-      <div class="gcn">${item.n}</div>`;
-    card.addEventListener('click', () => selectItem('telas', item));
-    grid.appendChild(card);
-  });
-}
-
-function renderGrid(type) {
-  /* Para telas, usar el render especializado con navegación */
-  if (type === 'telas') {
-    renderTelaNav();
-    renderGridTelas();
-    return;
-  }
-  /* Ocultar navegación de telas cuando no es telas */
-  document.getElementById('telas-nav').style.display = 'none';
-
-  const grid = document.getElementById('rgrid');
-  const cat  = CATALOG[type];
-  const cur  = layers[type];
-  grid.innerHTML = '';
-  cat.items.forEach(item => {
-    const sel  = cur?.src === item.src;
-    const card = document.createElement('div');
-    card.className = 'gc' + (sel ? ' sel' : '');
-    card.innerHTML = `
-      <div class="gci">
-        <img src="${item.src}" alt="${item.n}" loading="lazy">
-        <div class="gck">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M5 12l5 5 9-9" stroke="white" stroke-width="2.5"
-              stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </div>
-      <div class="gcn">${item.n}</div>`;
-    card.addEventListener('click', () => selectItem(type, item));
-    grid.appendChild(card);
-  });
-}
-
-/* ═══════════════════════════════════════════════
-   COMPARAR / GUARDAR / MAILTO
-═══════════════════════════════════════════════ */
-window.compare = function(on) {
-  comparing = on;
-  document.getElementById('cmp-btn').classList.toggle('on', on);
-  if (canvas.width) redraw();
-};
-
-window.savePNG = function() {
-  if (!canvas.width) return;
-  canvas.toBlob(blob => {
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'diseno-fallera-cosascucas.png';
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(a.href), 6000);
-  }, 'image/png');
-};
-
-function updateMailto() {
-  const LBL = { falda:'Falda', delantal:'Delantal', corpino:'Corpiño', completo:'Conjunto' };
-  const lines = Object.entries(layers)
-    .filter(([,v]) => v?.n).map(([k,v]) => `• ${LBL[k]||k}: ${v.n}`);
-  const body = lines.length
-    ? 'Hola, me gustaría información sobre este diseño:\n\n'
-      + lines.join('\n') + '\n\nQuedo a su disposición para concertar una visita.'
-    : 'Hola, me gustaría información sobre los trajes de fallera.';
-  const a = document.getElementById('mailto-btn');
-  if (a) a.href =
-    `mailto:info@cosascucas.es?subject=Consulta%20probador%20virtual&body=${encodeURIComponent(body)}`;
-}
-
-/* ═══════════════════════════════════════════════
-   HELPERS
-═══════════════════════════════════════════════ */
-function loadImg(src) {
-  if (imgCache[src]) return Promise.resolve(imgCache[src]);
-  return new Promise((res, rej) => {
-    const img = new Image();
-    img.onload  = () => { imgCache[src] = img; res(img); };
-    img.onerror = rej;
-    img.src = src;
-  });
-}
-function showSpinner(on) {
-  document.getElementById('fab-sp').style.display = on ? 'block' : 'none';
-}
-function hideTooltip() {
-  const t = document.getElementById('tip');
-  if (t) { t.style.opacity = '0'; t.style.pointerEvents = 'none'; }
-}
-
-/* ═══════════════════════════════════════════════
-   INICIALIZAR
-═══════════════════════════════════════════════ */
-renderTabs();
-renderGrid('falda');
-updateMailto();
-setTimeout(hideTooltip, 7000);
-
 /* ═══════════════════════════════════════════════════════════════════
-   PASO 4 — ENVIAR DISEÑO: EmailJS + validación Instagram
-   ─────────────────────────────────────────────────────────────────
-   CONFIGURACIÓN EmailJS (gratis 200 emails/mes → https://emailjs.com):
-   1. Crea cuenta → Email Services → conecta Gmail/Outlook
-   2. Email Templates → nuevo template con estas variables:
-      {{nombre}} {{email_cliente}} {{telefono}} {{estilo}}
-      {{descripcion}} {{prendas}} {{telas}} {{imagen}}
-   3. Copia PUBLIC KEY (Account > API Keys) y los IDs abajo
+   CONFIGURACIÓN EmailJS
+   1. Regístrate en https://emailjs.com (gratis: 200 emails/mes)
+   2. Conecta tu email (Gmail/Outlook) en Email Services
+   3. Crea una plantilla con las variables de abajo
+   4. Rellena las 3 constantes:
 ═══════════════════════════════════════════════════════════════════ */
-const EJS_PUBLIC_KEY  = 'TU_PUBLIC_KEY';   // ← Account > API Keys
-const EJS_SERVICE_ID  = 'TU_SERVICE_ID';   // ← Email Services > Service ID
-const EJS_TEMPLATE_ID = 'TU_TEMPLATE_ID';  // ← Email Templates > Template ID
-const IG_HANDLE       = '@cosascucas';
+const EJS_PUBLIC_KEY  = 'TU_PUBLIC_KEY';
+const EJS_SERVICE_ID  = 'TU_SERVICE_ID';
+const EJS_TEMPLATE_ID = 'TU_TEMPLATE_ID';
 const EMAIL_NEGOCIO   = 'info@cosascucas.es';
 
-/* ── Estilo histórico seleccionado ── */
-let estiloActivo = 'S. XVIII';
-document.querySelectorAll('.style-opt').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.style-opt').forEach(b => b.classList.remove('on'));
-    btn.classList.add('on');
-    estiloActivo = btn.dataset.s;
-  });
+/* ═══════════════════════════════════════════════════════════════════
+   DATOS
+═══════════════════════════════════════════════════════════════════ */
+const COLORS_SEDES = [
+  { id:'azul-marino',    name:'Azul Marino',    hex:'#1a2744' },
+  { id:'burdeos',        name:'Burdeos',         hex:'#6b1220' },
+  { id:'verde-esm',      name:'Esmeralda',       hex:'#0f4c35' },
+  { id:'negro',          name:'Negro',           hex:'#1a1714' },
+  { id:'marfil',         name:'Marfil',          hex:'#f4edd8', dark:true },
+  { id:'coral',          name:'Coral',           hex:'#d4614c' },
+  { id:'malva',          name:'Malva',           hex:'#8b6b8b' },
+  { id:'dorado',         name:'Dorado',          hex:'#b5903a' },
+];
+const COLORS_LIGEROS = [
+  { id:'blanco-roto',    name:'Blanco Roto',     hex:'#fdfaf3', dark:true },
+  { id:'nude',           name:'Nude',            hex:'#d4b89c', dark:true },
+  { id:'celeste',        name:'Celeste',         hex:'#b8d4e8', dark:true },
+  { id:'rosa-polvo',     name:'Rosa Polvado',    hex:'#e8c8c8', dark:true },
+  { id:'gris-perla',     name:'Gris Perla',      hex:'#c8c8c0', dark:true },
+];
+const STYLES = [
+  {
+    id:'XVIII',
+    name:'Segle XVIII',
+    desc:'Silueta con vuelo amplio, cuerpo entallado, mangas abullonadas. Elegancia barroca.',
+    img:'pasarela/_ADL4063.jpg',
+  },
+  {
+    id:'XIX',
+    name:'Segle XIX',
+    desc:'Líneas más depuradas, falda en capas, influencia romántica. Sofisticación clásica.',
+    img:'pasarela/_ADL4065.jpg',
+  },
+  {
+    id:'antiga',
+    name:"L'Antiga",
+    desc:'Traje tradicional valenciano puro, formas auténticas, herencia centenaria.',
+    img:'pasarela/_ADL4076.jpg',
+  },
+];
+const COMPLEMENTS = [
+  {
+    id:'adrecos',
+    name:'Adreços (Aderezos)',
+    desc:'Conjunto de joya tradicional: pendientes, collar y peineta artesanal.'
+  },
+  {
+    id:'manteletes',
+    name:'Manteletes',
+    desc:'Capa corta bordada sobre los hombros, elemento distintivo de la indumentaria valenciana.'
+  },
+  {
+    id:'mantilla',
+    name:'Mantilla',
+    desc:'Encaje tradicional, complemento de gran distinción para ocasiones especiales.'
+  },
+];
+
+/* ═══════════════════════════════════════════════════════════════════
+   ESTADO
+═══════════════════════════════════════════════════════════════════ */
+const state = {
+  step: 'modal',     /* 'modal' | 'instagram' | 'probador' */
+  user: { name:'', phone:'', email:'' },
+  photo: null,       /* File */
+  photoDataUrl: '',  /* base64 preview */
+  description: '',
+  colors: new Set(),
+  style: null,
+  complements: {
+    adrecos:    { open:false, metal:'oro'  },
+    manteletes: { open:false, metal:'plata'},
+    mantilla:   { open:false, metal:'oro'  },
+  },
+};
+
+/* ── Recuperar registro de localStorage ── */
+try {
+  const saved = JSON.parse(localStorage.getItem('cc-prob-user') || 'null');
+  if (saved?.name && saved?.email) {
+    state.user = saved;
+    /* Si ya se registró antes, saltar directamente al probador */
+    state.step = 'probador';
+    document.getElementById('modal-registro').classList.remove('open');
+    document.getElementById('app-probador').classList.remove('hidden');
+  }
+} catch {}
+
+/* ═══════════════════════════════════════════════════════════════════
+   PASO 1 — MODAL REGISTRO
+═══════════════════════════════════════════════════════════════════ */
+document.getElementById('form-registro').addEventListener('submit', e => {
+  e.preventDefault();
+  let valid = true;
+
+  const name    = document.getElementById('reg-name').value.trim();
+  const phone   = document.getElementById('reg-phone').value.trim();
+  const email   = document.getElementById('reg-email').value.trim();
+  const privacy = document.getElementById('reg-privacy').checked;
+
+  const showErr = (id, show) => {
+    document.getElementById(id).classList.toggle('show', show);
+    if (id.startsWith('err-')) {
+      const inputId = id.replace('err-','reg-');
+      const input = document.getElementById(inputId);
+      if (input) input.classList.toggle('error', show);
+    }
+  };
+
+  showErr('err-name',    !name || name.length < 3);
+  showErr('err-phone',   !phone || phone.replace(/\s/g,'').length < 9);
+  showErr('err-email',   !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+  showErr('err-privacy', !privacy);
+
+  if (!name || name.length < 3)                        valid = false;
+  if (!phone || phone.replace(/\s/g,'').length < 9)    valid = false;
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) valid = false;
+  if (!privacy)                                         valid = false;
+
+  if (!valid) return;
+
+  /* Guardar y avanzar */
+  state.user = { name, phone, email };
+  localStorage.setItem('cc-prob-user', JSON.stringify(state.user));
+
+  document.getElementById('modal-registro').classList.remove('open');
+  setTimeout(() => {
+    document.getElementById('screen-instagram').classList.add('open');
+    state.step = 'instagram';
+  }, 300);
 });
 
-/* ── Mostrar barra "Enviar" cuando hay algo en el canvas ── */
-function actualizarBtnEnviar() {
-  const hayDato = mqImg || Object.values(layers).some(l => l?.img);
-  document.getElementById('send-bar')?.classList.toggle('visible', !!hayDato);
+/* ═══════════════════════════════════════════════════════════════════
+   PASO 2 — PANTALLA INSTAGRAM
+═══════════════════════════════════════════════════════════════════ */
+document.getElementById('btn-skip-ig').addEventListener('click', enterProbador);
+
+function enterProbador() {
+  document.getElementById('screen-instagram').classList.remove('open');
+  setTimeout(() => {
+    document.getElementById('app-probador').classList.remove('hidden');
+    state.step = 'probador';
+  }, 350);
 }
-/* Interceptamos redraw para activar el botón automáticamente */
-const _redrawOrig = redraw;
-redraw = function() { _redrawOrig(); actualizarBtnEnviar(); };
 
-/* ── Botón Enviar → abrir modal IG ── */
-document.getElementById('btn-enviar').addEventListener('click', () => {
-  document.getElementById('ig-modal').classList.add('open');
+/* ═══════════════════════════════════════════════════════════════════
+   RENDERIZAR SWATCHES
+═══════════════════════════════════════════════════════════════════ */
+function renderSwatches(colors, containerId) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = colors.map(c => `
+    <div class="swatch${state.colors.has(c.id) ? ' selected' : ''}" data-color="${c.id}" role="checkbox" aria-checked="${state.colors.has(c.id)}" tabindex="0">
+      <div class="swatch-color" style="background:${c.hex}">
+        <span class="swatch-tick">
+          <svg viewBox="0 0 18 18" fill="none" stroke="${c.dark ? '#1a1714' : 'white'}" stroke-width="2.5">
+            <polyline points="3,9 7,13 15,5"/>
+          </svg>
+        </span>
+      </div>
+      <span class="swatch-name">${c.name}</span>
+    </div>`).join('');
+
+  el.querySelectorAll('.swatch').forEach(sw => {
+    const toggle = () => {
+      const id = sw.dataset.color;
+      if (state.colors.has(id)) state.colors.delete(id);
+      else state.colors.add(id);
+      renderSwatches(colors, containerId);
+      updateSummary();
+    };
+    sw.addEventListener('click', toggle);
+    sw.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }});
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   RENDERIZAR ESTILOS
+═══════════════════════════════════════════════════════════════════ */
+function renderStyles() {
+  const el = document.getElementById('styles-grid');
+  el.innerHTML = STYLES.map(s => `
+    <div class="style-card${state.style === s.id ? ' selected' : ''}" data-style="${s.id}" role="radio" aria-checked="${state.style === s.id}" tabindex="0">
+      <img class="style-img" src="${s.img}" alt="${s.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="style-img-placeholder" style="display:none">
+        <svg viewBox="0 0 48 80"><ellipse cx="24" cy="10" rx="7" ry="8"/><path d="M10 22 Q8 30 8 38 Q8 44 12 48 H36 Q40 44 40 38 Q40 30 38 22 Q32 18 24 18 Q16 18 10 22Z"/><path d="M14 48 L14 76 M34 48 L34 76"/></svg>
+        <span style="font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase">${s.name}</span>
+      </div>
+      <div class="style-body">
+        <p class="style-name">${s.name}</p>
+        <p class="style-desc">${s.desc}</p>
+        <div class="style-radio">
+          <div class="style-radio-dot"></div>
+          ${state.style === s.id ? 'Seleccionado' : 'Seleccionar'}
+        </div>
+      </div>
+    </div>`).join('');
+
+  el.querySelectorAll('.style-card').forEach(card => {
+    const select = () => {
+      state.style = card.dataset.style;
+      renderStyles();
+      updateSummary();
+    };
+    card.addEventListener('click', select);
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); }});
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   RENDERIZAR ACORDEÓN COMPLEMENTOS
+═══════════════════════════════════════════════════════════════════ */
+function renderAccordion() {
+  const el = document.getElementById('accord-container');
+  el.innerHTML = COMPLEMENTS.map(c => {
+    const st = state.complements[c.id];
+    return `
+    <div class="accord-item${st.open ? ' open' : ''}" data-comp="${c.id}">
+      <div class="accord-head">
+        <div class="accord-left">
+          <div class="accord-check">
+            <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+          </div>
+          <span class="accord-name">${c.name}</span>
+        </div>
+        <svg class="accord-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="accord-body">
+        <p class="accord-desc">${c.desc}</p>
+        <div class="metal-group">
+          <div class="metal-opt${st.metal === 'oro' ? ' active' : ''}" data-metal="oro">
+            <div class="metal-radio"></div>
+            <div class="metal-dot" style="background:#b5903a"></div>
+            Or (Oro)
+          </div>
+          <div class="metal-opt${st.metal === 'plata' ? ' active' : ''}" data-metal="plata">
+            <div class="metal-radio"></div>
+            <div class="metal-dot" style="background:#a0a0a0"></div>
+            Plata
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  /* Eventos acordeón */
+  el.querySelectorAll('.accord-item').forEach(item => {
+    const id = item.dataset.comp;
+
+    item.querySelector('.accord-head').addEventListener('click', () => {
+      state.complements[id].open = !state.complements[id].open;
+      renderAccordion();
+      updateSummary();
+    });
+
+    item.querySelectorAll('.metal-opt').forEach(opt => {
+      opt.addEventListener('click', e => {
+        e.stopPropagation();
+        state.complements[id].metal = opt.dataset.metal;
+        renderAccordion();
+        updateSummary();
+      });
+    });
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   UPLOAD DE FOTO
+═══════════════════════════════════════════════════════════════════ */
+const photoInput = document.getElementById('photo-input');
+const uploadZone = document.getElementById('upload-zone');
+const uploadPreview = document.getElementById('upload-preview');
+
+function loadPhoto(file) {
+  if (!file) return;
+  if (file.size > 10 * 1024 * 1024) {
+    alert('La imagen es demasiado grande. Máximo 10 MB.');
+    return;
+  }
+  state.photo = file;
+  const reader = new FileReader();
+  reader.onload = e => {
+    state.photoDataUrl = e.target.result;
+    document.getElementById('preview-img').src = state.photoDataUrl;
+    uploadPreview.classList.add('show');
+    uploadZone.style.display = 'none';
+    document.getElementById('err-photo').classList.remove('show');
+  };
+  reader.readAsDataURL(file);
+}
+
+photoInput.addEventListener('change', () => loadPhoto(photoInput.files[0]));
+
+/* Drag & drop */
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('drag');
+  loadPhoto(e.dataTransfer?.files?.[0]);
 });
-document.getElementById('ig-cancel').addEventListener('click', () => {
-  document.getElementById('ig-modal').classList.remove('open');
+
+/* Cambiar foto */
+document.getElementById('btn-change-photo').addEventListener('click', () => {
+  state.photo = null; state.photoDataUrl = '';
+  document.getElementById('preview-img').src = '';
+  uploadPreview.classList.remove('show');
+  uploadZone.style.display = '';
+  photoInput.value = '';
 });
 
-/* ── Confirma follow IG → envía email ── */
-document.getElementById('ig-confirm').addEventListener('click', async () => {
-  document.getElementById('ig-modal').classList.remove('open');
+/* ═══════════════════════════════════════════════════════════════════
+   CONTADOR DE CARACTERES
+═══════════════════════════════════════════════════════════════════ */
+document.getElementById('desc-input').addEventListener('input', function() {
+  state.description = this.value;
+  const len = this.value.length;
+  const counter = document.getElementById('char-counter');
+  counter.textContent = `${len} / 1200 caracteres — mínimo 50`;
+  counter.className = 'char-counter' + (len >= 50 ? ' ok' : len > 30 ? ' warn' : '');
+  if (len >= 50) document.getElementById('err-desc').classList.remove('show');
+});
 
-  /* Recoger datos de la clienta */
-  const nombre   = document.getElementById('u-name')?.value?.trim()  || '(sin nombre)';
-  const emailCli = document.getElementById('u-email')?.value?.trim() || '(sin email)';
-  const telefono = document.getElementById('u-phone')?.value?.trim() || '—';
-  const desc     = document.getElementById('u-desc')?.value?.trim()  || '(sin descripción)';
+/* ═══════════════════════════════════════════════════════════════════
+   RESUMEN DINÁMICO
+═══════════════════════════════════════════════════════════════════ */
+function updateSummary() {
+  const chips = document.getElementById('summary-chips');
+  const items = [];
 
-  /* Prendas y telas seleccionadas */
-  const LBL = { falda:'Falda', delantal:'Delantal', corpino:'Corpiño', completo:'Conjunto' };
-  const prendasTxt = Object.entries(layers)
-    .filter(([,v]) => v?.n).map(([k,v]) => `${LBL[k]||k}: ${v.n}`).join(' · ') || '—';
-  const telasTxt = Object.entries(telaOverlay)
-    .filter(([,v]) => v?.n).map(([k,v]) => `${LBL[k]||k}: ${v.n}`).join(' · ') || '—';
+  /* Colores seleccionados */
+  const allColors = [...COLORS_SEDES, ...COLORS_LIGEROS];
+  state.colors.forEach(id => {
+    const c = allColors.find(x => x.id === id);
+    if (c) items.push(`<span class="chip"><span class="chip-dot" style="background:${c.hex};border:1px solid rgba(0,0,0,.1)"></span>${c.name}</span>`);
+  });
 
-  /* Capturar canvas como imagen */
-  let imagenJPEG = '';
-  try { imagenJPEG = canvas.toDataURL('image/jpeg', 0.65); } catch {}
+  /* Estilo */
+  if (state.style) {
+    const s = STYLES.find(x => x.id === state.style);
+    if (s) items.push(`<span class="chip">✦ ${s.name}</span>`);
+  }
 
-  /* ── Fallback si EmailJS no está configurado ── */
+  /* Complementos */
+  COMPLEMENTS.forEach(c => {
+    const st = state.complements[c.id];
+    if (st.open) {
+      const metal = st.metal === 'oro' ? '🟡 Or' : '⚪ Plata';
+      items.push(`<span class="chip">${c.name.split(' ')[0]} · ${metal}</span>`);
+    }
+  });
+
+  if (items.length === 0) {
+    chips.innerHTML = '<span class="summary-empty">Selecciona colores, estilo y complementos para ver el resumen</span>';
+  } else {
+    chips.innerHTML = items.join('');
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   BOTÓN "SOLICITAR PRESUPUESTO"
+═══════════════════════════════════════════════════════════════════ */
+document.getElementById('btn-solicitar').addEventListener('click', async () => {
+  /* Validar mínimos */
+  let ok = true;
+  if (!state.photo) {
+    document.getElementById('err-photo').classList.add('show');
+    document.getElementById('upload-zone').scrollIntoView({ behavior:'smooth', block:'center' });
+    ok = false;
+  }
+  if (state.description.length < 50) {
+    document.getElementById('err-desc').classList.add('show');
+    document.getElementById('desc-input').focus();
+    ok = false;
+  }
+  if (!ok) return;
+
+  const btn = document.getElementById('btn-solicitar');
+  btn.disabled = true;
+  btn.textContent = 'Enviando…';
+
+  /* Construir resumen de selección */
+  const allColors = [...COLORS_SEDES, ...COLORS_LIGEROS];
+  const coloresTxt = [...state.colors].map(id => allColors.find(c => c.id === id)?.name).filter(Boolean).join(', ') || '—';
+  const estiloTxt  = STYLES.find(s => s.id === state.style)?.name || '—';
+  const compTxt    = COMPLEMENTS
+    .filter(c => state.complements[c.id].open)
+    .map(c => `${c.name} (${state.complements[c.id].metal})`)
+    .join(' | ') || '—';
+
+  /* ── Enviar vía EmailJS ── */
   if (EJS_PUBLIC_KEY === 'TU_PUBLIC_KEY') {
-    const resumen = `Diseño listo para presupuestar:\n\n` +
-      `Clienta: ${nombre}\nEmail: ${emailCli}\nTel: ${telefono}\n` +
-      `Estilo: ${estiloActivo}\nPrendas: ${prendasTxt}\nTelas: ${telasTxt}\n` +
-      `Descripción: ${desc}`;
-    alert('✅ ' + resumen + '\n\n⚙️ Activa el envío automático configurando EmailJS en probador.html');
+    /* Fallback: mostrar resumen en consola si no está configurado */
+    console.log('Solicitud de presupuesto:', {
+      nombre: state.user.name, email: state.user.email,
+      telefono: state.user.phone, descripcion: state.description,
+      colores: coloresTxt, estilo: estiloTxt, complementos: compTxt
+    });
+    mostrarExito();
     return;
   }
 
-  /* ── Enviar vía EmailJS ── */
   try {
     emailjs.init(EJS_PUBLIC_KEY);
     await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
-      to_email:       EMAIL_NEGOCIO,
-      nombre:         nombre,
-      email_cliente:  emailCli,
-      telefono:       telefono,
-      estilo:         estiloActivo,
-      descripcion:    desc,
-      prendas:        prendasTxt,
-      telas:          telasTxt,
-      imagen:         imagenJPEG,   /* base64 — incluir como <img> en la plantilla */
+      to_email:      EMAIL_NEGOCIO,
+      nombre:        state.user.name,
+      email_cliente: state.user.email,
+      telefono:      state.user.phone,
+      descripcion:   state.description,
+      colores:       coloresTxt,
+      estilo:        estiloTxt,
+      complementos:  compTxt,
+      imagen:        state.photoDataUrl,   /* base64 — incluir como <img> en la plantilla EmailJS */
     });
-
-    /* Toast de éxito */
-    const toast = document.getElementById('send-toast');
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 5000);
-
+    mostrarExito();
   } catch (err) {
-    alert('Error al enviar el email 😕\nLlámanos al 963 511 556 o escríbenos a info@cosascucas.es');
     console.error('EmailJS error:', err);
+    alert('Error al enviar la solicitud. Llámanos al 963 511 556 o escríbenos a info@cosascucas.es');
+    btn.disabled = false;
+    btn.innerHTML = 'Solicitar presupuesto sin compromiso <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
   }
 });
+
+function mostrarExito() {
+  document.getElementById('modal-exito').classList.add('open');
+}
+
+document.getElementById('btn-exito-close').addEventListener('click', () => {
+  window.location.href = 'index.html';
+});
+
+/* ═══════════════════════════════════════════════════════════════════
+   INICIALIZAR INTERFAZ
+═══════════════════════════════════════════════════════════════════ */
+renderSwatches(COLORS_SEDES,   'swatches-sedes');
+renderSwatches(COLORS_LIGEROS, 'swatches-ligeros');
+renderStyles();
+renderAccordion();
+updateSummary();
 </script>
 </body>
 </html>
