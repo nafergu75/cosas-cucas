@@ -261,7 +261,9 @@
         <div class="pbn-num">1</div>
         <div class="pbth" id="th-falda"><span class="empty-icon">👗</span><img id="thimg-falda"></div>
         <div class="pbi">
-          <div class="pbn">Falda</div>
+          <div class="pbn">Falda
+            <span id="tela-chip-falda" style="display:none;margin-left:5px;font-size:.5rem;background:var(--gold);color:#fff;padding:1px 5px;border-radius:10px;vertical-align:middle">🎨 tela</span>
+          </div>
           <div class="pbd">Capa exterior, vuelo</div>
           <div class="pbs" id="pbs-falda"></div>
         </div>
@@ -283,7 +285,9 @@
         <div class="pbn-num">2</div>
         <div class="pbth" id="th-delantal"><span class="empty-icon">🎭</span><img id="thimg-delantal"></div>
         <div class="pbi">
-          <div class="pbn">Delantal / Pico</div>
+          <div class="pbn">Delantal / Pico
+            <span id="tela-chip-delantal" style="display:none;margin-left:5px;font-size:.5rem;background:var(--gold);color:#fff;padding:1px 5px;border-radius:10px;vertical-align:middle">🎨 tela</span>
+          </div>
           <div class="pbd">Panel frontal + encaje</div>
           <div class="pbs" id="pbs-delantal"></div>
         </div>
@@ -304,7 +308,9 @@
         <div class="pbn-num">3</div>
         <div class="pbth" id="th-corpino"><span class="empty-icon">🎀</span><img id="thimg-corpino"></div>
         <div class="pbi">
-          <div class="pbn">Corpiño</div>
+          <div class="pbn">Corpiño
+            <span id="tela-chip-corpino" style="display:none;margin-left:5px;font-size:.5rem;background:var(--gold);color:#fff;padding:1px 5px;border-radius:10px;vertical-align:middle">🎨 tela</span>
+          </div>
           <div class="pbd">Cuerpo + mangas</div>
           <div class="pbs" id="pbs-corpino"></div>
         </div>
@@ -471,6 +477,34 @@ const CATALOG = {
       {src:'pasarela/prendas/falda  perpectiva.jpg',     n:'Ref. Falda Carmín'},
     ]
   },
+
+  /* ═══ TELAS DE COSAS CUCAS ═══
+     Se aplican sobre la parte activa seleccionada en el panel izquierdo.
+     Fondo claro → blend multiply → la tela se ve sobre la silueta del maniquí.
+  */
+  telas: {
+    label:'Telas', icon:'🎨',
+    area: null,           // Usa el área de la parte activa (falda, corpiño…)
+    blend:'multiply', alpha:0.86,
+    items:[
+      { src:'telas/probador digital/calanda.jpeg',                                    n:'Calanda'        },
+      { src:'telas/probador digital/san manuel.jpeg',                                 n:'San Manuel'     },
+      { src:'telas/probador digital/san manuel2.jpeg',                                n:'San Manuel 2'   },
+      { src:'telas/probador digital/cestas.jpeg',                                     n:'Cestas'         },
+      { src:'telas/probador digital/genoveva.jpeg',                                   n:'Genoveva'       },
+      { src:'telas/probador digital/santa genoveva.jpeg',                             n:'Santa Genoveva' },
+      { src:'telas/probador digital/sinfonia.jpeg',                                   n:'Sinfonía'       },
+      { src:'telas/probador digital/guadalquivir.jpeg',                               n:'Guadalquivir'   },
+      { src:'telas/probador digital/tela blanca.jpeg',                                n:'Blanca Clásica' },
+      { src:'telas/probador digital/tela blanca2.jpeg',                               n:'Blanca Ramos'   },
+      { src:'telas/probador digital/blanca3.jpeg',                                    n:'Blanca Rosa'    },
+      { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 11.54.12.jpeg',      n:'Verde Salvia'   },
+      { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 11.57.48.jpeg',      n:'Turquesa'       },
+      { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 12.17.10.jpeg',      n:'Azul Noche'     },
+      { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 12.29.35.jpeg',      n:'Crema Dorada'   },
+      { src:'telas/probador digital/WhatsApp Image 2026-05-11 at 12.31.03.jpeg',      n:'Azul Pizarra'   },
+    ]
+  },
 };
 
 /* ═══════════════════════════════════════════════
@@ -481,9 +515,12 @@ let comparing  = false;
 let mqImg      = null;   // HTMLImageElement del maniquí
 let mqLabel    = '';
 
-/* Capas activas: tipo → {src, n, img, alpha, blend} */
+/* Capas activas de prendas: tipo → {src, n, img} */
 const layers  = {};
 const imgCache = {};
+
+/* Telas aplicadas sobre cada parte: tipo → {src, n, img} */
+const telaOverlay = {};
 
 /* Override de alpha/blend por tipo (desde los sliders/selects) */
 const overrides = {
@@ -508,13 +545,17 @@ function redraw() {
 
   if (comparing) return;
 
-  /* Orden de capas: falda → delantal → corpino → completo */
+  /* Orden de capas: falda → delantal → corpino → completo.
+     Después de cada prenda se pinta la tela seleccionada (si la hay). */
   const DRAW_ORDER = ['falda', 'delantal', 'corpino', 'completo'];
   for (const type of DRAW_ORDER) {
-    const L = layers[type];
-    if (!L?.img) continue;
+    const L  = layers[type];
     const ov = overrides[type];
-    drawLayer(L.img, CATALOG[type].area, ov.blend, ov.alpha);
+    if (L?.img) drawLayer(L.img, CATALOG[type].area, ov.blend, ov.alpha);
+
+    // Tela encima de la prenda (multiply sobre la zona de la prenda)
+    const T = telaOverlay[type];
+    if (T?.img) drawLayer(T.img, CATALOG[type].area, 'multiply', 0.86);
   }
 }
 
@@ -610,7 +651,18 @@ window.selType = function(type) {
   document.querySelectorAll('.layer-opacity').forEach(el => el.classList.remove('visible'));
   const lop = document.getElementById('lop-' + type);
   if (layers[type]?.img && lop) lop.classList.add('visible');
-  document.getElementById('rcat').textContent = CATALOG[type].label;
+
+  /* Cabecera del panel derecho */
+  const LABELS = { falda:'Falda', delantal:'Delantal', corpino:'Corpiño',
+                   completo:'Conjunto', telas:'Telas' };
+  const rcatEl = document.getElementById('rcat');
+  if (type === 'telas') {
+    const activePart = activeType !== 'telas' ? LABELS[activeType] : 'Falda';
+    rcatEl.textContent = `Telas → aplica sobre ${activePart}`;
+  } else {
+    rcatEl.textContent = CATALOG[type].label;
+  }
+
   renderTabs(); renderGrid(type); hideTooltip();
 };
 
@@ -636,23 +688,47 @@ async function selectItem(type, item) {
   showSpinner(true);
   try {
     const img = await loadImg(item.src);
-    layers[type] = { ...item, img };
-    overrides[type].blend = CATALOG[type].blend;
-    overrides[type].alpha = CATALOG[type].alpha;
-    updateLayerUI(type, item);
+
+    if (type === 'telas') {
+      /* La tela se aplica sobre la parte activa en el panel izquierdo.
+         Si el activo es 'telas' (sin parte seleccionada), aplica a falda por defecto. */
+      const target = (activeType !== 'telas') ? activeType : 'falda';
+      telaOverlay[target] = { ...item, img };
+      updateTelaChip(target, item);
+    } else {
+      layers[type] = { ...item, img };
+      overrides[type].blend = CATALOG[type].blend;
+      overrides[type].alpha = CATALOG[type].alpha;
+      updateLayerUI(type, item);
+    }
+
     renderGrid(type);
     redraw();
     updateMailto();
-  } catch(e) { console.warn('Error cargando prenda:', item.src, e); }
+  } catch(e) { console.warn('Error cargando prenda/tela:', item.src, e); }
   showSpinner(false);
 }
 
 window.clearLayer = function(type) {
   delete layers[type];
+  delete telaOverlay[type];
   updateLayerUI(type, null);
+  updateTelaChip(type, null);
   document.getElementById('lop-' + type)?.classList.remove('visible');
-  renderGrid(type); redraw(); updateMailto();
+  renderGrid(activeType); redraw(); updateMailto();
 };
+
+/* Muestra la tela elegida como chip pequeño en el botón de parte */
+function updateTelaChip(partType, tela) {
+  const el = document.getElementById('tela-chip-' + partType);
+  if (!el) return;
+  if (tela) {
+    el.style.display = 'inline-flex';
+    el.title = 'Tela: ' + tela.n;
+  } else {
+    el.style.display = 'none';
+  }
+}
 
 /* ═══════════════════════════════════════════════
    SUBIR PRENDA PROPIA
@@ -711,7 +787,9 @@ function renderTabs() {
 function renderGrid(type) {
   const grid = document.getElementById('rgrid');
   const cat  = CATALOG[type];
-  const cur  = layers[type];
+  /* Para telas: la "selección actual" viene de telaOverlay de la parte activa */
+  const targetPart = (type === 'telas' && activeType !== 'telas') ? activeType : type;
+  const cur = (type === 'telas') ? telaOverlay[targetPart] : layers[type];
   grid.innerHTML = '';
   cat.items.forEach(item => {
     const sel  = cur?.src === item.src;
