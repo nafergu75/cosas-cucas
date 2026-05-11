@@ -2643,8 +2643,8 @@
     <div class="historia-timeline" id="hist-timeline"></div>
   </div>
 
-  <!-- FM Retratos — galería sin recorte -->
-  <div class="hist-fm-section">
+  <!-- FM Retratos — sección dedicada Falleras Mayores -->
+  <div class="hist-fm-section" id="falleras-mayores">
     <div class="container">
       <p class="hist-gallery-label" id="hist-fm-label"></p>
       <div class="fm-grid" id="fm-grid"></div>
@@ -3138,9 +3138,10 @@ const translations = {
   es: {
     about: 'Más de cuarenta años cosiendo con las manos lo que ninguna máquina puede igualar. Cada pieza que sale de nuestro taller es única: confeccionada a medida, bordada con paciencia y tejida con el alma que Paquita Martorell puso en esta casa en 1982. Hoy, sus hijas siguen ese mismo camino —hilo a hilo, puntada a puntada— para que la indumentaria valenciana siga viva y tan hermosa como siempre.',
     nav: [
-      { label: 'Colecciones',  href: '#drops-archive' },
-      { label: 'Deportivas Fallera', href: '#zapatillas' },
-      { label: 'Historia',     href: '#historia'      },
+      { label: 'Colecciones',      href: '#drops-archive'    },
+      { label: 'Falleras Mayores', href: '#falleras-mayores' },
+      { label: 'Deportivas Fallera', href: '#zapatillas'   },
+      { label: 'Historia',         href: '#historia'        },
       { label: 'Decoración',   href: '#decoracion'    },
       { label: 'Vídeos',       href: '#videos'        },
       { label: '✦ Probador',    href: 'probador.html', target: '_blank' },
@@ -3408,14 +3409,14 @@ const translations = {
         { year: '2010s', label: 'Referente\nnacional' },
         { year: 'Hoy', label: 'Nueva generación\nen el taller' },
       ],
-      fmLabel: 'Falleras Mayores vestidas por Cosas Cucas',
+      fmLabel: '✦ Falleras Mayores vestidas por Cosas Cucas',
       fm: [
-        { img: IMG.fm1, name: 'Fallera Mayor', year: 'Cosas Cucas · Valencia' },
-        { img: IMG.fm2, name: 'Fallera Mayor', year: 'Cosas Cucas · Valencia' },
-        { img: IMG.fm3, name: 'Fallera Mayor', year: 'Cosas Cucas · Valencia' },
-        { img: IMG.fm4, name: 'Fallera Mayor', year: 'Cosas Cucas · Valencia' },
-        { img: IMG.fm5, name: 'Fallera Mayor', year: 'Cosas Cucas · Valencia' },
-        { img: IMG.fm6, name: 'Fallera Mayor', year: 'Cosas Cucas · Valencia' },
+        { img: IMG.fm1, name: 'Fallera Mayor de Valencia',          year: '2024' },
+        { img: IMG.fm2, name: 'Fallera Mayor de Valencia',          year: '2023' },
+        { img: IMG.fm3, name: 'Fallera Mayor de Campanar',          year: '2024' },
+        { img: IMG.fm4, name: 'Fallera Mayor de Patraix',           year: '2023' },
+        { img: IMG.fm5, name: 'Fallera Mayor de Benimaclet',        year: '2024' },
+        { img: IMG.fm6, name: "Fallera Mayor de l'Eixample",        year: '2022' },
       ],
       cortsLabel: 'Cortes de Honor',
       corts: [
@@ -3522,9 +3523,10 @@ const translations = {
   ca: {
     about: "Més de quaranta anys cosint amb les mans allò que cap màquina pot igualar. Cada peça que ix del nostre taller és única: confeccionada a mida, brodada amb paciència i teixida amb l'ànima que Paquita Martorell va posar en esta casa el 1982. Avui, les seues filles seguixen aquell mateix camí —fil a fil, puntada a puntada— perquè la indumentària valenciana continue viva i tan bella com sempre.",
     nav: [
-      { label: "Col·leccions",  href: '#drops-archive' },
-      { label: 'Deportives Fallera', href: '#zapatillas' },
-      { label: "Història",      href: '#historia'      },
+      { label: "Col·leccions",       href: '#drops-archive'    },
+      { label: 'Falleres Majors',    href: '#falleras-mayores' },
+      { label: 'Deportives Fallera', href: '#zapatillas'       },
+      { label: "Història",           href: '#historia'         },
       { label: 'Decoració',     href: '#decoracion'    },
       { label: 'Vídeos',        href: '#videos'        },
       { label: '✦ Provador',    href: 'probador.html', target: '_blank' },
@@ -5010,221 +5012,248 @@ function updateCitaBtn() {
 </div>
 
 <script>
-/* ═══════════════════════════════════════════════════════════════════════
-   CHATBOT — Asistente local gratuito · Base de conocimiento Cosas Cucas
-   Sin APIs externas · Sin coste · Sin límites · Funciona sin internet
-════════════════════════════════════════════════════════════════════════ */
+/* CHATBOT COSAS CUCAS — Asistente indumentaria valenciana */
 (function () {
-  const KB = [
-    {
-      id:'partes',
-      keys:['partes','componentes','elementos','traje','qué lleva','cómo es','qué es'],
-      title:'El traje de fallera valenciana',
-      body:'El traje tiene tres grandes bloques:\n\n<b>Prendas exteriores</b>\n👗 Falda o Basquiña · ✨ Delantal · 🎀 Corpiño · 💪 Mangas · 🧣 Manteleta\n\n<b>Peinado y adornos</b>\n💆 Tres rodetes · 🪮 Peinetas · 💎 Aderezo (joyas)\n\n<b>Calzado y finales</b>\n👠 Zapatos · 🌸 Mantilla (opcional) · 🌹 Ramillete\n\n¿Sobre cuál quieres más detalle?'
+  'use strict';
+
+  var KB = [
+    { id:'partes',
+      keys:['partes','componentes','elementos','traje','que lleva','como es','que es'],
+      title:'El traje de fallera',
+      body:'El traje tiene tres bloques:\n\n<b>Prendas exteriores</b>\nFalda · Delantal · Corpino · Mangas · Manteleta\n\n<b>Peinado y adornos</b>\nTres rodetes · Peinetas · Aderezo\n\n<b>Calzado y finales</b>\nZapatos · Mantilla · Ramillete'
     },
-    {
-      id:'falda',
-      keys:['falda','basquiña','vuelo','plisada','raso','enagua','metros'],
-      title:'👗 Falda o Basquiña',
-      body:'La parte más vistosa del traje. Amplia y plisada, confeccionada en <b>seda o raso estampado</b> con motivos florales o vegetales.\n\n• Cae desde la cintura hasta los zapatos (o los tobillos)\n• Su vuelo espectacular se logra con <b>enaguas interiores</b>\n• Requiere entre <b>4 y 5 metros de tela</b>\n• Estampados de flores, motivos vegetales o diseños geométricos'
+    { id:'falda',
+      keys:['falda','basquina','vuelo','plisada','raso','enagua','metros'],
+      title:'Falda o Basquina',
+      body:'La parte mas vistosa. Amplia y plisada en <b>seda o raso estampado</b>.\n\nCae desde la cintura hasta los zapatos.\nRequiere <b>4 a 5 metros de tela</b>.\nSu vuelo se logra con enaguas interiores.'
     },
-    {
-      id:'corpino',
-      keys:['corpiño','corpino','cuerpo','torso','escote','cordones','terciopelo','ajustada'],
-      title:'🎀 Corpiño o Cuerpo',
-      body:'Prenda superior que <b>moldea el torso</b>, de seda o terciopelo a juego con la falda.\n\n• <b>Escote bajo</b> con cordones laterales para el cierre\n• Ricos bordados artesanales\n• Se divide en: <b>cuerpo principal</b> (pecho y cintura) + <b>mangas independientes</b> que se cosen o abrochan'
+    { id:'corpino',
+      keys:['corpino','cuerpo','torso','escote','cordones','terciopelo'],
+      title:'Corpino o Cuerpo',
+      body:'Prenda superior que <b>moldea el torso</b>.\n\n- Seda o terciopelo a juego con la falda\n- Escote bajo con cordones laterales\n- Cuerpo principal + mangas independientes'
     },
-    {
-      id:'mangas',
-      keys:['manga','mangas','farol','francesa','abullonada','manga larga','manga corta'],
-      title:'💪 Mangas del Corpiño',
-      body:'Tres tipos, todas bordadas:\n\n• <b>Farol:</b> Voluminosas en los hombros, muy festivas\n• <b>Francesa:</b> Cortas y abullonadas, versión ligera y elegante\n• <b>Larga:</b> Ceñidas, para actos solemnes\n\nSon intercambiables y se cosen o abrochan al corpiño.'
+    { id:'mangas',
+      keys:['manga','mangas','farol','francesa','manga larga','manga corta'],
+      title:'Mangas del Corpino',
+      body:'Tres tipos, todas bordadas:\n\n- <b>Farol:</b> Voluminosas en hombros\n- <b>Francesa:</b> Cortas y abullonadas\n- <b>Larga:</b> Cenidas, para actos solemnes'
     },
-    {
-      id:'delantal',
-      keys:['delantal','faldeta','tul','muselina','batista','bordado','arabescos','frontal'],
-      title:'✨ Delantal o Faldeta',
-      body:'Panel rectangular colocado <b>frontalmente sobre la falda</b>.\n\n• Material: tul, muselina o batista\n• <b>Bordado en oro y plata</b> con flores y arabescos\n• Se abrocha en la espalda cubriendo el regazo\n• El elemento más bordado del traje\n• Tul cristal (muy transparente) · batista (rígida y opaca)'
+    { id:'delantal',
+      keys:['delantal','faldeta','tul','muselina','batista','bordado','arabescos'],
+      title:'Delantal o Faldeta',
+      body:'Panel rectangular sobre la falda.\n\n- Tul, muselina o batista\n- <b>Bordado en oro y plata</b> con flores y arabescos\n- Se abrocha atras cubriendo el regazo'
     },
-    {
-      id:'manteleta',
-      keys:['manteleta','pico','pañoleta','hombros','cabeza','velo','semitransparente'],
-      title:'🧣 Manteleta',
-      body:'Complemento <b>imprescindible</b> sobre hombros y cabeza. Semitransparente para realzar la falda.\n\nDos piezas:\n• <b>Pico o Pañoleta:</b> Triangular o rectangular (tul / muselina / batista). Cubre hombros, escote y espalda.\n• <b>Parte superior:</b> Fijada con horquillas, deja ver el corpiño.'
+    { id:'manteleta',
+      keys:['manteleta','pico','panoleta','hombros','cabeza','velo'],
+      title:'Manteleta',
+      body:'Complemento <b>imprescindible</b> sobre hombros y cabeza.\n\n- Pico/Panoleta de tul o muselina\n- Cubre hombros, escote y espalda\n- Se fija con horquillas'
     },
-    {
-      id:'peinado',
-      keys:['peinado','rodete','rodetes','moño','recogido','liso','peinadora'],
-      title:'💆 Peinado Tradicional',
-      body:'Uno de los peinados más reconocibles del mundo.\n\n• <b>Tres rodetes:</b> dos laterales (a la altura de las orejas) + uno posterior\n• Cabello completamente <b>liso y recogido</b>\n• Sujeto con peinetas artesanales\n\nLa preparación puede llevar varias horas y requiere peinadora especializada.'
+    { id:'peinado',
+      keys:['peinado','rodete','rodetes','mono','recogido','liso'],
+      title:'Peinado Tradicional',
+      body:'Tres rodetes: dos laterales y uno posterior.\n\nCabello completamente <b>liso y recogido</b>.\nSujeto con peinetas artesanales.'
     },
-    {
-      id:'peinetas',
-      keys:['peineta','peinetas','nácar','carey','concha','sujetan'],
-      title:'🪮 Peinetas',
-      body:'Piezas ornamentales que <b>sujetan los rodetes</b>.\n\n• Material: nácar, carey o concha\n• Forma alta y curvada\n• Las de la <b>Fallera Mayor</b> son especialmente grandes\n• Se llevan <b>por parejas o tríos</b>\n• Gran valor artístico; muchas se heredan.'
+    { id:'peinetas',
+      keys:['peineta','peinetas','nacar','carey','concha'],
+      title:'Peinetas',
+      body:'Piezas ornamentales en nacar, carey o concha.\n\n- Altas y curvadas\n- Las de <b>Fallera Mayor</b> son grandes\n- Se llevan por parejas o trios'
     },
-    {
-      id:'aderezo',
-      keys:['aderezo','joyas','joya','pendientes','colgante','broche','herencia','dorado'],
-      title:'💎 Aderezo',
-      body:'Conjunto completo de joyas.\n\n• <b>Pendientes largos</b>\n• Broches para las peinetas\n• Colgantes para cuello y hombros\n• Oro o plata con <b>piedras preciosas o semipreciosas</b>\n\nSimboliza el estatus familiar. Muchos se heredan de generación en generación.'
+    { id:'aderezo',
+      keys:['aderezo','joyas','joya','pendientes','colgante','broche','herencia'],
+      title:'Aderezo',
+      body:'Conjunto completo de joyas:\n\n- Pendientes largos\n- Broches para peinetas\n- Colgantes para cuello y hombros\n- Oro o plata con piedras\n\nSe hereda de generacion en generacion.'
     },
-    {
-      id:'calzado',
-      keys:['zapato','zapatos','calzado','tacón','satén','medias','piel'],
-      title:'👠 Calzado',
-      body:'Sencillo para no competir con la riqueza visual del traje.\n\n• Tacón bajo: <b>3 a 5 cm</b>\n• Piel o satén negro o blanco\n• Con lazos o flores bordadas\n• Se combinan con <b>medias</b>'
+    { id:'calzado',
+      keys:['zapato','zapatos','calzado','tacon','saten','medias','piel'],
+      title:'Calzado',
+      body:'Sencillo para no competir con el traje.\n\n- Tacon bajo: <b>3 a 5 cm</b>\n- Piel o saten negro o blanco\n- Con lazos o flores bordadas\n- Se combinan con medias'
     },
-    {
-      id:'mantilla',
-      keys:['mantilla','encaje negro','encaje blanco','solemne','ceremonias'],
-      title:'🌸 Mantilla',
-      body:'Complemento <b>opcional</b> para actos solemnes.\n\n• Encaje negro o blanco\n• Se coloca sobre los hombros\n• Reservada para ceremonias de especial importancia'
+    { id:'mantilla',
+      keys:['mantilla','encaje negro','encaje blanco','solemne'],
+      title:'Mantilla',
+      body:'Complemento <b>opcional</b> para actos solemnes.\n\n- Encaje negro o blanco\n- Se coloca sobre los hombros'
     },
-    {
-      id:'ramillete',
+    { id:'ramillete',
       keys:['ramillete','flores','ramo','bouquet','rosas','claveles','ofrena'],
-      title:'🌹 Ramillete',
-      body:'Bouquet de flores naturales llevado en la mano en actos oficiales.\n\n• Flores habituales: <b>rosas y claveles</b>\n• Se usa en la <b>Ofrena de Flors</b> a la Virgen\n• Las flores se depositan en la imagen de la Virgen'
+      title:'Ramillete',
+      body:'Bouquet de flores naturales para actos oficiales.\n\n- Rosas y claveles\n- Se usa en la <b>Ofrena de Flors</b> a la Virgen'
     },
-    {
-      id:'tienda',
-      keys:['tienda','horario','cita','visita','abierto','dónde','dirección','teléfono','llamar','contacto'],
-      title:'🏪 Visítanos',
-      body:'<b>Tienda Principal</b>\nC/ Grabador Esteve, 30 · Valencia\n📞 963 511 556\n\n<b>Tienda Cabañal</b>\nC/ Vicent Gallart, 49 · Valencia\n📞 963 714 997\n\n⏰ Lun–Vie: 10:00–13:30 / 17:00–20:00\n⏰ Sábados: 10:30–13:30\n\n💬 WhatsApp: <b>667 775 501</b>\n✉️ info@cosascucas.es'
+    { id:'tienda',
+      keys:['tienda','horario','cita','visita','donde','direccion','telefono','contacto','llamar'],
+      title:'Visitanos',
+      body:'<b>Tienda Principal</b>\nGrabador Esteve 30, Valencia — 963 511 556\n\n<b>Tienda Cabanyal</b>\nVicent Gallart 49, Valencia — 963 714 997\n\nLun-Vie: 10:00-13:30 / 17:00-20:00\nSabados: 10:30-13:30\n\nWhatsApp: <b>667 775 501</b>'
     },
-    {
-      id:'precio',
-      keys:['precio','cuánto','cuesta','presupuesto','vale','coste'],
-      title:'💰 Presupuesto personalizado',
-      body:'El precio varía según <b>telas, bordados y confección</b> elegidos.\n\nPara un presupuesto sin compromiso:\n📞 963 511 556 · 963 714 997\n💬 WhatsApp: <b>667 775 501</b>\n✉️ info@cosascucas.es'
+    { id:'precio',
+      keys:['precio','cuanto','presupuesto','vale','coste','cuesta'],
+      title:'Presupuesto',
+      body:'El precio varia segun <b>telas, bordados y confeccion</b>.\n\nPresupuesto sin compromiso:\n963 511 556 o 963 714 997\nWhatsApp: <b>667 775 501</b>'
     },
-    {
-      id:'hola',
+    { id:'hola',
       keys:['hola','buenos','buenas','saludos','hey'],
       title:null,
-      body:'¡Hola! 👋 Soy la asistente virtual de <b>Cosas Cucas</b>.\n\nConozco todos los elementos del traje de fallera: la falda, el corpiño, el delantal, la manteleta, el aderezo y mucho más.\n\n¿Qué te gustaría saber?'
+      body:'Hola! Soy la asistente de <b>Cosas Cucas</b>. Puedo explicarte cualquier elemento del traje de fallera valenciana. Sobre que quieres saber?'
     },
-    {
-      id:'gracias',
+    { id:'gracias',
       keys:['gracias','perfecto','genial','muy bien','entendido'],
       title:null,
-      body:'¡De nada! 😊 Si tienes más dudas sobre la indumentaria o quieres visitar la tienda, aquí estoy. ¡Fins aviat! 🌹'
-    },
+      body:'De nada! Si tienes mas dudas, aqui estoy. Fins aviat!'
+    }
   ];
 
-  const SUGGS = [
-    '¿Qué es la falda?',
-    '¿Para qué sirve el delantal?',
-    '¿Tipos de mangas?',
-    '¿Qué es la manteleta?',
-    '¿Qué es el aderezo?',
-    'Horario y tiendas',
+  var SUGGS = [
+    'Que es la falda?',
+    'Para que sirve el delantal?',
+    'Tipos de mangas?',
+    'Que es la manteleta?',
+    'Que es el aderezo?',
+    'Horario y tiendas'
   ];
 
-  /* ── MATCHING ─────────────────────────────────────────────────────── */
+  /* Normalizar: minusculas, sin tildes, sin puntuacion */
   function norm(s) {
-    return s.toLowerCase()
-      .normalize('NFD').replace(/[̀-ͯ]/g,'')
-      .replace(/[^a-z0-9\s]/g,' ').trim();
+    return String(s)
+      .toLowerCase()
+      .replace(/a/g,'a').replace(/e/g,'e').replace(/i/g,'i').replace(/o/g,'o').replace(/u/g,'u')
+      .replace(/[^\x00-\x7F]/g, function(c) {
+        var m = {'\xe1':'a','\xe9':'e','\xed':'i','\xf3':'o','\xfa':'u','\xfc':'u',
+                 '\xe0':'a','\xe8':'e','\xec':'i','\xf2':'o','\xf9':'u',
+                 '\xf1':'n','\xe7':'c'};
+        return m[c] || '';
+      })
+      .replace(/[^a-z0-9 ]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
   }
-  function findAnswer(q) {
-    q = norm(q);
-    const tokens = q.split(/\s+/);
-    let best = null, top = 0;
-    for (const e of KB) {
-      let score = 0;
-      for (const k of e.keys) {
-        const nk = norm(k);
-        if (q.includes(nk)) score += nk.split(' ').length * 2;
-        else for (const t of tokens) if (t.length > 2 && nk.includes(t)) score++;
+
+  /* Encontrar mejor respuesta */
+  function findAnswer(txt) {
+    var q    = norm(txt);
+    var toks = q.split(' ').filter(function(t){ return t.length > 2; });
+    var best = null, top = 0;
+    for (var i = 0; i < KB.length; i++) {
+      var entry = KB[i], sc = 0;
+      for (var j = 0; j < entry.keys.length; j++) {
+        var k = norm(entry.keys[j]);
+        if (q.indexOf(k) !== -1) {
+          sc += k.split(' ').length * 2;
+        } else {
+          for (var ti = 0; ti < toks.length; ti++) {
+            if (k.indexOf(toks[ti]) !== -1) sc += 1;
+          }
+        }
       }
-      if (score > top) { top = score; best = e; }
+      if (sc > top) { top = sc; best = entry; }
     }
     return top > 0 ? best : null;
   }
 
-  /* ── UI ───────────────────────────────────────────────────────────── */
-  const panel = document.getElementById('chat-panel');
-  const msgs  = document.getElementById('chat-msgs');
-  const inp   = document.getElementById('chat-inp');
+  /* Referencias DOM */
+  var fab   = document.getElementById('chat-fab');
+  var panel = document.getElementById('chat-panel');
+  var msgs  = document.getElementById('chat-msgs');
+  var inp   = document.getElementById('chat-inp');
+  if (!fab || !panel || !msgs || !inp) return;
 
-  const openPanel  = () => { panel.classList.add('open'); inp.focus(); document.querySelector('.chat-badge').style.display='none'; };
-  const closePanel = () => panel.classList.remove('open');
+  function openPanel() {
+    panel.classList.add('open');
+    inp.focus();
+    var b = document.querySelector('.chat-badge');
+    if (b) b.style.display = 'none';
+  }
+  function closePanel() { panel.classList.remove('open'); }
+  function scrollEnd()  { setTimeout(function(){ msgs.scrollTop = msgs.scrollHeight; }, 60); }
 
+  /* Mensaje del bot con typing indicator */
   function addBot(entry, delay) {
-    const typing = document.createElement('div');
-    typing.className = 'ch-typing';
-    typing.innerHTML = '<div class="ch-bot-av">CC</div><div class="ch-typing-dots"><span></span><span></span><span></span></div>';
-    msgs.appendChild(typing); scrollEnd();
-
-    setTimeout(() => {
-      typing.remove();
-      const wrap = document.createElement('div');
-      wrap.className = 'ch-bot';
-      const title = entry.title ? `<span class="ch-topic">${entry.title}</span>` : '';
-      const body  = entry.body.replace(/\n/g,'<br>');
-      wrap.innerHTML = `<div class="ch-bot-av">CC</div><div class="ch-bubble">${title}${body}</div>`;
-      msgs.appendChild(wrap);
-      if (entry.id === 'hola' || msgs.querySelectorAll('.ch-bot').length === 1) addSuggs();
+    var d = (typeof delay === 'number') ? delay : 700;
+    var tp = document.createElement('div');
+    tp.className = 'ch-typing';
+    tp.innerHTML = '<div class="ch-bot-av">CC</div>'
+                 + '<div class="ch-typing-dots"><span></span><span></span><span></span></div>';
+    msgs.appendChild(tp);
+    scrollEnd();
+    setTimeout(function() {
+      if (tp.parentNode) tp.parentNode.removeChild(tp);
+      var w = document.createElement('div');
+      w.className = 'ch-bot';
+      var th = entry.title ? '<span class="ch-topic">' + entry.title + '</span>' : '';
+      var bh = entry.body.replace(/\n/g, '<br>');
+      w.innerHTML = '<div class="ch-bot-av">CC</div><div class="ch-bubble">' + th + bh + '</div>';
+      msgs.appendChild(w);
+      if (msgs.querySelectorAll('.ch-bot').length === 1) addSuggs();
       scrollEnd();
-    }, delay ?? (700 + Math.random() * 350));
+    }, d);
   }
 
+  /* Mensaje del usuario */
   function addUser(txt) {
-    const w = document.createElement('div');
+    var w = document.createElement('div');
     w.className = 'ch-user';
-    w.innerHTML = `<div class="ch-user-bubble">${txt.replace(/</g,'&lt;')}</div>`;
-    msgs.appendChild(w); scrollEnd();
+    w.innerHTML = '<div class="ch-user-bubble">' + txt.replace(/</g,'&lt;') + '</div>';
+    msgs.appendChild(w);
+    scrollEnd();
   }
 
+  /* Chips de sugerencias */
   function addSuggs() {
-    msgs.querySelectorAll('.ch-suggs').forEach(el => el.remove());
-    const div = document.createElement('div');
+    var old = msgs.querySelectorAll('.ch-suggs');
+    for (var i = 0; i < old.length; i++) if (old[i].parentNode) old[i].parentNode.removeChild(old[i]);
+    var div = document.createElement('div');
     div.className = 'ch-suggs';
-    SUGGS.forEach(s => {
-      const b = document.createElement('button');
-      b.className = 'ch-sugg'; b.textContent = s;
-      b.addEventListener('click', () => { div.remove(); handleSend(s); });
+    SUGGS.forEach(function(s) {
+      var b = document.createElement('button');
+      b.className = 'ch-sugg';
+      b.textContent = s;
+      b.addEventListener('click', function() {
+        if (div.parentNode) div.parentNode.removeChild(div);
+        handleSend(s);
+      });
       div.appendChild(b);
     });
-    msgs.appendChild(div); scrollEnd();
+    msgs.appendChild(div);
+    scrollEnd();
   }
 
-  function noMatch() {
-    addBot({ title:null, body:'No he entendido bien tu pregunta 🤔 Puedes preguntarme sobre la <b>falda, corpiño, delantal, manteleta, peinado, aderezo, zapatos</b> o sobre la <b>tienda y horarios</b>.' }, 500);
-    setTimeout(addSuggs, 1400);
-  }
-
-  function scrollEnd() { setTimeout(() => { msgs.scrollTop = msgs.scrollHeight; }, 50); }
-
+  /* Enviar mensaje */
   function handleSend(txt) {
-    txt = (txt || inp.value).trim();
-    if (!txt) return;
+    var text = (txt !== undefined ? String(txt) : inp.value).trim();
+    if (!text) return;
     inp.value = '';
-    msgs.querySelectorAll('.ch-suggs').forEach(el => el.remove());
-    addUser(txt);
-    const e = findAnswer(txt);
-    e ? addBot(e) : noMatch();
+    var su = msgs.querySelectorAll('.ch-suggs');
+    for (var i = 0; i < su.length; i++) if (su[i].parentNode) su[i].parentNode.removeChild(su[i]);
+    addUser(text);
+    var e = findAnswer(text);
+    if (e) {
+      addBot(e);
+    } else {
+      addBot({ title:null, body:'No entendi la pregunta. Puedes preguntarme sobre la <b>falda, corpino, delantal, manteleta, aderezo</b> o la <b>tienda y horarios</b>.' }, 500);
+      setTimeout(addSuggs, 1500);
+    }
   }
 
-  /* ── EVENTOS ──────────────────────────────────────────────────────── */
-  document.getElementById('chat-fab').addEventListener('click', () =>
-    panel.classList.contains('open') ? closePanel() : openPanel());
-  document.getElementById('chat-fab').addEventListener('keydown', e => {
+  /* Eventos */
+  fab.addEventListener('click', function() {
+    if (panel.classList.contains('open')) closePanel(); else openPanel();
+  });
+  fab.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPanel(); }
   });
-  document.getElementById('chat-close').addEventListener('click', closePanel);
-  document.getElementById('chat-send').addEventListener('click', () => handleSend());
-  inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); handleSend(); }});
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && panel.classList.contains('open')) closePanel(); });
+  var cc = document.getElementById('chat-close');
+  if (cc) cc.addEventListener('click', closePanel);
+  var cs = document.getElementById('chat-send');
+  if (cs) cs.addEventListener('click', function() { handleSend(); });
+  inp.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); handleSend(); }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
+  });
 
-  /* ── BIENVENIDA ───────────────────────────────────────────────────── */
+  /* Mensaje de bienvenida */
   addBot({
     title: null,
-    body: '¡Hola! 👋 Soy la asistente de <b>Cosas Cucas</b>. Conozco todos los elementos de la indumentaria valenciana tradicional. ¿Sobre qué quieres saber?'
-  }, 800);
+    body: 'Hola! Soy la asistente de <b>Cosas Cucas</b>. Preguntame sobre el traje de fallera, las telas, el aderezo o la tienda.'
+  }, 900);
+
 })();
 </script>
 
