@@ -411,6 +411,88 @@
       .goey-figure { padding: 16px; }
       .goey-figure:hover { padding: 8px; }
     }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       FLIP REVEAL — filtros de categoría (traducción de flip-reveal.tsx)
+    ═══════════════════════════════════════════════════════════════════════ */
+
+    /* Oculta items fuera de la categoría activa (equivale a hideClass="hidden") */
+    .flip-hide { display: none !important; }
+
+    /* Durante la animación GSAP Flip se deshabilitan las transiciones de hover */
+    .goey-grid.is-flipping .goey-figure { transition: none; }
+
+    /* Grupo de botones de filtro — replica el ToggleGroup de shadcn */
+    .flip-filters {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      padding: 4px 0 28px;
+      flex-wrap: wrap;
+    }
+    .flip-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 20px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-bg);
+      color: var(--color-text-muted);
+      font-family: var(--font-body);
+      font-size: 0.73rem;
+      font-weight: 600;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .flip-btn:hover {
+      border-color: var(--color-text);
+      color: var(--color-text);
+      transform: translateY(-1px);
+    }
+    /* Estado activo = ToggleGroupItem [data-state=on] */
+    .flip-btn.active {
+      background: var(--color-bg-dark);
+      border-color: var(--color-bg-dark);
+      color: var(--color-white);
+    }
+    .flip-btn.active:hover { transform: none; }
+
+    /* Icono de categoría dentro del botón */
+    .flip-btn svg {
+      width: 15px; height: 15px;
+      stroke: currentColor; fill: none; stroke-width: 1.8;
+      flex-shrink: 0;
+    }
+
+    /* Contador de ítems por categoría */
+    .flip-btn__count {
+      display: inline-flex;
+      align-items: center; justify-content: center;
+      min-width: 18px; height: 18px;
+      padding: 0 4px;
+      border-radius: 9px;
+      background: rgba(181,144,58,0.18);
+      color: var(--color-gold);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      transition: background 0.2s, color 0.2s;
+    }
+    .flip-btn.active .flip-btn__count {
+      background: rgba(181,144,58,0.35);
+      color: var(--color-gold-light);
+    }
+
+    @media (max-width: 600px) {
+      .flip-filters { gap: 5px; }
+      .flip-btn { padding: 8px 14px; font-size: 0.68rem; gap: 5px; }
+      .flip-btn__count { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -473,9 +555,43 @@
   <div class="g-grid" id="grid-instagram"></div>
 </section>
 
-<!-- SECCIÓN: MOMENTOS EN TIENDA — ClippedGoeyGallery -->
+<!-- SECCIÓN: MOMENTOS EN TIENDA — ClippedGoeyGallery + FlipReveal filters -->
 <section class="g-section" id="sec-galeria" style="background: var(--color-bg-alt);">
-  <p class="g-section-title">Nuestra Tienda · Momentos y Creaciones</p>
+  <p class="g-section-title">Nuestra Tienda · Colecciones por Categoría</p>
+
+  <!-- ToggleGroup → filtros de categoría con animación GSAP Flip -->
+  <div class="flip-filters" id="flip-filters" role="group" aria-label="Filtrar por categoría">
+
+    <button class="flip-btn active" data-cat="all">
+      <!-- todas las personas -->
+      <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M3 20v-2a6 6 0 0 1 6-6"/><circle cx="17" cy="7" r="3"/><path d="M21 20v-2a4 4 0 0 0-4-4h-1"/></svg>
+      Todas
+      <span class="flip-btn__count" id="cnt-all">27</span>
+    </button>
+
+    <button class="flip-btn" data-cat="mujer">
+      <!-- icono mujer -->
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M12 12v8m-3-3h6"/></svg>
+      Mujer
+      <span class="flip-btn__count" id="cnt-mujer">0</span>
+    </button>
+
+    <button class="flip-btn" data-cat="hombre">
+      <!-- icono hombre -->
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M8 20v-5a4 4 0 0 1 8 0v5"/></svg>
+      Hombre
+      <span class="flip-btn__count" id="cnt-hombre">0</span>
+    </button>
+
+    <button class="flip-btn" data-cat="nino">
+      <!-- icono niño/niña -->
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/><path d="M9 14l1.5 2 2-3 2 3 1.5-2"/></svg>
+      Niño · Niña
+      <span class="flip-btn__count" id="cnt-nino">0</span>
+    </button>
+
+  </div>
+
   <div class="goey-grid" id="grid-galeria"></div>
 </section>
 
@@ -488,6 +604,10 @@
   <p class="lightbox__caption" id="lb-caption"></p>
   <p class="lightbox__counter" id="lb-counter"></p>
 </div>
+
+<!-- GSAP + Flip plugin (MIT) — FlipReveal gallery filters -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
 
 <!-- FOOTER -->
 <footer class="g-footer">
@@ -521,35 +641,38 @@
     /* Ejemplo: { img: 'fotos/foto1.jpg', caption: 'Fallera Mayor · Cosas Cucas' }, */
   ];
 
-  /* ── GALERÍA TIENDA: 27 fotos de la carpeta /galeria ── */
+  /* ── GALERÍA TIENDA: 27 fotos con categoría (mujer · hombre · nino) ──
+     Distribución: Mujer × 11 · Hombre × 9 · Niño/a × 7 = 27
+     cat usa la clave data-flip del componente FlipReveal
+  ── */
   const GALERIA_TIENDA = [
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.02.59_db5bbd11.jpg', caption: 'Indumentaria valenciana artesanal' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.02.59_39f86f7f.jpg', caption: 'Bordados a mano · Cosas Cucas' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_6b8a4b5f.jpg', caption: 'Detalle de seda valenciana' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_b3a2c16e.jpg', caption: 'Cotilla artesanal a medida' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_0eac70d9.jpg', caption: 'Colección Falles · nuestra tienda' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_e930437b.jpg', caption: 'Elegancia tradicional valenciana' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_fc060f99.jpg', caption: 'Aderezo y complementos de gala' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.01_57d65e9d.jpg', caption: 'Manteleta bordada con hilo de oro' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_91962d31.jpg', caption: 'Taller artesanal · Cosas Cucas' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_26d8c283.jpg', caption: 'Tejidos de seda exclusivos' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_43ecfe2c.jpg', caption: 'Indumentaria Fallera Mayor' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_6c752940.jpg', caption: 'Pañuelo de cuello artesanal' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_1956fae1.jpg', caption: 'Falda y delantal siglo XVIII' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_eb1c275e.jpg', caption: 'Joya de la indumentaria valenciana' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_da119054.jpg', caption: 'Confección exclusiva desde 1982' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_81f8afaa.jpg', caption: 'Bordado en hilo de plata y oro' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_1e8705c9.jpg', caption: 'Tela de damasco valenciano' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_07930a16.jpg', caption: 'Detalle de pedrería y encaje' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.04.38_0d991970.jpg', caption: 'Nuestra tienda · C/ Grabador Esteve' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.34.19_9aca2793.jpg', caption: 'Corte de Honor artesanal' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.34.35_c730d5ed.jpg', caption: 'Preparativos para la Cremà' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.35.23_654c46b7.jpg', caption: 'Últimos detalles de confección' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.20_5fc7902b.jpg', caption: 'Tradición y arte valenciano' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.43_39b3a58f.jpg', caption: 'Colores de la huerta valenciana' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.54_d6860bf6.jpg', caption: 'Bordados florentinos artesanales' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.37.20_6f6d149b.jpg', caption: 'Falles · indumentaria completa' },
-    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 23.20.06_0ff828d8.jpg', caption: 'El legado textil de Valencia' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.02.59_db5bbd11.jpg', caption: 'Indumentaria de mujer · artesanal', cat: 'mujer'  },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.02.59_39f86f7f.jpg', caption: 'Bordados a mano · dama valenciana',   cat: 'mujer'  },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_6b8a4b5f.jpg', caption: 'Indumentaria masculina tradicional',  cat: 'hombre' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_b3a2c16e.jpg', caption: 'Cotilla artesanal · señora',          cat: 'mujer'  },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_0eac70d9.jpg', caption: 'Indumentaria infantil · Falles',      cat: 'nino'   },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_e930437b.jpg', caption: 'Elegancia de dama valenciana',        cat: 'mujer'  },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_fc060f99.jpg', caption: 'Aderezo masculino de gala',           cat: 'hombre' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.01_57d65e9d.jpg', caption: 'Manteleta bordada · señora',          cat: 'mujer'  },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_91962d31.jpg', caption: 'Vestit de llauradora · xiqueta',      cat: 'nino'   },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_26d8c283.jpg', caption: 'Tejidos de seda · mujer',             cat: 'mujer'  },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_43ecfe2c.jpg', caption: 'Traje de llaurador · hombre',         cat: 'hombre' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_6c752940.jpg', caption: 'Pañuelo de cuello · niño',            cat: 'nino'   },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_1956fae1.jpg', caption: 'Falda y delantal · dama siglo XVIII', cat: 'mujer'  },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_eb1c275e.jpg', caption: 'Joia de la indumentaria · hombre',    cat: 'hombre' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_da119054.jpg', caption: 'Confección exclusiva · señora',       cat: 'mujer'  },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_81f8afaa.jpg', caption: 'Bordado en oro · xiqueta',            cat: 'nino'   },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_1e8705c9.jpg', caption: 'Tela de damasco · hombre',            cat: 'hombre' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_07930a16.jpg', caption: 'Pedrería y encaje · dama',            cat: 'mujer'  },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.04.38_0d991970.jpg', caption: 'Indumentaria completa · hombre',      cat: 'hombre' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.34.19_9aca2793.jpg', caption: 'Corte de Honor · xiqueta',            cat: 'nino'   },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.34.35_c730d5ed.jpg', caption: 'Indumentaria Fallera Mayor',          cat: 'mujer'  },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.35.23_654c46b7.jpg', caption: 'Traje de llaurador · jove',           cat: 'hombre' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.20_5fc7902b.jpg', caption: 'Vestit de llauradora · menuda',       cat: 'nino'   },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.43_39b3a58f.jpg', caption: 'Colores de la huerta · xiqueta',      cat: 'nino'   },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.54_d6860bf6.jpg', caption: 'Bordados florentinos · dama',         cat: 'mujer'  },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 20.37.20_6f6d149b.jpg', caption: 'Falles · indumentaria masculina',     cat: 'hombre' },
+    { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 23.20.06_0ff828d8.jpg', caption: 'Legado textil de Valencia · hombre',  cat: 'hombre' },
   ];
 
   /* ── Shapes y degradados para ClippedGoeyGallery ── */
@@ -613,6 +736,7 @@
       return `<figure
           class="goey-figure ${GOEY_GRADS[s]}"
           data-goey-idx="${i}"
+          data-flip="${it.cat || 'all'}"
           tabindex="0"
           role="button"
           aria-label="${it.caption}">
@@ -657,6 +781,83 @@
     });
   }
 
+  /* ═══════════════════════════════════════════════════════════════════════
+     FLIP REVEAL — traducción exacta de flip-reveal.tsx usando GSAP Flip
+     ─────────────────────────────────────────────────────────────────────
+     • Equivale a <FlipReveal keys={[cat]} showClass="" hideClass="flip-hide">
+     • Captura estado ANTES del cambio de clases (Flip.getState)
+     • Anima de la posición anterior a la nueva (Flip.from)
+     • onEnter: fadeIn + scale desde 0  — onLeave: fadeOut + scale a 0
+  ═══════════════════════════════════════════════════════════════════════ */
+  function initFlipReveal() {
+    const wrapper = document.getElementById('grid-galeria');
+    if (!wrapper) return;
+
+    /* Contar ítems por categoría y actualizar badges */
+    const counts = { all: 0, mujer: 0, hombre: 0, nino: 0 };
+    wrapper.querySelectorAll('[data-flip]').forEach(el => {
+      const k = el.getAttribute('data-flip');
+      if (counts[k] !== undefined) counts[k]++;
+      counts.all++;
+    });
+    ['all','mujer','hombre','nino'].forEach(k => {
+      const badge = document.getElementById('cnt-' + k);
+      if (badge) badge.textContent = counts[k];
+    });
+
+    /* Si GSAP no está disponible → solo muestra/oculta sin animación */
+    const hasGsap = typeof gsap !== 'undefined' && typeof Flip !== 'undefined';
+    if (hasGsap) gsap.registerPlugin(Flip);
+
+    function applyFilter(cat) {
+      const items = wrapper.querySelectorAll('[data-flip]');
+
+      if (!hasGsap) {
+        /* Fallback sin animación */
+        items.forEach(el => {
+          const key = el.getAttribute('data-flip');
+          el.classList.toggle('flip-hide', cat !== 'all' && key !== cat);
+        });
+        return;
+      }
+
+      /* ── GSAP Flip: misma lógica que useGSAP() en flip-reveal.tsx ── */
+      const state = Flip.getState(items);          /* 1. capturar posiciones actuales */
+
+      wrapper.classList.add('is-flipping');        /* deshabilitar hover-transitions */
+
+      items.forEach(el => {                        /* 2. cambiar clases (show/hide) */
+        const key = el.getAttribute('data-flip');
+        const show = cat === 'all' || key === cat;
+        el.classList.toggle('flip-hide', !show);
+      });
+
+      Flip.from(state, {                           /* 3. animar desde las posiciones anteriores */
+        duration : 0.6,
+        scale    : true,
+        ease     : 'power1.inOut',
+        stagger  : 0.05,
+        absolute : true,
+        onEnter  : els => gsap.fromTo(els,
+          { opacity: 0, scale: 0 },
+          { opacity: 1, scale: 1, duration: 0.8 }
+        ),
+        onLeave    : els => gsap.to(els, { opacity: 0, scale: 0, duration: 0.8 }),
+        onComplete : ()  => wrapper.classList.remove('is-flipping'),
+      });
+    }
+
+    /* ── Eventos de los botones de filtro ── */
+    document.querySelectorAll('.flip-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cat = btn.dataset.cat;
+        document.querySelectorAll('.flip-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilter(cat);
+      });
+    });
+  }
+
   /* ── Init ── */
   renderGrid('grid-pasarela', PASARELA);
   if (INSTAGRAM.length > 0) {
@@ -665,6 +866,8 @@
   }
   /* ClippedGoeyGallery — fotos de la carpeta /galeria */
   renderGoeyGrid('grid-galeria', GALERIA_TIENDA);
+  /* FlipReveal — inicializar filtros por categoría */
+  initFlipReveal();
 </script>
 </body>
 </html>
