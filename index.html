@@ -441,6 +441,100 @@
       color: var(--color-gold);
       border-color: var(--color-gold);
     }
+    /* ── Dossier Historia ── */
+    #dossier-historia {
+      padding: 90px 0;
+      background: var(--color-bg-alt);
+      border-top: 1px solid var(--color-border);
+    }
+    .dh-header { max-width: 760px; margin: 0 auto 56px; text-align: center; }
+    .dh-eyebrow {
+      font-size: .68rem; font-weight: 700; letter-spacing: .22em;
+      text-transform: uppercase; color: var(--color-gold); display: block; margin-bottom: 12px;
+    }
+    .dh-title {
+      font-family: var(--font-display); font-size: clamp(2rem,4vw,3rem);
+      font-weight: 400; color: var(--color-text); margin-bottom: 20px; line-height: 1.15;
+    }
+    .dh-lead {
+      font-size: 1rem; color: var(--color-text-muted); line-height: 1.8; max-width: 640px; margin: 0 auto;
+    }
+    /* Grid principal */
+    .dh-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: start; margin-bottom: 56px;
+    }
+    .dh-img-main { position: relative; }
+    .dh-img-main img {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover;
+      border-radius: 6px; display: block;
+      box-shadow: 0 8px 40px rgba(26,23,20,.14);
+    }
+    .dh-img-caption {
+      font-size: .65rem; color: var(--color-text-muted); letter-spacing: .08em;
+      text-transform: uppercase; margin-top: 10px; text-align: center;
+    }
+    /* Contenido texto */
+    .dh-block { margin-bottom: 28px; }
+    .dh-block:last-of-type { margin-bottom: 20px; }
+    .dh-block-title {
+      font-family: var(--font-display); font-size: 1.1rem; font-weight: 400;
+      color: var(--color-text); margin-bottom: 10px; border-left: 3px solid var(--color-gold);
+      padding-left: 14px;
+    }
+    .dh-block-text {
+      font-size: .88rem; color: var(--color-text-muted); line-height: 1.8; margin-bottom: 10px;
+    }
+    .dh-list {
+      list-style: none; display: flex; flex-direction: column; gap: 7px;
+    }
+    .dh-list li {
+      font-size: .85rem; color: var(--color-text-muted); padding-left: 18px; position: relative;
+    }
+    .dh-list li::before {
+      content: '✦'; position: absolute; left: 0; color: var(--color-gold);
+      font-size: .55rem; top: 3px;
+    }
+    .dh-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+    /* Fila taller */
+    .dh-workshop-row {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .dh-workshop-img img {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover;
+      border-radius: 6px; display: block;
+      box-shadow: 0 4px 20px rgba(26,23,20,.1);
+    }
+    .dh-workshop-cap {
+      font-size: .67rem; color: var(--color-text-muted); letter-spacing: .06em;
+      text-transform: uppercase; text-align: center; margin-top: 8px;
+    }
+    .dh-workshop-text-card {
+      background: var(--color-bg-dark); border-radius: 6px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 32px 28px; text-align: center;
+      box-shadow: 0 4px 20px rgba(26,23,20,.1);
+    }
+    .dh-quote {
+      font-family: var(--font-display); font-size: 1.15rem; font-style: italic;
+      color: var(--color-white); line-height: 1.5; margin-bottom: 16px;
+    }
+    .dh-quote-author {
+      font-size: .72rem; font-weight: 600; color: var(--color-gold);
+      letter-spacing: .08em; text-transform: uppercase; display: block; margin-bottom: 6px;
+    }
+    .dh-quote-sub {
+      font-size: .65rem; color: rgba(253,250,243,.4); letter-spacing: .06em; text-transform: uppercase;
+    }
+    @media (max-width: 768px) {
+      .dh-grid { grid-template-columns: 1fr; gap: 28px; }
+      .dh-workshop-row { grid-template-columns: 1fr 1fr; }
+      #dossier-historia { padding: 56px 0; }
+    }
+    @media (max-width: 480px) {
+      .dh-workshop-row { grid-template-columns: 1fr; }
+    }
+
     /* ── Sección Falleras Mayores (en Colecciones) ── */
     #sec-fm {
       margin-top: 64px;
@@ -2712,6 +2806,101 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
+     NUESTRA HISTORIA — Dossier Cosas Cucas
+═══════════════════════════════════════════════════════════════════════════ -->
+<section id="dossier-historia">
+  <div class="container">
+
+    <div class="dh-header">
+      <span class="dh-eyebrow">✦ Dossier · Cosas Cucas desde 1982</span>
+      <h2 class="dh-title">Cuarenta años<br>cosiendo tradición</h2>
+      <p class="dh-lead">
+        En 1982, Paquita Martorell abrió Cosas Cucas en el barrio del Cabañal de Valencia con una misión clara:
+        tratar la indumentaria valenciana con el respeto y la dedicación que merece.
+        Hoy, sus hijas Noelia, María y Paqui continúan ese legado en el taller de la calle Grabador Esteve,
+        vistiendo Falleras Mayores, Cortes de Honor y a todas las que sienten que llevar la indumentaria
+        es mucho más que un vestido — es identidad.
+      </p>
+    </div>
+
+    <div class="dh-grid">
+
+      <!-- Columna izquierda: imagen tienda -->
+      <div class="dh-img-main">
+        <img src="historia/cosascucas_1.jpg" alt="Interior tienda Cosas Cucas · Telas y confección desde 1982" loading="lazy">
+        <div class="dh-img-caption">Interior de la tienda · C/ Grabador Esteve 30, Valencia</div>
+      </div>
+
+      <!-- Columna derecha: texto del dossier -->
+      <div class="dh-content">
+
+        <div class="dh-block">
+          <h3 class="dh-block-title">Quiénes somos</h3>
+          <p class="dh-block-text">
+            Cosas Cucas es una empresa familiar especializada en la <strong>confección artesanal de indumentaria valenciana</strong>
+            desde 1982. Somos miembros del <em>Gremio Artesano de Sastres y Modistas de Valencia</em>,
+            certificación que avala nuestra trayectoria y compromiso con la tradición.
+          </p>
+          <p class="dh-block-text">
+            Contamos con dos tiendas-taller en Valencia donde atendemos a nuestras clientas de forma personalizada,
+            asesorándolas en la elección de telas, colores y complementos para cada ocasión.
+          </p>
+        </div>
+
+        <div class="dh-block">
+          <h3 class="dh-block-title">Nuestros servicios</h3>
+          <ul class="dh-list">
+            <li>Confección a medida de trajes de fallera y llauradora</li>
+            <li>Bordados artesanales en hilo de oro y plata</li>
+            <li>Asesoramiento personalizado de indumentaria</li>
+            <li>Selección de más de 35 telas exclusivas a metro</li>
+            <li>Aderezos, peinetas y complementos artesanales</li>
+            <li>Decoración e interiorismo con tejidos valencianos</li>
+          </ul>
+        </div>
+
+        <div class="dh-block">
+          <h3 class="dh-block-title">Especialidad: Falleras Mayores</h3>
+          <p class="dh-block-text">
+            Vestir a una Fallera Mayor es el mayor honor para una casa de indumentaria.
+            A lo largo de cuatro décadas, hemos tenido el privilegio de confeccionar y perfilar
+            los trajes de las Falleras Mayores de Valencia y de decenas de comisiones de toda la ciudad.
+            Cada pieza es única: creada a medida, con los materiales más nobles y el rigor
+            artesanal que la ocasión exige.
+          </p>
+        </div>
+
+        <div class="dh-cta-row">
+          <a class="btn btn--gold" href="#contacto">Pedir cita en tienda</a>
+          <a class="btn" href="mailto:info@cosascucas.es">info@cosascucas.es</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Fila de imágenes del taller -->
+    <div class="dh-workshop-row">
+      <div class="dh-workshop-img">
+        <img src="historia/CocasCucas-02.jpg" alt="Vistiendo a una fallera en el taller de Cosas Cucas" loading="lazy">
+        <p class="dh-workshop-cap">El arte de vestir — taller de Cosas Cucas</p>
+      </div>
+      <div class="dh-workshop-img">
+        <img src="historia/cosascucas_5-1030x1030.jpg" alt="Detalle artesanal en el ajuste del corpiño" loading="lazy">
+        <p class="dh-workshop-cap">Cada detalle, cosido a mano</p>
+      </div>
+      <div class="dh-workshop-img dh-workshop-text-card">
+        <blockquote class="dh-quote">
+          "Vestimos la tradición con el amor que merece Valencia."
+        </blockquote>
+        <cite class="dh-quote-author">— Paquita Martorell, fundadora</cite>
+        <p class="dh-quote-sub">Cosas Cucas · Valencia desde 1982</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
      DECORACIÓN
 ═══════════════════════════════════════════════════════════════════════════ -->
 <section id="decoracion">
@@ -3043,6 +3232,9 @@ const IMG = {
   fm4: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_22e86fa0.jpg',
   fm5: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_19adae8f.jpg',
   fm6: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_ac29bca3.jpg',
+  /* Falleras Mayores 2026 — carpeta propia */
+  fm7: 'falleras%20mayores/fallera%20mayor2026%20Mat%C3%ADas%20perellolluis%20Sant%C3%A1ngel.jpeg',
+  fm8: 'falleras%20mayores/fallera%20mayor2026%20falla%20maestro%20rodrigo%20general%20avil%C3%A9s.jpeg',
   /* Cortes d'Honor grupales */
   cort1: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_c4ffba71.jpg',
   cort2: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_38136dc0.jpg',
@@ -3349,7 +3541,7 @@ const translations = {
       title: 'Cuarenta años bordando\nla tradición valenciana.',
       body: 'Paquita Martorell abrió Cosas Cucas en el Cabañal de Valencia en 1982, con una misión clara: tratar la indumentaria valenciana con el respeto y la dedicación que merece. Hoy, sus hijas Noelia, María y Paqui continúan ese legado en el taller de la calle Grabador Esteve, vistiendo Falleras Mayores, Cortes de Honor y a todas las que sienten que llevar la indumentaria es mucho más que un vestido — es identidad.',
       ctaLabel: 'Conoce nuestra historia',
-      ctaHref: 'https://gremiosastresymodistasvalencia.com/artesanos/cosas-cucas/',
+      ctaHref: '#dossier-historia',
       image: IMG.editorial,
       imageCaption: '"Vestimos la tradición\ncon el amor que\nmerece Valencia."',
     },
@@ -3444,12 +3636,14 @@ const translations = {
       ],
       fmLabel: '✦ Falleras Mayores de Valencia vestidas por Cosas Cucas',
       fm: [
-        { img: IMG.fm1, name: 'Fallera Mayor de Valencia',          year: '2024' },
-        { img: IMG.fm2, name: 'Fallera Mayor de Valencia',          year: '2023' },
-        { img: IMG.fm3, name: 'Fallera Mayor de Campanar',          year: '2024' },
-        { img: IMG.fm4, name: 'Fallera Mayor de Patraix',           year: '2023' },
-        { img: IMG.fm5, name: 'Fallera Mayor de Benimaclet',        year: '2024' },
-        { img: IMG.fm6, name: "Fallera Mayor de l'Eixample",        year: '2022' },
+        { img: IMG.fm7, name: 'Falla Matías Perelló · Luis Santángel',          year: 'Fallera Mayor 2026' },
+        { img: IMG.fm8, name: 'Falla Maestro Rodrigo · General Avilés',          year: 'Fallera Mayor 2026' },
+        { img: IMG.fm1, name: 'Fallera Mayor de Valencia',                        year: '2024' },
+        { img: IMG.fm2, name: 'Fallera Mayor de Valencia',                        year: '2023' },
+        { img: IMG.fm3, name: 'Fallera Mayor de Campanar',                        year: '2024' },
+        { img: IMG.fm4, name: 'Fallera Mayor de Patraix',                         year: '2023' },
+        { img: IMG.fm5, name: 'Fallera Mayor de Benimaclet',                      year: '2024' },
+        { img: IMG.fm6, name: "Fallera Mayor de l'Eixample",                      year: '2022' },
       ],
       cortsLabel: 'Cortes de Honor',
       corts: [
@@ -3756,7 +3950,7 @@ const translations = {
       title: "Quaranta anys bordant\nla tradició valenciana.",
       body: "Paquita Martorell va obrir Cosas Cucas al Cabañal de València el 1982, amb una missió clara: tractar la indumentària valenciana amb el respecte i la dedicació que mereix. Avui, les seues filles Noelia, María i Paqui continuen aquell llegat al taller del carrer Gravador Esteve, vestint Falleres Majors, Corts d'Honor i a totes les que senten que portar la indumentària és molt més que un vestit — és identitat.",
       ctaLabel: "Coneix la nostra història",
-      ctaHref: 'https://gremiosastresymodistasvalencia.com/artesanos/cosas-cucas/',
+      ctaHref: '#dossier-historia',
       image: IMG.editorial,
       imageCaption: '"Vestim la tradició\namb l\'amor que\nmereix València."',
     },
@@ -3849,14 +4043,16 @@ const translations = {
         { year: '2010s', label: "Referent\nnacional" },
         { year: 'Avui', label: "Nova generació\nal taller" },
       ],
-      fmLabel: "Falleres Majors de València vestides per Cosas Cucas",
+      fmLabel: "✦ Falleres Majors de València vestides per Cosas Cucas",
       fm: [
-        { img: IMG.fm1, name: 'Fallera Major', year: 'Cosas Cucas · València' },
-        { img: IMG.fm2, name: 'Fallera Major', year: 'Cosas Cucas · València' },
-        { img: IMG.fm3, name: 'Fallera Major', year: 'Cosas Cucas · València' },
-        { img: IMG.fm4, name: 'Fallera Major', year: 'Cosas Cucas · València' },
-        { img: IMG.fm5, name: 'Fallera Major', year: 'Cosas Cucas · València' },
-        { img: IMG.fm6, name: 'Fallera Major', year: 'Cosas Cucas · València' },
+        { img: IMG.fm7, name: 'Falla Matías Perelló · Luis Santángel',           year: 'Fallera Major 2026' },
+        { img: IMG.fm8, name: 'Falla Mestre Rodrigo · General Avilés',           year: 'Fallera Major 2026' },
+        { img: IMG.fm1, name: 'Fallera Major de València',                        year: '2024' },
+        { img: IMG.fm2, name: 'Fallera Major de València',                        year: '2023' },
+        { img: IMG.fm3, name: 'Fallera Major de Campanar',                        year: '2024' },
+        { img: IMG.fm4, name: 'Fallera Major de Patraix',                         year: '2023' },
+        { img: IMG.fm5, name: 'Fallera Major de Benimaclet',                      year: '2024' },
+        { img: IMG.fm6, name: "Fallera Major de l'Eixample",                      year: '2022' },
       ],
       cortsLabel: "Corts d'Honor",
       corts: [
