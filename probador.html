@@ -6,6 +6,8 @@
   <title>Probador Virtual · Cosas Cucas | Indumentaria Valenciana</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <!-- EmailJS SDK — gratis 200 emails/mes · https://www.emailjs.com -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
   :root{
     --bg:#F4EDD8;--bg-alt:#EDE5CE;--bg-dark:#1A1714;
@@ -207,6 +209,45 @@
     #cw{height:120vw;min-height:380px}
     #rgrid{grid-template-columns:repeat(3,1fr)}
   }
+
+  /* ── PASO 1: Datos de clienta ── */
+  .user-field{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:var(--r);font-family:var(--fb);font-size:.62rem;background:var(--bg-alt);color:var(--text);outline:none;transition:border-color .2s;margin-bottom:4px;display:block}
+  .user-field:focus{border-color:var(--gold)}
+  .user-field::placeholder{color:var(--muted)}
+
+  /* ── PASO 2: Estilo histórico ── */
+  .style-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:8px}
+  .style-opt{padding:7px 4px;border:1.5px solid var(--border);border-radius:var(--r);background:transparent;color:var(--muted);font-family:var(--fb);font-size:.5rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:all .15s;text-align:center;line-height:1.3}
+  .style-opt:hover{border-color:var(--gl);color:var(--gl)}
+  .style-opt.on{border-color:var(--gold);background:var(--gold);color:#fff}
+  .desc-field{width:100%;min-height:64px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r);font-family:var(--fb);font-size:.62rem;color:var(--text);background:var(--bg-alt);outline:none;resize:vertical;transition:border-color .2s}
+  .desc-field:focus{border-color:var(--gold)}
+
+  /* ── PASO 4: Botón Enviar Diseño ── */
+  #send-bar{background:var(--bg-dark);border-top:1px solid rgba(217,206,180,.18);padding:10px 16px;flex-shrink:0;display:none}
+  #send-bar.visible{display:block}
+  #btn-enviar{width:100%;padding:13px;background:var(--gold);color:#fff;border:none;border-radius:var(--r);font-family:var(--fb);font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s}
+  #btn-enviar:hover{background:var(--gl)}
+  .send-hint{font-size:.56rem;color:rgba(253,250,243,.4);text-align:center;margin-top:6px;letter-spacing:.06em}
+
+  /* ── Modal Instagram ── */
+  #ig-modal{position:fixed;inset:0;background:rgba(10,8,6,.9);z-index:9000;display:none;align-items:center;justify-content:center;padding:20px}
+  #ig-modal.open{display:flex}
+  .ig-box{background:var(--white);border-radius:16px;padding:32px 28px;max-width:360px;width:100%;text-align:center}
+  .ig-box h3{font-family:var(--fd);font-size:1.15rem;color:var(--text);margin-bottom:8px}
+  .ig-box p{font-size:.8rem;color:var(--muted);margin-bottom:20px;line-height:1.65}
+  .ig-link{display:block;background:#e1306c;color:#fff;padding:11px;border-radius:8px;text-decoration:none;font-weight:700;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;transition:opacity .2s}
+  .ig-link:hover{opacity:.85}
+  .ig-btn-yes,.ig-btn-no{width:100%;padding:12px;border-radius:var(--r);border:none;font-family:var(--fb);font-size:.7rem;font-weight:700;cursor:pointer;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;transition:all .2s}
+  .ig-btn-yes{background:var(--gold);color:#fff}
+  .ig-btn-yes:hover{background:var(--gl)}
+  .ig-btn-no{background:transparent;color:var(--muted);border:1px solid var(--border)}
+  .ig-btn-no:hover{border-color:var(--text);color:var(--text)}
+
+  /* ── Toast ── */
+  #send-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--gold);color:#fff;padding:14px 28px;border-radius:30px;font-size:.78rem;font-weight:600;box-shadow:0 6px 32px rgba(0,0,0,.35);z-index:9999;display:none;text-align:center;max-width:90vw}
+  #send-toast.show{display:block;animation:toastIn .3s ease}
+  @keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
   </style>
 </head>
 <body>
@@ -232,9 +273,17 @@
   <!-- ══ LEFT: control de capas ══ -->
   <aside id="lp">
 
+    <!-- PASO 1: Datos de la clienta -->
+    <div class="sec">
+      <span class="slbl">① Tus datos</span>
+      <input class="user-field" id="u-name"  type="text"  placeholder="Nombre y apellidos *" />
+      <input class="user-field" id="u-email" type="email" placeholder="Email de contacto *" />
+      <input class="user-field" id="u-phone" type="tel"   placeholder="Teléfono (opcional)"  />
+    </div>
+
     <!-- Maniquí base -->
     <div class="sec">
-      <span class="slbl">① Maniquí base</span>
+      <span class="slbl">② Tu foto</span>
 
       <img class="mq-preview" id="mq-preview" alt="Maniquí">
       <div class="mq-name" id="mq-name"></div>
@@ -402,6 +451,17 @@
       <div class="rtt">Librería Cosas Cucas</div>
       <div class="rsub">Seleccionando: <strong id="rcat">Falda</strong></div>
     </div>
+    <!-- PASO 2: Estilo histórico + descripción -->
+    <div style="padding:8px 10px;border-bottom:1px solid var(--border);flex-shrink:0">
+      <span style="font-size:.54rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px">Estilo histórico</span>
+      <div class="style-grid">
+        <button class="style-opt on" data-s="S. XVIII">S. XVIII<br><span style="font-weight:400;font-size:.45rem">Panier · corsé</span></button>
+        <button class="style-opt"    data-s="S. XIX" >S. XIX<br><span style="font-weight:400;font-size:.45rem">Victoriano</span></button>
+        <button class="style-opt"    data-s="L'Antiga">L'Antiga<br><span style="font-weight:400;font-size:.45rem">Fallera</span></button>
+      </div>
+      <textarea class="desc-field" id="u-desc" placeholder="Describe tu traje ideal: corte, colores, bordados, mangas, escote, accesorios…"></textarea>
+    </div>
+
     <div id="rtabs"></div>
 
     <!-- Upload prenda personalizada -->
@@ -416,6 +476,33 @@
   </aside>
 
 </main>
+
+<!-- PASO 4: Botón Enviar Diseño (aparece cuando hay diseño en el canvas) -->
+<div id="send-bar">
+  <button id="btn-enviar">
+    ✦ Enviar diseño · Quiero presupuesto
+  </button>
+  <p class="send-hint">Recibirás respuesta con presupuesto en menos de 24 h</p>
+</div>
+
+<!-- Modal validación Instagram -->
+<div id="ig-modal" role="dialog">
+  <div class="ig-box">
+    <h3>¡Un paso más! 🌸</h3>
+    <p>Síguenos en Instagram <strong>@cosascucas</strong> para desbloquear el envío y recibir cada día inspiración de trajes únicos.</p>
+    <a class="ig-link" href="https://instagram.com/cosascucas" target="_blank" rel="noopener">
+      Abrir @cosascucas en Instagram →
+    </a>
+    <button class="ig-btn-yes" id="ig-confirm">✓ Ya os sigo · Enviar diseño ahora</button>
+    <button class="ig-btn-no"  id="ig-cancel" >Quizá más tarde</button>
+  </div>
+</div>
+
+<!-- Toast de confirmación -->
+<div id="send-toast">
+  🌸 ¡Diseño enviado!<br>
+  <span style="font-weight:400;font-size:.72rem">Os contactamos en 24 h con vuestro presupuesto personalizado.</span>
+</div>
 
 <script>
 /* ═══════════════════════════════════════════════
@@ -871,6 +958,106 @@ renderTabs();
 renderGrid('falda');
 updateMailto();
 setTimeout(hideTooltip, 7000);
+
+/* ═══════════════════════════════════════════════════════════════════
+   PASO 4 — ENVIAR DISEÑO: EmailJS + validación Instagram
+   ─────────────────────────────────────────────────────────────────
+   CONFIGURACIÓN EmailJS (gratis 200 emails/mes → https://emailjs.com):
+   1. Crea cuenta → Email Services → conecta Gmail/Outlook
+   2. Email Templates → nuevo template con estas variables:
+      {{nombre}} {{email_cliente}} {{telefono}} {{estilo}}
+      {{descripcion}} {{prendas}} {{telas}} {{imagen}}
+   3. Copia PUBLIC KEY (Account > API Keys) y los IDs abajo
+═══════════════════════════════════════════════════════════════════ */
+const EJS_PUBLIC_KEY  = 'TU_PUBLIC_KEY';   // ← Account > API Keys
+const EJS_SERVICE_ID  = 'TU_SERVICE_ID';   // ← Email Services > Service ID
+const EJS_TEMPLATE_ID = 'TU_TEMPLATE_ID';  // ← Email Templates > Template ID
+const IG_HANDLE       = '@cosascucas';
+const EMAIL_NEGOCIO   = 'info@cosascucas.es';
+
+/* ── Estilo histórico seleccionado ── */
+let estiloActivo = 'S. XVIII';
+document.querySelectorAll('.style-opt').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.style-opt').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    estiloActivo = btn.dataset.s;
+  });
+});
+
+/* ── Mostrar barra "Enviar" cuando hay algo en el canvas ── */
+function actualizarBtnEnviar() {
+  const hayDato = mqImg || Object.values(layers).some(l => l?.img);
+  document.getElementById('send-bar')?.classList.toggle('visible', !!hayDato);
+}
+/* Interceptamos redraw para activar el botón automáticamente */
+const _redrawOrig = redraw;
+redraw = function() { _redrawOrig(); actualizarBtnEnviar(); };
+
+/* ── Botón Enviar → abrir modal IG ── */
+document.getElementById('btn-enviar').addEventListener('click', () => {
+  document.getElementById('ig-modal').classList.add('open');
+});
+document.getElementById('ig-cancel').addEventListener('click', () => {
+  document.getElementById('ig-modal').classList.remove('open');
+});
+
+/* ── Confirma follow IG → envía email ── */
+document.getElementById('ig-confirm').addEventListener('click', async () => {
+  document.getElementById('ig-modal').classList.remove('open');
+
+  /* Recoger datos de la clienta */
+  const nombre   = document.getElementById('u-name')?.value?.trim()  || '(sin nombre)';
+  const emailCli = document.getElementById('u-email')?.value?.trim() || '(sin email)';
+  const telefono = document.getElementById('u-phone')?.value?.trim() || '—';
+  const desc     = document.getElementById('u-desc')?.value?.trim()  || '(sin descripción)';
+
+  /* Prendas y telas seleccionadas */
+  const LBL = { falda:'Falda', delantal:'Delantal', corpino:'Corpiño', completo:'Conjunto' };
+  const prendasTxt = Object.entries(layers)
+    .filter(([,v]) => v?.n).map(([k,v]) => `${LBL[k]||k}: ${v.n}`).join(' · ') || '—';
+  const telasTxt = Object.entries(telaOverlay)
+    .filter(([,v]) => v?.n).map(([k,v]) => `${LBL[k]||k}: ${v.n}`).join(' · ') || '—';
+
+  /* Capturar canvas como imagen */
+  let imagenJPEG = '';
+  try { imagenJPEG = canvas.toDataURL('image/jpeg', 0.65); } catch {}
+
+  /* ── Fallback si EmailJS no está configurado ── */
+  if (EJS_PUBLIC_KEY === 'TU_PUBLIC_KEY') {
+    const resumen = `Diseño listo para presupuestar:\n\n` +
+      `Clienta: ${nombre}\nEmail: ${emailCli}\nTel: ${telefono}\n` +
+      `Estilo: ${estiloActivo}\nPrendas: ${prendasTxt}\nTelas: ${telasTxt}\n` +
+      `Descripción: ${desc}`;
+    alert('✅ ' + resumen + '\n\n⚙️ Activa el envío automático configurando EmailJS en probador.html');
+    return;
+  }
+
+  /* ── Enviar vía EmailJS ── */
+  try {
+    emailjs.init(EJS_PUBLIC_KEY);
+    await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
+      to_email:       EMAIL_NEGOCIO,
+      nombre:         nombre,
+      email_cliente:  emailCli,
+      telefono:       telefono,
+      estilo:         estiloActivo,
+      descripcion:    desc,
+      prendas:        prendasTxt,
+      telas:          telasTxt,
+      imagen:         imagenJPEG,   /* base64 — incluir como <img> en la plantilla */
+    });
+
+    /* Toast de éxito */
+    const toast = document.getElementById('send-toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 5000);
+
+  } catch (err) {
+    alert('Error al enviar el email 😕\nLlámanos al 963 511 556 o escríbenos a info@cosascucas.es');
+    console.error('EmailJS error:', err);
+  }
+});
 </script>
 </body>
 </html>
