@@ -193,6 +193,17 @@
     transition: color .2s;
   }
   .ph-back:hover { color: var(--gl); }
+  .lang-toggle {
+    display: flex; gap: 2px; background: rgba(253,250,243,.06);
+    border: 1px solid rgba(181,144,58,.25); border-radius: 4px; overflow: hidden;
+  }
+  .lang-btn {
+    padding: 4px 10px; font-family: var(--fb); font-size: .62rem;
+    font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    background: transparent; border: none; cursor: pointer;
+    color: rgba(253,250,243,.4); transition: all .15s;
+  }
+  .lang-btn.on { background: var(--gold); color: var(--white); }
 
   /* ── LAYOUT PRINCIPAL ─────────────────────────────────────────────── */
   #prob-main {
@@ -468,6 +479,17 @@
   .modal-exito-icon svg { width: 32px; height: 32px; stroke: var(--success); fill: none; stroke-width: 2; }
   .modal-exito-title { font-family: var(--fd); font-size: 1.6rem; text-align: center; margin-bottom: 12px; }
   .modal-exito-msg { font-size: .88rem; color: var(--muted); text-align: center; line-height: 1.7; margin-bottom: 28px; }
+
+  /* ── Otras clientas han elegido ─────────────────────────────────── */
+  .clientas-section { margin-top: 28px; }
+  .clientas-title  { font-family:var(--fd);font-size:.95rem;font-style:italic;color:var(--gl);margin-bottom:4px; }
+  .clientas-sub    { font-size:.72rem;color:rgba(253,250,243,.45);margin-bottom:14px;line-height:1.5; }
+  .clientas-grid   { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
+  .clienta-card    { border-radius:var(--r2);overflow:hidden;background:rgba(253,250,243,.04);border:1px solid rgba(181,144,58,.15); }
+  .clienta-img     { width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block; }
+  .clienta-body    { padding:10px; }
+  .clienta-tag     { font-size:.55rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:4px; }
+  .clienta-desc    { font-size:.68rem;color:rgba(253,250,243,.6);line-height:1.55; }
 
   /* ── Sección Ayuda ──────────────────────────────────────────────── */
   .help-box {
@@ -757,6 +779,10 @@
   <header id="prob-header">
     <a class="ph-logo" href="index.html">Cosas Cucas</a>
     <span class="ph-badge">Probador Virtual</span>
+    <div class="lang-toggle" id="lang-toggle">
+      <button class="lang-btn on" data-lang="es">ES</button>
+      <button class="lang-btn"   data-lang="val">VAL</button>
+    </div>
     <a class="ph-back" href="index.html">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
         <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -853,6 +879,47 @@
         <p class="help-footer">
           ¿Tienes dudas? Usa el chat 💬 o llámanos al <strong>963 511 556</strong>
         </p>
+      </div>
+
+      <!-- ── OTRAS CLIENTAS HAN ELEGIDO ── -->
+      <div class="clientas-section">
+        <p class="clientas-title" id="clientas-title">✦ Otras clientas han elegido</p>
+        <p class="clientas-sub" id="clientas-sub">Inspírate con diseños reales. Así de detalladas deben ser las descripciones.</p>
+        <div class="clientas-grid">
+
+          <div class="clienta-card">
+            <img class="clienta-img" src="galeria/Imagen de WhatsApp 2025-03-04 a las 18.02.59_db5bbd11.jpg" alt="Fallera Mayor" loading="lazy">
+            <div class="clienta-body">
+              <span class="clienta-tag">Fallera Mayor · Gala</span>
+              <p class="clienta-desc">"Traje de Fallera Mayor en burdeos con delantal bordado en hilo de oro, corpino de seda roja, manteleta de tul dorado y aderezo completo en plata."</p>
+            </div>
+          </div>
+
+          <div class="clienta-card">
+            <img class="clienta-img" src="galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_91962d31.jpg" alt="Fallera teal" loading="lazy">
+            <div class="clienta-body">
+              <span class="clienta-tag">Fallera · Acto Oficial</span>
+              <p class="clienta-desc">"Falda y corpino en terciopelo verde azulado, delantal de encaje dorado, manteleta blanca. Estilo Siglo XVIII para Ofrena de Flors."</p>
+            </div>
+          </div>
+
+          <div class="clienta-card">
+            <img class="clienta-img" src="galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_b3a2c16e.jpg" alt="Fallera joven" loading="lazy">
+            <div class="clienta-body">
+              <span class="clienta-tag">Fallera Jove · Primera Ofrena</span>
+              <p class="clienta-desc">"Traje en fucsia con delantal de encaje en hilo de oro y plata. Corpino terciopelo, mangas francesas bordadas. Aderezo dorado."</p>
+            </div>
+          </div>
+
+          <div class="clienta-card">
+            <img class="clienta-img" src="galeria/Imagen de WhatsApp 2025-03-04 a las 20.37.20_6f6d149b.jpg" alt="Llauradora" loading="lazy">
+            <div class="clienta-body">
+              <span class="clienta-tag">Llauradora · L'Antiga</span>
+              <p class="clienta-desc">"Cotilla negra con bordados florales en hilo dorado, faldilla floral en rojo y crema. Manteleta de tul negro con encaje."</p>
+            </div>
+          </div>
+
+        </div>
       </div>
 
     </aside>
@@ -1027,60 +1094,114 @@ const TELAS_CATALOG = [
 const STYLES = [
   {
     id:'XVIII',
-    name:'Segle XVIII',
-    desc:'Silueta con vuelo amplio, cuerpo entallado, mangas abullonadas. Elegancia barroca.',
-    img:'pasarela/_ADL4063.jpg',
+    name:{ es:'Segle XVIII', val:'Segle XVIII' },
+    desc:{ es:'Silueta con gran vuelo, cuerpo entallado con mangas abullonadas. Elegancia barroca valenciana del siglo XVIII.', val:"Silueta amb gran vol, cos entallat amb mànigues abufades. Elegància barroca valenciana del segle XVIII." },
+    img:'telas/probador digital/traje siglo xviii.jpeg',
   },
   {
     id:'XIX',
-    name:'Segle XIX',
-    desc:'Líneas más depuradas, falda en capas, influencia romántica. Sofisticación clásica.',
-    img:'pasarela/_ADL4065.jpg',
+    name:{ es:'Segle XIX', val:'Segle XIX' },
+    desc:{ es:'Líneas más depuradas, falda en capas y mangas más ajustadas. Influencia romántica. Sofisticación clásica.', val:"Línies més depurades, faldilla en capes i mànigues més ajustades. Influència romàntica. Sofisticació clàssica." },
+    img:'telas/probador digital/traje siglo xix.jpeg',
   },
   {
     id:'antiga',
-    name:"L'Antiga",
-    desc:'Traje tradicional valenciano puro, formas auténticas, herencia centenaria.',
+    name:{ es:"L'Antiga", val:"L'Antiga" },
+    desc:{ es:"Traje tradicional valenciano puro. Formas auténticas heredadas durante siglos. La indumentaria en su forma más genuina.", val:"Vestit tradicional valencià pur. Formes autèntiques heretades durant segles. La indumentària en la seua forma més genuïna." },
     img:'pasarela/_ADL4076.jpg',
   },
 ];
+
 const COMPLEMENTS = [
   {
     id:'adrecos',
-    name:'Adreços (Aderezos)',
-    desc:'Conjunto de joya tradicional: pendientes, collar y peineta artesanal.'
+    name:{ es:'Adreços (Aderezos)', val:'Adreços' },
+    desc:{ es:'Conjunto de joya tradicional: pendientes, collar y peineta artesanal.', val:'Conjunt de joia tradicional: arracades, collar i peineta artesanal.' },
+    metals:['oro','plata'],
+    metalLabel:{ es:{ oro:'Or (Oro)', plata:'Plata' }, val:{ oro:'Or', plata:'Plata' } },
   },
   {
     id:'manteletes',
-    name:'Manteletes',
-    desc:'Capa corta bordada sobre los hombros, elemento distintivo de la indumentaria valenciana.'
+    name:{ es:'Manteletes', val:'Manteletes' },
+    desc:{ es:'Capa corta bordada sobre los hombros, elemento distintivo de la indumentaria valenciana. Disponible en varios colores.', val:'Capa curta brodada sobre les espatlles, element distintiu de la indumentària valenciana. Disponible en diversos colors.' },
+    metals:['oro','plata','blanco','negro'],
+    metalLabel:{ es:{ oro:'Oro', plata:'Plata', blanco:'Blanca', negro:'Negra' }, val:{ oro:'Or', plata:'Plata', blanco:'Blanca', negro:'Negra' } },
   },
   {
     id:'mantilla',
-    name:'Mantilla',
-    desc:'Encaje tradicional, complemento de gran distinción para ocasiones especiales.'
+    name:{ es:'Mantilla', val:'Mantellina' },
+    desc:{ es:'Encaje tradicional de gran distinción. Disponible en varios colores para cualquier ocasión especial.', val:"Encaix tradicional de gran distinció. Disponible en diversos colors per a qualsevol ocasió especial." },
+    metals:['blanco','negro','oro','plata'],
+    metalLabel:{ es:{ blanco:'Blanca', negro:'Negra', oro:'Dorada', plata:'Plateada' }, val:{ blanco:'Blanca', negro:'Negra', oro:'Daurada', plata:'Platejada' } },
+  },
+  {
+    id:'zapatos',
+    name:{ es:'Zapatos', val:'Sabates' },
+    desc:{ es:'Calzado artesanal para completar tu indumentaria. Podemos fabricarlos a juego exacto con la tela que hayas elegido.', val:"Calçat artesanal per a completar la teua indumentària. Podem fabricar-los a to exacte amb la tela que hages triat." },
+    metals:['tela','negro','blanco','marfil'],
+    metalLabel:{ es:{ tela:'🎨 Del color de mi tela', negro:'Negros', blanco:'Blancos', marfil:'Marfil' }, val:{ tela:'🎨 Del color de la meua tela', negro:'Negres', blanco:'Blancs', marfil:'Marfil' } },
   },
 ];
 
 /* ═══════════════════════════════════════════════════════════════════
    ESTADO
 ═══════════════════════════════════════════════════════════════════ */
-const state = {
-  step: 'modal',     /* 'modal' | 'instagram' | 'probador' */
-  user: { name:'', phone:'', email:'' },
-  photo: null,       /* File */
-  photoDataUrl: '',  /* base64 preview */
-  description: '',
-  colors: new Set(),
-  telas: new Set(),  /* IDs de telas seleccionadas */
-  telaFibra: 'todas', /* filtro activo: 'todas' | 'seda' | 'rayon' */
-  style: null,
-  complements: {
-    adrecos:    { open:false, metal:'oro'  },
-    manteletes: { open:false, metal:'plata'},
-    mantilla:   { open:false, metal:'oro'  },
+/* ── Traducciones UI ── */
+const I18N = {
+  es: {
+    step1:'① Tu foto', step2:'② Descripción', step3:'Cuéntanos qué quieres',
+    uploadLabel:'<strong>Arrastra tu foto aquí</strong><br>o haz clic para seleccionarla<br><span style="font-size:.68rem;opacity:.7">De frente, de pies a cabeza</span>',
+    changePhoto:'↺ Cambiar foto',
+    descPlaceholder:'Ej: Quiero un traje de fallera major con falda en azul marino, mandil bordado en oro con motivos florales, cuerpo de terciopelo negro con mangas francesas, manteleta blanca de encaje...',
+    charMin:'mínimo 500', blockA:'Colores de tela', blockATelas:'Nuestras Telas',
+    blockB:'Estilo del traje', blockBSub:'Elige el corte y la época que mejor refleja tu visión.',
+    blockC:'Complements', blockCSub:'Añade los complementos artesanales.',
+    selectStyle:'Seleccionar', selectedStyle:'Seleccionado',
+    btnSolicitar:'Solicitar presupuesto sin compromiso →',
+    summaryEmpty:'Selecciona colores, estilo y complementos para ver el resumen',
+    helpTitle:'💡 ¿Cómo funciona el Probador?',
+    clientasTitle:'✦ Otras clientas han elegido',
+    clientasSub:'Inspírate con diseños reales de Cosas Cucas. Así de detalladas deben ser las descripciones.',
+    metalTitle:'Color',
+  },
+  val: {
+    step1:'① La teua foto', step2:'② Descripció', step3:"Explica'ns que vols",
+    uploadLabel:"<strong>Arrossega la teua foto ací</strong><br>o fes clic per a seleccionar-la<br><span style='font-size:.68rem;opacity:.7'>De front, de peus al cap</span>",
+    changePhoto:'↺ Canviar foto',
+    descPlaceholder:"Ex: Vull un vestit de fallera major amb faldilla en blau marí, davantal brodat en or amb motius florals, cos de vellut negre amb mànigues franceses, mantellina blanca d'encaix...",
+    charMin:'mínim 500', blockA:'Colors de tela', blockATelas:'Les nostres Teles',
+    blockB:'Estil del vestit', blockBSub:"Tria el tall i l'època que millor reflecteix la teua visió.",
+    blockC:'Complements', blockCSub:'Afig els complements artesanals.',
+    selectStyle:'Triar', selectedStyle:'Triat',
+    btnSolicitar:'Sol·licitar pressupost sense compromís →',
+    summaryEmpty:'Tria colors, estil i complements per a veure el resum',
+    helpTitle:'💡 Com funciona el Provador?',
+    clientasTitle:'✦ Altres clientes han triat',
+    clientasSub:"Inspira't amb dissenys reals de Cosas Cucas. Així de detallades han de ser les descripcions.",
+    metalTitle:'Color',
   },
 };
+
+const state = {
+  step: 'modal',
+  lang: 'es',       /* 'es' | 'val' */
+  user: { name:'', phone:'', email:'' },
+  photo: null,
+  photoDataUrl: '',
+  description: '',
+  colors: new Set(),
+  telas: new Set(),
+  telaFibra: 'todas',
+  style: null,
+  complements: {
+    adrecos:    { open:false, metal:'oro'    },
+    manteletes: { open:false, metal:'oro'    },
+    mantilla:   { open:false, metal:'blanco' },
+    zapatos:    { open:false, metal:'tela'   },
+  },
+};
+
+function tx(key) { return I18N[state.lang]?.[key] ?? I18N.es[key] ?? key; }
 
 /* ── Recuperar registro de localStorage ── */
 try {
@@ -1241,66 +1362,75 @@ function renderSwatches(colors, containerId) {
 ═══════════════════════════════════════════════════════════════════ */
 function renderStyles() {
   const el = document.getElementById('styles-grid');
-  el.innerHTML = STYLES.map(s => `
+  const L = state.lang;
+  el.innerHTML = STYLES.map(s => {
+    const nm = s.name[L] || s.name.es;
+    const dc = s.desc[L] || s.desc.es;
+    return `
     <div class="style-card${state.style === s.id ? ' selected' : ''}" data-style="${s.id}" role="radio" aria-checked="${state.style === s.id}" tabindex="0">
-      <img class="style-img" src="${s.img}" alt="${s.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="style-img" src="${s.img}" alt="${nm}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="style-img-placeholder" style="display:none">
         <svg viewBox="0 0 48 80"><ellipse cx="24" cy="10" rx="7" ry="8"/><path d="M10 22 Q8 30 8 38 Q8 44 12 48 H36 Q40 44 40 38 Q40 30 38 22 Q32 18 24 18 Q16 18 10 22Z"/><path d="M14 48 L14 76 M34 48 L34 76"/></svg>
-        <span style="font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase">${s.name}</span>
+        <span style="font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase">${nm}</span>
       </div>
       <div class="style-body">
-        <p class="style-name">${s.name}</p>
-        <p class="style-desc">${s.desc}</p>
+        <p class="style-name">${nm}</p>
+        <p class="style-desc">${dc}</p>
         <div class="style-radio">
           <div class="style-radio-dot"></div>
-          ${state.style === s.id ? 'Seleccionado' : 'Seleccionar'}
+          ${state.style === s.id ? tx('selectedStyle') : tx('selectStyle')}
         </div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 
   el.querySelectorAll('.style-card').forEach(card => {
-    const select = () => {
-      state.style = card.dataset.style;
-      renderStyles();
-      updateSummary();
-    };
+    const select = () => { state.style = card.dataset.style; renderStyles(); updateSummary(); };
     card.addEventListener('click', select);
-    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); }});
+    card.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' '){e.preventDefault();select();} });
   });
 }
 
 /* ═══════════════════════════════════════════════════════════════════
    RENDERIZAR ACORDEÓN COMPLEMENTOS
 ═══════════════════════════════════════════════════════════════════ */
+/* Colores visuales para los dots de metal/color */
+const METAL_COLORS = { oro:'#b5903a', plata:'#a0a0a0', blanco:'#fdfaf3', negro:'#1a1714', marfil:'#f4edd8', tela:'linear-gradient(135deg,#b5903a,#8a6c2b)' };
+
 function renderAccordion() {
   const el = document.getElementById('accord-container');
+  const L  = state.lang;
+
   el.innerHTML = COMPLEMENTS.map(c => {
-    const st = state.complements[c.id];
+    const st   = state.complements[c.id];
+    const nm   = c.name[L] || c.name.es;
+    const dc   = c.desc[L] || c.desc.es;
+    const labs = c.metalLabel[L] || c.metalLabel.es;
+
+    const metalOpts = c.metals.map(m => {
+      const dotStyle = m === 'tela'
+        ? `background:${METAL_COLORS.tela};border:1.5px solid rgba(181,144,58,.4)`
+        : `background:${METAL_COLORS[m]};border:1.5px solid rgba(0,0,0,.12)`;
+      return `<div class="metal-opt${st.metal === m ? ' active' : ''}" data-metal="${m}">
+        <div class="metal-radio"></div>
+        <div class="metal-dot" style="${dotStyle}"></div>
+        ${labs[m] || m}
+      </div>`;
+    }).join('');
+
     return `
     <div class="accord-item${st.open ? ' open' : ''}" data-comp="${c.id}">
       <div class="accord-head">
         <div class="accord-left">
-          <div class="accord-check">
-            <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
-          </div>
-          <span class="accord-name">${c.name}</span>
+          <div class="accord-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <span class="accord-name">${nm}</span>
         </div>
         <svg class="accord-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="accord-body">
-        <p class="accord-desc">${c.desc}</p>
-        <div class="metal-group">
-          <div class="metal-opt${st.metal === 'oro' ? ' active' : ''}" data-metal="oro">
-            <div class="metal-radio"></div>
-            <div class="metal-dot" style="background:#b5903a"></div>
-            Or (Oro)
-          </div>
-          <div class="metal-opt${st.metal === 'plata' ? ' active' : ''}" data-metal="plata">
-            <div class="metal-radio"></div>
-            <div class="metal-dot" style="background:#a0a0a0"></div>
-            Plata
-          </div>
-        </div>
+        <p class="accord-desc">${dc}</p>
+        <p style="font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">${tx('metalTitle')}</p>
+        <div class="metal-group" style="flex-wrap:wrap;gap:10px 16px">${metalOpts}</div>
       </div>
     </div>`;
   }).join('');
@@ -1503,6 +1633,27 @@ document.getElementById('btn-exito-close').addEventListener('click', () => {
 /* ═══════════════════════════════════════════════════════════════════
    INICIALIZAR INTERFAZ
 ═══════════════════════════════════════════════════════════════════ */
+/* ── Toggle idioma ── */
+document.getElementById('lang-toggle')?.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    state.lang = btn.dataset.lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('on', b.dataset.lang === state.lang));
+    /* Re-renderizar todo lo que depende del idioma */
+    renderStyles();
+    renderAccordion();
+    renderTelas();
+    updateSummary();
+    /* Actualizar textos estáticos de la columna izquierda */
+    const t = I18N[state.lang];
+    const ce = document.getElementById('clientas-title');
+    const cs = document.getElementById('clientas-sub');
+    if (ce) ce.textContent = t.clientasTitle;
+    if (cs) cs.textContent = t.clientasSub;
+    const btn2 = document.getElementById('btn-solicitar');
+    if (btn2) btn2.childNodes[0].nodeValue = t.btnSolicitar.replace(' →','') + ' ';
+  });
+});
+
 renderSwatches(COLORS_SEDES,   'swatches-sedes');
 renderSwatches(COLORS_LIGEROS, 'swatches-ligeros');
 renderTelas();
