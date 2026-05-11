@@ -157,7 +157,7 @@
       grid-template-columns: auto 1fr auto;
       align-items: center;
       height: 100%;
-      gap: 16px;
+      gap: clamp(8px, 1.5vw, 20px);
     }
     /* LOGO */
     .logo {
@@ -199,13 +199,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 22px;
+      gap: clamp(6px, 1.1vw, 18px);   /* se comprime en pantallas medias */
       overflow: hidden;
+      flex-wrap: nowrap;
     }
     .nav-desktop a {
-      font-size: 0.73rem;
+      font-size: clamp(0.6rem, 0.7vw, 0.72rem);   /* escala con el viewport */
       font-weight: 500;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--color-text);
       position: relative;
@@ -3146,7 +3147,7 @@ const translations = {
       { label: 'Vídeos',       href: '#videos'        },
       { label: '✦ Probador',    href: 'probador.html', target: '_blank' },
       { label: 'Galería',      href: 'galeria.html', target: '_blank' },
-      { label: 'Contacto & Visítanos', href: '#contacto' },
+      { label: 'Contacto', href: '#contacto' },
     ],
     stripe: [
       'Confección artesanal a medida — Valencia desde 1982',
@@ -3531,7 +3532,7 @@ const translations = {
       { label: 'Vídeos',        href: '#videos'        },
       { label: '✦ Provador',    href: 'probador.html', target: '_blank' },
       { label: 'Galeria',       href: 'galeria.html', target: '_blank' },
-      { label: "Contacte & Visita'ns", href: '#contacto' },
+      { label: 'Contacte', href: '#contacto' },
     ],
     stripe: [
       "Confecció artesanal a mida — València des de 1982",
