@@ -465,7 +465,7 @@
       gap: 48px; align-items: start; margin-bottom: 56px;
     }
     .dh-img-main { position: relative; }
-    .dh-img-main img {
+    .dh-img-main > img {
       width: 100%; aspect-ratio: 4/3; object-fit: cover;
       border-radius: 6px; display: block;
       box-shadow: 0 8px 40px rgba(26,23,20,.14);
@@ -473,6 +473,16 @@
     .dh-img-caption {
       font-size: .65rem; color: var(--color-text-muted); letter-spacing: .08em;
       text-transform: uppercase; margin-top: 10px; text-align: center;
+    }
+    /* Dos fotos pequeñas bajo la principal */
+    .dh-img-sub-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 8px; margin-top: 10px;
+    }
+    .dh-img-sub img {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover;
+      border-radius: 4px; display: block;
+      box-shadow: 0 4px 16px rgba(26,23,20,.1);
     }
     /* Contenido texto */
     .dh-block { margin-bottom: 28px; }
@@ -2843,6 +2853,15 @@
       <div class="dh-img-main">
         <img src="historia/cosascucas_1.jpg" alt="Interior tienda Cosas Cucas · Telas y confección desde 1982" loading="lazy">
         <div class="dh-img-caption">Tienda de Cosas Cucas — C/ Grabador Esteve 30, Valencia · Desde 1982</div>
+        <!-- Las dos fotos adicionales debajo -->
+        <div class="dh-img-sub-row">
+          <div class="dh-img-sub">
+            <img src="historia/cosascucas_1.jpg" alt="Interior de la tienda Cosas Cucas con telas" loading="lazy">
+          </div>
+          <div class="dh-img-sub">
+            <img src="historia/CocasCucas-02.jpg" alt="Vistiendo a una fallera en el taller" loading="lazy">
+          </div>
+        </div>
       </div>
 
       <div class="dh-content">
