@@ -5461,12 +5461,204 @@ function updateCitaBtn() {
 
 <script>
 /* ═══════════════════════════════════════════════════════════════════════
-   CHATBOT — Base de conocimiento: Diccionario del traje de fallera
-   Matching: tokenización + puntuación por solapamiento de keywords
+   CHATBOT — Powered by Claude (Anthropic) vía Cloudflare Worker
+   ─────────────────────────────────────────────────────────────────────
+   CONFIGURACIÓN: pega aquí la URL de tu Cloudflare Worker después de
+   desplegarlo según las instrucciones de worker.js
 ════════════════════════════════════════════════════════════════════════ */
 (function () {
-  /* ── BASE DE CONOCIMIENTO ─────────────────────────────────────────── */
-  const KB = [
+
+  /* ▶ PEGA AQUÍ TU URL DE CLOUDFLARE WORKER (ver worker.js para instrucciones) */
+  const CHAT_ENDPOINT = 'PENDIENTE_CONFIGURAR';
+
+  /* ── SYSTEM PROMPT: todo lo que Claude sabe sobre Cosas Cucas ──────── */
+  const SYSTEM_PROMPT = `Eres la asistente virtual de Cosas Cucas, tienda especializada en indumentaria valenciana tradicional fundada en 1982 en Valencia, España.
+
+PERSONALIDAD: Amable, experta y cercana. Hablas como una de las expertas de la tienda. Usas algún valencianismo natural (xiqueta, bonita, ché…). Respuestas concisas pero completas. Usa emojis con moderación.
+
+SOBRE LA TIENDA:
+• Tienda Principal: C/ Grabador Esteve, 30 · Valencia · Tel: 963 511 556
+• Tienda Cabañal: C/ Vicent Gallart, 49 · Valencia · Tel: 963 714 997
+• WhatsApp: 667 775 501 · Email: info@cosascucas.es
+• Horario: Lun–Vie 10:00–13:30 / 17:00–20:00 · Sábados 10:30–13:30
+• Historia: Fundada por Paquita Martorell en 1982. Hoy la llevan sus hijas Noelia, María y Paqui en C/ Grabador Esteve.
+• Servicios: confección a medida, bordados artesanales, asesoramiento personalizado, probador virtual en web.
+
+DICCIONARIO DEL TRAJE DE FALLERA (tu conocimiento experto):
+
+PRENDAS EXTERIORES — confeccionadas con sedas estampadas de flores o lisas:
+
+FALDA O BASQUIÑA: Falda amplia y plisada de seda o raso estampado (flores, vegetales). Cae desde la cintura hasta los zapatos o tobillos. Su vuelo se logra con enaguas interiores. Mide 4–5 metros de tela.
+
+CORPIÑO O CUERPO: Prenda superior ajustada de seda o terciopelo a juego con la falda. Escote bajo, cordones laterales de cierre, bordados ricos. Se divide en cuerpo principal (pecho y cintura) y mangas independientes.
+
+MANGAS DEL CORPIÑO: Se cosen o abrochan al cuerpo. Tres tipos: farol (voluminosas en hombros), francesas (cortas abullonadas) y largas (ceñidas y elegantes). Todas van bordadas.
+
+DELANTAL O FALDETA: Pañuelo rectangular de tul, muselina o batista bordado en oro/plata con flores y arabescos. Se coloca frontalmente sobre la falda, abrochado atrás, cubriendo el regazo.
+
+MANTELETA: Complemento imprescindible sobre hombros y cabeza. Semitransparente para realzar la falda. Dos piezas: Pico o Pañoleta (triangular o rectangular de tul/muselina/batista, cubre hombros y escote) y parte superior (fijada con horquillas, deja ver el corpiño).
+
+PEINADO Y ADEREZOS:
+PEINADO: Tres rodetes (dos laterales a la altura de las orejas, uno posterior). Cabello liso y recogido. Sujeto con peinetas. Puede llevar horas de preparación.
+PEINETAS: De nácar, carey o concha. Altas y curvadas. Las de Fallera Mayor son especialmente grandes. Van por parejas o tríos. Gran valor artístico; muchas se heredan.
+ADEREZO: Conjunto de joyas (pendientes largos, broches para peinetas, colgantes). En oro o plata con piedras. Simboliza el estatus familiar y muchos se heredan.
+
+CALZADO Y COMPLEMENTOS FINALES:
+ZAPATOS: Tacón bajo 3–5 cm, piel o satén negro o blanco, con lazos o flores bordadas. Combinan con medias.
+MANTILLA: Opcional para actos solemnes. Encaje negro o blanco sobre hombros.
+RAMILLETE: Bouquet de flores naturales (rosas, claveles) en la mano para actos oficiales como la Ofrena de Flors.
+
+Responde SIEMPRE en el mismo idioma que use el cliente. Si no sabes algo con certeza, recomienda contactar con la tienda.`;
+
+  /* ── ESTADO ────────────────────────────────────────────────────────── */
+  const history = [];   /* historial de conversación para contexto multi-turno */
+  let   busy    = false;
+
+  /* Sugerencias iniciales */
+  const SUGGS = [
+    '¿Qué es la falda?',
+    '¿Para qué sirve el delantal?',
+    '¿Tipos de mangas?',
+    '¿Qué es la manteleta?',
+    '¿Qué es el aderezo?',
+    'Horario y tiendas',
+  ];
+
+  /* ── UI ────────────────────────────────────────────────────────────── */
+  const panel = document.getElementById('chat-panel');
+  const msgs  = document.getElementById('chat-msgs');
+  const inp   = document.getElementById('chat-inp');
+
+  const openPanel  = () => { panel.classList.add('open'); inp.focus(); document.querySelector('.chat-badge').style.display = 'none'; };
+  const closePanel = () => panel.classList.remove('open');
+
+  function addBot(html, skipHistory = false) {
+    const wrap = document.createElement('div');
+    wrap.className = 'ch-bot';
+    wrap.innerHTML = `<div class="ch-bot-av">CC</div><div class="ch-bubble">${html}</div>`;
+    msgs.appendChild(wrap);
+    scrollEnd();
+    if (!skipHistory) history.push({ role: 'assistant', content: stripHtml(html) });
+  }
+
+  function addUser(txt) {
+    const w = document.createElement('div');
+    w.className = 'ch-user';
+    w.innerHTML = `<div class="ch-user-bubble">${escHtml(txt)}</div>`;
+    msgs.appendChild(w);
+    scrollEnd();
+    history.push({ role: 'user', content: txt });
+  }
+
+  function showTyping() {
+    const el = document.createElement('div');
+    el.className = 'ch-typing'; el.id = 'ch-typing-indicator';
+    el.innerHTML = '<div class="ch-bot-av">CC</div><div class="ch-typing-dots"><span></span><span></span><span></span></div>';
+    msgs.appendChild(el); scrollEnd();
+    return el;
+  }
+
+  function addSuggs() {
+    msgs.querySelectorAll('.ch-suggs').forEach(e => e.remove());
+    const div = document.createElement('div');
+    div.className = 'ch-suggs';
+    SUGGS.forEach(s => {
+      const b = document.createElement('button');
+      b.className = 'ch-sugg'; b.textContent = s;
+      b.addEventListener('click', () => { div.remove(); handleSend(s); });
+      div.appendChild(b);
+    });
+    msgs.appendChild(div); scrollEnd();
+  }
+
+  function scrollEnd() { setTimeout(() => { msgs.scrollTop = msgs.scrollHeight; }, 50); }
+  function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function stripHtml(s) { return s.replace(/<[^>]+>/g,''); }
+
+  /* ── LLAMADA A CLAUDE VÍA CLOUDFLARE WORKER ────────────────────────── */
+  async function askClaude(userMsg) {
+    if (CHAT_ENDPOINT === 'PENDIENTE_CONFIGURAR') {
+      /* Fallback elegante si el Worker aún no está configurado */
+      return 'Para activar el asistente con IA necesito que configures el endpoint de Claude. Consulta el archivo <b>worker.js</b> del repositorio para las instrucciones paso a paso. ¡En 5 minutos lo tienes listo! 🚀';
+    }
+
+    const response = await fetch(CHAT_ENDPOINT, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model:      'claude-haiku-3-5',
+        max_tokens: 600,
+        system:     SYSTEM_PROMPT,
+        messages:   history,   /* historial completo → Claude recuerda el contexto */
+      }),
+    });
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.error?.message || `Error ${response.status}`);
+    }
+
+    const data = await response.json();
+    /* Anthropic devuelve: data.content[0].text */
+    return data.content?.[0]?.text ?? '(respuesta vacía)';
+  }
+
+  /* ── ENVIAR MENSAJE ────────────────────────────────────────────────── */
+  async function handleSend(txt) {
+    txt = (txt || inp.value).trim();
+    if (!txt || busy) return;
+    busy = true;
+    inp.value = '';
+    inp.disabled = true;
+    msgs.querySelectorAll('.ch-suggs').forEach(e => e.remove());
+
+    addUser(txt);
+    const typingEl = showTyping();
+
+    try {
+      const reply = await askClaude(txt);
+      typingEl.remove();
+      /* Convertir saltos de línea en <br> y **negritas** */
+      const html = reply
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/\*\*(.*?)\*\*/g,'<b>$1</b>')
+        .replace(/\n/g,'<br>');
+      addBot(html);
+    } catch (err) {
+      typingEl.remove();
+      addBot(`Lo siento, ha habido un problema al conectar con el asistente. 😕<br><br>Puedes contactarnos directamente:<br>📞 <b>963 511 556</b> · 💬 <b>WhatsApp 667 775 501</b>`, true);
+      console.error('Chat error:', err);
+    }
+
+    busy = false;
+    inp.disabled = false;
+    inp.focus();
+  }
+
+  /* ── EVENTOS ──────────────────────────────────────────────────────── */
+  document.getElementById('chat-fab').addEventListener('click', () =>
+    panel.classList.contains('open') ? closePanel() : openPanel());
+  document.getElementById('chat-fab').addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPanel(); }
+  });
+  document.getElementById('chat-close').addEventListener('click', closePanel);
+  document.getElementById('chat-send').addEventListener('click', () => handleSend());
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); handleSend(); } });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
+  });
+
+  /* ── BIENVENIDA ─────────────────────────────────────────────────────  */
+  setTimeout(() => {
+    addBot('¡Hola! 👋 Soy la asistente virtual de <b>Cosas Cucas</b>, experta en indumentaria valenciana. Puedo ayudarte con el traje de fallera, nuestras colecciones, citas en tienda y mucho más. ¿Qué te gustaría saber?', true);
+    setTimeout(addSuggs, 900);
+  }, 800);
+
+})();
+</script>
+
+</body>
+</html>
     {
       id:'partes',
       keys:['partes','componentes','elementos','traje','qué lleva','cómo es','qué es'],
