@@ -1878,6 +1878,89 @@
     }
     .btn--cita:hover { background: var(--color-gold); color: var(--color-white); }
 
+    /* ═══════════════════════════════════════════════════════════════════════════
+       ANIMATED BORDER BUTTONS — traducción de button-border.tsx (motion/react)
+       ─────────────────────────────────────────────────────────────────────────
+       Técnica idéntica al componente React:
+       • .ab-track  = capa de borde con máscara CSS → solo visible el anillo
+       • .ab-orb    = orbe de degradado que recorre el perímetro con offset-path
+       ab = "animated border"
+    ═══════════════════════════════════════════════════════════════════════════ */
+
+    /* Garantizar position:relative en todos los botones target */
+    .btn,
+    .btn-probador-primary,
+    .btn-probador-secondary { position: relative; }
+
+    /* ── Capa track: se extiende 1 px fuera y oculta todo excepto el borde ─ */
+    .ab-track {
+      position: absolute;
+      inset: -1px;
+      border: 2px solid transparent;
+      border-radius: inherit;
+      pointer-events: none;
+      z-index: 1;
+
+      /* MASK: revela SOLO el anillo del borde
+         Layer 1 → gradient transparente / padding-box → oculta el interior
+         Layer 2 → gradient negro     / border-box  → muestra todo el borde
+         mask-composite:intersect    → visible = borde − interior           */
+      mask-clip:        padding-box, border-box;
+      mask-composite:   intersect;
+      mask-image:       linear-gradient(#0000 0 0), linear-gradient(#000 0 0);
+      /* Safari */
+      -webkit-mask-clip:       padding-box, border-box;
+      -webkit-mask-composite:  source-in;
+      -webkit-mask-image:      linear-gradient(#0000 0 0), linear-gradient(#000 0 0);
+    }
+
+    /* ── Orbe de degradado dorado que viaja por el borde ───────────────────── */
+    .ab-orb {
+      position: absolute;
+      width: 24px;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 90deg at 50% 50%,
+        transparent   0%,
+        var(--color-gold-light) 35%,
+        #fff9dc       52%,
+        var(--color-gold-light) 68%,
+        transparent  100%
+      );
+
+      /* Recorre el rectángulo del track (= perímetro del botón) */
+      offset-path:   rect(0 auto auto 0 round var(--ab-r, 0px));
+      offset-anchor: center center;
+      animation: ab-travel var(--ab-dur, 3.5s) linear infinite;
+    }
+
+    @keyframes ab-travel {
+      from { offset-distance: 0%;   }
+      to   { offset-distance: 100%; }
+    }
+
+    /* Variantes de velocidad y radio según tipo de botón */
+    .btn--cita            { --ab-dur: 3s;   }
+    .btn--filled          { --ab-dur: 4s;   }
+    .btn--gold            { --ab-dur: 3.2s; }
+    .btn-probador-primary { --ab-dur: 2.8s; --ab-r: 0px; }
+    .btn-probador-secondary { --ab-dur: 3.8s; --ab-r: 0px; }
+
+    /* Para botones con fondo oscuro (.btn--filled) el orbe es más brillante */
+    .btn--filled .ab-orb {
+      background: conic-gradient(
+        from 90deg at 50% 50%,
+        transparent 0%,
+        var(--color-gold) 35%,
+        #ffecaa 52%,
+        var(--color-gold) 68%,
+        transparent 100%
+      );
+    }
+    /* Para .btn--cita el orbe es ligeramente más grande */
+    .btn--cita .ab-orb { width: 28px; }
+
     /* ── Volver arriba ── */
     .back-top {
       position: fixed; bottom: 100px; right: 28px;
@@ -4287,6 +4370,29 @@ function renderAll() {
   buildEditorial(); buildDecoracion(); buildVideos(); buildResenas();
   buildNewsletter(); buildContacto(); buildVisita(); buildFooter();
   updateCitaBtn();
+  initAnimatedBorders();   /* button-border.tsx → orbe dorado en todos los botones */
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ANIMATED BORDER BUTTONS — init (inyecta .ab-track > .ab-orb en cada botón)
+   Se llama al final de renderAll() para que todos los botones generados
+   por JS ya existan en el DOM.
+═══════════════════════════════════════════════════════════════════════════ */
+function initAnimatedBorders() {
+  const SEL = '.btn, .btn-probador-primary, .btn-probador-secondary';
+  document.querySelectorAll(SEL).forEach(btn => {
+    if (btn.querySelector('.ab-track')) return;  /* evitar duplicados */
+
+    const track = document.createElement('span');
+    track.className = 'ab-track';
+    track.setAttribute('aria-hidden', 'true');
+
+    const orb = document.createElement('span');
+    orb.className = 'ab-orb';
+
+    track.appendChild(orb);
+    btn.appendChild(track);
+  });
 }
 
 /* ── Probador Virtual modal ── */
