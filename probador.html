@@ -469,6 +469,63 @@
   .modal-exito-title { font-family: var(--fd); font-size: 1.6rem; text-align: center; margin-bottom: 12px; }
   .modal-exito-msg { font-size: .88rem; color: var(--muted); text-align: center; line-height: 1.7; margin-bottom: 28px; }
 
+  /* ── Telas de la colección ───────────────────────────────────────── */
+  .tela-filter-row {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;
+  }
+  .tela-filter-btn {
+    padding: 5px 13px; border: 1.5px solid var(--border); border-radius: 20px;
+    background: transparent; color: var(--muted); font-family: var(--fb);
+    font-size: .63rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase;
+    cursor: pointer; transition: all .15s;
+  }
+  .tela-filter-btn:hover { border-color: var(--text); color: var(--text); }
+  .tela-filter-btn.on { background: var(--text); border-color: var(--text); color: var(--white); }
+  .tela-filter-btn.on.seda  { background: var(--gold); border-color: var(--gold); }
+  .tela-filter-btn.on.rayon { background: var(--muted); border-color: var(--muted); }
+
+  .telas-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+  }
+  .tela-card {
+    position: relative; border: 2px solid transparent; border-radius: var(--r2);
+    overflow: hidden; cursor: pointer; background: var(--bg-alt);
+    transition: border-color .15s, transform .15s, box-shadow .15s;
+  }
+  .tela-card:hover { border-color: var(--gl); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(181,144,58,.2); }
+  .tela-card.sel { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(181,144,58,.2); }
+  .tela-img {
+    width: 100%; aspect-ratio: 1; object-fit: cover; display: block;
+    transition: transform .25s ease;
+  }
+  .tela-card:hover .tela-img { transform: scale(1.06); }
+  .tela-tick {
+    position: absolute; top: 6px; right: 6px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transform: scale(.6);
+    transition: opacity .18s, transform .18s;
+  }
+  .tela-card.sel .tela-tick { opacity: 1; transform: scale(1); }
+  .tela-tick svg { width: 12px; height: 12px; stroke: #fff; fill: none; stroke-width: 2.5; }
+  /* Badge fibra en esquina inferior izquierda */
+  .tela-fibra {
+    position: absolute; bottom: 28px; left: 4px;
+    font-size: .48rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    padding: 2px 6px; border-radius: 2px;
+  }
+  .tela-fibra.seda  { background: rgba(181,144,58,.88); color: #fff; }
+  .tela-fibra.rayon { background: rgba(107,93,79,.8);   color: #fff; }
+  .tela-name {
+    padding: 5px 6px 6px; font-size: .6rem; font-weight: 600;
+    letter-spacing: .04em; text-transform: uppercase;
+    color: var(--muted); text-align: center; line-height: 1.3; background: var(--bg-alt);
+  }
+  .tela-card.sel .tela-name { color: var(--text); }
+  /* Sin resultados */
+  .telas-empty { grid-column: 1/-1; text-align: center; font-size: .75rem; color: var(--muted); padding: 24px; font-style: italic; }
+
   /* ── RESPONSIVE ──────────────────────────────────────────────────── */
   @media (max-width: 900px) {
     #prob-main { grid-template-columns: 1fr; }
@@ -483,6 +540,7 @@
     .modal-box { padding: 32px 24px 28px; }
     .styles-grid { grid-template-columns: 1fr 1fr; }
     .swatches-grid { grid-template-columns: repeat(3, 1fr); }
+    .telas-grid  { grid-template-columns: repeat(3, 1fr); }
     .col-der { padding: 24px 18px 140px; }
     .col-izq { padding: 24px 18px; }
   }
@@ -640,6 +698,18 @@
 
       <hr class="block-divider">
 
+      <!-- ── BLOQUE A2: Telas de la Colección ── -->
+      <p class="block-label">Bloque A · Telas</p>
+      <h2 class="block-title">Nuestras Telas</h2>
+      <p class="block-sub">Elige la tela exacta de nuestra colección. Puedes seleccionar varias para diferentes partes del traje.</p>
+
+      <!-- Mini filtros Seda/Rayón -->
+      <div class="tela-filter-row" id="telas-filter-row"></div>
+      <!-- Grid de telas -->
+      <div class="telas-grid" id="telas-grid"></div>
+
+      <hr class="block-divider">
+
       <!-- ── BLOQUE B: Estilo del modelo ── -->
       <p class="block-label">Bloque B</p>
       <h2 class="block-title">Estilo del traje</h2>
@@ -727,6 +797,29 @@ const COLORS_LIGEROS = [
   { id:'rosa-polvo',     name:'Rosa Polvado',    hex:'#e8c8c8', dark:true },
   { id:'gris-perla',     name:'Gris Perla',      hex:'#c8c8c0', dark:true },
 ];
+const TELAS_CATALOG = [
+  /* ── Seda · Brocateles ── */
+  { id:'san-manuel',      name:'San Manuel',      src:'telas/probador digital/san manuel.jpeg',                              fibra:'seda',  tipo:'brocatel' },
+  { id:'cestas',          name:'Cestas',           src:'telas/probador digital/cestas.jpeg',                                  fibra:'seda',  tipo:'brocatel' },
+  { id:'sinfonia',        name:'Sinfonía',         src:'telas/probador digital/sinfonia.jpeg',                                fibra:'seda',  tipo:'brocatel' },
+  { id:'guadalquivir',    name:'Guadalquivir',     src:'telas/probador digital/guadalquivir.jpeg',                            fibra:'seda',  tipo:'brocatel' },
+  /* ── Seda · Damascos ── */
+  { id:'blanca-ramos',    name:'Blanca Ramos',     src:'telas/probador digital/tela blanca2.jpeg',                            fibra:'seda',  tipo:'damasco'  },
+  { id:'blanca-rosa',     name:'Blanca Rosa',      src:'telas/probador digital/blanca3.jpeg',                                 fibra:'seda',  tipo:'damasco'  },
+  /* ── Rayón · Brocateles ── */
+  { id:'calanda',         name:'Calanda',          src:'telas/probador digital/calanda.jpeg',                                 fibra:'rayon', tipo:'brocatel' },
+  { id:'genoveva',        name:'Genoveva',         src:'telas/probador digital/genoveva.jpeg',                                fibra:'rayon', tipo:'brocatel' },
+  { id:'santa-genoveva',  name:'Santa Genoveva',   src:'telas/probador digital/santa genoveva.jpeg',                          fibra:'rayon', tipo:'brocatel' },
+  { id:'san-manuel2',     name:'San Manuel 2',     src:'telas/probador digital/san manuel2.jpeg',                             fibra:'rayon', tipo:'brocatel' },
+  { id:'verde-salvia',    name:'Verde Salvia',     src:'telas/probador digital/WhatsApp Image 2026-05-11 at 11.54.12.jpeg',   fibra:'rayon', tipo:'brocatel' },
+  { id:'turquesa',        name:'Turquesa',         src:'telas/probador digital/WhatsApp Image 2026-05-11 at 11.57.48.jpeg',   fibra:'rayon', tipo:'brocatel' },
+  { id:'azul-noche',      name:'Azul Noche',       src:'telas/probador digital/WhatsApp Image 2026-05-11 at 12.17.10.jpeg',   fibra:'rayon', tipo:'brocatel' },
+  { id:'azul-pizarra',    name:'Azul Pizarra',     src:'telas/probador digital/WhatsApp Image 2026-05-11 at 12.31.03.jpeg',   fibra:'rayon', tipo:'brocatel' },
+  /* ── Rayón · Damascos ── */
+  { id:'blanca-clasica',  name:'Blanca Clásica',   src:'telas/probador digital/tela blanca.jpeg',                             fibra:'rayon', tipo:'damasco'  },
+  { id:'crema-dorada',    name:'Crema Dorada',     src:'telas/probador digital/WhatsApp Image 2026-05-11 at 12.29.35.jpeg',   fibra:'rayon', tipo:'damasco'  },
+];
+
 const STYLES = [
   {
     id:'XVIII',
@@ -775,6 +868,8 @@ const state = {
   photoDataUrl: '',  /* base64 preview */
   description: '',
   colors: new Set(),
+  telas: new Set(),  /* IDs de telas seleccionadas */
+  telaFibra: 'todas', /* filtro activo: 'todas' | 'seda' | 'rayon' */
   style: null,
   complements: {
     adrecos:    { open:false, metal:'oro'  },
@@ -850,6 +945,61 @@ function enterProbador() {
     document.getElementById('app-probador').classList.remove('hidden');
     state.step = 'probador';
   }, 350);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   RENDERIZAR TELAS DE LA COLECCIÓN
+═══════════════════════════════════════════════════════════════════ */
+function renderTelas() {
+  /* Filtros */
+  const filterRow = document.getElementById('telas-filter-row');
+  const filters = [
+    { k:'todas', label:'Todas (16)' },
+    { k:'seda',  label:'🌸 Seda (6)' },
+    { k:'rayon', label:'⚡ Rayón (10)' },
+  ];
+  filterRow.innerHTML = filters.map(f =>
+    `<button class="tela-filter-btn${state.telaFibra === f.k ? ' on ' + f.k : ''}" data-fib="${f.k}">${f.label}</button>`
+  ).join('');
+  filterRow.querySelectorAll('.tela-filter-btn').forEach(btn =>
+    btn.addEventListener('click', () => {
+      state.telaFibra = btn.dataset.fib;
+      renderTelas();
+    })
+  );
+
+  /* Grid filtrado */
+  const grid = document.getElementById('telas-grid');
+  const visibles = TELAS_CATALOG.filter(t => state.telaFibra === 'todas' || t.fibra === state.telaFibra);
+
+  if (!visibles.length) {
+    grid.innerHTML = '<p class="telas-empty">No hay telas en esta categoría.</p>';
+    return;
+  }
+
+  grid.innerHTML = visibles.map(t => `
+    <div class="tela-card${state.telas.has(t.id) ? ' sel' : ''}" data-tela="${t.id}"
+         role="checkbox" aria-checked="${state.telas.has(t.id)}" tabindex="0"
+         aria-label="${t.name}">
+      <img class="tela-img" src="${t.src.replace(/ /g,'%20')}" alt="${t.name}" loading="lazy" />
+      <span class="tela-fibra ${t.fibra}">${t.fibra === 'seda' ? 'Seda' : 'Rayón'}</span>
+      <span class="tela-tick">
+        <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+      </span>
+      <p class="tela-name">${t.name}</p>
+    </div>`).join('');
+
+  grid.querySelectorAll('.tela-card').forEach(card => {
+    const toggle = () => {
+      const id = card.dataset.tela;
+      if (state.telas.has(id)) state.telas.delete(id);
+      else state.telas.add(id);
+      renderTelas();
+      updateSummary();
+    };
+    card.addEventListener('click', toggle);
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+  });
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -1036,7 +1186,13 @@ function updateSummary() {
   const chips = document.getElementById('summary-chips');
   const items = [];
 
-  /* Colores seleccionados */
+  /* Telas de la colección seleccionadas */
+  state.telas.forEach(id => {
+    const t = TELAS_CATALOG.find(x => x.id === id);
+    if (t) items.push(`<span class="chip">🧵 ${t.name}</span>`);
+  });
+
+  /* Colores base seleccionados */
   const allColors = [...COLORS_SEDES, ...COLORS_LIGEROS];
   state.colors.forEach(id => {
     const c = allColors.find(x => x.id === id);
@@ -1089,6 +1245,7 @@ document.getElementById('btn-solicitar').addEventListener('click', async () => {
 
   /* Construir resumen de selección */
   const allColors = [...COLORS_SEDES, ...COLORS_LIGEROS];
+  const telasTxt   = [...state.telas].map(id => TELAS_CATALOG.find(t => t.id === id)?.name).filter(Boolean).join(', ') || '—';
   const coloresTxt = [...state.colors].map(id => allColors.find(c => c.id === id)?.name).filter(Boolean).join(', ') || '—';
   const estiloTxt  = STYLES.find(s => s.id === state.style)?.name || '—';
   const compTxt    = COMPLEMENTS
@@ -1102,7 +1259,7 @@ document.getElementById('btn-solicitar').addEventListener('click', async () => {
     console.log('Solicitud de presupuesto:', {
       nombre: state.user.name, email: state.user.email,
       telefono: state.user.phone, descripcion: state.description,
-      colores: coloresTxt, estilo: estiloTxt, complementos: compTxt
+      telas: telasTxt, colores: coloresTxt, estilo: estiloTxt, complementos: compTxt
     });
     mostrarExito();
     return;
@@ -1116,6 +1273,7 @@ document.getElementById('btn-solicitar').addEventListener('click', async () => {
       email_cliente: state.user.email,
       telefono:      state.user.phone,
       descripcion:   state.description,
+      telas:         telasTxt,
       colores:       coloresTxt,
       estilo:        estiloTxt,
       complementos:  compTxt,
@@ -1143,6 +1301,7 @@ document.getElementById('btn-exito-close').addEventListener('click', () => {
 ═══════════════════════════════════════════════════════════════════ */
 renderSwatches(COLORS_SEDES,   'swatches-sedes');
 renderSwatches(COLORS_LIGEROS, 'swatches-ligeros');
+renderTelas();
 renderStyles();
 renderAccordion();
 updateSummary();
