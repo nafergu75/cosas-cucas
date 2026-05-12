@@ -676,6 +676,17 @@
     }
     .telas-f-btn.on.seda   { background: var(--color-gold); border-color: var(--color-gold); color: var(--color-white); }
     .telas-f-btn.on.rayon  { background: var(--color-text-muted); border-color: var(--color-text-muted); color: var(--color-white); }
+    /* Badge material en tarjetas de indumentaria femenina */
+    .product-card__material {
+      position: absolute; top: 8px; left: 8px;
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 3px 8px; border-radius: 2px;
+      pointer-events: none;
+    }
+    .product-card__material.espolin { background: rgba(139,88,28,.9);  color: #fff; }
+    .product-card__material.seda    { background: rgba(181,144,58,.9); color: #fff; }
+    .product-card__material.rayon   { background: rgba(107,93,79,.85); color: #fff; }
+
     /* Badge fibra/tipo en cada tarjeta */
     .product-card__fibra {
       position: absolute; bottom: 8px; left: 8px;
@@ -3417,20 +3428,39 @@ const translations = {
     ],
     drops: [
       {
-        id: 'falles-2027-mujer', title: 'Indumentaria Femenina', subtitle: 'La Luz de la Tradición',
-        description: 'Nuestra colección más completa para las Fallas de 2027. Telas de seda y rayón, damascos, brocateles, damasinas, spolines... Manteletas, aderezos y complementos que dan vida a nuestra colección.',
+        id: 'falles-2027-mujer', title: 'Indumentaria Femenina · Fallas 2027', subtitle: 'La Luz de la Tradición',
+        description: 'En Cosas Cucas apostamos por la artesanía cuidada, los detalles únicos y las piezas que transmiten dulzura, tradición y originalidad.',
         heroImage: IMG.portada, archiveImage: IMG.archive1, badge: 'Disponible Ahora',
         ctaPrimary: { label: 'Ver la colección', href: '#drops-archive' },
         ctaSecondary: { label: 'Pedir cita', href: 'mailto:info@cosascucas.es' },
         products: [
-          { id:'p1',  name:'Manteleta Bordada a Mano',     desc:'Seda natural con bordado floral exclusivo. Diseño siglo XVIII.',               price:'Consultar', image:IMG.p1,  tag:'new', tagLabel:'Nueva' },
-          { id:'p2',  name:'Delantal de Seda Valenciana',  desc:'Seda tejida en Valencia, bordada con hilos de oro y plata.',                   price:'Consultar', image:IMG.p2,  tag:null },
-          { id:'p3',  name:'Cotilla Artesanal',            desc:'Confeccionada a medida en nuestro taller. Brocados exclusivos.',               price:'A medida',  image:IMG.p3,  tag:null },
-          { id:'p4',  name:'Aderezo Completo',             desc:'Conjunto de joyas de plata dorada para indumentaria valenciana.',              price:'Consultar', image:IMG.p4,  tag:null },
-          { id:'p5',  name:'Falda Siglo XVIII',            desc:'Recreación fiel del vestido del siglo XVIII. Telas exclusivas.',               price:'A medida',  image:IMG.p5,  tag:'new', tagLabel:'Nueva' },
-          { id:'p6',  name:'Pañuelo de Cuello Bordado',   desc:'Batista fina con bordados artesanales de motivos florales valencianos.',       price:'Consultar', image:IMG.p6,  tag:null },
-          { id:'p7',  name:'Enagua con Volantes',          desc:'Tela de algodón blanco con volantes bordados. Talla única ajustable.',         price:'Consultar', image:IMG.p7,  tag:null },
-          { id:'p8',  name:'Jubón de Terciopelo',          desc:'Terciopelo sevillano con pasamanería dorada. Confección artesanal.',           price:'A medida',  image:IMG.p8,  tag:null },
+          /* ── ESPOLÍN ── */
+          { id:'p1', material:'espolin', name:'Espolín Negro · Flores Multicolor y Delantal Dorado',
+            desc:'Traje de espolín negro de gran impacto visual. La falda vuela con amplitud extraordinaria mostrando en su base una guirnalda de flores en rojo intenso, naranja y blanco tejidas directamente en el espolín. Corpino de terciopelo negro con mangas largas. Manteleta cruzada en blanco con bordados barrocos en hilo de oro. Delantal central en tul con arabescos y medallones florales en hilo de oro. Cinturón de seda negro. Conjunto de máxima distinción para gala.',
+            price:'Consultar', image:IMG.p1, tag:'new', tagLabel:'Espolín' },
+          { id:'p2', material:'espolin', name:'Espolín Azul Celeste · Flores Tropicales',
+            desc:'Traje de espolín en azul celeste luminoso con peonías en fucsia intenso, flores lilas, amarillas y azules danzando sobre el fondo celeste. Corpino de terciopelo negro de manga larga. Manteleta de tul dorado con encaje y bordados en hilo de oro. Delantal barroco dorado y lazo de seda celeste en la espalda. Singular luminosidad y alegría. Ideal para la Ofrena de Flors.',
+            price:'Consultar', image:IMG.p2, tag:null },
+          { id:'p3', material:'espolin', name:'Espolín Negro · Vista Nocturna Gala',
+            desc:'El mismo espolín negro en la noche de Valencia: la iluminación urbana hace brillar los hilos dorados del delantal y revela la riqueza de las flores tejidas en el tejido. El terciopelo negro absorbe la luz mientras el tul del delantal la refleja en destellos dorados. Una pieza que gana presencia y misterio bajo las luces de la ciudad en noche de Fallas.',
+            price:'Consultar', image:IMG.p3, tag:null },
+          { id:'p4', material:'espolin', name:'Espolín Verde Oscuro · Vista Lateral',
+            desc:'Traje de espolín en verde oliva oscuro con florido estampado barroco: rosas en rojo coral, flores azules y amarillas, follaje vivo tejido sobre el fondo verde oscuro. Corpino entallado con escote bordeado de encaje y mangas francesas abullonadas de tul. Delantal en tul dorado con composición barroca en hilo de oro. Lazo negro. Un traje de tierra, tradición y naturaleza viva.',
+            price:'Consultar', image:IMG.p4, tag:null },
+          { id:'p5', material:'espolin', name:'Espolín Verde Oscuro · Vista Frontal',
+            desc:'Vista frontal del espolín verde oscuro: corpino entallado con perlas y encaje en el escote. Manteleta dorada cruzada con bordados de cadeneta artesanal a mano. Delantal de tul dorado en toda su riqueza barroca. Falda de espolín verde con flores en rosa, azul, amarillo y rojo coral. Cinturón de seda negro que estrecha la silueta. Artesanía viva en cada detalle.',
+            price:'Consultar', image:IMG.p5, tag:null },
+          { id:'p7', material:'espolin', name:'Espolín Verde · Detalle Espalda y Vuelo',
+            desc:'Vista lateral del espolín verde: la maestría en el lazo de seda negro en la espalda, el vuelo amplio de la falda con flores multicolor y la manteleta dorada cayendo con naturalidad. La falda de espolín alcanza el máximo volumen sobre enaguas interiores: arquitectura textil de tradición centenaria que solo se consigue con décadas de experiencia artesanal.',
+            price:'Consultar', image:IMG.p7, tag:null },
+          /* ── SEDA ── */
+          { id:'p6', material:'seda', name:'Seda Marrón Oscuro · Delantal de Encaje y Banda',
+            desc:'Traje en seda marrón oscuro con brillo satinado característico de la seda natural. La falda cae con peso y vuelo propios del tejido. Gran delantal de encaje blanco con motivos florales y barrocos en hilo de plata y oro. Manteleta de encaje blanco. Conjunto de sobriedad y distinción para Fallera Mayor: la seda habla por sí sola con cada movimiento.',
+            price:'Consultar', image:IMG.p6, tag:null },
+          { id:'p8', material:'seda', name:'Seda Blanca · Flores en Plata y Rosa',
+            desc:'Traje en seda blanca de extraordinaria delicadeza con estampado floral en gris plata, rosa empolvado y crema: jarrones barrocos, peonías y guirnaldas flotan sobre el fondo blanco con los reflejos propios de la seda natural. Mangas largas acampanadas de encaje blanco. Manteleta de encaje crema con detalles de pedrería. Delantal de tul con lentejuelas en crema. La luz lo transforma a cada paso.',
+            price:'Consultar', image:IMG.p8, tag:null },
+          /* ── RAYÓN — reservado para incorporar próximas fotos ── */
         ],
       },
       {
@@ -4421,12 +4451,14 @@ let telaFiltTipo  = 'todos';
 function renderProductCard(p) {
   const tagHtml   = p.tag ? `<span class="product-card__tag product-card__tag--${p.tag}">${p.tagLabel || p.tag}</span>` : '';
   const priceHtml = p.originalPrice ? `<span class="product-card__price--original">${p.originalPrice}</span>${p.price}` : p.price;
-  const fibraHtml = p.fibra ? `<span class="product-card__fibra ${p.fibra}">${p.fibra === 'seda' ? 'Seda' : 'Rayón'}</span>` : '';
-  const tipoHtml  = p.tipo  ? `<span class="product-card__tipo ${p.tipo}">${p.tipo === 'brocatel' ? 'Brocatel' : 'Damasco'}</span>` : '';
+  const fibraHtml    = p.fibra    ? `<span class="product-card__fibra ${p.fibra}">${p.fibra === 'seda' ? 'Seda' : 'Rayón'}</span>` : '';
+  const tipoHtml     = p.tipo     ? `<span class="product-card__tipo ${p.tipo}">${p.tipo === 'brocatel' ? 'Brocatel' : 'Damasco'}</span>` : '';
+  const materialLbl  = { espolin:'Espolín', seda:'Seda', rayon:'Rayón' };
+  const materialHtml = p.material ? `<span class="product-card__material ${p.material}">${materialLbl[p.material] || p.material}</span>` : '';
   return `<article class="product-card">
       <div class="product-card__img-wrap" style="position:relative">
         <img src="${p.image}" alt="${p.name}" loading="lazy" />
-        ${tagHtml}${fibraHtml}${tipoHtml}
+        ${tagHtml}${materialHtml}${fibraHtml}${tipoHtml}
         <span class="product-card__quick-add">${t().footer.viewProduct}</span>
       </div>
       <h3 class="product-card__name">${p.name}</h3>
