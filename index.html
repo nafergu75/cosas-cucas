@@ -4527,16 +4527,19 @@ function buildFMDetail() {
   const eyebrow = document.getElementById('sec-fm-eyebrow');
   const title   = document.getElementById('sec-fm-title');
   const sub     = document.getElementById('sec-fm-sub');
-  if (eyebrow) eyebrow.textContent = '✦ Indumentaria de Honor';
-  if (title)   title.innerHTML     = h.fmLabel.replace('✦ ', '').replace(' vestidas por Cosas Cucas', '<br><span style="color:var(--color-gold)">vestidas por Cosas Cucas</span>');
-  if (sub)     sub.textContent     = currentLang === 'ca'
-    ? "Cada any l'honor de vestir les Falleres Majors de València i les seues Corts d'Honor. Quatre dècades de confiança que es renoven."
-    : 'Cada año el honor de vestir a las Falleras Mayores de Valencia y sus Cortes de Honor. Cuatro décadas de confianza que se renuevan.';
+  if (eyebrow) eyebrow.textContent = '✦ Falleras Mayores 2026';
+  const labelSrc = (h.fmCurrentLabel || h.fmLabel).replace('✦ ', '');
+  if (title)   title.innerHTML = labelSrc.replace(' vestidas por Cosas Cucas', '<br><span style="color:var(--color-gold)">vestidas por Cosas Cucas</span>');
+  if (sub)     sub.textContent = currentLang === 'ca'
+    ? "Les Falleres Majors de les festes 2026, vestides amb els nostres dissenys exclusius."
+    : 'Las Falleras Mayores de las fiestas 2026, vestidas con nuestros diseños exclusivos.';
 
   /* Grid de fotos con año y falla */
   const grid = document.getElementById('fm-detail-grid');
   if (!grid) return;
-  grid.innerHTML = h.fm.map(f => `
+  /* Indumentaria de Honor: muestra las 2026 (fmCurrent) */
+  const fmDetailData = h.fmCurrent || h.fm;
+  grid.innerHTML = fmDetailData.map(f => `
     <div class="fm-detail-card">
       <img src="${f.img}" alt="${f.name}" loading="lazy" />
       <div class="fm-detail-info">
@@ -4673,9 +4676,9 @@ function buildHistoria() {
   document.getElementById('hist-timeline').innerHTML  = h.timeline.map(hi =>
     `<div class="hito"><div class="hito__year">${hi.year}</div><div class="hito__label">${hi.label.replace(/\n/g,'<br>')}</div></div>`
   ).join('');
-  /* Historia: muestra las Falleras Mayores actuales (2026) */
-  const fmData = h.fmCurrent || h.fm;
-  document.getElementById('hist-fm-label').textContent = h.fmCurrentLabel || h.fmLabel;
+  /* Historia: muestra las Falleras Mayores históricas (fm1-fm6) */
+  const fmData = h.fm;
+  document.getElementById('hist-fm-label').textContent = h.fmLabel;
   document.getElementById('fm-grid').innerHTML = fmData.map(f =>
     `<div class="fm-card">
       <div class="fm-card__img"><img src="${f.img}" alt="${f.name}" loading="lazy" /></div>
