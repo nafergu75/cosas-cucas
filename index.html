@@ -2727,29 +2727,6 @@
     <!-- Thumbnails de todas las colecciones -->
     <div class="drops-archive-grid" id="drops-archive-grid"></div>
 
-    <!-- Detalle de la colección seleccionada (se muestra al hacer clic) -->
-    <div class="collection-detail" id="collection-detail" style="display:none">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title" id="products-title"></h2>
-          <p class="section-subtitle" id="products-subtitle"></p>
-        </div>
-        <a class="btn" id="products-cta" href="#">Ver Todo</a>
-      </div>
-      <div class="drops-tabs" id="drops-tabs"></div>
-      <div id="telas-filtros">
-        <div class="telas-f-grupo">
-          <span class="telas-f-label">Fibra</span>
-          <div class="telas-f-row" id="tf-fibra"></div>
-        </div>
-        <div class="telas-f-grupo">
-          <span class="telas-f-label">Tipo</span>
-          <div class="telas-f-row" id="tf-tipo"></div>
-        </div>
-      </div>
-      <div class="products-grid" id="products-grid"></div>
-    </div>
-
     <!-- ✦ FALLERAS MAYORES — sección dedicada -->
     <div id="falleras-mayores">
       <span class="sec-fm-eyebrow" id="sec-fm-eyebrow">✦ Indumentaria de Honor</span>
@@ -4512,21 +4489,7 @@ function buildArchive() {
 
   document.getElementById('drops-archive-grid').addEventListener('click', e => {
     const card = e.target.closest('.archive-card');
-    if (!card) return;
-
-    /* Marcar tarjeta activa */
-    document.querySelectorAll('.archive-card').forEach(c => c.classList.remove('active'));
-    card.classList.add('active');
-
-    /* Mostrar el detalle y cargar productos */
-    activeDropIndex = +card.dataset.dropIndex;
-    const detail = document.getElementById('collection-detail');
-    detail.style.display = '';
-    buildTabs();
-    renderProducts(t().drops[activeDropIndex]);
-
-    /* Scroll suave al detalle */
-    detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (card) openCollectionModal(t().drops[+card.dataset.dropIndex]);
   });
 }
 
