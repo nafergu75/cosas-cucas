@@ -579,7 +579,7 @@
     }
     .fm-detail-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 20px;
     }
     .fm-detail-card {
@@ -3253,8 +3253,13 @@ const IMG = {
   fm5: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_19adae8f.jpg',
   fm6: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_ac29bca3.jpg',
   /* Falleras Mayores 2026 — carpeta propia */
-  fm7: 'falleras%20mayores/fallera%20mayor2026%20Mat%C3%ADas%20perellolluis%20Sant%C3%A1ngel.jpeg',
-  fm8: 'falleras%20mayores/fallera%20mayor2026%20falla%20maestro%20rodrigo%20general%20avil%C3%A9s.jpeg',
+  fm7:  'falleras%20mayores/fallera%20mayor2026%20Mat%C3%ADas%20perellolluis%20Sant%C3%A1ngel.jpeg',
+  fm8:  'falleras%20mayores/fallera%20mayor2026%20falla%20maestro%20rodrigo%20general%20avil%C3%A9s.jpeg',
+  fm9:  'falleras%20mayores/fallera%20mayor%202026%20falla%20exposicion.jpg',
+  fm10: 'falleras%20mayores/fallera%20mayor%202026%20falla%20blocs%20platja.jpeg',
+  fm11: 'falleras%20mayores/fallera%20mayor%202026%20falla%20rosario%20plaza%20calabuig%20lourdes%20oreo.jpeg',
+  fm12: 'falleras%20mayores/fallera%20mayor%202026%20falla%20conserva%20berenguermallol%20kira%20vila.jpeg',
+  fm13: 'falleras%20mayores/fallera%20mayor%202026%20falla%20maestro%20rodrigo%20general%20aviles%20alejandra%20blasco%20beltr%C3%A1n.jpeg',
   /* Cortes d'Honor grupales */
   cort1: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_c4ffba71.jpg',
   cort2: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_38136dc0.jpg',
@@ -3674,12 +3679,13 @@ const translations = {
       ],
       fmLabel: '✦ Falleras Mayores y Corte de Honor de Valencia vestidas por Cosas Cucas',
       fm: [
-        { img: IMG.fm1, name: 'Monica Palmer',    year: 'Fallera Mayor de Valencia · 1992' },
-        { img: IMG.fm2, name: 'Maria Asensi',     year: 'Corte Fallera Mayor Infantil de Valencia · 1993' },
-        { img: IMG.fm3, name: 'Ana Belén Chardí', year: 'Fallera Mayor Infantil de Valencia · 1995' },
-        { img: IMG.fm4, name: 'Carmen Serrano',   year: 'Fallera Mayor Infantil de Valencia · 1998' },
-        { img: IMG.fm5, name: 'Adriana Polo',     year: 'Fallera Mayor de Valencia · 2001' },
-        { img: IMG.fm6, name: 'Carmen Serrano',   year: 'Fallera Mayor Infantil de Valencia · 2012' },
+        { img: IMG.fm9,  name: 'Falla Exposición',                              year: 'Fallera Mayor 2026' },
+        { img: IMG.fm7,  name: 'Falla Matías Perelló · Luis Santángel',         year: 'Fallera Mayor 2026' },
+        { img: IMG.fm10, name: 'Falla Blocs · Platja',                          year: 'Fallera Mayor 2026' },
+        { img: IMG.fm11, name: 'Falla Rosario · Plaza Calabuig · Lourdes Oreo', year: 'Fallera Mayor 2026' },
+        { img: IMG.fm12, name: 'Falla Conserva · Berenguer Mallol · Kira Vila', year: 'Fallera Mayor 2026' },
+        { img: IMG.fm8,  name: 'Falla Maestro Rodrigo · General Avilés',        year: 'Fallera Mayor 2026' },
+        { img: IMG.fm13, name: 'Falla Maestro Rodrigo · Alejandra Blasco Beltrán', year: 'Fallera Mayor 2026' },
       ],
       cortsLabel: 'Cortes de Honor',
       corts: [
@@ -4081,12 +4087,13 @@ const translations = {
       ],
       fmLabel: "✦ Falleres Majors i Cort d'Honor de València vestides per Cosas Cucas",
       fm: [
-        { img: IMG.fm1, name: 'Monica Palmer',    year: 'Fallera Major de València · 1992' },
-        { img: IMG.fm2, name: 'Maria Asensi',     year: 'Cort Fallera Major Infantil de València · 1993' },
-        { img: IMG.fm3, name: 'Ana Belén Chardí', year: 'Fallera Major Infantil de València · 1995' },
-        { img: IMG.fm4, name: 'Carmen Serrano',   year: 'Fallera Major Infantil de València · 1998' },
-        { img: IMG.fm5, name: 'Adriana Polo',     year: 'Fallera Major de València · 2001' },
-        { img: IMG.fm6, name: 'Carmen Serrano',   year: 'Fallera Major Infantil de València · 2012' },
+        { img: IMG.fm9,  name: 'Falla Exposició',                                year: 'Fallera Major 2026' },
+        { img: IMG.fm7,  name: 'Falla Matías Perelló · Luis Santángel',         year: 'Fallera Major 2026' },
+        { img: IMG.fm10, name: 'Falla Blocs · Platja',                          year: 'Fallera Major 2026' },
+        { img: IMG.fm11, name: 'Falla Rosario · Plaza Calabuig · Lourdes Oreo', year: 'Fallera Major 2026' },
+        { img: IMG.fm12, name: 'Falla Conserva · Berenguer Mallol · Kira Vila', year: 'Fallera Major 2026' },
+        { img: IMG.fm8,  name: 'Falla Mestre Rodrigo · General Avilés',         year: 'Fallera Major 2026' },
+        { img: IMG.fm13, name: 'Falla Mestre Rodrigo · Alejandra Blasco Beltrán', year: 'Fallera Major 2026' },
       ],
       cortsLabel: "Corts d'Honor",
       corts: [
