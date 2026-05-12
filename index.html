@@ -609,6 +609,24 @@
       text-transform: uppercase; color: var(--color-gold);
     }
 
+    /* ── Detalle colección inline ── */
+    .collection-detail {
+      margin-top: 56px; padding-top: 48px;
+      border-top: 2px solid var(--color-border);
+    }
+    .collection-detail .section-header { margin-bottom: 32px; }
+    /* Tarjeta activa */
+    .archive-card.active .archive-card__label {
+      color: var(--color-gold); border-color: var(--color-gold);
+    }
+    .archive-card.active .archive-card__img-wrap::after {
+      content: ''; position: absolute; inset: 0;
+      border: 2.5px solid var(--color-gold); pointer-events: none;
+    }
+    @media (max-width: 480px) {
+      .collection-detail { margin-top: 32px; padding-top: 28px; }
+    }
+
     /* ── Tarjeta de colección activa en el archivo */
     .archive-card.active .archive-card__label {
       color: var(--color-gold);
@@ -2709,6 +2727,29 @@
     <!-- Thumbnails de todas las colecciones -->
     <div class="drops-archive-grid" id="drops-archive-grid"></div>
 
+    <!-- Detalle de la colección seleccionada (se muestra al hacer clic) -->
+    <div class="collection-detail" id="collection-detail" style="display:none">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title" id="products-title"></h2>
+          <p class="section-subtitle" id="products-subtitle"></p>
+        </div>
+        <a class="btn" id="products-cta" href="#">Ver Todo</a>
+      </div>
+      <div class="drops-tabs" id="drops-tabs"></div>
+      <div id="telas-filtros">
+        <div class="telas-f-grupo">
+          <span class="telas-f-label">Fibra</span>
+          <div class="telas-f-row" id="tf-fibra"></div>
+        </div>
+        <div class="telas-f-grupo">
+          <span class="telas-f-label">Tipo</span>
+          <div class="telas-f-row" id="tf-tipo"></div>
+        </div>
+      </div>
+      <div class="products-grid" id="products-grid"></div>
+    </div>
+
     <!-- ✦ FALLERAS MAYORES — sección dedicada -->
     <div id="falleras-mayores">
       <span class="sec-fm-eyebrow" id="sec-fm-eyebrow">✦ Indumentaria de Honor</span>
@@ -4458,7 +4499,7 @@ function buildArchive() {
   document.querySelector('#drops-archive .section-subtitle').textContent = ft.archiveSubtitle;
 
   document.getElementById('drops-archive-grid').innerHTML = t().drops.map((d, i) => `
-    <article class="archive-card" data-drop-index="${i}">
+    <article class="archive-card${i === activeDropIndex ? ' active' : ''}" data-drop-index="${i}">
       <span class="archive-card__label">${d.title}</span>
       <div class="archive-card__img-wrap">
         <img src="${d.archiveImage}" alt="${d.title}" loading="lazy" />
@@ -4468,7 +4509,25 @@ function buildArchive() {
         </div>
       </div>
     </article>`).join('');
-  /* Sin detalle inline — las tarjetas son solo visual del catálogo */
+
+  document.getElementById('drops-archive-grid').addEventListener('click', e => {
+    const card = e.target.closest('.archive-card');
+    if (!card) return;
+
+    /* Marcar tarjeta activa */
+    document.querySelectorAll('.archive-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+
+    /* Mostrar el detalle y cargar productos */
+    activeDropIndex = +card.dataset.dropIndex;
+    const detail = document.getElementById('collection-detail');
+    detail.style.display = '';
+    buildTabs();
+    renderProducts(t().drops[activeDropIndex]);
+
+    /* Scroll suave al detalle */
+    detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 }
 
 /* ── Falleras Mayores de Valencia — sección dedicada en Colecciones ── */
