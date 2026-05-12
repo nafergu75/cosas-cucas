@@ -780,7 +780,7 @@
     }
     .drops-archive-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(6, 1fr);  /* 6 familias en una línea */
       gap: 2px;
       margin-top: 48px;
     }
@@ -1515,7 +1515,7 @@
       .drop-tab   { white-space: nowrap; padding: 10px 14px; font-size: 0.72rem; }
 
       /* DROPS ARCHIVE */
-      .drops-archive-grid { grid-template-columns: repeat(3, 1fr); }
+      .drops-archive-grid { grid-template-columns: repeat(3, 1fr); gap: 2px; }
       #drops-archive { padding: 56px 0; }
 
       /* SECTION HEADERS */
@@ -3417,8 +3417,8 @@ const translations = {
     ],
     drops: [
       {
-        id: 'falles-2027-mujer', title: 'Mujer · Falles 2027', subtitle: 'La Luz de la Tradición',
-        description: 'Nuestra colección más completa para las Fallas de 2027. Manteletas bordadas a mano, telas de seda valenciana, cotillas artesanales y aderezos exclusivos. Cada pieza, una ceremonia. Cada detalle, una herencia.',
+        id: 'falles-2027-mujer', title: 'Indumentaria Femenina', subtitle: 'La Luz de la Tradición',
+        description: 'Nuestra colección más completa para las Fallas de 2027. Telas de seda y rayón, damascos, brocateles, damasinas, spolines... Manteletas, aderezos y complementos que dan vida a nuestra colección.',
         heroImage: IMG.portada, archiveImage: IMG.archive1, badge: 'Disponible Ahora',
         ctaPrimary: { label: 'Ver la colección', href: '#drops-archive' },
         ctaSecondary: { label: 'Pedir cita', href: 'mailto:info@cosascucas.es' },
@@ -3434,7 +3434,7 @@ const translations = {
         ],
       },
       {
-        id: 'hombre-2027', title: 'Hombre · Falles 2027', subtitle: 'Indumentaria Masculina Valenciana',
+        id: 'hombre-2027', title: 'Indumentaria Masculina', subtitle: 'Indumentaria Masculina Valenciana',
         description: 'Indumentaria tradicional masculina valenciana para las Fallas de 2027. Jubones de seda, calzas, fajas bordadas y complementos artesanales. Todo confeccionado a medida en nuestro taller de Valencia, con los mismos materiales exclusivos que nuestra línea de mujer.',
         heroImage: IMG.hHero, archiveImage: IMG.hArchive, badge: 'Colección 2027',
         ctaPrimary: { label: 'Ver la colección', href: '#drops-archive' },
@@ -3455,7 +3455,7 @@ const translations = {
         ],
       },
       {
-        id: 'aderezos-peinetas', title: 'Aderezos & Peinetas', subtitle: 'El Complemento Perfecto',
+        id: 'aderezos-peinetas', title: 'Aderezos y Peinetas', subtitle: 'El Complemento Perfecto',
         description: 'Nuestra selección de aderezos, peinetas y complementos para completar cualquier indumentaria valenciana. Joyas de plata dorada, peinetas artesanales y accesorios exclusivos que realzan el valor de cada conjunto.',
         heroImage: IMG.aderezo, archiveImage: IMG.aderezo, badge: 'Exclusivos',
         ctaPrimary: { label: 'Ver aderezos', href: '#drops-archive' },
@@ -3479,7 +3479,7 @@ const translations = {
         ],
       },
       {
-        id: 'telas-bordados', title: 'Telas & Bordados', subtitle: 'El Corazón de la Indumentaria',
+        id: 'telas-bordados', title: 'Telas Valencianas', subtitle: 'El Corazón de la Indumentaria',
         description: 'Diseños exclusivos de brocado valenciano para indumentaria fallera: sedas, jacquards y espolinas con nombres propios de nuestra colección. Disponibles a metro. Ven a nuestro taller y te asesoramos sin compromiso.',
         heroImage: IMG.tPortada, archiveImage: IMG.tPortada, badge: 'Siempre Disponible',
         ctaPrimary: { label: 'Ver telas', href: '#drops-archive' },
@@ -3510,6 +3510,21 @@ const translations = {
           { id:'t23', fibra:'seda',  tipo:'damasco',  name:'Azul Noche Clásico', desc:'Damasco de seda en azul marino profundo con gran medallón floral central en hilo dorado y lazo barroco. Composición clásica de extraordinaria elegancia. Tejido de gran distinción para Falleras Mayores y trajes de máxima ceremonia.',                                                                                                                                                    price:'Consultar', image:IMG.t23, tag:'new', tagLabel:'Nueva' },
           { id:'t24', fibra:'seda',  tipo:'damasco',  name:'Verde Esmeralda',    desc:'Damasco de seda en verde botella oscuro con motivos florales y arabescos en hilo crema y plata. Composición refinada y elegante. Un tejido de gran sobriedad y distinción para indumentaria de perfil clásico e historicista.',                                                                                                                                                            price:'Consultar', image:IMG.t24, tag:'new', tagLabel:'Nueva' },
           { id:'t25', fibra:'seda',  tipo:'brocatel', name:'Turquesa Real',      desc:'Brocatel de seda en turquesa intenso con composición barroca en hilo dorado y plateado. Fondo de turquesa luminoso con motivos en relieve de gran riqueza. Un tejido de fuerte impacto cromático y máxima distinción para Falleras Mayores.',                                                                                                                                               price:'Consultar', image:IMG.t25, tag:'new', tagLabel:'Nueva' },
+        ],
+      },
+      {
+        id: 'manteletas-mantillas', title: 'Manteletas y Mantillas', subtitle: 'El Arte del Encaje Valenciano',
+        description: 'Nuestras manteletas son verdaderas obras de arte, elaboradas manualmente e inspiradas en diseños antiguos. Bordadas a mano en cadeneta y realce sobre bases de nipy, seda natural y tules de hilo. Mantillas de encaje negro o blanco para cualquier ocasión especial. Cada pieza, única.',
+        heroImage: IMG.tPortada, archiveImage: IMG.tPortada, badge: 'Artesanía',
+        ctaPrimary:   { label: 'Ver manteletas', href: '#drops-archive' },
+        ctaSecondary: { label: 'Pedir cita',     href: 'mailto:info@cosascucas.es' },
+        products: [
+          { id:'mt1', name:'Manteleta Bordada en Oro',   desc:'Elaborada a mano en cadeneta y realce sobre base de nipy. Motivos florales en hilo de oro. Exclusiva para indumentaria de gala y Falleras Mayores.',                     price:'Consultar', image:IMG.p1,  tag:'new', tagLabel:'Artesanal' },
+          { id:'mt2', name:'Manteleta de Tul y Seda',    desc:'Sobre base de tul de hilo con bordados en seda natural. Diseño delicado e inspirado en patrones del siglo XVIII. Confección completamente artesanal.',               price:'Consultar', image:IMG.p2,  tag:null },
+          { id:'mt3', name:'Mantilla Blanca de Encaje',  desc:'Encaje tradicional valenciano en blanco. Complemento de gran distinción para actos solemnes y bodas. Disponible también en negro y marfil.',                        price:'Consultar', image:IMG.p3,  tag:null },
+          { id:'mt4', name:'Mantilla Negra Clásica',     desc:'Encaje negro tradicional de gran elegancia. Para la Ofrena, Semana Santa y actos de alta ceremonia. Confeccionada con encajes seleccionados a mano.',               price:'Consultar', image:IMG.p4,  tag:null },
+          { id:'mt5', name:'Manteleta Verde Bordada',    desc:'Base de seda natural en verde con bordados florales artesanales en hilo de plata y oro. Diseño exclusivo de nuestra colección para indumentaria festiva.',           price:'Consultar', image:IMG.p5,  tag:null },
+          { id:'mt6', name:'Manteleta Coral y Oro',      desc:'Motivos florales barrocos en hilo de oro sobre fondo coral. Realce tridimensional. Una pieza de identidad propia para Cortes de Honor y Falleras Mayores.',         price:'Consultar', image:IMG.p6,  tag:null },
         ],
       },
       {
@@ -3626,7 +3641,7 @@ const translations = {
         { label: 'Aviso legal', href: 'aviso-legal.html',        target: '_blank' },
       ],
       archiveTitle:    'Todas las Colecciones',
-      archiveSubtitle: 'Falles, aderezos, telas y bordados — cada colección, un trozo de tradición valenciana.',
+      archiveSubtitle: 'Conoce nuestro trabajo y pasión por nuestra indumentaria, tradición, detalle y artesanía en cada creación. Nuestro trabajo, nuestra ilusión.',
       viewCollection:  'Ver colección',
       viewProduct:     '+ Ver pieza',
       viewAll:         'Ver todo',
@@ -3821,7 +3836,7 @@ const translations = {
     ],
     drops: [
       {
-        id: 'falles-2027-dona', title: 'Dona · Falles 2027', subtitle: 'La Llum de la Tradició',
+        id: 'falles-2027-dona', title: 'Indumentària Femenina', subtitle: 'La Llum de la Tradició',
         description: "La nostra col·lecció més completa per a les Falles de 2027. Manteletes brodades a mà, teles de seda valenciana, cotilles artesanals i adreços exclusius. Cada peça, una cerimònia. Cada detall, una herència.",
         heroImage: IMG.portada, archiveImage: IMG.archive1, badge: 'Disponible Ara',
         ctaPrimary: { label: "Veure la col·lecció", href: '#drops-archive' },
@@ -3838,7 +3853,7 @@ const translations = {
         ],
       },
       {
-        id: 'home-2027', title: 'Home · Falles 2027', subtitle: 'Indumentària Masculina Valenciana',
+        id: 'home-2027', title: 'Indumentària Masculina', subtitle: 'Indumentària Masculina Valenciana',
         description: "Indumentària tradicional masculina valenciana per a les Falles del 2027. Jubons de seda, calces, faixes brodades i complements artesanals. Tot confeccionat a mida al nostre taller de València, amb els mateixos materials exclusius que la nostra línia de dona.",
         heroImage: IMG.hHero, archiveImage: IMG.hArchive, badge: "Col·lecció 2027",
         ctaPrimary: { label: "Veure la col·lecció", href: '#drops-archive' },
@@ -3859,7 +3874,7 @@ const translations = {
         ],
       },
       {
-        id: 'adrecos-peinetes', title: 'Adreços & Peinetes', subtitle: 'El Complement Perfecte',
+        id: 'adrecos-peinetes', title: 'Adreços i Peinetes', subtitle: 'El Complement Perfecte',
         description: "La nostra selecció d'adreços, peinetes i complements per a completar qualsevol indumentària valenciana. Joies de plata daurada, peinetes artesanals i accessoris exclusius que realcen el valor de cada conjunt.",
         heroImage: IMG.aderezo, archiveImage: IMG.aderezo, badge: 'Exclusius',
         ctaPrimary: { label: "Veure adreços", href: '#drops-archive' },
@@ -3883,7 +3898,7 @@ const translations = {
         ],
       },
       {
-        id: 'teles-brodats', title: 'Teles & Brodats', subtitle: "El Cor de la Indumentària",
+        id: 'teles-brodats', title: 'Teles Valencianes', subtitle: "El Cor de la Indumentària",
         description: "Més de 35 brocats i sedes exclusives per a indumentària valenciana: jacquards, damasquinats, velluts i teixits tradicionals en tots els colors. Disponibles a metre. Vine al nostre taller i t'assessorem sense compromís.",
         heroImage: IMG.tPortada, archiveImage: IMG.tPortada, badge: 'Sempre Disponible',
         ctaPrimary: { label: 'Veure teles', href: '#drops-archive' },
@@ -4043,7 +4058,7 @@ const translations = {
         { label: "Avís legal", href: 'aviso-legal.html',         target: '_blank' },
       ],
       archiveTitle:    "Totes les Col·leccions",
-      archiveSubtitle: "Falles, adreços, teles i brodats — cada col·lecció, un tros de tradició valenciana.",
+      archiveSubtitle: "Coneix el nostre treball i passió per la nostra indumentària, tradició, detall i artesania en cada creació. El nostre treball, la nostra il·lusió.",
       viewCollection:  "Veure col·lecció",
       viewProduct:     '+ Veure peça',
       viewAll:         'Veure tot',
@@ -4527,7 +4542,7 @@ function buildFMDetail() {
   const eyebrow = document.getElementById('sec-fm-eyebrow');
   const title   = document.getElementById('sec-fm-title');
   const sub     = document.getElementById('sec-fm-sub');
-  if (eyebrow) eyebrow.textContent = '✦ Falleras Mayores 2026';
+  if (eyebrow) eyebrow.textContent = '✦ Indumentaria de Honor';
   const labelSrc = (h.fmCurrentLabel || h.fmLabel).replace('✦ ', '');
   if (title)   title.innerHTML = labelSrc.replace(' vestidas por Cosas Cucas', '<br><span style="color:var(--color-gold)">vestidas por Cosas Cucas</span>');
   if (sub)     sub.textContent = currentLang === 'ca'
