@@ -561,6 +561,20 @@
   }
   .help-footer strong { color: var(--gl); }
 
+  /* ── Texto emotivo bajo clientas ── */
+  .seduce-box {
+    margin-top: 20px;
+    background: linear-gradient(135deg, rgba(181,144,58,.18) 0%, rgba(181,144,58,.06) 100%);
+    border: 1px solid rgba(181,144,58,.35);
+    border-radius: var(--r2);
+    padding: 18px 16px;
+    text-align: center;
+  }
+  .seduce-text {
+    font-family: var(--fd); font-size: 1rem; font-style: italic;
+    color: var(--gl); line-height: 1.6; margin: 0;
+  }
+
   /* ── Chatbot flotante (probador) ─────────────────────────────────── */
   /* Reutiliza las mismas clases .ch-* del chatbot de index.html */
   #prob-chat-fab {
@@ -975,42 +989,17 @@
         <p class="form-err" id="err-desc" style="color:rgba(192,57,43,.8);margin-top:4px">Describe tu traje con detalle (mínimo 5000 caracteres)</p>
       </div>
 
-      <!-- ── SECCIÓN AYUDA: Cómo funciona ── -->
+      <!-- ── SECCIÓN AYUDA: Cómo funciona (dinámica vía I18N) ── -->
       <div class="help-box" id="help-box">
-        <p class="help-title">💡 ¿Cómo funciona el Probador?</p>
+        <p class="help-title" id="help-title">💡 ¿Cómo funciona el Probador?</p>
         <ol class="help-steps">
-          <li>
-            <span class="help-num">1</span>
-            <div>
-              <strong>Sube tu foto</strong>
-              <span>De frente, cuerpo completo, con buena luz. Sin fondo recargado.</span>
-            </div>
-          </li>
-          <li>
-            <span class="help-num">2</span>
-            <div>
-              <strong>Describe tu traje</strong>
-              <span>Cuanto más detallada sea la descripción, más preciso será el diseño. Menciona colores, estilo, época, bordados, ocasión…</span>
-            </div>
-          </li>
-          <li>
-            <span class="help-num">3</span>
-            <div>
-              <strong>Elige telas, estilo y complementos</strong>
-              <span>Selecciona de nuestra colección de telas reales y el estilo histórico que más te inspire.</span>
-            </div>
-          </li>
-          <li>
-            <span class="help-num">4</span>
-            <div>
-              <strong>Solicita tu presupuesto</strong>
-              <span>Recibirás respuesta personalizada en menos de 24 horas con el diseño adaptado a tu foto.</span>
-            </div>
-          </li>
+          <li><span class="help-num">1</span><div><strong id="h1t"></strong><span id="h1s"></span></div></li>
+          <li><span class="help-num">2</span><div><strong id="h2t"></strong><span id="h2s"></span></div></li>
+          <li><span class="help-num">3</span><div><strong id="h3t"></strong><span id="h3s"></span></div></li>
+          <li><span class="help-num">4</span><div><strong id="h4t"></strong><span id="h4s"></span></div></li>
+          <li><span class="help-num">5</span><div><strong id="h5t"></strong><span id="h5s"></span></div></li>
         </ol>
-        <p class="help-footer">
-          ¿Tienes dudas? Usa el chat 💬 o llámanos al <strong>963 511 556</strong>
-        </p>
+        <p class="help-footer" id="help-footer"></p>
       </div>
 
       <!-- ── OTRAS CLIENTAS HAN ELEGIDO ── -->
@@ -1116,6 +1105,12 @@
           </div>
 
         </div>
+
+        <!-- ── Texto emotivo ── -->
+        <div class="seduce-box" id="seduce-box">
+          <p class="seduce-text" id="seduce-text">Ahora que te has inspirado… Tu traje perfecto te espera. Envíanos tu diseño y te contactaremos en menos de 24 horas con tu presupuesto personalizado. 🌸</p>
+        </div>
+
       </div>
 
     </aside>
@@ -1301,19 +1296,19 @@ const STYLES = [
     id:'XVIII',
     name:{ es:'Segle XVIII', val:'Segle XVIII' },
     desc:{ es:'Silueta con gran vuelo, cuerpo entallado con mangas abullonadas. Elegancia barroca valenciana del siglo XVIII.', val:"Silueta amb gran vol, cos entallat amb mànigues abufades. Elegància barroca valenciana del segle XVIII." },
-    img:'telas/probador digital/traje siglo xviii.jpeg',
+    img:'telas/probador digital/siglo xviii.png',
   },
   {
     id:'XIX',
     name:{ es:'Segle XIX', val:'Segle XIX' },
     desc:{ es:'Líneas más depuradas, falda en capas y mangas más ajustadas. Influencia romántica. Sofisticación clásica.', val:"Línies més depurades, faldilla en capes i mànigues més ajustades. Influència romàntica. Sofisticació clàssica." },
-    img:'telas/probador digital/traje siglo xix.jpeg',
+    img:'telas/probador digital/siglo xix.png',
   },
   {
     id:'antiga',
     name:{ es:"L'Antiga", val:"L'Antiga" },
     desc:{ es:"Traje tradicional valenciano puro. Formas auténticas heredadas durante siglos. La indumentaria en su forma más genuina.", val:"Vestit tradicional valencià pur. Formes autèntiques heretades durant segles. La indumentària en la seua forma més genuïna." },
-    img:'galeria/Imagen de WhatsApp 2025-03-04 a las 20.37.20_6f6d149b.jpg',
+    img:"telas/probador digital/l´antiga.png",
   },
 ];
 
@@ -1343,8 +1338,8 @@ const COMPLEMENTS = [
     id:'zapatos',
     name:{ es:'Zapatos', val:'Sabates' },
     desc:{ es:'Calzado artesanal para completar tu indumentaria. Podemos fabricarlos a juego exacto con la tela que hayas elegido.', val:"Calçat artesanal per a completar la teua indumentària. Podem fabricar-los a to exacte amb la tela que hages triat." },
-    metals:['tela','negro','blanco','marfil'],
-    metalLabel:{ es:{ tela:'🎨 Del color de mi tela', negro:'Negros', blanco:'Blancos', marfil:'Marfil' }, val:{ tela:'🎨 Del color de la meua tela', negro:'Negres', blanco:'Blancs', marfil:'Marfil' } },
+    metals:['tela','negro','alpargata'],
+    metalLabel:{ es:{ tela:'🎨 Del color de mi tela', negro:'Negros', alpargata:'Alpargatas' }, val:{ tela:'🎨 Del color de la meua tela', negro:'Negres', alpargata:'Espardenyes' } },
   },
 ];
 
@@ -1365,8 +1360,15 @@ const I18N = {
     btnSolicitar:'Solicitar presupuesto sin compromiso →',
     summaryEmpty:'Selecciona colores, estilo y complementos para ver el resumen',
     helpTitle:'💡 ¿Cómo funciona el Probador?',
+    help1:'Sube tu foto', help1t:'De frente, cuerpo completo, con buena luz. Sin fondo recargado.',
+    help2:'Describe tu traje', help2t:'Cuanto más detallada sea la descripción, más preciso será el diseño. Menciona colores, estilo, época, bordados, ocasión…',
+    help3:'Elige telas, estilo y complementos', help3t:'Selecciona de nuestra colección de telas reales y el estilo histórico que más te inspire.',
+    help4:'Inspírate con otras clientas', help4t:'Mira cómo han descrito su traje otras clientas. Sus palabras son el mejor ejemplo de lo que necesitamos saber para crear tu diseño único.',
+    help5:'Solicita tu presupuesto', help5t:'Recibirás respuesta personalizada en menos de 24 horas con el diseño adaptado a tu foto.',
+    helpFooter:'¿Tienes dudas? Usa el chat 💬 o llámanos al',
     clientasTitle:'✦ Otras clientas han elegido',
     clientasSub:'Inspírate con diseños reales de Cosas Cucas. Así de detalladas deben ser las descripciones.',
+    seduceText:'Ahora que te has inspirado… Tu traje perfecto te espera. Envíanos tu diseño y te contactaremos en menos de 24 horas con tu presupuesto personalizado. 🌸',
     metalTitle:'Color',
   },
   val: {
@@ -1381,8 +1383,15 @@ const I18N = {
     btnSolicitar:'Sol·licitar pressupost sense compromís →',
     summaryEmpty:'Tria colors, estil i complements per a veure el resum',
     helpTitle:'💡 Com funciona el Provador?',
+    help1:'Puja la teua foto', help1t:'De front, cos complet, amb bona llum. Sense fons recarregat.',
+    help2:'Descriu el teu vestit', help2t:'Com més detallada siga la descripció, més precís serà el disseny. Menciona colors, estil, època, brodats, ocasió…',
+    help3:'Tria teles, estil i complements', help3t:"Selecciona de la nostra col·lecció de teles reals i l'estil històric que més t'inspire.",
+    help4:"Inspira't amb altres clientes", help4t:"Mira com han descrit el seu vestit altres clientes. Les seues paraules són el millor exemple del que necessitem saber per a crear el teu disseny únic.",
+    help5:'Sol·licita el teu pressupost', help5t:'Rebràs resposta personalitzada en menys de 24 hores amb el disseny adaptat a la teua foto.',
+    helpFooter:'Tens dubtes? Usa el xat 💬 o truca\'ns al',
     clientasTitle:'✦ Altres clientes han triat',
     clientasSub:"Inspira't amb dissenys reals de Cosas Cucas. Així de detallades han de ser les descripcions.",
+    seduceText:"Ara que t'has inspirat… El teu traje perfecte t'espera. Envia'ns el teu disseny i et contactarem en menys de 24 hores amb el teu pressupost personalitzat. 🌸",
     metalTitle:'Color',
   },
 };
@@ -1848,12 +1857,24 @@ document.getElementById('lang-toggle')?.querySelectorAll('.lang-btn').forEach(bt
     renderAccordion();
     renderTelas();
     updateSummary();
-    /* Actualizar textos estáticos de la columna izquierda */
+    /* Actualizar TODOS los textos estáticos */
     const t = I18N[state.lang];
-    const ce = document.getElementById('clientas-title');
-    const cs = document.getElementById('clientas-sub');
-    if (ce) ce.textContent = t.clientasTitle;
-    if (cs) cs.textContent = t.clientasSub;
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    /* Clientas */
+    set('clientas-title', t.clientasTitle);
+    set('clientas-sub',   t.clientasSub);
+    /* Texto emotivo */
+    set('seduce-text', t.seduceText);
+    /* Help box */
+    set('help-title',  t.helpTitle);
+    set('h1t', t.help1); set('h1s', t.help1t);
+    set('h2t', t.help2); set('h2s', t.help2t);
+    set('h3t', t.help3); set('h3s', t.help3t);
+    set('h4t', t.help4); set('h4s', t.help4t);
+    set('h5t', t.help5); set('h5s', t.help5t);
+    const hf = document.getElementById('help-footer');
+    if (hf) hf.innerHTML = t.helpFooter + ' <strong>963 511 556</strong>';
+    /* Botón solicitar */
     const btn2 = document.getElementById('btn-solicitar');
     if (btn2) btn2.childNodes[0].nodeValue = t.btnSolicitar.replace(' →','') + ' ';
   });
@@ -1865,6 +1886,21 @@ renderTelas();
 renderStyles();
 renderAccordion();
 updateSummary();
+
+/* Poblar textos estáticos en el idioma inicial */
+(function initTexts() {
+  const t   = I18N[state.lang];
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  set('help-title', t.helpTitle);
+  set('h1t', t.help1); set('h1s', t.help1t);
+  set('h2t', t.help2); set('h2s', t.help2t);
+  set('h3t', t.help3); set('h3s', t.help3t);
+  set('h4t', t.help4); set('h4s', t.help4t);
+  set('h5t', t.help5); set('h5s', t.help5t);
+  const hf = document.getElementById('help-footer');
+  if (hf) hf.innerHTML = t.helpFooter + ' <strong>963 511 556</strong>';
+  set('seduce-text', t.seduceText);
+})();
 
 /* ── Lightbox: ampliar fotos de "Otras clientas han elegido" ── */
 (function () {
