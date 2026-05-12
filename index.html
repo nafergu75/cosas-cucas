@@ -814,12 +814,14 @@
     .archive-card__img-wrap {
       position: relative;
       overflow: hidden;
-      aspect-ratio: 3/4;
-      flex: 1;
+      aspect-ratio: 3/4;     /* mismo ratio en todas */
+      flex: 0 0 auto;        /* no crece ni encoge — tamaño fijo */
+      width: 100%;
     }
     .archive-card__img-wrap img {
       width: 100%; height: 100%;
       object-fit: cover;
+      object-position: center top;   /* centra en la parte superior */
       transition: transform 0.6s ease, filter 0.4s;
     }
     .archive-card:hover .archive-card__img-wrap img { transform: scale(1.05); filter: brightness(0.85); }
@@ -3351,6 +3353,7 @@ const IMG = {
   t20: 'telas/probador digital/WhatsApp Image 2026-05-12 at 12.02.41.jpeg',
   t21: 'telas/probador digital/WhatsApp Image 2026-05-08 at 07.40.12.jpeg',
   t22: 'telas/probador digital/WhatsApp Image 2026-05-08 at 07.40.30.jpeg',
+  manteletas: 'manteletas.jpg',
   t23: 'telas/probador digital/WhatsApp Image 2026-05-12 at 12.30.45.jpeg',
   t24: 'telas/probador digital/WhatsApp Image 2026-05-12 at 12.30.59.jpeg',
   t25: 'telas/probador digital/WhatsApp Image 2026-05-12 at 12.31.43.jpeg',
@@ -3429,7 +3432,7 @@ const translations = {
     drops: [
       {
         id: 'falles-2027-mujer', title: 'Indumentaria Femenina · Fallas 2027', subtitle: 'La Luz de la Tradición',
-        description: 'En Cosas Cucas apostamos por la artesanía cuidada, los detalles únicos y las piezas que transmiten dulzura, tradición y originalidad.',
+        description: 'Nuestra colección más completa para las Fallas de 2027. Manteletas bordadas a mano, telas de seda valenciana, cotillas artesanales y aderezos exclusivos. Cada pieza, una ceremonia. Cada detalle, una herencia.',
         heroImage: IMG.portada, archiveImage: IMG.archive1, badge: 'Disponible Ahora',
         ctaPrimary: { label: 'Ver la colección', href: '#drops-archive' },
         ctaSecondary: { label: 'Pedir cita', href: 'mailto:info@cosascucas.es' },
@@ -3545,7 +3548,7 @@ const translations = {
       {
         id: 'manteletas-mantillas', title: 'Manteletas y Mantillas', subtitle: 'El Arte del Encaje Valenciano',
         description: 'Nuestras manteletas son verdaderas obras de arte, elaboradas manualmente e inspiradas en diseños antiguos. Bordadas a mano en cadeneta y realce sobre bases de nipy, seda natural y tules de hilo. Mantillas de encaje negro o blanco para cualquier ocasión especial. Cada pieza, única.',
-        heroImage: IMG.tPortada, archiveImage: IMG.tPortada, badge: 'Artesanía',
+        heroImage: IMG.manteletas, archiveImage: IMG.manteletas, badge: 'Artesanía',
         ctaPrimary:   { label: 'Ver manteletas', href: '#drops-archive' },
         ctaSecondary: { label: 'Pedir cita',     href: 'mailto:info@cosascucas.es' },
         products: [
