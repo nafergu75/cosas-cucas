@@ -2652,6 +2652,8 @@
       }
     }
   </style>
+  <!-- EmailJS — envío de formulario de contacto (gratis 200 emails/mes) -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -3281,6 +3283,7 @@ const IMG = {
   fm11: 'falleras%20mayores/fallera%20mayor%202026%20falla%20rosario%20plaza%20calabuig%20lourdes%20oreo.jpeg',
   fm12: 'falleras%20mayores/fallera%20mayor%202026%20falla%20conserva%20berenguermallol%20kira%20vila.jpeg',
   fm13: 'falleras%20mayores/fallera%20mayor%202026%20falla%20maestro%20rodrigo%20general%20aviles%20alejandra%20blasco%20beltr%C3%A1n.jpeg',
+  fm14: 'falleras%20mayores/fallera%20infantil%202026%20falla%20la%20manta%20al%20coll%20de%20algunet.jpeg',
   /* Cortes d'Honor grupales */
   cort1: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_c4ffba71.jpg',
   cort2: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_38136dc0.jpg',
@@ -3750,7 +3753,8 @@ const translations = {
         { img: IMG.fm11, name: 'Falla Rosario · Plaza Calabuig · Lourdes Oreo',   year: 'Fallera Mayor 2026' },
         { img: IMG.fm12, name: 'Falla Conserva · Berenguer Mallol · Kira Vila',   year: 'Fallera Mayor 2026' },
         { img: IMG.fm8,  name: 'Falla Maestro Rodrigo · General Avilés',          year: 'Fallera Mayor 2026' },
-        { img: IMG.fm13, name: 'Falla Maestro Rodrigo · Alejandra Blasco Beltrán',year: 'Fallera Mayor 2026' },
+        { img: IMG.fm13, name: 'Falla Maestro Rodrigo · Alejandra Blasco Beltrán', year: 'Fallera Mayor 2026' },
+        { img: IMG.fm14, name: 'Falla La Manta al Coll · Alguenet',               year: 'Fallera Infantil 2026' },
       ],
       cortsLabel: 'Cortes de Honor',
       corts: [
@@ -4169,6 +4173,7 @@ const translations = {
         { img: IMG.fm12, name: 'Falla Conserva · Berenguer Mallol · Kira Vila',   year: 'Fallera Major 2026' },
         { img: IMG.fm8,  name: 'Falla Mestre Rodrigo · General Avilés',           year: 'Fallera Major 2026' },
         { img: IMG.fm13, name: 'Falla Mestre Rodrigo · Alejandra Blasco Beltrán', year: 'Fallera Major 2026' },
+        { img: IMG.fm14, name: 'Falla La Manta al Coll · Alguenet',              year: 'Fallera Infantil 2026' },
       ],
       cortsLabel: "Corts d'Honor",
       corts: [
@@ -4778,6 +4783,23 @@ function buildDecoracion() {
     </div>`).join('');
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   CONTACTO — EmailJS (gratis: 200 emails/mes · https://emailjs.com)
+   ─────────────────────────────────────────────────────────────────
+   Pasos (5 min):
+   1. Crea cuenta en emailjs.com
+   2. Email Services → conecta Gmail/Outlook
+   3. Email Templates → crea plantilla con: {{from_name}}, {{reply_to}},
+      {{subject}}, {{message}}
+   4. Rellena las 3 constantes con tus IDs
+   ─────────────────────────────────────────────────────────────────
+   Sin EmailJS configurado → abre automáticamente el cliente de correo
+═══════════════════════════════════════════════════════════════════ */
+const CONTACT_EJS_KEY      = 'TU_PUBLIC_KEY';   /* Account > API Keys */
+const CONTACT_EJS_SERVICE  = 'TU_SERVICE_ID';   /* Email Services */
+const CONTACT_EJS_TEMPLATE = 'TU_TEMPLATE_ID';  /* Email Templates */
+const CONTACT_EMAIL        = 'info@cosascucas.es';
+
 function buildContacto() {
   const c = t().contacto;
   const icons = {
@@ -4825,42 +4847,49 @@ function buildContacto() {
     fNote.textContent = '';
     fNote.style.color = '';
 
-    try {
-      const res  = await fetch('/api/contact', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, subject, message: msg }),
+    /* Función de éxito compartida */
+    const onSuccess = () => {
+      fNote.textContent = c.successMsg;
+      fNote.style.color = 'var(--color-gold)';
+      fBtn.textContent  = '✓';
+      ['f-name','f-email','f-subject','f-msg'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
       });
-      const data = await res.json();
+      setTimeout(() => { fBtn.disabled = false; fBtn.textContent = c.submit; }, 4000);
+    };
 
-      if (res.ok && data.ok) {
-        // ✓ Enviado con éxito
-        fNote.textContent = c.successMsg;
-        fNote.style.color = 'var(--color-gold)';
-        fBtn.textContent  = '✓';
-        document.getElementById('f-name').value    = '';
-        document.getElementById('f-email').value   = '';
-        document.getElementById('f-subject').value = '';
-        document.getElementById('f-msg').value     = '';
-        setTimeout(() => {
-          fBtn.disabled    = false;
-          fBtn.textContent = c.submit;
-        }, 4000);
-      } else if (data.fallback) {
-        // Servidor sin clave → abrir cliente de correo
-        const body = encodeURIComponent(`Nombre: ${name}\nEmail: ${email}\n\n${msg}`);
-        const sub  = encodeURIComponent(subject || c.title);
-        window.location.href = `mailto:info@cosascucas.es?subject=${sub}&body=${body}`;
-        fBtn.disabled    = false;
-        fBtn.textContent = c.submit;
-      } else {
-        throw new Error(data.error || 'Error');
-      }
-    } catch {
-      fNote.textContent = c.errorMsg;
-      fNote.style.color = '#c0392b';
-      fBtn.disabled    = false;
+    /* Fallback: abrir cliente de correo del usuario */
+    const mailtoFallback = () => {
+      const body = encodeURIComponent(
+        `Nombre: ${name}\nEmail: ${email}\nAsunto: ${subject}\n\n${msg}`
+      );
+      const sub = encodeURIComponent(subject || 'Consulta Cosas Cucas');
+      window.open(`mailto:${CONTACT_EMAIL}?subject=${sub}&body=${body}`, '_blank');
+      fBtn.disabled = false;
       fBtn.textContent = c.submit;
+    };
+
+    if (CONTACT_EJS_KEY === 'TU_PUBLIC_KEY') {
+      /* Sin EmailJS configurado → fallback directo a mailto */
+      mailtoFallback();
+      return;
+    }
+
+    try {
+      emailjs.init(CONTACT_EJS_KEY);
+      await emailjs.send(CONTACT_EJS_SERVICE, CONTACT_EJS_TEMPLATE, {
+        from_name: name,
+        reply_to:  email,
+        subject:   subject || 'Consulta web Cosas Cucas',
+        message:   msg,
+        to_email:  CONTACT_EMAIL,
+      });
+      onSuccess();
+    } catch (err) {
+      console.error('EmailJS error:', err);
+      /* Si falla EmailJS → fallback a mailto */
+      mailtoFallback();
     }
   };
 }
