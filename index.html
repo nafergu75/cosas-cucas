@@ -2875,68 +2875,38 @@
 <section id="dossier-historia">
   <div class="container">
 
-    <!-- CABECERA -->
+    <!-- CABECERA (dinámica vía buildDossierHistoria) -->
     <div class="dh-header">
-      <span class="dh-eyebrow">✦ Memoria Descriptiva · Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana</span>
-      <h2 class="dh-title">Nuestra Historia</h2>
-      <p class="dh-lead">
-        Desde su fundación en 1982 en los pintorescos poblados marítimos, <strong>Cosas Cucas</strong> ha sido un faro de tradición
-        y elegancia en el mundo de la indumentaria valenciana. Inspirada por su profundo vínculo con el estudio y la pasión
-        por la indumentaria, nuestra fundadora <strong>Paquita Martorell</strong> abrió las puertas de nuestra primera tienda
-        en el entrañable barrio del Cabañal. Desde entonces, hemos tenido el honor de vestir a numerosas Falleras Mayores de
-        Valencia e infantiles, cortes de honor, reinas de las fiestas de la comarca y distinguidas personalidades de la sociedad valenciana.
-      </p>
+      <span class="dh-eyebrow" id="dh-eyebrow"></span>
+      <h2 class="dh-title" id="dh-title"></h2>
+      <p class="dh-lead" id="dh-lead"></p>
     </div>
 
     <!-- GRID PRINCIPAL -->
     <div class="dh-grid">
 
       <div class="dh-img-main">
-        <img src="historia/cosascucas_1.jpg" alt="Interior tienda Cosas Cucas · Telas y confección desde 1982" loading="lazy">
-        <div class="dh-img-caption">Tienda de Cosas Cucas — C/ Grabador Esteve 30, Valencia · Desde 1982</div>
-        <!-- Las dos fotos adicionales debajo -->
+        <img src="historia/cosascucas_1.jpg" alt="Interior tienda Cosas Cucas" loading="lazy">
+        <div class="dh-img-caption" id="dh-img-caption"></div>
         <div class="dh-img-sub-row">
-          <div class="dh-img-sub">
-            <img src="historia/cosascucas_5-1030x1030.jpg" alt="Detalle artesanal en el taller de Cosas Cucas" loading="lazy">
-          </div>
-          <div class="dh-img-sub">
-            <img src="historia/CocasCucas-02.jpg" alt="Vistiendo a una fallera en el taller" loading="lazy">
-          </div>
+          <div class="dh-img-sub"><img src="historia/cosascucas_5-1030x1030.jpg" alt="Detalle artesanal" loading="lazy"></div>
+          <div class="dh-img-sub"><img src="historia/CocasCucas-02.jpg" alt="Vistiendo a una fallera" loading="lazy"></div>
         </div>
       </div>
 
       <div class="dh-content">
-
         <div class="dh-block">
-          <h3 class="dh-block-title">La segunda generación</h3>
-          <p class="dh-block-text">
-            Las hijas de Paquita Martorell, <strong>Noelia y María</strong>, son una parte fundamental del legado y la continuidad
-            de Cosas Cucas. Como parte de la segunda generación, han heredado la pasión por la indumentaria valenciana y han dedicado
-            su vida al negocio familiar. Desde que se unieron al taller dirigido por su madre, han aportado su experiencia y
-            habilidades para mantener los altos estándares de calidad y artesanía que caracterizan a <strong>Cosas Cucas</strong>.
-          </p>
-          <p class="dh-block-text">
-            Han desempeñado un papel importante en la expansión y modernización de la empresa, participando en la elaboración de
-            nuevos dibujos exclusivos y en la introducción de innovaciones en el proceso de confección. Su compromiso con la
-            tradición y su visión para el futuro han sido fundamentales para mantener a Cosas Cucas como un referente en el mundo
-            de la indumentaria valenciana.
-          </p>
+          <h3 class="dh-block-title" id="dh-b1-title"></h3>
+          <p class="dh-block-text" id="dh-b1-p1"></p>
+          <p class="dh-block-text" id="dh-b1-p2"></p>
         </div>
-
         <div class="dh-block">
-          <h3 class="dh-block-title">Nuestro compromiso</h3>
-          <p class="dh-block-text">
-            Con más de cuatro décadas de dedicación y pasión por este arte, <strong>Cosas Cucas</strong> se ha distinguido por
-            la calidad y el detalle de cada prenda, convirtiéndonos en un referente en el sector. Nuestra participación
-            en la vida fallera no solo representa una oportunidad para vestir a figuras emblemáticas, sino también un homenaje
-            a nuestra historia y a la belleza de nuestra cultura.
-          </p>
+          <h3 class="dh-block-title" id="dh-b2-title"></h3>
+          <p class="dh-block-text" id="dh-b2-p1"></p>
         </div>
-
         <div class="dh-cta-row">
-          <a class="btn btn--gold" href="#contacto">Pedir cita en tienda</a>
+          <a class="btn btn--gold" href="#contacto" id="dh-cta"></a>
         </div>
-
       </div>
     </div>
 
@@ -3647,6 +3617,18 @@ const translations = {
       image: IMG.editorial,
       imageCaption: '"Vestimos la tradición\ncon el amor que\nmerece Valencia."',
     },
+    dossier: {
+      eyebrow: '✦ Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana',
+      title: 'Nuestra Historia',
+      lead: 'Desde su fundación en 1982 en los pintorescos poblados marítimos, <strong>Cosas Cucas</strong> ha sido un faro de tradición y elegancia en el mundo de la indumentaria valenciana. Inspirada por su profundo vínculo con el estudio y la pasión por la indumentaria, nuestra fundadora <strong>Paquita Martorell</strong> abrió las puertas de nuestra primera tienda en el entrañable barrio del Cabañal.',
+      imgCaption: 'Tienda de Cosas Cucas — C/ Grabador Esteve 30, Valencia · Desde 1982',
+      block1Title: 'La segunda generación',
+      block1p1: 'Las hijas de Paquita Martorell, <strong>Noelia y María</strong>, son una parte fundamental del legado y la continuidad de Cosas Cucas. Han heredado la pasión por la indumentaria valenciana y han dedicado su vida al negocio familiar. Desde que se unieron al taller dirigido por su madre, han aportado experiencia y habilidades para mantener los altos estándares de calidad y artesanía.',
+      block1p2: 'Han desempeñado un papel importante en la expansión y modernización de la empresa, participando en la elaboración de nuevos dibujos exclusivos y en la introducción de innovaciones en el proceso de confección.',
+      block2Title: 'Nuestro compromiso',
+      block2p1: 'Con más de cuatro décadas de dedicación, <strong>Cosas Cucas</strong> se ha distinguido por la calidad y el detalle de cada prenda. Nuestra participación en la vida fallera es un homenaje a nuestra historia y a la belleza de nuestra cultura.',
+      ctaLabel: 'Pedir cita en tienda',
+    },
     newsletter: {
       eyebrow: 'Lista Privada',
       title: 'Sé la primera en saberlo.',
@@ -4065,6 +4047,18 @@ const translations = {
       ctaHref: '#dossier-historia',
       image: IMG.editorial,
       imageCaption: '"Vestim la tradició\namb l\'amor que\nmereix València."',
+    },
+    dossier: {
+      eyebrow: '✦ Gremi Artesà de Sastres i Modistes de la Comunitat Valenciana',
+      title: 'La nostra Història',
+      lead: 'Des de la seua fundació el 1982 als pintorescos poblats marítims, <strong>Cosas Cucas</strong> ha sigut un far de tradició i elegància en el món de la indumentària valenciana. Inspirada per la passió per la indumentària, la nostra fundadora <strong>Paquita Martorell</strong> va obrir les portes de la nostra primera tenda al barri del Cabanyal.',
+      imgCaption: 'Tenda de Cosas Cucas — C/ Gravador Esteve 30, València · Des de 1982',
+      block1Title: 'La segona generació',
+      block1p1: 'Les filles de Paquita Martorell, <strong>Noelia i María</strong>, són una part fonamental del llegat i la continuïtat de Cosas Cucas. Han heretat la passió per la indumentària valenciana i han dedicat la seua vida al negoci familiar. Des que es van unir al taller dirigit per sa mare, han aportat experiència i habilitats per a mantenir els alts estàndards de qualitat.',
+      block1p2: "Han exercit un paper important en l'expansió i modernització de l'empresa, participant en l'elaboració de nous dibuixos exclusius i en la introducció d'innovacions en el procés de confecció.",
+      block2Title: 'El nostre compromís',
+      block2p1: 'Amb més de quatre dècades de dedicació, <strong>Cosas Cucas</strong> s\'ha distingit per la qualitat i el detall de cada peça. La nostra participació en la vida fallera és un homenatge a la nostra història i a la bellesa de la nostra cultura.',
+      ctaLabel: 'Demanar cita a la tenda',
     },
     newsletter: {
       eyebrow: 'Llista Privada',
@@ -4613,6 +4607,23 @@ function buildFMDetail() {
     </div>`).join('');
 }
 
+function buildDossierHistoria() {
+  const d = t().dossier;
+  if (!d) return;
+  const s = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
+  s('dh-eyebrow',   d.eyebrow);
+  s('dh-title',     d.title);
+  s('dh-lead',      d.lead);
+  s('dh-img-caption', d.imgCaption);
+  s('dh-b1-title',  d.block1Title);
+  s('dh-b1-p1',     d.block1p1);
+  s('dh-b1-p2',     d.block1p2);
+  s('dh-b2-title',  d.block2Title);
+  s('dh-b2-p1',     d.block2p1);
+  const cta = document.getElementById('dh-cta');
+  if (cta) cta.textContent = d.ctaLabel;
+}
+
 function buildEditorial() {
   const ed = t().editorial;
   document.getElementById('editorial-eyebrow').textContent = ed.eyebrow;
@@ -4871,8 +4882,12 @@ function buildContacto() {
     };
 
     if (CONTACT_EJS_KEY === 'TU_PUBLIC_KEY') {
-      /* Sin EmailJS configurado → fallback directo a mailto */
-      mailtoFallback();
+      /* EmailJS aún no configurado — muestra instrucciones en consola */
+      console.warn('⚙️ Configura EmailJS en index.html (CONTACT_EJS_KEY, SERVICE, TEMPLATE)');
+      fNote.textContent = '⚙️ Para activar el envío automático, configura EmailJS. Llámanos al 963 511 556.';
+      fNote.style.color = 'var(--color-gold)';
+      fBtn.disabled = false;
+      fBtn.textContent = c.submit;
       return;
     }
 
@@ -4888,8 +4903,10 @@ function buildContacto() {
       onSuccess();
     } catch (err) {
       console.error('EmailJS error:', err);
-      /* Si falla EmailJS → fallback a mailto */
-      mailtoFallback();
+      fNote.textContent = c.errorMsg + ' · Llámanos al 963 511 556';
+      fNote.style.color = '#c0392b';
+      fBtn.disabled = false;
+      fBtn.textContent = c.submit;
     }
   };
 }
@@ -5002,7 +5019,7 @@ function renderAll() {
   renderHero(t().drops[0]);
   initHeroSlider();           /* ImagePlayer: fotos de pasarela en bucle */
   buildArchive(); buildFMDetail(); buildProbador(); buildZapatillas(); buildHistoria();
-  buildEditorial(); buildDecoracion(); buildVideos(); buildResenas();
+  buildEditorial(); buildDossierHistoria(); buildDecoracion(); buildVideos(); buildResenas();
   buildNewsletter(); buildContacto(); buildVisita(); buildFooter();
   updateCitaBtn();
   initAnimatedBorders();   /* button-border.tsx → orbe dorado en todos los botones */
