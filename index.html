@@ -3413,6 +3413,7 @@ const translations = {
     drops: [
       {
         id: 'falles-2027-mujer', title: 'Indumentaria Femenina', subtitle: 'Fallas 2027 · La Luz de la Tradición',
+        heroTitle: 'El arte de vestir Valencia.',
         description: 'En Cosas Cucas apostamos por la artesanía cuidada, los detalles únicos y las piezas que transmiten dulzura, tradición y originalidad.',
         heroImage: IMG.portada, archiveImage: IMG.archive1, badge: 'Disponible Ahora',
         ctaPrimary: { label: 'Ver la colección', href: '#drops-archive' },
@@ -3449,6 +3450,7 @@ const translations = {
       },
       {
         id: 'hombre-2027', title: 'Indumentaria Masculina', subtitle: 'Indumentaria Masculina Valenciana',
+        heroTitle: 'El llaurador, vestido con orgullo.',
         description: 'Indumentaria tradicional masculina valenciana para las Fallas de 2027. Jubones de seda, calzas, fajas bordadas y complementos artesanales. Todo confeccionado a medida en nuestro taller de Valencia, con los mismos materiales exclusivos que nuestra línea de mujer.',
         heroImage: IMG.hHero, archiveImage: IMG.hArchive, badge: 'Colección 2027',
         ctaPrimary: { label: 'Ver la colección', href: '#drops-archive' },
@@ -3470,6 +3472,7 @@ const translations = {
       },
       {
         id: 'aderezos-peinetas', title: 'Aderezos y Peinetas', subtitle: 'El Complemento Perfecto',
+        heroTitle: 'Joyas que cuentan una herencia.',
         description: 'Nuestra selección de aderezos, peinetas y complementos para completar cualquier indumentaria valenciana. Joyas de plata dorada, peinetas artesanales y accesorios exclusivos que realzan el valor de cada conjunto.',
         heroImage: IMG.aderezo, archiveImage: IMG.aderezo, badge: 'Exclusivos',
         ctaPrimary: { label: 'Ver aderezos', href: '#drops-archive' },
@@ -3494,6 +3497,7 @@ const translations = {
       },
       {
         id: 'telas-bordados', title: 'Telas Valencianas', subtitle: 'El Corazón de la Indumentaria',
+        heroTitle: 'Tejidos con alma valenciana.',
         description: 'Diseños exclusivos de brocado valenciano para indumentaria fallera: sedas, jacquards y espolinas con nombres propios de nuestra colección. Disponibles a metro. Ven a nuestro taller y te asesoramos sin compromiso.',
         heroImage: IMG.tPortada, archiveImage: IMG.tPortada, badge: 'Siempre Disponible',
         ctaPrimary: { label: 'Ver telas', href: '#drops-archive' },
@@ -3528,6 +3532,7 @@ const translations = {
       },
       {
         id: 'manteletas-mantillas', title: 'Manteletas y Mantillas', subtitle: 'El Arte del Encaje Valenciano',
+        heroTitle: 'El encaje que completa tu historia.',
         description: 'Nuestras manteletas son verdaderas obras de arte, elaboradas manualmente e inspiradas en diseños antiguos. Bordadas a mano en cadeneta y realce sobre bases de nipy, seda natural y tules de hilo. Mantillas de encaje negro o blanco para cualquier ocasión especial. Cada pieza, única.',
         heroImage: IMG.manteletas, archiveImage: IMG.manteletas, badge: 'Artesanía',
         ctaPrimary:   { label: 'Ver manteletas', href: '#drops-archive' },
@@ -3543,6 +3548,7 @@ const translations = {
       },
       {
         id: 'semana-santa', title: 'Semana Santa', subtitle: 'Devoción y Elegancia',
+        heroTitle: 'Devoción vestida con esmero.',
         description: 'La indumentaria de Semana Santa elaborada con la misma pasión artesanal que nos define desde 1982. Mantillas de encaje negro, mantos bordados y túnicas confeccionadas a medida en nuestro taller de Valencia. Cada pieza, un acto de devoción y elegancia que honra la tradición.',
         heroImage: IMG.ss13, archiveImage: IMG.ss1, badge: 'Disponible',
         ctaPrimary:   { label: 'Ver la colección', href: '#drops-archive' },
@@ -4378,7 +4384,7 @@ function renderHero(drop) {
   /* Texto del hero — las imágenes las gestiona initHeroSlider() */
   document.getElementById('hero-badge').textContent   = '';
   document.getElementById('hero-eyebrow').textContent = drop.title + ' · ' + drop.subtitle;
-  document.getElementById('hero-title').textContent   = drop.description.split('.')[0] + '.';
+  document.getElementById('hero-title').textContent   = drop.heroTitle || drop.title;
   document.getElementById('hero-desc').textContent    = drop.description;
 }
 
