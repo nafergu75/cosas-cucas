@@ -142,17 +142,23 @@
     ═══════════════════════════════════════════════════════════════════════════ */
     /* ── BANNER INAUGURACIÓN ── */
     .inaug-banner {
+      /* reset botón */
+      border-top: none; border-left: none; border-right: none;
+      border-bottom: 1.5px solid rgba(181,144,58,.35);
+      outline: none; cursor: pointer;
+      font-family: var(--font-body);
+      /* posición y tamaño */
       position: fixed;
-      top: 0; left: 0; right: 0;
+      top: 0; left: 0; right: 0; width: 100%;
       z-index: 1100;
       background: var(--color-bg-dark);
-      border-bottom: 1px solid rgba(181,144,58,.3);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
-      padding: 9px 24px;
-      text-decoration: none;
+      padding: 0 24px;
+      height: var(--banner-h);
+      min-height: 36px;
       transition: background .2s;
     }
     .inaug-banner:hover { background: #221e1a; }
@@ -197,7 +203,7 @@
 
     #header {
       position: fixed;
-      top: 36px; /* desplazar debajo del banner */ left: 0; right: 0;
+      top: var(--banner-h); left: 0; right: 0;
       height: var(--header-h);
       z-index: 1000;
       background: var(--color-bg);
@@ -1625,7 +1631,8 @@
 
     /* ── TABLET / MÓVIL ── */
     @media (max-width: 768px) {
-      :root { --header-h: 60px; }
+      :root { --header-h: 60px; --banner-h: 36px; }
+      .inaug-text span { font-size: .56rem; }
 
       /* NAV */
       .nav-desktop { display: none; }
