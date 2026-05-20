@@ -142,26 +142,18 @@
     ═══════════════════════════════════════════════════════════════════════════ */
     /* ── BANNER INAUGURACIÓN ── */
     .inaug-banner {
-      /* reset botón */
-      border-top: none; border-left: none; border-right: none;
-      border-bottom: 1.5px solid rgba(181,144,58,.35);
-      outline: none; cursor: pointer;
-      font-family: var(--font-body);
-      /* posición y tamaño */
-      position: fixed;
-      top: 0; left: 0; right: 0; width: 100%;
-      z-index: 1100;
-      background: var(--color-bg-dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      padding: 0 24px;
-      height: var(--banner-h);
-      min-height: 36px;
-      transition: background .2s;
+      -webkit-appearance:none; appearance:none;
+      border:none !important; outline:none; cursor:pointer;
+      position:fixed !important; top:0 !important; left:0 !important;
+      right:0 !important; width:100% !important; z-index:99999 !important;
+      background:#1A1714 !important;
+      border-bottom:1.5px solid rgba(181,144,58,.5) !important;
+      display:flex !important; align-items:center; justify-content:center;
+      gap:12px; padding:0 20px; height:36px !important;
+      box-sizing:border-box; font-family:"Space Grotesk",sans-serif;
+      transition:background .2s;
     }
-    .inaug-banner:hover { background: #221e1a; }
+    .inaug-banner:hover { background:#2a241f !important; }
     .inaug-dot {
       width: 7px; height: 7px; border-radius: 50%;
       background: var(--color-gold);
@@ -5943,7 +5935,7 @@ function updateCitaBtn() {
 <style>
 /* ── MODAL INAUGURACIÓN ──────────────────────────────────────── */
 #inaug-modal {
-  position: fixed; inset: 0; z-index: 9000;
+  position: fixed; inset: 0; z-index: 99998;
   display: none;
   opacity: 0;
   transition: opacity .4s ease;
