@@ -194,34 +194,95 @@
       letter-spacing: 0.02em;
       display: none; /* se muestra solo si la imagen falla */
     }
-    /* NAV DESKTOP */
+    /* ── NAV DESKTOP — AnimatedTabs ─────────────────────────────── */
     .nav-desktop {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: clamp(6px, 1.1vw, 18px);   /* se comprime en pantallas medias */
-      overflow: hidden;
+      overflow: visible;
       flex-wrap: nowrap;
     }
-    .nav-desktop a {
-      font-size: clamp(0.6rem, 0.7vw, 0.72rem);   /* escala con el viewport */
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--color-text);
+
+    /* Contenedor pill completo */
+    .anim-tabs {
       position: relative;
-      padding-bottom: 2px;
-      white-space: nowrap;
+      background: rgba(26,23,20,.06);
+      border: 1px solid rgba(181,144,58,.18);
+      border-radius: 9999px;
+      padding: 3px 6px;
+      display: flex;
+      align-items: center;
+      gap: 0;
     }
-    .nav-desktop a::after {
-      content: '';
+
+    /* Capa activa (clip-path animado sobre fondo dorado) */
+    .anim-tabs__active-layer {
       position: absolute;
-      bottom: -2px; left: 0;
-      width: 0; height: 1px;
-      background: var(--color-gold);
-      transition: width 0.3s;
+      inset: 0;
+      z-index: 1;
+      border-radius: 9999px;
+      overflow: hidden;
+      clip-path: inset(0 100% 0 0% round 17px);
+      transition: clip-path 0.28s ease;
+      pointer-events: none;
     }
-    .nav-desktop a:hover::after { width: 100%; }
+    .anim-tabs__active-bg {
+      position: absolute;
+      inset: 0;
+      background: var(--color-gold);
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      padding: 3px 6px;
+      gap: 0;
+    }
+    /* Botones fantasma dentro de la capa activa (solo visuales) */
+    .anim-tabs__active-bg .anim-tab-ghost {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      padding: 0 clamp(6px, 0.7vw, 11px);
+      font-size: clamp(0.56rem, 0.62vw, 0.66rem);
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--color-bg);
+      white-space: nowrap;
+      border-radius: 9999px;
+      pointer-events: none;
+      flex-shrink: 0;
+    }
+
+    /* Botones reales (capa base) */
+    .anim-tab {
+      position: relative;
+      z-index: 2;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      padding: 0 clamp(6px, 0.7vw, 11px);
+      font-family: var(--font-body);
+      font-size: clamp(0.56rem, 0.62vw, 0.66rem);
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      background: transparent;
+      border: none;
+      border-radius: 9999px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+    .anim-tab:hover { color: var(--color-text); }
+    .anim-tab.active { color: transparent; } /* el dorado tapa este texto */
+
+    @media (max-width: 768px) {
+      .nav-desktop { display: none; }
+      .hamburger { display: flex; }
+    }
     /* HEADER ACTIONS */
     .header-actions {
       display: flex;
@@ -2676,7 +2737,18 @@
       </a>
 
       <!-- NAV DESKTOP — edita los links en el array navLinks de JS -->
-      <nav class="nav-desktop" id="nav-desktop"></nav>
+      <nav class="nav-desktop" id="nav-desktop">
+        <!-- AnimatedTabs: generado por buildNav() -->
+        <div class="anim-tabs" id="anim-tabs-container">
+          <!-- capa activa con fondo dorado (clip-path animado) -->
+          <div class="anim-tabs__active-layer" id="anim-tabs-layer">
+            <div class="anim-tabs__active-bg" id="anim-tabs-bg">
+              <!-- los ghost buttons se generan por JS -->
+            </div>
+          </div>
+          <!-- botones reales: generados por JS -->
+        </div>
+      </nav>
 
       <!-- ACCIONES -->
       <div class="header-actions">
@@ -4294,6 +4366,8 @@ function setLang(lang) {
     b.classList.toggle('active', b.dataset.lang === lang));
   document.documentElement.lang = lang === 'ca' ? 'ca' : 'es';
   renderAll();
+  /* Re-renderizar nav con el nuevo idioma */
+  if (typeof window._navRender === 'function') window._navRender();
 }
 
 function buildStripe() {
@@ -4302,16 +4376,83 @@ function buildStripe() {
   track.innerHTML = double.map(m => `<span class="stripe-item">${m}</span>`).join('');
 }
 
+/* ── buildNav — AnimatedTabs (vanilla JS translation of the React component) ── */
 function buildNav() {
-  const desktopNav = document.getElementById('nav-desktop');
   const mobileMenu = document.getElementById('mobile-menu');
-  desktopNav.innerHTML = '';
-  mobileMenu.innerHTML = '';
-  t().nav.forEach(link => {
-    const tgt = link.target ? ` target="${link.target}" rel="noopener"` : '';
-    desktopNav.insertAdjacentHTML('beforeend', `<a href="${link.href}"${tgt}>${link.label}</a>`);
-    mobileMenu.insertAdjacentHTML('beforeend', `<a href="${link.href}"${tgt}>${link.label}</a>`);
-  });
+  const container  = document.getElementById('anim-tabs-container');
+  const layer      = document.getElementById('anim-tabs-layer');
+  const bgStrip    = document.getElementById('anim-tabs-bg');
+  if (!container) return;
+
+  const links = t().nav;
+  let activeHref = window.location.hash || links[0].href;
+
+  /* ── Generar botones reales + ghosts ── */
+  function render() {
+    /* Limpiar solo los botones reales (no la capa activa) */
+    container.querySelectorAll('.anim-tab').forEach(b => b.remove());
+    bgStrip.innerHTML = '';
+
+    links.forEach((link, i) => {
+      /* Ghost (dentro de la capa dorada) */
+      const ghost = document.createElement('span');
+      ghost.className = 'anim-tab-ghost';
+      ghost.textContent = link.label;
+      bgStrip.appendChild(ghost);
+
+      /* Botón real */
+      const btn = document.createElement('a');
+      btn.className = 'anim-tab' + (link.href === activeHref ? ' active' : '');
+      btn.href = link.href;
+      btn.textContent = link.label;
+      if (link.target) { btn.target = link.target; btn.rel = 'noopener'; }
+      btn.dataset.index = i;
+
+      btn.addEventListener('click', () => {
+        activeHref = link.href;
+        container.querySelectorAll('.anim-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        updateClip(btn);
+      });
+
+      container.appendChild(btn);
+    });
+
+    /* Animar al tab activo inicial */
+    requestAnimationFrame(() => {
+      const activeBtn = container.querySelector('.anim-tab.active');
+      if (activeBtn) updateClip(activeBtn);
+    });
+  }
+
+  /* ── Función clip-path (core de AnimatedTabs) ── */
+  function updateClip(activeBtn) {
+    const cW = container.offsetWidth;
+    if (!cW) return;
+
+    const { offsetLeft, offsetWidth } = activeBtn;
+    const clipL = offsetLeft + 6;               /* compensar padding izq del container */
+    const clipR = offsetLeft + offsetWidth + 6;
+
+    const pctL = ((clipL / cW) * 100).toFixed(1);
+    const pctR = (100 - (clipR / cW) * 100).toFixed(1);
+
+    layer.style.clipPath = `inset(0 ${pctR}% 0 ${pctL}% round 17px)`;
+  }
+
+  render();
+
+  /* ── Menú móvil (sin cambios) ── */
+  if (mobileMenu) {
+    mobileMenu.innerHTML = '';
+    links.forEach(link => {
+      const tgt = link.target ? ` target="${link.target}" rel="noopener"` : '';
+      mobileMenu.insertAdjacentHTML('beforeend', `<a href="${link.href}"${tgt}>${link.label}</a>`);
+    });
+  }
+
+  /* ── Re-renderizar al cambiar de idioma ── */
+  window._navRender = render;
 }
 
 /* ── Modal colección ── */
