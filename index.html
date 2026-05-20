@@ -2771,6 +2771,8 @@
   </style>
   <!-- EmailJS — envío de formulario de contacto (gratis 200 emails/mes) -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- Three.js — shader animation modal inauguración (carga diferida) -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js" defer></script>
 </head>
 <body>
 
@@ -2778,14 +2780,14 @@
      HEADER
 ═══════════════════════════════════════════════════════════════════════════ -->
 <!-- ── BANNER INAUGURACIÓN ── -->
-<a href="inauguracion.html" class="inaug-banner" id="inaug-banner">
+<button class="inaug-banner" id="inaug-banner" onclick="openInaugModal()">
   <span class="inaug-dot"></span>
   <span class="inaug-text">
     <strong>Próxima Inauguración</strong>
     <span>Nueva tienda · C/ Burriana, 21 · Valencia</span>
   </span>
   <span class="inaug-arrow">→</span>
-</a>
+</button>
 
 <header id="header">
   <div class="container">
@@ -5877,6 +5879,265 @@ function updateCitaBtn() {
     body: 'Hola! Soy la asistente de <b>Cosas Cucas</b>. Preguntame sobre el traje de fallera, las telas, el aderezo o la tienda.'
   }, 900);
 
+})();
+</script>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     MODAL INAUGURACIÓN — se abre al clicar el banner, sobre la portada
+════════════════════════════════════════════════════════════════════ -->
+<div id="inaug-modal" role="dialog" aria-modal="true" aria-label="Próxima Inauguración Cosas Cucas">
+
+  <!-- Canvas shader (fondo animado Three.js) -->
+  <canvas id="inaug-canvas"></canvas>
+
+  <!-- Overlay oscuro sobre el shader -->
+  <div class="inaug-overlay"></div>
+
+  <!-- Botón cerrar -->
+  <button class="inaug-close" id="inaug-close" aria-label="Cerrar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+
+  <!-- Contenido central -->
+  <div class="inaug-stage">
+    <div class="inaug-card">
+
+      <!-- Badge pulsante -->
+      <div class="inaug-badge">
+        <span class="inaug-badge-dot"></span>
+        Próxima Inauguración
+      </div>
+
+      <!-- Foto tienda nueva -->
+      <div class="inaug-photo-wrap">
+        <img src="tienda nueva.jpeg" alt="Nueva tienda Cosas Cucas · C/ Burriana 21 Valencia" loading="lazy" />
+        <div class="inaug-photo-info">
+          <h2 class="inaug-title">Cosas Cucas</h2>
+          <p class="inaug-address">
+            <span class="inaug-star">✦</span>
+            C/ Burriana, 21 · 46005 Valencia
+          </p>
+        </div>
+      </div>
+
+      <!-- Tagline -->
+      <p class="inaug-tagline">
+        Cuarenta años vistiendo la tradición valenciana.<br>
+        Próximamente en nuestra nueva casa.
+      </p>
+
+    </div>
+  </div>
+
+</div>
+
+<style>
+/* ── MODAL INAUGURACIÓN ──────────────────────────────────────── */
+#inaug-modal {
+  position: fixed; inset: 0; z-index: 9000;
+  display: none;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+#inaug-modal.open { display: block; }
+#inaug-modal.visible { opacity: 1; }
+
+#inaug-canvas {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%;
+}
+.inaug-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: radial-gradient(ellipse at center,
+    rgba(26,23,20,.4) 0%, rgba(26,23,20,.78) 100%);
+}
+
+/* Cerrar */
+.inaug-close {
+  position: absolute; top: 20px; right: 20px; z-index: 10;
+  width: 42px; height: 42px; border-radius: 50%;
+  background: rgba(253,250,243,.1);
+  border: 1px solid rgba(181,144,58,.3);
+  color: rgba(253,250,243,.8);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background .2s, border-color .2s;
+}
+.inaug-close:hover { background: rgba(181,144,58,.2); border-color: var(--color-gold); }
+.inaug-close svg { width: 18px; height: 18px; }
+
+/* Stage centrado */
+.inaug-stage {
+  position: absolute; inset: 0; z-index: 3;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.inaug-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0;
+  max-width: 620px; width: 100%;
+  animation: inaugFadeUp .7s ease both;
+}
+@keyframes inaugFadeUp {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* Badge */
+.inaug-badge {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: var(--color-gold);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: .62rem; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase;
+  padding: 7px 20px; border-radius: 9999px;
+  margin-bottom: 22px;
+  box-shadow: 0 0 40px rgba(181,144,58,.5);
+  animation: inaugPulse 2.5s ease-in-out infinite;
+}
+@keyframes inaugPulse {
+  0%,100% { box-shadow: 0 0 36px rgba(181,144,58,.5); }
+  50%      { box-shadow: 0 0 64px rgba(181,144,58,.8); }
+}
+.inaug-badge-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: #fff;
+  animation: inaugBlink 1.3s ease-in-out infinite;
+}
+@keyframes inaugBlink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+/* Foto */
+.inaug-photo-wrap {
+  position: relative; width: 100%;
+  border-radius: 14px; overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(181,144,58,.3), 0 28px 70px rgba(0,0,0,.65);
+}
+.inaug-photo-wrap img {
+  width: 100%; display: block; object-fit: cover;
+  max-height: 52vh;
+}
+.inaug-photo-wrap::after {
+  content: ''; position: absolute; bottom:0; left:0; right:0; height:55%;
+  background: linear-gradient(transparent, rgba(26,23,20,.92));
+  pointer-events: none;
+}
+.inaug-photo-info {
+  position: absolute; bottom:0; left:0; right:0; z-index:2;
+  padding: 24px 24px 20px;
+}
+.inaug-title {
+  font-family: var(--font-display); font-size: clamp(1.8rem,4.5vw,3rem);
+  font-weight: 400; color: var(--color-white); line-height:1.05;
+}
+.inaug-address {
+  font-family: var(--font-body); font-size: clamp(.72rem,1.4vw,.88rem);
+  font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--color-gold-light); margin-top: 5px;
+  display: flex; align-items: center; gap: 7px;
+}
+.inaug-star { font-size: .55rem; color: var(--color-gold); }
+
+/* Tagline */
+.inaug-tagline {
+  font-family: var(--font-display); font-style: italic;
+  font-size: clamp(.78rem,1.5vw,.95rem);
+  color: rgba(253,250,243,.5); text-align: center;
+  margin-top: 18px; line-height: 1.65;
+}
+
+@media (max-height: 680px) {
+  .inaug-photo-wrap img { max-height: 40vh; }
+  .inaug-badge { margin-bottom: 14px; }
+  .inaug-tagline { margin-top: 10px; }
+}
+@media (max-width: 480px) {
+  .inaug-photo-info { padding: 14px; }
+  .inaug-title { font-size: 1.5rem; }
+}
+</style>
+
+<script>
+/* ── Modal Inauguración + ShaderAnimation Three.js ── */
+(function () {
+  const modal    = document.getElementById('inaug-modal');
+  const closeBtn = document.getElementById('inaug-close');
+  let   renderer = null, raf = null;
+
+  /* Shader igual al de inauguracion.html */
+  const VERT = `void main(){gl_Position=vec4(position,1.0);}`;
+  const FRAG = `
+    precision highp float;
+    uniform vec2  resolution;
+    uniform float time;
+    void main(void){
+      vec2 uv=(gl_FragCoord.xy*2.0-resolution.xy)/min(resolution.x,resolution.y);
+      float t=time*0.05;
+      float lw=0.002;
+      vec3 c=vec3(0.0);
+      for(int j=0;j<3;j++){
+        for(int i=0;i<5;i++){
+          c[j]+=lw*float(i*i)/abs(fract(t-0.01*float(j)+float(i)*0.01)*5.0-length(uv)+mod(uv.x+uv.y,0.2));
+        }
+      }
+      gl_FragColor=vec4(c[0],c[1],c[2],1.0);
+    }`;
+
+  function startShader() {
+    if (renderer || typeof THREE === 'undefined') return;
+    const canvas = document.getElementById('inaug-canvas');
+    const camera = new THREE.Camera();
+    camera.position.z = 1;
+    const scene = new THREE.Scene();
+    const geo = new THREE.PlaneGeometry(2,2);
+    const uniforms = {
+      time:       { value: 1.0 },
+      resolution: { value: new THREE.Vector2() }
+    };
+    const mat = new THREE.ShaderMaterial({ uniforms, vertexShader:VERT, fragmentShader:FRAG });
+    scene.add(new THREE.Mesh(geo, mat));
+    renderer = new THREE.WebGLRenderer({ canvas, antialias:true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    function resize(){
+      const w=modal.clientWidth, h=modal.clientHeight;
+      renderer.setSize(w,h);
+      uniforms.resolution.value.set(renderer.domElement.width, renderer.domElement.height);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    (function animate(){
+      raf = requestAnimationFrame(animate);
+      uniforms.time.value += 0.05;
+      renderer.render(scene, camera);
+    })();
+  }
+
+  function stopShader() {
+    if (raf) { cancelAnimationFrame(raf); raf = null; }
+  }
+
+  /* ── Abrir ── */
+  window.openInaugModal = function () {
+    modal.classList.add('open');
+    requestAnimationFrame(() => modal.classList.add('visible'));
+    document.body.style.overflow = 'hidden';
+    startShader();
+  };
+
+  /* ── Cerrar ── */
+  function closeModal() {
+    modal.classList.remove('visible');
+    setTimeout(() => {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+      stopShader();
+    }, 420);
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
 })();
 </script>
 
