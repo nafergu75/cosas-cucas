@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Próxima Inauguración · Cosas Cucas · C/ Burriana, 21 Valencia</title>
+  <meta name="description" content="Cosas Cucas abre nueva tienda en C/ Burriana, 21 · Valencia. Próxima inauguración. Indumentaria valenciana artesanal desde 1982.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Three.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
+
+  <style>
+    :root {
+      --gold:  #B5903A;
+      --gl:    #D4B166;
+      --dark:  #1A1714;
+      --cream: #F4EDD8;
+      --white: #FDFAF3;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+
+    /* ── SHADER CANVAS (fondo) ──────────────────── */
+    #shader-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.85;
+    }
+
+    /* ── OVERLAY oscuro encima del shader ────────── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      background: radial-gradient(ellipse at center,
+        rgba(26,23,20,0.45) 0%,
+        rgba(26,23,20,0.75) 100%);
+    }
+
+    /* ── CONTENIDO CENTRAL ───────────────────────── */
+    .stage {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      max-width: 680px;
+      width: 100%;
+      animation: fadeUp 1.2s ease both;
+    }
+
+    /* ── BADGE "PRÓXIMA INAUGURACIÓN" ────────────── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gold);
+      color: var(--white);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 8px 22px;
+      border-radius: 9999px;
+      margin-bottom: 28px;
+      box-shadow: 0 0 40px rgba(181,144,58,0.55);
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    .badge::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #fff;
+      animation: blink 1.2s ease-in-out infinite;
+    }
+
+    /* ── FOTO DE LA TIENDA ───────────────────────── */
+    .store-photo-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 580px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(181,144,58,0.35),
+        0 32px 80px rgba(0,0,0,0.65),
+        0 0 60px rgba(181,144,58,0.2);
+    }
+    .store-photo-wrap img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      max-height: 54vh;
+    }
+    /* Gradiente inferior sobre la foto */
+    .store-photo-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(transparent, rgba(26,23,20,0.9));
+      pointer-events: none;
+    }
+    /* Texto encima de la foto */
+    .store-photo-text {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 2;
+      padding: 28px 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .store-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.05;
+      letter-spacing: 0.01em;
+    }
+    .store-address {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(0.75rem, 1.6vw, 0.95rem);
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gl);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .store-address::before {
+      content: '✦';
+      font-size: 0.6rem;
+      color: var(--gold);
+    }
+
+    /* ── TAGLINE ─────────────────────────────────── */
+    .tagline {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(0.8rem, 1.6vw, 1rem);
+      color: rgba(253,250,243,0.55);
+      text-align: center;
+      margin-top: 20px;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── BOTÓN VOLVER ────────────────────────────── */
+    .btn-back {
+      margin-top: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 28px;
+      border: 1.5px solid rgba(181,144,58,0.45);
+      border-radius: 9999px;
+      background: transparent;
+      color: rgba(253,250,243,0.7);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color .2s, color .2s, background .2s;
+    }
+    .btn-back:hover {
+      border-color: var(--gold);
+      color: var(--white);
+      background: rgba(181,144,58,0.12);
+    }
+
+    /* ── LOGO TOP ────────────────────────────────── */
+    .top-logo {
+      position: fixed;
+      top: 22px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .top-logo img {
+      height: 36px;
+      width: auto;
+      filter: brightness(10);
+      mix-blend-mode: normal;
+    }
+    .top-eyebrow {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ── ANIMACIONES ─────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 40px rgba(181,144,58,0.55); }
+      50%       { box-shadow: 0 0 70px rgba(181,144,58,0.8); }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-height: 700px) {
+      .store-photo-wrap img { max-height: 42vh; }
+      .badge { margin-bottom: 16px; }
+      .tagline { margin-top: 12px; }
+    }
+    @media (max-width: 480px) {
+      .store-photo-text { padding: 16px; }
+      .store-name { font-size: 1.6rem; }
+      .btn-back { padding: 9px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SHADER ANIMATION CANVAS -->
+  <canvas id="shader-canvas"></canvas>
+
+  <!-- OVERLAY OSCURO -->
+  <div class="overlay"></div>
+
+  <!-- LOGO SUPERIOR -->
+  <div class="top-logo">
+    <img src="logo cosascucas.png" alt="Cosas Cucas" onerror="this.style.display='none'">
+    <span class="top-eyebrow">Cosas Cucas · Desde 1982</span>
+  </div>
+
+  <!-- CONTENIDO CENTRAL -->
+  <div class="stage">
+    <div class="card">
+
+      <!-- Badge animado -->
+      <div class="badge">Próxima Inauguración</div>
+
+      <!-- Foto de la tienda nueva -->
+      <div class="store-photo-wrap">
+        <img src="tienda nueva.jpeg" alt="Nueva tienda Cosas Cucas · C/ Burriana 21 Valencia" />
+        <div class="store-photo-text">
+          <h1 class="store-name">Cosas Cucas</h1>
+          <p class="store-address">C/ Burriana, 21 · Valencia</p>
+        </div>
+      </div>
+
+      <!-- Tagline -->
+      <p class="tagline">
+        Cuarenta años vistiendo la tradición valenciana.<br>
+        Próximamente en nuestra nueva casa.
+      </p>
+
+      <!-- Botón volver -->
+      <a href="index.html" class="btn-back">
+        ← Volver a la web
+      </a>
+
+    </div>
+  </div>
+
+  <script>
+  /* ═══════════════════════════════════════════════════════════════
+     ShaderAnimation — traducción exacta del componente React a
+     vanilla JS + Three.js (mismo fragment shader)
+  ═══════════════════════════════════════════════════════════════ */
+  (function () {
+    const canvas = document.getElementById('shader-canvas');
+
+    const vertexShader = `
+      void main() {
+        gl_Position = vec4(position, 1.0);
+      }
+    `;
+
+    const fragmentShader = `
+      #define TWO_PI 6.2831853072
+      #define PI 3.14159265359
+
+      precision highp float;
+      uniform vec2  resolution;
+      uniform float time;
+
+      void main(void) {
+        vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);
+        float t = time * 0.05;
+        float lineWidth = 0.002;
+
+        vec3 color = vec3(0.0);
+        for (int j = 0; j < 3; j++) {
+          for (int i = 0; i < 5; i++) {
+            color[j] += lineWidth * float(i*i) /
+              abs(fract(t - 0.01*float(j) + float(i)*0.01)*5.0
+                - length(uv) + mod(uv.x + uv.y, 0.2));
+          }
+        }
+
+        gl_FragColor = vec4(color[0], color[1], color[2], 1.0);
+      }
+    `;
+
+    /* Init Three.js */
+    const camera   = new THREE.Camera();
+    camera.position.z = 1;
+
+    const scene    = new THREE.Scene();
+    const geometry = new THREE.PlaneGeometry(2, 2);
+
+    const uniforms = {
+      time:       { type: 'f',  value: 1.0 },
+      resolution: { type: 'v2', value: new THREE.Vector2() },
+    };
+
+    const material = new THREE.ShaderMaterial({
+      uniforms, vertexShader, fragmentShader,
+    });
+
+    scene.add(new THREE.Mesh(geometry, material));
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+
+    function resize() {
+      const w = window.innerWidth, h = window.innerHeight;
+      renderer.setSize(w, h);
+      uniforms.resolution.value.set(
+        renderer.domElement.width,
+        renderer.domElement.height
+      );
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    let raf;
+    function animate() {
+      raf = requestAnimationFrame(animate);
+      uniforms.time.value += 0.05;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    /* Cleanup si se abandona la página */
+    window.addEventListener('pagehide', () => {
+      cancelAnimationFrame(raf);
+      renderer.dispose();
+      geometry.dispose();
+      material.dispose();
+    });
+  })();
+  </script>
+
+</body>
+</html>
