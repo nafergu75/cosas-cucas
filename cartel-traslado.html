@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cartel · Nos trasladamos · Cosas Cucas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Dancing+Script:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --burgundy:#9E4F63;
+    --burgundy-dark:#8A4255;
+    --gold:#C2A24C;
+    --gold-deep:#B5903A;
+    --cream:#FBF4E4;
+    --cream-soft:#FBF7EC;
+    --ink:#5A3A40;
+    --ink-soft:#7A5A60;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:#3a3a3a;
+    display:flex;flex-direction:column;align-items:center;
+    padding:30px 0;font-family:'Montserrat',sans-serif;
+  }
+  .toolbar{
+    color:#eee;font-size:13px;margin-bottom:18px;text-align:center;line-height:1.6;
+    max-width:1080px;
+  }
+  .toolbar b{color:#fff;}
+
+  /* ─── LIENZO 1080×1350 (formato Instagram retrato) ─── */
+  .flyer{
+    position:relative;
+    width:1080px;height:1350px;
+    background:
+      radial-gradient(120% 80% at 80% 0%, #FCF8EE 0%, var(--cream) 55%, #F4E9D2 100%);
+    overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+  }
+
+  /* Marco fino dorado interior */
+  .flyer::before{
+    content:'';position:absolute;inset:26px;
+    border:1.5px solid rgba(194,162,76,.45);
+    border-radius:4px;pointer-events:none;z-index:5;
+  }
+
+  /* Foto del traje a la derecha */
+  .dress{
+    position:absolute;top:0;right:0;
+    width:430px;height:1090px;
+    object-fit:cover;object-position:center top;
+    -webkit-mask-image:linear-gradient(to left, #000 70%, transparent 100%);
+            mask-image:linear-gradient(to left, #000 70%, transparent 100%);
+    z-index:1;
+  }
+
+  /* Contenido */
+  .content{
+    position:absolute;inset:0;z-index:3;
+    padding:58px 70px 0 80px;
+    display:flex;flex-direction:column;
+  }
+
+  .brand-logo{
+    height:78px;width:auto;margin-bottom:18px;
+    mix-blend-mode:multiply;
+  }
+
+  h1{
+    font-family:'Playfair Display',serif;
+    font-weight:700;color:var(--burgundy);
+    font-size:84px;line-height:.95;letter-spacing:-1px;
+    text-shadow:0 2px 0 rgba(255,255,255,.4);
+  }
+
+  .date-line{
+    font-family:'Dancing Script',cursive;font-weight:700;
+    font-size:54px;color:var(--ink);margin-top:26px;
+  }
+  .date-line .hl{
+    color:var(--burgundy);position:relative;white-space:nowrap;
+  }
+  .date-line .hl::after{
+    content:'';position:absolute;left:0;right:0;bottom:4px;height:10px;
+    background:rgba(158,79,99,.28);border-radius:6px;z-index:-1;
+  }
+
+  .lead{
+    max-width:540px;margin-top:18px;
+    font-size:24px;line-height:1.5;color:var(--ink);font-weight:500;
+  }
+  .lead b{color:var(--burgundy);font-weight:700;}
+
+  /* Tarjeta dirección */
+  .addr{
+    margin-top:30px;max-width:560px;
+    background:var(--cream-soft);
+    border:1.5px dashed rgba(194,162,76,.6);
+    border-radius:18px;padding:32px 38px 34px;
+    box-shadow:0 10px 30px rgba(138,66,85,.08);
+  }
+  .addr-pill{
+    display:inline-block;background:var(--burgundy);color:#fff;
+    font-family:'Dancing Script',cursive;font-weight:700;font-size:34px;
+    padding:6px 30px;border-radius:30px;margin-bottom:18px;
+    box-shadow:0 6px 16px rgba(138,66,85,.35);
+  }
+  .addr-street{
+    font-family:'Playfair Display',serif;font-weight:700;
+    font-size:46px;color:var(--ink);line-height:1.1;
+  }
+  .addr-city{
+    font-family:'Playfair Display',serif;font-weight:600;
+    font-size:34px;color:var(--ink);margin-top:2px;
+  }
+  .addr-pin{color:var(--burgundy);font-size:30px;margin-right:6px;}
+  .addr-cta{
+    font-family:'Dancing Script',cursive;font-weight:700;
+    font-size:38px;color:var(--burgundy);margin-top:14px;
+  }
+
+  /* Features */
+  .features{
+    display:flex;gap:30px;margin-top:32px;max-width:600px;
+  }
+  .feat{flex:1;text-align:center;color:var(--burgundy);}
+  .feat .ic{font-size:40px;line-height:1;}
+  .feat .tx{
+    font-size:14px;font-weight:700;letter-spacing:1px;color:var(--ink);
+    margin-top:10px;text-transform:uppercase;line-height:1.3;
+  }
+
+  .thanks{
+    font-family:'Dancing Script',cursive;font-weight:700;
+    font-size:44px;color:var(--gold-deep);
+    margin-top:34px;
+  }
+
+  /* Barra inferior */
+  .footer{
+    position:absolute;left:0;right:0;bottom:0;z-index:4;
+    background:var(--burgundy);color:#fff;
+    padding:30px 70px 32px 80px;
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+  }
+  .footer .col-contact{display:flex;flex-direction:column;gap:10px;}
+  .footer .row{display:flex;align-items:center;gap:12px;font-size:21px;font-weight:600;}
+  .footer .row .ic{font-size:24px;opacity:.95;}
+  .footer .social{
+    font-size:18px;font-weight:600;letter-spacing:.5px;opacity:.95;
+    margin-top:4px;display:flex;align-items:center;gap:10px;
+  }
+  .footer .logo-box{
+    flex-shrink:0;text-align:center;
+  }
+  .footer .logo-box .name{
+    font-family:'Dancing Script',cursive;font-weight:700;
+    font-size:50px;color:#fff;line-height:1;
+  }
+  .footer .logo-box .since{
+    font-size:12px;letter-spacing:5px;text-transform:uppercase;
+    opacity:.85;margin-top:8px;
+  }
+
+  @media print{
+    body{background:#fff;padding:0;}
+    .toolbar{display:none;}
+    .flyer{box-shadow:none;}
+    @page{size:1080px 1350px;margin:0;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <b>Cómo exportarlo para redes:</b> abre este archivo en el navegador →
+    botón derecho sobre el cartel → <b>"Capturar"</b>, o usa una extensión de captura a tamaño completo.
+    Alternativa exacta: <b>Imprimir (Ctrl+P) → Guardar como PDF</b> (tamaño 1080×1350) y luego conviértelo a PNG.
+    El lienzo mide exactamente 1080×1350 px (formato vertical de Instagram).
+  </div>
+
+  <div class="flyer">
+
+    <img class="dress" src="telas/probador digital/siglo xix.png"
+         alt="Traje valenciano de época"
+         onerror="this.onerror=null;this.src='telas/probador digital/siglo xviii.png';">
+
+    <div class="content">
+      <img class="brand-logo" src="logo cosascucas.png" alt="Cosas Cucas"
+           onerror="this.style.display='none'">
+
+      <h1>¡NOS<br>TRASLADAMOS!</h1>
+
+      <p class="date-line">A partir del <span class="hl">1 de julio</span></p>
+
+      <p class="lead">
+        estaremos en nuestra nueva tienda para seguir ofreciéndoos la
+        <b>misma atención, calidad y dedicación</b> de siempre.
+      </p>
+
+      <div class="addr">
+        <span class="addr-pill">Nueva dirección</span>
+        <div class="addr-street"><span class="addr-pin">&#9679;</span>C/ Burriana, 21</div>
+        <div class="addr-city">46005 València</div>
+        <div class="addr-cta">¡Os esperamos! &#9825;</div>
+      </div>
+
+      <div class="features">
+        <div class="feat"><div class="ic">&#9986;</div><div class="tx">Confección<br>a medida</div></div>
+        <div class="feat"><div class="ic">&#10047;</div><div class="tx">Diseños<br>exclusivos</div></div>
+        <div class="feat"><div class="ic">&#9825;</div><div class="tx">La misma<br>ilusión</div></div>
+      </div>
+
+      <p class="thanks">Gracias por acompañarnos siempre &#9825;</p>
+    </div>
+
+    <div class="footer">
+      <div class="col-contact">
+        <div class="row"><span class="ic">&#9742;</span> 963 511 556</div>
+        <div class="row"><span class="ic">&#128172;</span> WhatsApp 667 775 501</div>
+        <div class="row"><span class="ic">&#9993;</span> info@cosascucas.es</div>
+        <div class="social"><span class="ic">&#9673;</span> @cosas.cucas1982</div>
+      </div>
+      <div class="logo-box">
+        <div class="name">Cosas Cucas</div>
+        <div class="since">Desde 1982</div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
