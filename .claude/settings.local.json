@@ -4,7 +4,13 @@
       "Bash(curl -s http://localhost:4747/api/telas)",
       "Bash(curl -s http://localhost:4747/api/aderezos)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4747/telas/10d72799667cdfedd50b7db1e47de9af.jpg)",
-      "Bash(netstat -ano)"
+      "Bash(netstat -ano)",
+      "Bash(curl -s -w \"\\\\nHTTP:%{http_code}\" http://localhost:4747/api/aderezos)",
+      "Bash(node server.js)",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'{len\\(d\\)} telas'\\)\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'{len\\(d\\)} aderezos'\\)\")",
+      "Bash(node -e \"const d=require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\);console.log\\(JSON.parse\\(d\\).length+' telas'\\)\")",
+      "Bash(node -e \"const d=require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\);console.log\\(JSON.parse\\(d\\).length+' aderezos'\\)\")"
     ]
   }
 }
