@@ -19,7 +19,8 @@
       "Bash(py --version)",
       "Bash(\"C:\\\\Program Files\\\\Git\\\\mingw64\\\\bin\\\\pdftotext.exe\" -layout \"Confeccdiones Hermanas Saez contrato.pdf\" -)",
       "Bash(\"C:\\\\Program Files\\\\Git\\\\mingw64\\\\bin\\\\pdftotext.exe\" -layout \"Carta 2026.pdf\" -)",
-      "mcp__84972252-2889-4b71-bcd4-55f92bb06388__search_threads"
+      "mcp__84972252-2889-4b71-bcd4-55f92bb06388__search_threads",
+      "mcp__84972252-2889-4b71-bcd4-55f92bb06388__list_labels"
     ]
   }
 }
