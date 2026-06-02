@@ -17,7 +17,8 @@
       "Bash(python -c \"import pypdf; r=pypdf.PdfReader\\('Confeccdiones Hermanas Saez contrato.pdf'\\); print\\('PAGES', len\\(r.pages\\)\\); [print\\('---P',i,'---', p.extract_text\\(\\)\\) for i,p in enumerate\\(r.pages\\)]\")",
       "Bash(where.exe py *)",
       "Bash(py --version)",
-      "Bash(\"C:\\\\Program Files\\\\Git\\\\mingw64\\\\bin\\\\pdftotext.exe\" -layout \"Confeccdiones Hermanas Saez contrato.pdf\" -)"
+      "Bash(\"C:\\\\Program Files\\\\Git\\\\mingw64\\\\bin\\\\pdftotext.exe\" -layout \"Confeccdiones Hermanas Saez contrato.pdf\" -)",
+      "Bash(\"C:\\\\Program Files\\\\Git\\\\mingw64\\\\bin\\\\pdftotext.exe\" -layout \"Carta 2026.pdf\" -)"
     ]
   }
 }
