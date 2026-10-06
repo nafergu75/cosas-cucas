@@ -7,21 +7,24 @@ const PORT         = 4747;
 const ROOT         = __dirname;
 
 // ── API Keys ────────────────────────────────────────────────────────
-const PIXELAPI_KEY   = process.env.PIXELAPI_KEY   || 'CLAVE_ELIMINADA';
+const PIXELAPI_KEY   = process.env.PIXELAPI_KEY   || '';
 const ANTHROPIC_KEY  = process.env.ANTHROPIC_KEY  || '';
 const BRAVE_KEY      = process.env.BRAVE_KEY       || '';
 const CONTACT_KEY    = process.env.CONTACT_KEY     || '';   // Web3Forms access key
 
+// Extensiones que el servidor estático puede entregar (nada de PDF, Excel, .env…)
+const PUBLIC_EXT = new Set(['.html','.css','.js','.json','.jpg','.jpeg','.png','.webp','.gif','.svg','.ico','.mp4','.webm','.woff','.woff2','.txt','.xml']);
+
 const PIXELAPI_URL   = 'https://api.pixelapi.dev/v1/virtual-tryon';
 const ANTHROPIC_URL  = 'https://api.anthropic.com/v1/messages';
 const BRAVE_URL      = 'https://api.search.brave.com/res/v1/web/search';
-const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || 'claude-3-5-haiku-20241022';
+const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5-20251001';
 
 // ── System prompt de Cuca ───────────────────────────────────────────
 const CUCA_SYSTEM = `Eres Cuca, la asistente virtual experta de Cosas Cucas, una tienda de indumentaria valenciana artesanal en Valencia, España, fundada en 1982 por Paquita Martorell. Actualmente la llevan sus hijas Noelia, María y Paqui.
 
 INFORMACIÓN DE LA TIENDA:
-- Tienda Principal: C/ Grabador Esteve 30, Valencia · Tel: 963 511 556 · WhatsApp: 667 775 501
+- Tienda Principal: C/ Burriana 21, 46005 Valencia · Tel: 963 511 556 · WhatsApp: 667 775 501
 - Tienda Cabañal: C/ Vicent Gallart 49, Valencia · Tel: 963 714 997
 - Email: info@cosascucas.es · Web: cosas-cucas.es
 - Instagram: @cosascucas | TikTok: @cosas.cucas1982 | Facebook: Cosas Cucas
@@ -217,7 +220,7 @@ http.createServer(async (req, res) => {
     
     try {
       const pathOnly = req.url.split('?')[0];
-      const jobId = pathOnly.split('/').pop();
+      const jobId = encodeURIComponent(pathOnly.split('/').pop());
       const apiRes = await fetch(`https://api.pixelapi.dev/v1/virtual-tryon/jobs/${jobId}`, {
         method: 'GET',
         headers: { 'Authorization': `Bearer ${apiKey}` }
@@ -379,11 +382,21 @@ http.createServer(async (req, res) => {
   }
 
   // ── Archivos estáticos ───────────────────────────────────────
-  let p = decodeURIComponent(req.url.split('?')[0]);
+  let p;
+  try { p = decodeURIComponent(req.url.split('?')[0]); }
+  catch { res.writeHead(400); return res.end('Bad request'); }
   if (p === '/' || p === '') p = '/index.html';
   // Normalizar la ruta para evitar Path Traversal (ej. ../../etc/passwd)
   const full = path.normalize(path.join(ROOT, p));
-  if (!full.startsWith(ROOT)) { res.writeHead(403); return res.end(); }
+  if (!full.startsWith(ROOT + path.sep)) { res.writeHead(403); return res.end(); }
+  // Solo recursos web públicos: nada oculto (.env, .git, .claude), ni código
+  // del servidor, ni documentos privados (facturas, contratos, excel…)
+  const rel = path.relative(ROOT, full);
+  if (rel.split(path.sep).some(seg => seg.startsWith('.')) ||
+      !PUBLIC_EXT.has(path.extname(full).toLowerCase()) ||
+      rel === 'server.js' || rel === 'worker.js') {
+    res.writeHead(404); return res.end('Not found');
+  }
 
   fs.readFile(full, (err, data) => {
     if (err) { res.writeHead(404); return res.end('Not found'); }

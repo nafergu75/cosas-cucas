@@ -45,9 +45,13 @@ export default {
 
     try {
       const body = await request.json();
+      if (!Array.isArray(body.messages) || body.messages.length === 0 || body.messages.length > 30) {
+        return new Response(JSON.stringify({ error: 'Invalid messages' }),
+          { status: 400, headers: { 'Content-Type': 'application/json', ...CORS } });
+      }
 
-      /* Llamada a Anthropic — claude-haiku-3-5 (rápido, económico).
-         Cambia a claude-sonnet-4-5 si quieres más calidad de respuesta. */
+      /* Llamada a Anthropic — modelo y límite de tokens fijados aquí, nunca
+         desde el navegador, para que nadie pueda usar el proxy a tu costa. */
       const upstream = await fetch('https://api.anthropic.com/v1/messages', {
         method:  'POST',
         headers: {
@@ -56,8 +60,8 @@ export default {
           'anthropic-version': '2023-06-01',
         },
         body: JSON.stringify({
-          model:      body.model      ?? 'claude-haiku-3-5',
-          max_tokens: body.max_tokens ?? 512,
+          model:      'claude-haiku-4-5-20251001',
+          max_tokens: Math.min(Number(body.max_tokens) || 512, 1024),
           system:     body.system,
           messages:   body.messages,
         }),

@@ -2,4 +2,26 @@
 .env
 *.log
 cloudflared.exe
-.vercel
+
+# Documentos privados del negocio (nunca al repo público)
+*.xlsx
+*.xls
+*.docx
+facturas/
+documentos/
+excel/
+licencia/
+licencia2/
+licencia3/
+LICENCIA3/
+FACTURA*.pdf
+factura*.pdf
+N*factura*.pdf
+*CONTRATO*.pdf
+despido.pdf
+CERTIFICADO*.pdf
+Confecciones*.pdf
+MAYOR*.pdf
+.claude/settings.local.json
+.vercel/
+sepa*.pdf
