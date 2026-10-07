@@ -1248,6 +1248,27 @@
       display: block;
       filter: sepia(0.15) contrast(1.05);
     }
+    /* Mapa bajo demanda: Google Maps solo se carga si la clienta pulsa "Ver mapa" */
+    .map-consent {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 24px;
+      text-align: center;
+      filter: none;
+      background:
+        repeating-linear-gradient(45deg, rgba(181,144,58,.07) 0 2px, transparent 2px 14px),
+        var(--color-bg);
+    }
+    .map-consent__pin { width: 34px; height: 34px; fill: var(--color-gold); }
+    .map-consent__note {
+      max-width: 300px;
+      font-size: .72rem;
+      line-height: 1.5;
+      color: rgba(26,23,20,.6);
+    }
     .store-card__info {
       padding: 28px 28px 24px;
       background: var(--color-white);
@@ -3026,13 +3047,11 @@
 
       <!-- TIENDA 1 -->
       <div class="store-card">
-        <iframe
-          class="store-card__map"
-          loading="lazy"
-          allowfullscreen
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://maps.google.com/maps?q=Calle+Burriana+21+46005+Valencia+Spain&output=embed&hl=es&z=16">
-        </iframe>
+        <div class="store-card__map map-consent" data-map-src="https://maps.google.com/maps?q=Calle+Burriana+21+46005+Valencia+Spain&output=embed&hl=es&z=16" data-map-title="Mapa: C/ Burriana, 21 · Valencia">
+          <svg class="map-consent__pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+          <button type="button" class="btn btn--gold map-consent__btn"></button>
+          <p class="map-consent__note"></p>
+        </div>
         <div class="store-card__info">
           <p class="store-card__name" id="store1-name"></p>
           <p class="store-card__address">C/ Burriana, 21<br>46005 Valencia</p>
@@ -3044,13 +3063,11 @@
 
       <!-- TIENDA 2 -->
       <div class="store-card">
-        <iframe
-          class="store-card__map"
-          loading="lazy"
-          allowfullscreen
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://maps.google.com/maps?q=Calle+Vicent+Gallart+49+46011+Valencia+Spain&output=embed&hl=es&z=17&t=m">
-        </iframe>
+        <div class="store-card__map map-consent" data-map-src="https://maps.google.com/maps?q=Calle+Vicent+Gallart+49+46011+Valencia+Spain&output=embed&hl=es&z=17&t=m" data-map-title="Mapa: C/ Vicent Gallart, 49 · Valencia">
+          <svg class="map-consent__pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+          <button type="button" class="btn btn--gold map-consent__btn"></button>
+          <p class="map-consent__note"></p>
+        </div>
         <div class="store-card__info">
           <p class="store-card__name" id="store2-name"></p>
           <p class="store-card__address">C/ Vicent Gallart, 49<br>46011 Valencia</p>
@@ -3591,6 +3608,8 @@ const translations = {
     },
     visita: {
       eyebrow: 'Dónde encontrarnos',
+      mapBtn:  'Ver mapa',
+      mapNote: 'Al pulsar se cargará Google Maps, que puede usar sus propias cookies.',
       title: 'Visítanos en Valencia',
       subtitle: 'Dos tiendas en el corazón de la ciudad. Ven a conocernos y te asesoraremos sin compromiso.',
       store1: { name: 'Tienda Principal',  phone: '963 511 556', hours: 'Lun–Vie: 10:00–13:30 · 17:00–20:00\nSábado: 10:30–13:30\nDomingo: Cerrado',   linkLabel: 'Cómo llegar' },
@@ -3994,6 +4013,8 @@ const translations = {
     },
     visita: {
       eyebrow: "On trobar-nos",
+      mapBtn:  'Veure el mapa',
+      mapNote: 'En prémer es carregarà Google Maps, que pot fer servir les seues pròpies galetes.',
       title: "Visita'ns a València",
       subtitle: "Dues botigues al cor de la ciutat. Vine a conèixer-nos i t'assessorarem sense compromís.",
       store1: { name: 'Botiga Principal',  phone: '963 511 556', hours: "Dl–Dv: 10:00–13:30 · 17:00–20:00\nDissabte: 10:30–13:30\nDiumenge: Tancat", linkLabel: 'Com arribar' },
@@ -4645,7 +4666,25 @@ function buildVisita() {
   document.getElementById('store2-phone').innerHTML      = `<a href="tel:${v.store2.phone.replace(/\s/g,'')}">${v.store2.phone}</a>`;
   document.getElementById('store2-hours').innerHTML      = v.store2.hours.replace(/\n/g, '<br>');
   document.getElementById('store2-link').textContent     = v.store2.linkLabel;
+  document.querySelectorAll('.map-consent').forEach(box => {
+    box.querySelector('.map-consent__btn').textContent  = v.mapBtn;
+    box.querySelector('.map-consent__note').textContent = v.mapNote;
+  });
 }
+
+/* Mapas bajo demanda: el iframe de Google Maps solo se crea al pulsar "Ver mapa" */
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.map-consent__btn');
+  if (!btn) return;
+  const box = btn.closest('.map-consent');
+  const map = document.createElement('iframe');
+  map.className = 'store-card__map';
+  map.title = box.dataset.mapTitle;
+  map.allowFullscreen = true;
+  map.referrerPolicy = 'no-referrer-when-downgrade';
+  map.src = box.dataset.mapSrc;
+  box.replaceWith(map);
+});
 
 function buildFooter() {
   const ft    = t().footer;
