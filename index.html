@@ -6,13 +6,16 @@
   <meta name="description" content="Cosas Cucas — Indumentaria valenciana artesanal desde 1982. Falleras Mayores, Cortes de Honor, telas, bordados y aderezos exclusivos. C/ Burriana 21, Valencia." />
   <meta name="robots" content="index, follow" />
   <title>Cosas Cucas | Indumentaria Valenciana Artesanal desde 1982 · Valencia</title>
+  <link rel="canonical" href="https://cosascucas.es/" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
 
   <!-- Open Graph / Social Sharing -->
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://cosascucas.es/" />
   <meta property="og:title"       content="Cosas Cucas | Indumentaria Valenciana Artesanal desde 1982" />
   <meta property="og:description" content="Confección artesanal de indumentaria valenciana desde 1982. Falleras Mayores, Cortes de Honor, telas exclusivas y aderezos. Valencia." />
-  <meta property="og:image"       content="https://cosascucas.es/logo%20cosascucas.png" />
+  <meta property="og:image"       content="https://cosas-cucas.vercel.app/og-image.jpg" />
   <meta property="og:image:width"  content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt"    content="Cosas Cucas — Indumentaria Valenciana Artesanal" />
@@ -21,7 +24,7 @@
   <meta name="twitter:card"       content="summary_large_image" />
   <meta name="twitter:title"      content="Cosas Cucas | Indumentaria Valenciana Artesanal" />
   <meta name="twitter:description" content="Confección artesanal de indumentaria valenciana desde 1982. Valencia." />
-  <meta name="twitter:image"      content="https://cosascucas.es/logo%20cosascucas.png" />
+  <meta name="twitter:image"      content="https://cosas-cucas.vercel.app/og-image.jpg" />
 
   <!-- Schema.org Local Business -->
   <script type="application/ld+json">
@@ -30,11 +33,11 @@
     "@type": "ClothingStore",
     "name": "Cosas Cucas",
     "description": "Tienda de indumentaria valenciana artesanal. Confección de trajes de fallera, Falleras Mayores, Cortes de Honor, telas, bordados y aderezos desde 1982.",
-    "url": "https://cosascucas.es",
+    "url": "https://cosascucas.es/",
     "telephone": "+34963511556",
     "email": "info@cosascucas.es",
     "foundingDate": "1982",
-    "image": "https://cosascucas.es/logo%20cosascucas.png",
+    "image": "https://cosas-cucas.vercel.app/og-image.jpg",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Calle Burriana 21",
@@ -2881,8 +2884,6 @@
       }
     }
   </style>
-  <!-- EmailJS — envío de formulario de contacto (gratis 200 emails/mes) -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <!-- Three.js — shader animation modal inauguración (carga diferida) -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js" defer></script>
 </head>
@@ -3027,7 +3028,7 @@
 <section id="probador-section">
   <div class="probador-inner">
     <div class="probador-img-wrap">
-      <img src="pasarela/_ADL4063.jpg" alt="Modelo Cosas Cucas — Probador Virtual" />
+      <img src="pasarela/_ADL4063.jpg" alt="Modelo Cosas Cucas — Probador Virtual" loading="lazy" decoding="async" />
       <div class="probador-img-overlay"></div>
       <span class="probador-img-badge" id="probador-badge">Nuevo</span>
     </div>
@@ -3124,7 +3125,7 @@
     <a class="btn" id="editorial-cta" href="#">Conoce la marca</a>
   </div>
   <div class="editorial-image">
-    <img src="" alt="Editorial Cosas Cucas" id="editorial-img" class="img-placeholder" />
+    <img src="" alt="Editorial Cosas Cucas" id="editorial-img" class="img-placeholder" loading="lazy" decoding="async" />
     <span class="editorial-image-caption" id="editorial-caption"></span>
   </div>
 </section>
@@ -3146,11 +3147,11 @@
     <div class="dh-grid">
 
       <div class="dh-img-main">
-        <img src="historia/cosascucas_1.jpg" alt="Interior tienda Cosas Cucas" loading="lazy">
+        <img src="historia/cosascucas_1.jpg" alt="Interior tienda Cosas Cucas" loading="lazy" decoding="async">
         <div class="dh-img-caption" id="dh-img-caption"></div>
         <div class="dh-img-sub-row">
-          <div class="dh-img-sub"><img src="historia/cosascucas_5-1030x1030.jpg" alt="Detalle artesanal" loading="lazy"></div>
-          <div class="dh-img-sub"><img src="historia/CocasCucas-02.jpg" alt="Vistiendo a una fallera" loading="lazy"></div>
+          <div class="dh-img-sub"><img src="historia/cosascucas_5-1030x1030.jpg" alt="Detalle artesanal" loading="lazy" decoding="async"></div>
+          <div class="dh-img-sub"><img src="historia/CocasCucas-02.jpg" alt="Vistiendo a una fallera" loading="lazy" decoding="async"></div>
         </div>
       </div>
 
@@ -3278,7 +3279,8 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      NEWSLETTER
 ═══════════════════════════════════════════════════════════════════════════ -->
-<section id="newsletter">
+<!-- Oculta hasta tener un proveedor de newsletter real (Brevo, Mailchimp…). Para activarla, quita "hidden" y conecta el formulario. -->
+<section id="newsletter" hidden>
   <div class="container">
     <p class="newsletter-eyebrow" id="nl-eyebrow"></p>
     <h2 class="newsletter-title" id="nl-title"></h2>
@@ -3396,6 +3398,7 @@
         <img
           src="logo%20cosascucas.png"
           alt="Cosas Cucas"
+          loading="lazy" decoding="async"
           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
         />
         <span class="logo-text-footer" style="display:none;">Cosas Cucas</span>
@@ -3449,7 +3452,7 @@ const BRAND_NAME = 'Cosas Cucas';
 
 const SOCIAL = [
   { label: 'Instagram', href: 'https://www.instagram.com/cosascucass/', icon: '<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>' },
-  { label: 'TikTok',    href: 'https://www.tiktok.com/@cosascucas',          icon: '<svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg>' },
+  { label: 'TikTok',    href: 'https://www.tiktok.com/@cosas.cucas1982',     icon: '<svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg>' },
   { label: 'Facebook',  href: 'https://www.facebook.com/cosas.cucas.3/',     icon: '<svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>' },
 ];
 
@@ -3909,7 +3912,6 @@ const translations = {
       subtitle: 'Apúntate a nuestra lista y recibe avant-première de nuevas colecciones, telas exclusivas, citas prioritarias y todo lo que pasa en el taller de Cosas Cucas.',
       buttonLabel: 'Apuntarme',
       note: 'Sin spam. Solo cosas cucas, de vez en cuando.',
-      successMsg: '¡Bienvenida a la familia de Cosas Cucas!',
     },
     visita: {
       eyebrow: 'Dónde encontrarnos',
@@ -4106,12 +4108,13 @@ const translations = {
       emailLabel:    'Email',
       subjectLabel:  'Asunto',
       msgLabel:      'Mensaje',
-      submit:        'Enviar mensaje',
-      sending:       'Enviando…',
-      note:          'Te responderemos en menos de 48 horas. Para citas urgentes, llámanos directamente.',
+      submit:        'Enviar por WhatsApp',
+      note:          'Tu mensaje nos llega por WhatsApp. Si es urgente, llámanos al 963 511 556.',
       validationMsg: 'Por favor, completa nombre, email y mensaje.',
-      successMsg:    '✓ Mensaje recibido. Te contestamos en menos de 48 horas.',
-      errorMsg:      'No se pudo enviar. Escríbenos directamente a info@cosascucas.es',
+      emailMsg:      'Revisa el email, parece que le falta algo.',
+      waIntro:       'Hola, os escribo desde la web de Cosas Cucas.',
+      waOpened:      'Te abrimos WhatsApp con tu mensaje ya escrito; solo tienes que darle a enviar.',
+      waRetry:       '¿No se ha abierto? Pulsa aquí.',
     },
   },
 
@@ -4202,49 +4205,36 @@ const translations = {
       },
       {
         id: 'teles-brodats', title: 'Teles Valencianes', subtitle: "El Cor de la Indumentària",
-        description: "Més de 35 brocats i sedes exclusives per a indumentària valenciana: jacquards, damasquinats, velluts i teixits tradicionals en tots els colors. Disponibles a metre. Vine al nostre taller i t'assessorem sense compromís.",
+        description: "Dissenys exclusius de brocat valencià per a indumentària fallera: sedes, jacquards i espolins amb noms propis de la nostra col·lecció. Disponibles a metre. Vine al nostre taller i t'assessorem sense compromís.",
         heroImage: IMG.tPortada, archiveImage: IMG.tPortada, badge: 'Sempre Disponible',
         ctaPrimary: { label: 'Veure teles', href: '#drops-archive' },
         ctaSecondary: { label: 'Assessorament gratuït', href: 'mailto:info@cosascucas.es' },
         products: [
-          { id:'p13', name:'Brocat Fosc — Crisantems Lila i Peonies Fúcsia',       desc:'Brocat en fons negre-bordeus amb composició vertical de grans flors: crisantems en lila-lavanda, peonies en fúcsia i rosa intensa, flors blaves i tocs daurats. Fulles en verd intens. Teixit de gran riquesa per a indumentària de gala.',              price:'Consultar', image:IMG.p13, tag:'new', tagLabel:'Exclusiu' },
-          { id:'p14', name:'Brocat Fons Perla — Ram en Bordeus i Lila',             desc:"Brocat en fons gris perla-marfil amb gran composició central de crisantem en bordeus, flors lila i taronja-teja, fullatge en fil daurat-oliva. Marc de medallons en fil daurat. Teixit de gran elegància i refinament.",                               price:'Consultar', image:IMG.p14, tag:null },
-          { id:'p15', name:'Seda Crema-Daurada — Flor Fúcsia Central',              desc:"Brocat de seda en fons crema-daurat amb gran flor central tipus dàlia en fúcsia-magenta intens. Rameig en fil daurat envellit amb fullatge verd i motius en roig grana. Teixit exclusiu amb textura en relleu.",                                          price:'Consultar', image:IMG.p15, tag:null },
-          { id:'t1',  name:'Brocat Blau Marí — Rameig Barroc',                      desc:"Brocat de seda en blau marí profund amb grans medallons florals simètrics. Motius en rosa lila, blanc marfil i verd molsa amb rameig barroc en fil daurat. Ideal per a jubons, cotilles i faldilles de gala.",                                            price:'Consultar', image:IMG.t1,  tag:null },
-          { id:'t2',  name:'Brocat Lila-Morat — Jardí Multicolor',                  desc:"Brocat en fons lila-morat fosc amb profusió de flors silvestres: roses, margarides i fulles en rosa, blau, taronja, verd i crema. Composició densa amb efecte jardí valencià. Teixit exclusiu per a indumentària de celebració.",                          price:'Consultar', image:IMG.t2,  tag:null },
-          { id:'t3',  name:'Brocat Blau Nit — Gerro amb Peonies',                   desc:"Brocat de seda en blau nit amb composició central de gerro platejat ple de peonies roses, grogues i blaves. Rameig de paisley en fil de plata. Disseny simètric estil segle XVIII d'extraordinària riquesa.",                                            price:'Consultar', image:IMG.t3,  tag:null },
-          { id:'t4',  name:"Brocats Valencians — Tota la Col·lecció",               desc:"Vista de l'arxiu de brocats valencians de Cosas Cucas: rotlles de teixit en verd oliva, blau marí, crema-daurat, bordeus fosc i blanc floral. Tots disponibles a metre per a confecció d'indumentària valenciana a mida.",                            price:'Consultar', image:IMG.t4,  tag:null },
-          { id:'t5',  name:'Brocat Negre — Flors Fúcsia i Turquesa',                desc:"Brocat en fons negre grafit amb vibrants flors en fúcsia intens, turquesa, rosa pastel i filigrana daurada. Composició vertical amb motius barrocs simètrics. Teixit de màxima riquesa cromàtica i gran contrast.",                                      price:'Consultar', image:IMG.t5,  tag:null },
-          { id:'t6',  name:'Brocat Verd Oliva — Bouquet Campestre',                 desc:"Brocat jacquard en verd oliva fosc amb grans rams centrals de flors multicolor: peonies roses, margarides blaves, flors taronges i liles. Fulles verdes i detall d'aus brodades. Disseny naturalista valencià.",                                         price:'Consultar', image:IMG.t6,  tag:null },
-          { id:'t7',  name:"Brocat Roig Carmesí — Rameig d'Acant Daurat",           desc:"Brocat de seda en roig carmesí brillant amb rameig àuric de fulles d'acant i rams florals intercalats. Flors en rosa, blau cel, verd i groc sobre el vibrant fons roig. Teixit clàssic valencià de gran impacte visual.",                               price:'Consultar', image:IMG.t7,  tag:'new', tagLabel:'Destacada' },
-          { id:'t8',  name:'Brocat Blau Índigo — Flors Exuberants',                 desc:"Brocat en blau índigo-marí amb composició floral exuberant: flors en lila, blau clar, taronja, rosa, roig i daurat. Rameig de fulles daurades emmarcant cada medalló. Teixit de gran riquesa cromàtica per a Falleres Majors.",                          price:'Consultar', image:IMG.t8,  tag:null },
-          { id:'t9',  name:'Brocat Fúcsia Magenta — Alta Costura',                  desc:"Brocat de seda en fúcsia-magenta intens amb flors en tons rosats, blaus i verds teixides en fil de seda. Rameig daurat barroc de gran elegància i simetria. Teixit d'alta costura per a Fallera Major i Cort d'Honor.",                                price:'Consultar', image:IMG.t9,  tag:null },
-          { id:'t10', name:'Brocat Marró Xocolata — Damasquinat Floral',             desc:"Brocat en fons marró xocolata fosc amb teixit de damasquinat i grans flors en rosa intens, taronja teja i crema. Disseny simètric amb motius barrocs emmarcats. Teixit elegant i sobri de gran profunditat cromàtica.",                               price:'Consultar', image:IMG.t10, tag:null },
-          { id:'t11', name:'Brocat Bordeus Granat — Gran Ram Central',               desc:"Brocat en bordeus-granat fosc amb gran composició central de ram floral multicolor: peonies lila, flors blaves, roses, taronges i fulles verdes. Rameig delicat en el fons que emmarca la composició principal.",                                        price:'Consultar', image:IMG.t11, tag:null },
-          { id:'t12', name:'Selecció de Brocats — Mostrari Cosas Cucas',            desc:"Mostrari de brocats exclusius de Cosas Cucas: teles plegades en crema-daurat amb flors taronges i lila, crema floral multicolor i verd menta amb flors teixides en seda i or. Tots disponibles a metre o en peça completa.",                         price:'Consultar', image:IMG.t12, tag:null },
-          { id:'t13', name:'Brocat Gris Pissarra — Medalló Multicolor',              desc:"Brocat en gris pissarra-lila amb gran medalló central de flors taronges, roses, turquesa i daurat sobre verd. Composició simètrica amb efecte de tapís. Teixit de gran prestigi per a trajes de gala i cotilles artesanals.",                         price:'Consultar', image:IMG.t13, tag:null },
-          { id:'t14', name:'Brocat Crema Marfil — Peonies Roses',                   desc:"Brocat en fons crema-marfil amb exuberants peonies en rosa i fúcsia intens, fulles en verd fosc i motius d'encaix blanc en fil texturitzat. Composició romàntica i elegant. Ideal per a cotilles i manteletes de núvia.",                              price:'Consultar', image:IMG.t14, tag:null },
-          { id:'t15', name:'Brocat Verd Sàlvia — Flors Festives',                   desc:"Brocat en fons verd sàlvia grisenc amb grans ramellets de flors en rosa fúcsia, blau àcian, groc ocre i terracota. Rameig en fil de plata-blanc. Teixit valencià d'extraordinària vivesa cromàtica.",                                               price:'Consultar', image:IMG.t15, tag:null },
-          { id:'t16', name:'Brocat Daurat-Oliva — Rameig Clàssic',                  desc:"Brocat jacquard en fons daurat-oliva amb rameig clàssic de fulles i cenefes en fil daurat. Flors en rosa i blau pàl·lid de forma discreta. Disseny de gran sobrietat i elegància historicista per a cotilles i jubons de gala.",                    price:'Consultar', image:IMG.t16, tag:null },
-          { id:'t17', name:'Brocat Verd Bosc — Diamants Florals',                   desc:"Brocat en verd bosc fosc amb disseny de retícula de diamants florals. En cada rombe, un medalló amb flors en roig, taronja, gris blavós i rosa. Teixit geomètric-floral de gran distinció i versatilitat per a indumentària.",                      price:'Consultar', image:IMG.t17, tag:null },
-          { id:'t18', name:'Brocat Verd Ampolla — Composició Exuberant',             desc:"Brocat jacquard en verd ampolla intens amb composició floral exuberant: roses roges, peonies turquesa, crisantems taronges, flors liles i grogues. Branques daurades entrellaçades. Un dels dissenys més rics i vius de la col·lecció.",            price:'Consultar', image:IMG.t18, tag:null },
-          { id:'t19', name:'Brocat Roig Cirera — Medallons Florals',                desc:"Brocat en roig cirera brillant amb composició simètrica de medallons florals. Flors en blau cobalt, lila, groc ocre, verd i crema sobre el fons roig intens. Teixit de màxima presència visual per a indumentària de gala.",                         price:'Consultar', image:IMG.t19, tag:null },
-          { id:'t20', name:'Brocat Crema Rosa — Flors Discretes',                   desc:"Brocat en fons crema-rosat molt suau amb composició floral discreta: grans flors en bordeus fosc, blau-lila i verd sobre un fons de summa delicadesa. Teixit refinat per a trajes de comunió, festa i núvies.",                                       price:'Consultar', image:IMG.t20, tag:null },
-          { id:'t21', name:'Brocat Gris Acer — Gerres i Garlandes',                 desc:"Brocat en gris acer perla amb composició de gerres florals i garlandes en fil daurat. Flors en turquesa intens, bordeus i rosa sobre el fons gris metal·litzat. Disseny d'inspiració neoclàssica amb gran riquesa de detall.",                       price:'Consultar', image:IMG.t21, tag:null },
-          { id:'t22', name:'Brocat Blanc Marfil — Flors Multicolor en Relleu',       desc:"Brocat en fons blanc marfil amb grans flors multicolor en relleu: lila, blau cobalt, roig, rosa, verd i groc. Rameig en fil daurat clar. Teixit de màxima lluminositat per a Falleres Majors i Corts d'Honor.",                                     price:'Consultar', image:IMG.t22, tag:'new', tagLabel:'Destacada' },
-          { id:'t23', name:'Seda Fúcsia Brillant — Rameig Barroc Daurat',           desc:"Seda natural en fúcsia-magenta brillant amb rameig barroc de fulles d'acant en fil daurat. Flors en blanc marfil, taronja i rosa en composició simètrica. Teixit d'altíssima qualitat per a indumentària de Fallera Major d'honor.",               price:'Consultar', image:IMG.t23, tag:null },
-          { id:'t24', name:'Brocat Blau-Gris — Flors Taronges i Roses',              desc:"Brocat en blau-gris plom amb grans flors taronges cremades i roses com a protagonistes. Rameig en fil daurat envellit amb fullatge verd oliva. Composició simètrica d'elegant sobrietat per a trajes de gala.",                                     price:'Consultar', image:IMG.t24, tag:null },
-          { id:'t25', name:'Brocat Gris Perla — Peonies Roses i Violeta',            desc:"Brocat en gris perla-taupé amb grans peonies en rosa intens i lila-violeta, flors blanques i grogues d'acompanyament. Rameig en fil daurat-beix. Composició oval simètrica. Teixit refinat per a trajes de gala i cotilles.",                       price:'Consultar', image:IMG.t25, tag:null },
-          { id:'t26', name:'Brocat Gris Plata — Dàlies Roses i Daurat',              desc:"Brocat en fons gris platejat amb grans flors tipus dàlia en rosa fúcsia i rosa vell com a elements centrals. Fullatge en fil daurat i detalls en taronja i bordeus. Teixit d'alta costura de gran lluminositat i distinció.",                        price:'Consultar', image:IMG.t26, tag:null },
-          { id:'t27', name:'Brocat Gris Mauve — Roses Blavoses i Bordeus',           desc:"Brocat en gris mauve amb medalló central de peonies en blau grisenc i bordeus, flors menudes en rosa clar i fulles en fil daurat. Rameig geomètric en to natural. Disseny de gran subtilesa i elegància atemporal.",                               price:'Consultar', image:IMG.t27, tag:null },
-          { id:'t28', name:'Brocat Daurat Xampany — Flors Primaverals',              desc:"Brocat en fons daurat-xampany llimona amb flors en fúcsia, blau àcian, taronja teja i lila. Rameig en to natural amb motius de fulles i acant. Teixit de gran alegria cromàtica per a indumentària de primavera-estiu.",                          price:'Consultar', image:IMG.t28, tag:null },
-          { id:'t29', name:'Brocat Verd Poma — Flors de Primavera',                  desc:"Brocat jacquard en verd poma fresc amb flors en fúcsia, blau lavanda, préssec i rosa. Petites campanetes blaves i rameig en fil daurat. Teixit de gran alegria i lluminositat per a trajes i complements festius.",                                price:'Consultar', image:IMG.t29, tag:null },
-          { id:'t30', name:'Brocat Turquesa — Medallons Florals',                    desc:"Brocat en turquesa intens amb medallons florals en blanc marfil, fúcsia, blau, taronja i lila. Rameig en fil blanc que forma marcs d'encaix. Teixit de gran impacte visual per a indumentària d'estiu i Falles.",                                  price:'Consultar', image:IMG.t30, tag:null },
-          { id:'t31', name:'Arxiu de Teles — Expositor Cosas Cucas',                 desc:"Vista de l'expositor de teles de Cosas Cucas amb rotlles de brocats valencians en tots els colors: blau cobalt, fúcsia, groc, roig, verd, lila i crema. Demana assessorament sense compromís per a triar el teu teixit.",                       price:'Consultar', image:IMG.t31, tag:null },
-          { id:'t32', name:'Brocat Marfil — Flors Taronges i Roges',                 desc:"Brocat en fons marfil molt clar amb flors en taronja-coral, roig grana i blau grisenc. Fulles i branques en verd oliva amb detalls en fil daurat suau. Disseny elegant de gran lluminositat per a Falleres i Corts d'Honor.",                   price:'Consultar', image:IMG.t32, tag:null },
-          { id:'t33', name:'Brocat Blau Marí — Bouquets en Rombes Daurats',          desc:"Brocat en blau marí profund amb retícula de rombes en fil daurat que emmarca bouquets de flors: peonies roses, dàlies bordeus, flors taronges i blaves. Teixit de màxima riquesa per a Falleres Majors i Corts d'Honor.",                       price:'Consultar', image:IMG.t33, tag:null },
-          { id:'t34', name:'Brocat Blanc — Flors Estil Brodat',                      desc:"Brocat en blanc pur amb flors multicolor en estil brodat: turquesa, taronja, roig coral, blau i rosa. Rameig en fil daurat que forma un òval central amb motius d'acant. Teixit de gran delicadesa i lluminositat.",                             price:'Consultar', image:IMG.t34, tag:null },
-          { id:'t35', name:'Manteleta Brodada — Fons Crema Daurat',                  desc:"Manteleta brodada a mà en fons crema-beix daurat amb gran ram central de flors multicolor: peonies roses, flors blaves, taronja, lila i groc. Rameig en gris perla amb marc de flors menudes. Peça artesanal d'altíssima qualitat.",            price:'Consultar', image:IMG.t35, tag:null },
+          { id:'t1',  fibra:'rayon', tipo:'brocatel', name:'Calanda',          desc:"Brocat en fons blanc perla amb un gran medalló floral simètric: crisantems blau cobalt, peònies fúcsia i roges, flors liles i detalls en fil daurat. Un rameig barroc d'acant daurat emmarca la composició. Un disseny molt lluminós, d'elegància clàssica valenciana.",                                                      price:'Consultar', image:IMG.t1,  tag:'new', tagLabel:'Exclusiu' },
+          { id:'t2',  fibra:'seda',  tipo:'brocatel', name:'San Manuel',       desc:"Brocat de seda en fons bordeus-granat intens amb una composició floral vertical ben plena: peònies en rosa fúcsia i lila, flors blaves i taronja, fulles en verd intens. Els colors destaquen sobre el fons fosc amb el contrast propi de la indumentària valenciana de gala.",                                         price:'Consultar', image:IMG.t2,  tag:null },
+          { id:'t3',  fibra:'rayon', tipo:'brocatel', name:'San Manuel 2',     desc:"Brocat en fons blanc-crema amb composició floral simètrica de tulipes, peònies i flors silvestres de molts colors: roig, blau, rosa, taronja i lila. Un disseny alegre i lluminós, ideal per a indumentària festiva i vestits de primera Ofrena.",                                                                       price:'Consultar', image:IMG.t3,  tag:null },
+          { id:'t4',  fibra:'seda',  tipo:'brocatel', name:'Cestas',           desc:"Brocat de seda en fons bordeus fosc amb una cistella de flors ben plena al centre: flors turquesa intens, taronja cremat, liles i roses sobre un fons molt profund. Disseny d'inspiració historicista, amb cistelles i garlandes del segle XVIII valencià.",                                                       price:'Consultar', image:IMG.t4,  tag:null },
+          { id:'t5',  fibra:'rayon', tipo:'brocatel', name:'Genoveva',         desc:"Brocat en fons blanc-crema amb un gran ram floral simètric de molts colors: crisantems, peònies i flors menudes en rosa, blau, lila i taronja. Un rameig daurat d'acant tanca la composició en un òval. Teixit elegant i versàtil, que va bé per a qualsevol indumentària valenciana.",                                     price:'Consultar', image:IMG.t5,  tag:null },
+          { id:'t6',  fibra:'rayon', tipo:'brocatel', name:'Santa Genoveva',   desc:"Brocat en fons gris plata-perla amb una composició floral delicada: flors en verd menta, blau cel, rosa suau i detalls en fil daurat oliva. Disseny subtil i refinat, ideal per a cotilles de núvia, manteletes i vestits de Fallera Major de línia clàssica.",                                                       price:'Consultar', image:IMG.t6,  tag:null },
+          { id:'t7',  fibra:'seda',  tipo:'brocatel', name:'Sinfonía',         desc:"Brocat de seda en fons blau pissarra, fosc com la nit, amb una composició floral molt rica: flors roges vives i turquesa intens sobre el fons fosc. El contrast de colors es veu de lluny. Un disseny per a vestits de gala, perfecte per a Falleres Majors i Corts d'Honor.",                                          price:'Consultar', image:IMG.t7,  tag:'new', tagLabel:'Destacada' },
+          { id:'t8',  fibra:'seda',  tipo:'brocatel', name:'Guadalquivir',     desc:"Brocat de seda en blau nit profund amb un gran ram floral central: flors roges, turquesa, roses i grogues sobre el blau marí. El rameig daurat ordena la composició en medallons simètrics. Teixit ple de color per a la indumentària de més cerimònia.",                                                                  price:'Consultar', image:IMG.t8,  tag:null },
+          { id:'t9',  fibra:'rayon', tipo:'damasco',  name:'Blanca Clàssica',  desc:"Damasc en fons blanc pur, amb el fons teixit en relleu i una composició floral clàssica i simètrica: flors en rosa, blau, roig i lila amb fullatge verd. Rameig daurat barroc d'acant. Un teixit molt lluminós, ideal per a núvies i Falleres Majors.",                                                                  price:'Consultar', image:IMG.t9,  tag:null },
+          { id:'t10', fibra:'seda',  tipo:'damasco',  name:'Blanca Rams',      desc:"Damasc de seda en fons blanc amb rams florals escampats en rosa fúcsia, blau cobalt i roig coral, amb fullatge verd i detalls en fil daurat. El fons, teixit en relleu, li dona molta elegància. Perfecte per a vestits de primavera, primera Ofrena i indumentària de xiqueta.",                                         price:'Consultar', image:IMG.t10, tag:null },
+          { id:'t11', fibra:'seda',  tipo:'damasco',  name:'Blanca Rosa',      desc:"Damasc de seda en fons blanc-crema amb peònies i crisantems en rosa i gris plata, flors menudes en bordeus i motius de cistella en fil platejat. Fons teixit en relleu. Una tela amb personalitat, que ajunta la llum del fons blanc amb la riquesa del damasc valencià de sempre.",                                    price:'Consultar', image:IMG.t11, tag:null },
+          { id:'t12', fibra:'rayon', tipo:'brocatel', name:'Verd Sàlvia',      desc:"Brocat en fons verd sàlvia-oliva amb una composició floral festiva: grans flors fúcsia, liles i roses sobre el verd. Un rameig en fil daurat i plata tanca cada ram en un medalló simètric. Teixit de colors molt vius per a la indumentària de Falles i vestits de celebració.",                                          price:'Consultar', image:IMG.t12, tag:null },
+          { id:'t13', fibra:'rayon', tipo:'brocatel', name:'Turquesa',         desc:"Brocat en turquesa intens amb una composició floral ben plena: flors taronja cremat, roses fúcsia, liles i roges sobre el fons turquesa, molt lluminós. Rameig daurat molt elegant. Un disseny amb molta personalitat, valencià de cap a peus, per a vestits de festa que no passen desapercebuts.",                    price:'Consultar', image:IMG.t13, tag:null },
+          { id:'t14', fibra:'rayon', tipo:'brocatel', name:'Blau Nit',         desc:"Brocat en blau marí profund amb un gran gerro de flors al centre: roses roges i rosades, flors turquesa, liles i grogues. Un rameig de fulles daurades puja en vertical per tota la tela. Teixit molt elegant per a indumentària de gala i Falleres Majors de Districte.",                                                price:'Consultar', image:IMG.t14, tag:null },
+          { id:'t15', fibra:'rayon', tipo:'damasco',  name:'Crema Daurada',    desc:"Damasc en fons crema-taupe amb el fons teixit en relleu i flors en rosa, coral, blau grisenc i taronja suau. Rameig en fil daurat envellit amb motius d'acant i fullatge en fil natural. Una composició refinada i sòbria. Ideal per a cotilles, jubons i vestits de Fallera Major de línia historicista.",                  price:'Consultar', image:IMG.t15, tag:null },
+          { id:'t16', fibra:'rayon', tipo:'brocatel', name:'Blau Pissarra',    desc:"Brocat en blau pissarra amb una composició floral molt rica: flors roges, turquesa, liles, taronja i roses sobre el blau fosc. Rameig daurat barroc amb molt de detall. Un teixit amb personalitat, que combina la profunditat del blau amb la flor valenciana de tota la vida.",                                         price:'Consultar', image:IMG.t16, tag:null },
+          { id:'t17', fibra:'seda',  tipo:'damasco',  name:'Blau Reial',       desc:"Damasc de seda en blau marí intens amb motius florals barrocs en fil daurat. Composició simètrica molt elegant. Un teixit de molta categoria per a Falleres Majors i vestits de gala.",                                                                                                                              price:'Consultar', image:IMG.t17, tag:'new', tagLabel:'Nova' },
+          { id:'t18', fibra:'seda',  tipo:'brocatel', name:'Blau Barroc',      desc:"Brocat de seda en blau nit amb una composició barroca ben plena en fil daurat i flors en relleu. Motius densos i rics. Exclusiu per a indumentària de cerimònia i Corts d'Honor.",                                                                                                                                       price:'Consultar', image:IMG.t18, tag:'new', tagLabel:'Nova' },
+          { id:'t19', fibra:'seda',  tipo:'damasco',  name:'Roig Carmesí',     desc:"Damasc de seda en roig carmesí amb motius florals barrocs en fil crema i plata. Composició amb molta presència i vida. Un teixit amb caràcter per a vestits que criden l'atenció.",                                                                                                                                       price:'Consultar', image:IMG.t19, tag:'new', tagLabel:'Nova' },
+          { id:'t20', fibra:'rayon', tipo:'damasco',  name:'Beix Perla',       desc:"Damasc en to beix torrat amb motius florals delicats en verd grisenc. Composició elegant i molt subtil. Perfecte per a indumentària de línia clàssica i historicista.",                                                                                                                                                     price:'Consultar', image:IMG.t20, tag:'new', tagLabel:'Nova' },
+          { id:'t21', fibra:'rayon', tipo:'brocatel', name:'Bordeus Barroc',   desc:"Brocat en bordeus fosc amb motius florals i arabescos en verd oliva i rosa. Molt de color sobre el fons fosc. Teixit amb caràcter per a vestits de Falles amb personalitat.",                                                                                                                                             price:'Consultar', image:IMG.t21, tag:'new', tagLabel:'Nova' },
+          { id:'t22', fibra:'rayon', tipo:'brocatel', name:'Blanca Festiva',   desc:"Brocat en fons blanc amb una composició floral ben plena i de molts colors: blau, rosa, verd i daurat. Lluminós i festiu, ideal per a l'Ofrena i vestits de primera cerimònia.",                                                                                                                                       price:'Consultar', image:IMG.t22, tag:'new', tagLabel:'Nova' },
+          { id:'t23', fibra:'seda',  tipo:'damasco',  name:'Blau Nit Clàssic', desc:"Damasc de seda en blau marí profund amb un gran medalló floral central en fil daurat i llaç barroc. Composició clàssica i molt elegant. Teixit de categoria per a Falleres Majors i vestits de màxima cerimònia.",                                                                                                         price:'Consultar', image:IMG.t23, tag:'new', tagLabel:'Nova' },
+          { id:'t24', fibra:'seda',  tipo:'damasco',  name:'Verd Maragda',     desc:"Damasc de seda en verd ampolla fosc amb motius florals i arabescos en fil crema i plata. Composició refinada i elegant. Un teixit sobri i distingit per a indumentària de línia clàssica i historicista.",                                                                                                                price:'Consultar', image:IMG.t24, tag:'new', tagLabel:'Nova' },
+          { id:'t25', fibra:'seda',  tipo:'brocatel', name:'Turquesa Reial',   desc:"Brocatell de seda en turquesa intens amb composició barroca en fil daurat i platejat. Fons turquesa lluminós amb motius en relleu molt rics. Un teixit de color intens i molta categoria per a Falleres Majors.",                                                                                                          price:'Consultar', image:IMG.t25, tag:'new', tagLabel:'Nova' },
         ],
       },
       {
@@ -4341,7 +4331,6 @@ const translations = {
       subtitle: "Apunta't a la nostra llista i rep avant-estrena de noves col·leccions, teles exclusives, cites prioritàries i tot el que passa al taller de Cosas Cucas.",
       buttonLabel: 'Apuntar-me',
       note: 'Sense spam. Només coses cucas, de tant en tant.',
-      successMsg: '¡Benvinguda a la família de Cosas Cucas!',
     },
     visita: {
       eyebrow: "On trobar-nos",
@@ -4538,12 +4527,13 @@ const translations = {
       emailLabel:    'Email',
       subjectLabel:  'Assumpte',
       msgLabel:      'Missatge',
-      submit:        'Enviar missatge',
-      sending:       'Enviant…',
-      note:          "Et respondrem en menys de 48 hores. Per a cites urgents, truca'ns directament.",
+      submit:        'Enviar per WhatsApp',
+      note:          "El teu missatge ens arriba per WhatsApp. Si és urgent, telefona'ns al 963 511 556.",
       validationMsg: 'Si us plau, completa nom, email i missatge.',
-      successMsg:    '✓ Missatge rebut. Et contestem en menys de 48 hores.',
-      errorMsg:      "No s'ha pogut enviar. Escriu-nos directament a info@cosascucas.es",
+      emailMsg:      "Revisa l'email, pareix que li falta alguna cosa.",
+      waIntro:       'Hola, vos escric des de la web de Cosas Cucas.',
+      waOpened:      "T'obrim WhatsApp amb el missatge ja escrit; només has de donar-li a enviar.",
+      waRetry:       "No s'ha obert? Prem ací.",
     },
   },
 };
@@ -4672,7 +4662,7 @@ function openCollectionModal(drop) {
   document.getElementById('col-modal-grid').innerHTML = drop.products.map(p =>
     `<div class="col-modal__card">
       <div class="col-modal__card-img">
-        <img src="${p.image}" alt="${p.name}" loading="lazy" />
+        <img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" />
         ${p.tag ? `<span class="col-modal__card-tag">${p.tagLabel || p.tag}</span>` : ''}
       </div>
       <div class="col-modal__card-body">
@@ -4734,6 +4724,11 @@ function renderHero(drop) {
    18 fotos de pasarela, crossfade suave, 4 s por foto
 ═══════════════════════════════════════════════════════════════════════ */
 function initHeroSlider() {
+  /* Solo una vez: renderAll() se vuelve a llamar al cambiar de idioma y
+     cada llamada creaba otro setInterval (más cambios y más descargas) */
+  if (initHeroSlider.started) return;
+  initHeroSlider.started = true;
+
   const SLIDES = [
     'tienda nueva.jpeg',
     'pasarela/_ADL4063.jpg',
@@ -4815,7 +4810,7 @@ function renderProductCard(p) {
   const materialHtml = p.material ? `<span class="product-card__material ${p.material}">${materialLbl[p.material] || p.material}</span>` : '';
   return `<article class="product-card">
       <div class="product-card__img-wrap" style="position:relative">
-        <img src="${p.image}" alt="${p.name}" loading="lazy" />
+        <img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" />
         ${tagHtml}${materialHtml}${fibraHtml}${tipoHtml}
         <span class="product-card__quick-add">${t().footer.viewProduct}</span>
       </div>
@@ -4909,7 +4904,7 @@ function buildArchive() {
     <article class="archive-card${i === activeDropIndex ? ' active' : ''}" data-drop-index="${i}">
       <span class="archive-card__label">${d.title}</span>
       <div class="archive-card__img-wrap">
-        <img src="${d.archiveImage}" alt="${d.title}" loading="lazy" />
+        <img src="${d.archiveImage}" alt="${d.title}" loading="lazy" decoding="async" />
         <div class="archive-card__overlay">
           <h3 class="archive-card__title">${d.subtitle}</h3>
           <span class="archive-card__link">${ft.viewCollection}</span>
@@ -4946,7 +4941,7 @@ function buildFMDetail() {
   const fmDetailData = h.fmCurrent || h.fm;
   grid.innerHTML = fmDetailData.map(f => `
     <div class="fm-detail-card">
-      <img src="${f.img}" alt="${f.name}" loading="lazy" />
+      <img src="${f.img}" alt="${f.name}" loading="lazy" decoding="async" />
       <div class="fm-detail-info">
         <span class="fm-detail-falla">${f.name}</span>
         <span class="fm-detail-year">${f.year}</span>
@@ -5085,7 +5080,7 @@ function buildZapatillas() {
       <img
         src="${item.src}"
         alt="${item.name}"
-        loading="${i < 4 ? 'eager' : 'lazy'}"
+        loading="lazy" decoding="async"
       />
     </div>`).join('');
 }
@@ -5103,7 +5098,7 @@ function buildHistoria() {
   document.getElementById('hist-fm-label').textContent = h.fmLabel;
   document.getElementById('fm-grid').innerHTML = fmData.map(f =>
     `<div class="fm-card">
-      <div class="fm-card__img"><img src="${f.img}" alt="${f.name}" loading="lazy" /></div>
+      <div class="fm-card__img"><img src="${f.img}" alt="${f.name}" loading="lazy" decoding="async" /></div>
       <div class="fm-card__info">
         <p class="fm-card__name">${f.name}</p>
         <p class="fm-card__year">${f.year}</p>
@@ -5112,7 +5107,7 @@ function buildHistoria() {
   document.getElementById('hist-corts-label').textContent = h.cortsLabel;
   document.getElementById('corts-grid').innerHTML = h.corts.map(c =>
     `<div class="cort-card">
-      <img src="${c.img}" alt="${c.label}" loading="lazy" />
+      <img src="${c.img}" alt="${c.label}" loading="lazy" decoding="async" />
       <div class="cort-card__label">${c.label}</div>
     </div>`).join('') +
     `<div class="hist-corts-text">${h.cortsText}</div>`;
@@ -5126,7 +5121,7 @@ function buildDecoracion() {
   document.getElementById('deco-body').innerHTML    = d.body.map(p => `<p>${p}</p>`).join('');
   document.getElementById('deco-mosaic').innerHTML  = d.cells.map((c, i) =>
     `<div class="deco-cell" data-index="${i}" data-img="${c.img}" data-caption="${c.caption}">
-      <img src="${c.img}" alt="${c.caption}" loading="lazy" />
+      <img src="${c.img}" alt="${c.caption}" loading="lazy" decoding="async" />
       <div class="deco-cell__zoom">
         <div class="deco-zoom-icon">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -5142,21 +5137,13 @@ function buildDecoracion() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   CONTACTO — EmailJS (gratis: 200 emails/mes · https://emailjs.com)
+   CONTACTO — WhatsApp
    ─────────────────────────────────────────────────────────────────
-   Pasos (5 min):
-   1. Crea cuenta en emailjs.com
-   2. Email Services → conecta Gmail/Outlook
-   3. Email Templates → crea plantilla con: {{from_name}}, {{reply_to}},
-      {{subject}}, {{message}}
-   4. Rellena las 3 constantes con tus IDs
-   ─────────────────────────────────────────────────────────────────
-   Sin EmailJS configurado → abre automáticamente el cliente de correo
+   Al pulsar el botón se abre WhatsApp (nueva pestaña / app) con el
+   mensaje ya redactado con los datos del formulario. El mensaje NO se
+   envía desde la web: la clienta tiene que darle a enviar en WhatsApp.
 ═══════════════════════════════════════════════════════════════════ */
-const CONTACT_EJS_KEY      = 'TU_PUBLIC_KEY';   /* Account > API Keys */
-const CONTACT_EJS_SERVICE  = 'TU_SERVICE_ID';   /* Email Services */
-const CONTACT_EJS_TEMPLATE = 'TU_TEMPLATE_ID';  /* Email Templates */
-const CONTACT_EMAIL        = 'info@cosascucas.es';
+const CONTACT_WHATSAPP = '34667775501';
 
 function buildContacto() {
   const c = t().contacto;
@@ -5186,75 +5173,45 @@ function buildContacto() {
   fNote.textContent = c.note;
   fNote.style.color = '';
 
-  fBtn.onclick = async () => {
+  fBtn.onclick = () => {
     const name    = document.getElementById('f-name').value.trim();
     const email   = document.getElementById('f-email').value.trim();
     const subject = document.getElementById('f-subject').value.trim();
     const msg     = document.getElementById('f-msg').value.trim();
 
-    // Validación básica
+    // Validación: nombre, email y mensaje obligatorios
     if (!name || !email || !msg) {
       fNote.textContent = c.validationMsg;
       fNote.style.color = '#c0392b';
       return;
     }
-
-    // Estado de carga
-    fBtn.disabled    = true;
-    fBtn.textContent = c.sending;
-    fNote.textContent = '';
-    fNote.style.color = '';
-
-    /* Función de éxito compartida */
-    const onSuccess = () => {
-      fNote.textContent = c.successMsg;
-      fNote.style.color = 'var(--color-gold)';
-      fBtn.textContent  = '✓';
-      ['f-name','f-email','f-subject','f-msg'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.value = '';
-      });
-      setTimeout(() => { fBtn.disabled = false; fBtn.textContent = c.submit; }, 4000);
-    };
-
-    /* Fallback: abrir cliente de correo del usuario */
-    const mailtoFallback = () => {
-      const body = encodeURIComponent(
-        `Nombre: ${name}\nEmail: ${email}\nAsunto: ${subject}\n\n${msg}`
-      );
-      const sub = encodeURIComponent(subject || 'Consulta Cosas Cucas');
-      window.open(`mailto:${CONTACT_EMAIL}?subject=${sub}&body=${body}`, '_blank');
-      fBtn.disabled = false;
-      fBtn.textContent = c.submit;
-    };
-
-    if (CONTACT_EJS_KEY === 'TU_PUBLIC_KEY') {
-      /* EmailJS aún no configurado — muestra instrucciones en consola */
-      console.warn('⚙️ Configura EmailJS en index.html (CONTACT_EJS_KEY, SERVICE, TEMPLATE)');
-      fNote.textContent = '⚙️ Para activar el envío automático, configura EmailJS. Llámanos al 963 511 556.';
-      fNote.style.color = 'var(--color-gold)';
-      fBtn.disabled = false;
-      fBtn.textContent = c.submit;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      fNote.textContent = c.emailMsg;
+      fNote.style.color = '#c0392b';
       return;
     }
 
-    try {
-      emailjs.init(CONTACT_EJS_KEY);
-      await emailjs.send(CONTACT_EJS_SERVICE, CONTACT_EJS_TEMPLATE, {
-        from_name: name,
-        reply_to:  email,
-        subject:   subject || 'Consulta web Cosas Cucas',
-        message:   msg,
-        to_email:  CONTACT_EMAIL,
-      });
-      onSuccess();
-    } catch (err) {
-      console.error('EmailJS error:', err);
-      fNote.textContent = c.errorMsg + ' · Llámanos al 963 511 556';
-      fNote.style.color = '#c0392b';
-      fBtn.disabled = false;
-      fBtn.textContent = c.submit;
-    }
+    // Mensaje de WhatsApp ya redactado con los datos del formulario
+    const text = c.waIntro + '\n\n' +
+      `${c.nameLabel}: ${name}\n` +
+      `${c.emailLabel}: ${email}\n` +
+      (subject ? `${c.subjectLabel}: ${subject}\n` : '') +
+      `\n${msg}`;
+    const waUrl = `https://wa.me/${CONTACT_WHATSAPP}?text=${encodeURIComponent(text)}`;
+
+    const win = window.open(waUrl, '_blank');
+    if (win) win.opener = null;
+
+    // Aviso honesto (no se ha enviado nada todavía) + enlace por si el navegador bloquea la pestaña
+    fNote.textContent = c.waOpened + ' ';
+    fNote.style.color = 'var(--color-gold)';
+    const retry = document.createElement('a');
+    retry.href = waUrl;
+    retry.target = '_blank';
+    retry.rel = 'noopener';
+    retry.textContent = c.waRetry;
+    retry.style.textDecoration = 'underline';
+    fNote.appendChild(retry);
   };
 }
 
@@ -5266,7 +5223,7 @@ function buildVideos() {
   document.getElementById('videos-grid').innerHTML = v.items.map(item => `
     <a class="video-card" href="https://www.youtube.com/watch?v=${item.id}" target="_blank" rel="noopener" aria-label="${item.title}">
       <div class="video-card__thumb">
-        <img src="https://img.youtube.com/vi/${item.id}/hqdefault.jpg" alt="${item.title}" loading="lazy" />
+        <img src="https://img.youtube.com/vi/${item.id}/hqdefault.jpg" alt="${item.title}" loading="lazy" decoding="async" />
         <div class="video-card__play">
           <div class="video-card__play-btn">
             <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
@@ -5446,15 +5403,11 @@ document.getElementById('lang-switcher').addEventListener('click', e => {
   setLang(btn.dataset.lang);
 });
 
-/* ── Newsletter (handler único) ── */
+/* ── Newsletter — sección oculta (hidden) hasta conectar un proveedor real.
+   El formulario no guarda ni envía nada, así que no se muestra ningún
+   mensaje de "bienvenida": solo se evita que recargue la página. ── */
 document.getElementById('newsletter-form').addEventListener('submit', function(e) {
   e.preventDefault();
-  const email = document.getElementById('nl-email').value.trim();
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
-  this.style.display = 'none';
-  const msg = document.getElementById('nl-success');
-  msg.textContent    = t().newsletter.successMsg;
-  msg.style.display  = 'block';
 });
 
 /* ── INICIO ── */
