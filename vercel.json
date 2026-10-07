@@ -11,6 +11,16 @@
       "source": "/probador.html",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/inauguracion",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/inauguracion.html",
+      "destination": "/",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -33,10 +43,6 @@
     {
       "source": "/landing",
       "destination": "/landing.html"
-    },
-    {
-      "source": "/inauguracion",
-      "destination": "/inauguracion.html"
     },
     {
       "source": "/cartel-traslado",
