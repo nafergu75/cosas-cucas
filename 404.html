@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Página no encontrada · Cosas Cucas</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/png" href="favicon.png" data-root="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" data-root="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #b5903a;
+      --gold-light: #d4a843;
+      --bg: #fdfaf3;
+      --bg-dark: #1a1714;
+      --text: #2c2a27;
+      --text-muted: #6b6560;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+    }
+    html, body { height: 100%; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      display: flex; flex-direction: column;
+    }
+    .site-header {
+      background: var(--bg-dark);
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(181,144,58,0.2);
+    }
+    .site-header .inner { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+    .brand { text-decoration: none; display: inline-block; }
+    .brand-name {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 1.4rem; color: #fdfaf3; letter-spacing: 0.01em; display: block;
+    }
+    .brand-since {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em;
+      color: var(--gold); text-transform: uppercase; display: block; margin-top: 1px;
+    }
+    main {
+      flex: 1;
+      max-width: 620px; margin: 0 auto; padding: 72px 24px 80px;
+      text-align: center;
+    }
+    .code {
+      font-family: var(--font-display); font-style: italic;
+      font-size: clamp(4rem, 18vw, 7rem); line-height: 1;
+      color: var(--gold); margin-bottom: 16px;
+    }
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      font-weight: 700; margin-bottom: 16px;
+    }
+    p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 12px; }
+    .actions {
+      display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+      margin-top: 32px;
+    }
+    .btn {
+      display: inline-block; padding: 12px 26px; border-radius: 2px;
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em;
+      text-decoration: none; transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .btn-primary { background: var(--bg-dark); color: #fdfaf3; border: 1px solid var(--bg-dark); }
+    .btn-primary:hover { background: var(--gold); border-color: var(--gold); }
+    .btn-ghost { color: var(--text); border: 1px solid rgba(44,42,39,0.25); }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+    .site-footer { background: var(--bg-dark); padding: 24px; text-align: center; }
+    .site-footer p { font-size: 0.75rem; color: rgba(253,250,243,0.45); margin: 0; }
+    .site-footer a { color: rgba(181,144,58,0.85); text-decoration: none; white-space: nowrap; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="index.html" data-root="">
+      <span class="brand-name">Cosas Cucas</span>
+      <span class="brand-since">Desde 1982</span>
+    </a>
+  </div>
+</header>
+
+<main>
+  <div class="code" aria-hidden="true">404</div>
+  <h1>Esta página no está</h1>
+  <p>Puede que el enlace esté mal escrito o que hayamos cambiado la página de sitio.</p>
+  <p>Si buscabas algo en concreto, escríbenos por WhatsApp y te echamos una mano.</p>
+  <div class="actions">
+    <a class="btn btn-primary" href="index.html" data-root="">Volver al inicio</a>
+    <a class="btn btn-ghost" href="galeria.html" data-root="galeria.html">Ver la galería</a>
+    <a class="btn btn-ghost" href="https://wa.me/34667775501" target="_blank" rel="noopener">WhatsApp 667 775 501</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p>Cosas Cucas · C/ Burriana, 21 · 46005 Valencia · <a href="tel:+34963511556">963 511 556</a></p>
+</footer>
+
+<script>
+  // Si la dirección que falla tiene varias carpetas (p. ej. /algo/otra/cosa),
+  // los enlaces relativos no llevarían a la portada. Aquí se calcula la raíz
+  // de la web: en GitHub Pages es /cosas-cucas/, en el resto es /.
+  (function () {
+    var parts = location.pathname.split('/');
+    var root = /\.github\.io$/.test(location.hostname) && parts[1] ? '/' + parts[1] + '/' : '/';
+    var els = document.querySelectorAll('[data-root]');
+    for (var i = 0; i < els.length; i++) {
+      els[i].setAttribute('href', root + els[i].getAttribute('data-root'));
+    }
+  })();
+</script>
+</body>
+</html>

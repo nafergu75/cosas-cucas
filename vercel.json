@@ -6,15 +6,44 @@
     { "source": "/galeria", "destination": "/galeria.html" },
     { "source": "/probador", "destination": "/probador.html" },
     { "source": "/aviso-legal", "destination": "/aviso-legal.html" },
-    { "source": "/politica-privacidad", "destination": "/politica-privacidad.html" }
+    { "source": "/politica-privacidad", "destination": "/politica-privacidad.html" },
+    { "source": "/landing", "destination": "/landing.html" },
+    { "source": "/inauguracion", "destination": "/inauguracion.html" },
+    { "source": "/cartel-traslado", "destination": "/cartel-traslado.html" }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
         {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        }
+      ]
+    },
+    {
+      "source": "/((?!.*\\.(?:jpg|jpeg|png|webp|gif|svg|ico|avif|jfif|mp4|webm|mov|css|js)$).*)",
+      "headers": [
+        {
           "key": "Cache-Control",
           "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(jpg|jpeg|png|webp|gif|svg|ico|avif|jfif|mp4|webm|mov|css|js)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
         }
       ]
     }

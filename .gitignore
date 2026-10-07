@@ -25,3 +25,28 @@ MAYOR*.pdf
 .claude/settings.local.json
 .vercel/
 sepa*.pdf
+
+# Documentacion personal y administrativa (DNI, vida laboral, padron, alquileres...)
+ayuda/
+ayuda2/
+ayuda3/
+/*.pdf
+fotos tienda/*.pdf
+# Archivos enormes que GitHub rechaza (>100 MB) y material bruto de video
+imagenes/
+video/
+*.mxf
+*.zip
+*.rar
+/paula.mp4
+
+# Material que no es la web: se queda en el ordenador, fuera del repo
+frontend/
+trailofbits-skills/
+historia/dossier cosascucas.pdf
+historia/dossier cosascucas_compressed.docx
+historia/dossier_pages/
+fotos nuevas/dossier cosascucas.pdf
+_originales/
+# Carpeta temporal que crea el workflow de GitHub Pages
+_site/

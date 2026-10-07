@@ -1,0 +1,106 @@
+# .vercelignore - LISTA BLANCA: solo se publica la web.
+#
+# Sintaxis de .gitignore. La linea "/*" deja fuera TODO lo que hay en la raiz
+# y cada linea "!/..." vuelve a incluir lo que la web necesita.
+# Este mismo archivo decide tambien que se sube a GitHub Pages
+# (ver .github/workflows/pages.yml), asi que hay una sola lista para las dos webs.
+#
+# Si una pagina empieza a usar una imagen nueva de la raiz o una carpeta nueva,
+# anade aqui su linea "!/..." o no se vera en internet.
+# Las carpetas se escriben SIN barra final ("!/galeria*", no "!/galeria/"):
+# la CLI de Vercel no reconoce la barra final y dejaria la carpeta fuera.
+
+/*
+
+# Configuracion de Vercel
+!/vercel.json
+
+# Paginas
+!/index.html
+!/galeria.html
+!/probador.html
+!/landing.html
+!/inauguracion.html
+!/aviso-legal.html
+!/politica-privacidad.html
+!/cartel-traslado.html
+!/404.html
+
+# Estilos, icono, imagen para redes y SEO
+!/styles.css
+!/favicon.png
+!/og-image.jpg
+!/robots.txt
+!/sitemap.xml
+
+# Imagenes de la raiz que usan las paginas
+!/Imagen de WhatsApp 2025-03-04 a las *.jpg
+!/aderezos.jpg
+!/aderezos2.jpg
+!/cosascucas_1.jpg
+!/cosascucas_5-1030x1030.jpg
+!/logo cosascucas.png
+!/manteletas.jpg
+!/portada.jpg
+!/tienda nueva.jpeg
+
+# Carpetas de fotos que usan las paginas.
+# El "*" final hace falta: al desplegar con la CLI desde Windows, las fotos
+# con tildes o enes en el nombre (p. ej. "Matias" con tilde) llegan con "\" en la ruta
+# y sin el "*" se quedarian fuera.
+!/aderezos*
+!/coleccion 2027*
+!/decoracion*
+!/espolin*
+!/falleras mayores*
+!/fotos nuevas*
+!/galeria*
+!/historia*
+!/hombre*
+!/pasarela*
+!/semana santa*
+!/telas*
+
+# Nunca publicar, aunque este dentro de una carpeta permitida
+dossier*
+*.pdf
+*.doc
+*.docx
+*.xls
+*.xlsx
+*.csv
+*.zip
+*.rar
+*.7z
+*.exe
+*.ps1
+*.bat
+*.cmd
+*.sh
+*.log
+*.mxf
+*.code-workspace
+.*
+Thumbs.db
+desktop.ini
+node_modules
+
+# Ya quedan fuera por "/*"; se dejan escritos para que quede claro
+/server.js
+/worker.js
+/frontend
+/trailofbits-skills
+/imagenes
+/video
+/_originales
+/_site
+/ayuda*
+/facturas
+/documentos
+/excel
+/licencia*
+/LICENCIA3
+/probador virtual
+/fotos burriana
+/fotos tienda
+/cloudflared*

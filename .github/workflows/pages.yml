@@ -22,16 +22,42 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v6
+
+      # Only the public website goes into _site. The list of files is the
+      # allowlist in .vercelignore (gitignore syntax), so GitHub Pages and
+      # Vercel always publish the same files.
+      - name: Build _site (only the website files)
+        shell: bash
+        run: |
+          set -euo pipefail
+          export LC_ALL=C
+          tmp="${RUNNER_TEMP:-/tmp}"
+          git ls-files -z | sort -z > "$tmp/all.lst"
+          git ls-files -z --cached --ignored --exclude-from=.vercelignore | sort -z > "$tmp/excluded.lst"
+          comm -z -23 "$tmp/all.lst" "$tmp/excluded.lst" > "$tmp/site.lst"
+          rm -rf _site
+          mkdir _site
+          tar --null --verbatim-files-from --files-from="$tmp/site.lst" -cf - | tar -xf - -C _site
+          rm -f _site/vercel.json
+          test -f _site/index.html
+          bad="$(find _site -type f \( -name 'server.js' -o -name 'worker.js' -o -name '*.ps1' -o -name '*.bat' -o -name '*.exe' \
+            -o -name '*.pdf' -o -name '*.doc' -o -name '*.docx' -o -name '*.xls' -o -name '*.xlsx' -o -path '*/.*' \) -print)"
+          if [ -n "$bad" ]; then
+            echo "::error::Files that must not be published ended up in _site:"
+            echo "$bad"
+            exit 1
+          fi
+          echo "_site: $(find _site -type f | wc -l) files, $(du -sh _site | cut -f1)"
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
-          path: '.'
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
