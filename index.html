@@ -1555,146 +1555,6 @@
       .col-modal__grid { grid-template-columns: 1fr; }
     }
 
-    /* ══════════════════════════════════════════════════════════════════════
-       PROBADOR VIRTUAL — sección en la página principal
-    ══════════════════════════════════════════════════════════════════════ */
-    #probador-section {
-      padding: 0;
-      background: var(--color-bg-dark);
-      overflow: hidden;
-      position: relative;
-    }
-    .probador-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 600px;
-    }
-    .probador-img-wrap {
-      position: relative;
-      overflow: hidden;
-    }
-    .probador-img-wrap img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
-      filter: brightness(0.88) contrast(1.05);
-      transition: transform 1s ease, filter .6s ease;
-    }
-    .probador-img-wrap:hover img {
-      transform: scale(1.04);
-      filter: brightness(0.95) contrast(1.05);
-    }
-    .probador-img-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(26,23,20,.45) 0%, transparent 60%);
-    }
-    .probador-img-badge {
-      position: absolute; top: 32px; left: 32px;
-      background: var(--color-gold);
-      color: var(--color-white);
-      font-size: .62rem; font-weight: 700; letter-spacing: .22em;
-      text-transform: uppercase; padding: 6px 14px;
-    }
-    .probador-content {
-      display: flex; flex-direction: column;
-      justify-content: center;
-      padding: 80px 72px;
-      color: var(--color-white);
-    }
-    .probador-eyebrow {
-      font-size: .65rem; font-weight: 700; letter-spacing: .22em;
-      text-transform: uppercase; color: var(--color-gold-light);
-      margin-bottom: 20px;
-    }
-    .probador-title {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      font-weight: 400; line-height: 1.15;
-      margin-bottom: 24px;
-    }
-    .probador-title em { font-style: italic; color: var(--color-gold-light); }
-    .probador-body {
-      font-size: .9rem; line-height: 1.8;
-      color: rgba(253,250,243,.7);
-      max-width: 400px; margin-bottom: 40px;
-    }
-    .probador-features {
-      display: flex; flex-direction: column; gap: 10px;
-      margin-bottom: 40px;
-    }
-    .probador-feature {
-      display: flex; align-items: center; gap: 12px;
-      font-size: .78rem; color: rgba(253,250,243,.65);
-    }
-    .probador-feature-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--color-gold); flex-shrink: 0;
-    }
-    .probador-cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
-    .btn-probador {
-      padding: 16px 36px; font-size: .75rem; font-weight: 700;
-      letter-spacing: .14em; text-transform: uppercase;
-      border-radius: 0; cursor: pointer; transition: all .25s;
-      font-family: var(--font-body);
-    }
-    .btn-probador-primary {
-      background: var(--color-gold); color: var(--color-white);
-      border: 2px solid var(--color-gold);
-    }
-    .btn-probador-primary:hover {
-      background: var(--color-gold-light); border-color: var(--color-gold-light);
-    }
-    .btn-probador-secondary {
-      background: transparent; color: rgba(253,250,243,.75);
-      border: 2px solid rgba(253,250,243,.25);
-    }
-    .btn-probador-secondary:hover {
-      border-color: rgba(253,250,243,.7); color: var(--color-white);
-    }
-
-    /* IFRAME MODAL */
-    #probador-modal {
-      position: fixed; inset: 0; z-index: 5000;
-      background: var(--color-bg-dark);
-      display: flex; flex-direction: column;
-      opacity: 0; pointer-events: none;
-      transition: opacity .35s ease;
-    }
-    #probador-modal.open { opacity: 1; pointer-events: all; }
-    .probador-modal-bar {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 24px;
-      height: 52px; flex-shrink: 0;
-      background: rgba(26,23,20,.95);
-      border-bottom: 1px solid rgba(217,206,180,.15);
-    }
-    .probador-modal-label {
-      font-size: .68rem; font-weight: 700; letter-spacing: .18em;
-      text-transform: uppercase; color: var(--color-gold-light);
-    }
-    .probador-modal-close {
-      width: 36px; height: 36px;
-      border: 1px solid rgba(217,206,180,.25);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; color: rgba(253,250,243,.6);
-      cursor: pointer; transition: all .2s; background: none;
-      font-family: inherit;
-    }
-    .probador-modal-close:hover {
-      background: var(--color-white); color: var(--color-bg-dark);
-    }
-    #probador-iframe {
-      flex: 1; border: none; width: 100%;
-      background: var(--color-bg);
-    }
-
-    @media (max-width: 768px) {
-      .probador-inner { grid-template-columns: 1fr; }
-      .probador-img-wrap { min-height: 280px; max-height: 340px; }
-      .probador-content { padding: 48px 24px 56px; }
-    }
-
     /* ── TABLET / MÓVIL ── */
     @media (max-width: 768px) {
       :root { --header-h: 60px; --banner-h: 36px; }
@@ -2550,9 +2410,7 @@
     ═══════════════════════════════════════════════════════════════════════════ */
 
     /* Garantizar position:relative en todos los botones target */
-    .btn,
-    .btn-probador-primary,
-    .btn-probador-secondary { position: relative; }
+    .btn { position: relative; }
 
     /* ── Capa track: se extiende 1 px fuera y oculta todo excepto el borde ─ */
     .ab-track {
@@ -2606,8 +2464,6 @@
     .btn--cita            { --ab-dur: 3s;   }
     .btn--filled          { --ab-dur: 4s;   }
     .btn--gold            { --ab-dur: 3.2s; }
-    .btn-probador-primary { --ab-dur: 2.8s; --ab-r: 0px; }
-    .btn-probador-secondary { --ab-dur: 3.8s; --ab-r: 0px; }
 
     /* Para botones con fondo oscuro (.btn--filled) el orbe es más brillante */
     .btn--filled .ab-orb {
@@ -3021,43 +2877,6 @@
 
   </div>
 </section>
-
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     PROBADOR VIRTUAL
-═══════════════════════════════════════════════════════════════════════════ -->
-<section id="probador-section">
-  <div class="probador-inner">
-    <div class="probador-img-wrap">
-      <img src="pasarela/_ADL4063.jpg" alt="Modelo Cosas Cucas — Probador Virtual" loading="lazy" decoding="async" />
-      <div class="probador-img-overlay"></div>
-      <span class="probador-img-badge" id="probador-badge">Nuevo</span>
-    </div>
-    <div class="probador-content">
-      <p class="probador-eyebrow" id="probador-eyebrow"></p>
-      <h2 class="probador-title" id="probador-title"></h2>
-      <p class="probador-body" id="probador-body"></p>
-      <ul class="probador-features" id="probador-features"></ul>
-      <div class="probador-cta-row">
-        <button class="btn-probador btn-probador-primary" id="btn-open-probador"></button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MODAL FULLSCREEN — Probador Virtual -->
-<div id="probador-modal">
-  <div class="probador-modal-bar">
-    <span class="probador-modal-label">✦ Cosas Cucas — Probador Virtual</span>
-    <button class="probador-modal-close" id="btn-close-probador">✕</button>
-  </div>
-  <iframe
-    id="probador-iframe"
-    src=""
-    allow="camera; microphone"
-    allowfullscreen
-    title="Probador Virtual Cosas Cucas"
-  ></iframe>
-</div>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
      ZAPATILLAS FALLERAS
@@ -3665,7 +3484,6 @@ const translations = {
       { label: 'Historia',         href: '#historia'        },
       { label: 'Decoración',   href: '#decoracion'    },
       { label: 'Vídeos',       href: '#videos'        },
-      { label: '✦ Probador',    href: 'probador.html', target: '_blank' },
       { label: 'Galería',      href: 'galeria.html', target: '_blank' },
       { label: 'Contacto', href: '#contacto' },
     ],
@@ -3949,21 +3767,6 @@ const translations = {
       viewAll:         'Ver todo',
       copyright:       'Todos los derechos reservados.',
     },
-    probador: {
-      badge:   'Nuevo',
-      eyebrow: 'Tecnología · Tradición',
-      title:   'Pruébate la\n<em>indumentaria fallera</em>\nantes de encargarla.',
-      body:    'Sube tu foto o hazte una con la cámara y visualiza telas, colores y complementos sobre tu propia imagen. Combina prendas, guarda tus looks favoritos y comparte el resultado con nuestras artesanas.',
-      features: [
-        'Sube tu foto o usa la cámara integrada',
-        'Biblioteca de 35 telas, 18 outfits de pasarela y 15 aderezos',
-        'Capas interactivas: arrastra, escala y ajusta opacidad',
-        'Compara antes y después con un clic',
-        'Descarga tu look en alta resolución',
-      ],
-      ctaPrimary:   'Probar ahora',
-      ctaSecondary: 'Abrir en nueva pestaña',
-    },
     zapatillas: {
       eyebrow: 'Exclusivo Cosas Cucas',
       title: 'Deportivas Fallera',
@@ -4128,7 +3931,6 @@ const translations = {
       { label: "Història",           href: '#historia'         },
       { label: 'Decoració',     href: '#decoracion'    },
       { label: 'Vídeos',        href: '#videos'        },
-      { label: '✦ Provador',    href: 'probador.html', target: '_blank' },
       { label: 'Galeria',       href: 'galeria.html', target: '_blank' },
       { label: 'Contacte', href: '#contacto' },
     ],
@@ -4367,21 +4169,6 @@ const translations = {
       viewProduct:     '+ Veure peça',
       viewAll:         'Veure tot',
       copyright:       'Tots els drets reservats.',
-    },
-    probador: {
-      badge:   'Nou',
-      eyebrow: 'Tecnologia · Tradició',
-      title:   "Prova't la\n<em>indumentària fallera</em>\nabans d'encarregar-la.",
-      body:    "Puja la teua foto o fes-te'n una amb la càmera i visualitza teles, colors i complements sobre la teua pròpia imatge. Combina peces, guarda els teus looks favorits i comparteix el resultat amb les nostres artesanes.",
-      features: [
-        "Puja la teua foto o usa la càmera integrada",
-        "Biblioteca de 35 teles, 18 outfits de passarel·la i 15 adreços",
-        "Capes interactives: arrossega, escala i ajusta opacitat",
-        "Compara abans i després amb un clic",
-        "Descarrega el teu look en alta resolució",
-      ],
-      ctaPrimary:   'Provar ara',
-      ctaSecondary: 'Obrir en nova pestanya',
     },
     zapatillas: {
       eyebrow: 'Exclusiu Cosas Cucas',
@@ -5052,18 +4839,6 @@ function buildFooter() {
     `<a href="${l.href}"${l.target ? ` target="${l.target}" rel="noopener"` : ''}>${l.label}</a>`).join('');
 }
 
-function buildProbador() {
-  const p = t().probador;
-  document.getElementById('probador-badge').textContent   = p.badge;
-  document.getElementById('probador-eyebrow').textContent = p.eyebrow;
-  document.getElementById('probador-title').innerHTML     = p.title.replace(/\n/g, '<br>');
-  document.getElementById('probador-body').textContent    = p.body;
-  document.getElementById('probador-features').innerHTML  = p.features.map(f =>
-    `<li class="probador-feature"><span class="probador-feature-dot"></span>${f}</li>`
-  ).join('');
-  document.getElementById('btn-open-probador').textContent = p.ctaPrimary;
-}
-
 function buildZapatillas() {
   const z = t().zapatillas;
   document.getElementById('zap-eyebrow').textContent = z.eyebrow;
@@ -5322,7 +5097,7 @@ function renderAll() {
   buildStripe(); buildNav();
   renderHero(t().drops[0]);
   initHeroSlider();           /* ImagePlayer: fotos de pasarela en bucle */
-  buildArchive(); buildFMDetail(); buildProbador(); buildZapatillas(); buildHistoria();
+  buildArchive(); buildFMDetail(); buildZapatillas(); buildHistoria();
   buildEditorial(); buildDossierHistoria(); buildDecoracion(); buildVideos(); buildResenas();
   buildNewsletter(); buildContacto(); buildVisita(); buildFooter();
   updateCitaBtn();
@@ -5335,7 +5110,7 @@ function renderAll() {
    por JS ya existan en el DOM.
 ═══════════════════════════════════════════════════════════════════════════ */
 function initAnimatedBorders() {
-  const SEL = '.btn, .btn-probador-primary, .btn-probador-secondary';
+  const SEL = '.btn';
   document.querySelectorAll(SEL).forEach(btn => {
     if (btn.querySelector('.ab-track')) return;  /* evitar duplicados */
 
@@ -5350,32 +5125,6 @@ function initAnimatedBorders() {
     btn.appendChild(track);
   });
 }
-
-/* ── Probador Virtual modal ── */
-(function() {
-  const modal  = document.getElementById('probador-modal');
-  const iframe = document.getElementById('probador-iframe');
-  const closeBtn = document.getElementById('btn-close-probador');
-
-  function openProbador() {
-    if (!iframe.getAttribute('src') || !iframe.src.includes('probador.html')) {
-      iframe.src = 'probador.html';
-    }
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeProbador() {
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  document.getElementById('btn-open-probador').addEventListener('click', openProbador);
-  closeBtn.addEventListener('click', closeProbador);
-  // ESC para cerrar
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) closeProbador();
-  });
-})();
 
 /* ── Scroll header ── */
 window.addEventListener('scroll', () => {

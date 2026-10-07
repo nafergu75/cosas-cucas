@@ -7,7 +7,6 @@ const PORT         = 4747;
 const ROOT         = __dirname;
 
 // ── API Keys ────────────────────────────────────────────────────────
-const PIXELAPI_KEY   = process.env.PIXELAPI_KEY   || '';
 const ANTHROPIC_KEY  = process.env.ANTHROPIC_KEY  || '';
 const BRAVE_KEY      = process.env.BRAVE_KEY       || '';
 const CONTACT_KEY    = process.env.CONTACT_KEY     || '';   // Web3Forms access key
@@ -15,7 +14,6 @@ const CONTACT_KEY    = process.env.CONTACT_KEY     || '';   // Web3Forms access 
 // Extensiones que el servidor estático puede entregar (nada de PDF, Excel, .env…)
 const PUBLIC_EXT = new Set(['.html','.css','.js','.json','.jpg','.jpeg','.png','.webp','.gif','.svg','.ico','.mp4','.webm','.woff','.woff2','.txt','.xml']);
 
-const PIXELAPI_URL   = 'https://api.pixelapi.dev/v1/virtual-tryon';
 const ANTHROPIC_URL  = 'https://api.anthropic.com/v1/messages';
 const BRAVE_URL      = 'https://api.search.brave.com/res/v1/web/search';
 const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5-20251001';
@@ -167,89 +165,6 @@ http.createServer(async (req, res) => {
     return jsonRes(res, 429, { error: 'Demasiadas peticiones. Por favor, espera un minuto.' });
   }
 
-  // ── POST /api/try-on ─────────────────────────────────────────
-  if (req.url === '/api/try-on' && req.method === 'POST') {
-    const apiKey = PIXELAPI_KEY || req.headers['x-api-key'] || '';
-    if (!apiKey) {
-      return jsonRes(res, 503, {
-        error: 'API key no configurada. Reinicia el servidor con: PIXELAPI_KEY=pk_live_… node server.js  — o configúrala en el probador.',
-      });
-    }
-    try {
-      const body        = await bufferBody(req);
-      const contentType = req.headers['content-type'] || '';
-      const apiRes = await fetch(PIXELAPI_URL, {
-        method:  'POST',
-        headers: { 
-          'Authorization': `Bearer ${apiKey}`, 
-          'Content-Type': contentType,
-          'Content-Length': body.length.toString()
-        },
-        body,
-      });
-      const text = await apiRes.text();
-      
-      // Intentar parsear el JSON. Si falla (ej. devuelve "Internal Server Error" en texto plano), lo envolvemos.
-      let isJson = false;
-      try {
-        JSON.parse(text);
-        isJson = true;
-      } catch(e) {}
-
-      res.writeHead(apiRes.status, { 'Content-Type': 'application/json' });
-      if (isJson) {
-        res.end(text);
-      } else {
-        res.end(JSON.stringify({ error: `Error del servidor externo (PixelAPI): ${text.substring(0, 50)}...` }));
-      }
-    } catch (err) {
-      console.error('[/api/try-on]', err.message);
-      if (err.message === 'Payload Too Large') {
-        jsonRes(res, 413, { error: 'El archivo enviado es demasiado grande (máx. 10MB)' });
-      } else {
-        jsonRes(res, 500, { error: 'Error interno del servidor' });
-      }
-    }
-    return;
-  }
-
-  // ── GET /api/try-on/jobs/:id (Polling PixelAPI) ──────────────
-  if (req.url.startsWith('/api/try-on/jobs/') && req.method === 'GET') {
-    const apiKey = PIXELAPI_KEY || req.headers['x-api-key'] || '';
-    if (!apiKey) return jsonRes(res, 503, { error: 'API key no configurada' });
-    
-    try {
-      const pathOnly = req.url.split('?')[0];
-      const jobId = encodeURIComponent(pathOnly.split('/').pop());
-      const apiRes = await fetch(`https://api.pixelapi.dev/v1/virtual-tryon/jobs/${jobId}`, {
-        method: 'GET',
-        headers: { 'Authorization': `Bearer ${apiKey}` }
-      });
-      const text = await apiRes.text();
-      
-      let isJson = false;
-      try {
-        JSON.parse(text);
-        isJson = true;
-      } catch(e) {}
-
-      res.writeHead(apiRes.status, { 'Content-Type': 'application/json' });
-      if (isJson) {
-        res.end(text);
-      } else {
-        res.end(JSON.stringify({ error: `PixelAPI Polling Error: ${text.substring(0, 50)}...` }));
-      }
-    } catch (err) {
-      jsonRes(res, 500, { error: 'Error interno en el proxy de polling' });
-    }
-    return;
-  }
-
-  // ── GET /api/try-on-status ───────────────────────────────────
-  if (req.url === '/api/try-on-status' && req.method === 'GET') {
-    return jsonRes(res, 200, { configured: !!PIXELAPI_KEY });
-  }
-
   // ── POST /api/chat ───────────────────────────────────────────
   if (req.url === '/api/chat' && req.method === 'POST') {
     if (!ANTHROPIC_KEY) {
@@ -318,32 +233,6 @@ http.createServer(async (req, res) => {
     return jsonRes(res, 200, { configured: !!CONTACT_KEY });
   }
 
-  // ── GET /api/telas ────────────────────────────────────────────
-  if (req.url === '/api/telas' && req.method === 'GET') {
-    try {
-      const telasDir = path.join(ROOT, 'telas');
-      const files = await fs.promises.readdir(telasDir);
-      const images = files.filter(f => f.match(/\.(jpg|jpeg|png)$/i));
-      return jsonRes(res, 200, images);
-    } catch (err) {
-      console.error('[/api/telas]', err.message);
-      return jsonRes(res, 500, { error: 'No se pudieron cargar las telas' });
-    }
-  }
-
-  // ── GET /api/aderezos ─────────────────────────────────────────
-  if (req.url === '/api/aderezos' && req.method === 'GET') {
-    try {
-      const dir = path.join(ROOT, 'aderezos');
-      const files = await fs.promises.readdir(dir);
-      const images = files.filter(f => f.match(/\.(jpg|jpeg|png|webp)$/i));
-      return jsonRes(res, 200, images);
-    } catch (err) {
-      console.error('[/api/aderezos]', err.message);
-      return jsonRes(res, 500, { error: 'No se pudieron cargar los aderezos' });
-    }
-  }
-
   // ── POST /api/contact ─────────────────────────────────────────
   if (req.url === '/api/contact' && req.method === 'POST') {
     try {
@@ -409,7 +298,6 @@ http.createServer(async (req, res) => {
 }).listen(PORT, () => {
   console.log(`\n✦ Cosas Cucas · servidor listo`);
   console.log(`   http://localhost:${PORT}`);
-  console.log(`   PIXELAPI_KEY:  ${PIXELAPI_KEY  ? '✓ configurada' : '✗ no configurada'}`);
   console.log(`   ANTHROPIC_KEY: ${ANTHROPIC_KEY ? '✓ configurada' : '✗ no configurada  →  ANTHROPIC_KEY=sk-ant-… node server.js'}`);
   console.log(`   BRAVE_KEY:     ${BRAVE_KEY     ? '✓ configurada (búsqueda web activa)' : '✗ no configurada  →  opcional, activa búsqueda en tiempo real'}`);
   console.log(`   CONTACT_KEY:   ${CONTACT_KEY   ? '✓ configurada (formulario activo)'   : '✗ no configurada  →  CONTACT_KEY=xxxxxxxx node server.js  (Web3Forms)'}\n`);

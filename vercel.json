@@ -1,15 +1,47 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/probador",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/probador.html",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
   "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/galeria", "destination": "/galeria.html" },
-    { "source": "/probador", "destination": "/probador.html" },
-    { "source": "/aviso-legal", "destination": "/aviso-legal.html" },
-    { "source": "/politica-privacidad", "destination": "/politica-privacidad.html" },
-    { "source": "/landing", "destination": "/landing.html" },
-    { "source": "/inauguracion", "destination": "/inauguracion.html" },
-    { "source": "/cartel-traslado", "destination": "/cartel-traslado.html" }
+    {
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/galeria",
+      "destination": "/galeria.html"
+    },
+    {
+      "source": "/aviso-legal",
+      "destination": "/aviso-legal.html"
+    },
+    {
+      "source": "/politica-privacidad",
+      "destination": "/politica-privacidad.html"
+    },
+    {
+      "source": "/landing",
+      "destination": "/landing.html"
+    },
+    {
+      "source": "/inauguracion",
+      "destination": "/inauguracion.html"
+    },
+    {
+      "source": "/cartel-traslado",
+      "destination": "/cartel-traslado.html"
+    }
   ],
   "headers": [
     {

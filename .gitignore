@@ -50,3 +50,6 @@ fotos nuevas/dossier cosascucas.pdf
 _originales/
 # Carpeta temporal que crea el workflow de GitHub Pages
 _site/
+
+# Probador virtual retirado de la web (se conserva solo en local)
+probador.html
