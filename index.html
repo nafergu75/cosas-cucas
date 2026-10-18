@@ -451,6 +451,11 @@
       font-size: 1rem; line-height: 1.8; color: rgba(253,250,243,.74);
       margin-bottom: 14px; max-width: 440px;
     }
+    .noticia__dedica {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 1.2rem; line-height: 1.5; color: var(--color-gold-light);
+      margin: 6px 0 4px; max-width: 440px;
+    }
     .noticia__link {
       display: inline-flex; align-items: center; gap: 10px; margin-top: 18px;
       font-size: .74rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
@@ -602,7 +607,7 @@
 
     @media (max-width: 1024px) {
       .noticia__inner { grid-template-columns: 1fr; }
-      .noticia__lead { max-width: 640px; }
+      .noticia__lead, .noticia__dedica { max-width: 640px; }
     }
     @media (max-width: 600px) {
       .noticia { padding: 64px 0; }
@@ -3028,6 +3033,7 @@
       <h2 class="noticia__title" id="noticia-title"></h2>
       <p class="noticia__lead" id="noticia-p1"></p>
       <p class="noticia__lead" id="noticia-p2"></p>
+      <p class="noticia__dedica" id="noticia-p3"></p>
       <a class="noticia__link" id="noticia-link" href="#falleras-mayores"></a>
     </div>
     <div class="nf" id="nf" role="region" aria-roledescription="carrusel">
@@ -3731,8 +3737,9 @@ const translations = {
       pill:    'Vestimos a la Fallera Mayor Infantil de València 2027',
       eyebrow: 'Noticia · Octubre 2026',
       title:   'Fallera Mayor Infantil de València 2027',
-      p1:      'Julia Vizcayno Orero, de la falla Rosari-Plaça Calabuig, es la nueva Fallera Mayor Infantil de València. Y en Cosas Cucas la hemos visto crecer. Desde bien pequeña, por tradición fallera, venía a la tienda y se quedaba entre telas y modistas.',
-      p2:      'Hemos tenido el honor de vestirla en toda su trayectoria fallera, y ahora ese camino culmina de la manera más bonita. El 14 de octubre, el día de su proclamación, la vimos subir las escaleras del Ayuntamiento vestida por nuestro taller. Se nos hizo un nudo en la garganta.',
+      p1:      'Julia Vizcayno Orero, de la falla Rosari-Plaça Calabuig, es la nueva Fallera Mayor Infantil de València. En Cosas Cucas hemos tenido el regalo de verla crecer desde muy pequeña, cuando venía por tradición familiar y hacía de nuestro taller su rincón favorito entre telas y modistas.',
+      p2:      'Vestirla en toda su trayectoria ha sido un verdadero honor, pero el 14 de octubre, al verla subir las escaleras del Ayuntamiento vestida por nuestra casa, el corazón se nos llenó de lágrimas y orgullo.',
+      p3:      'Julia, gracias por dejarnos tejer la historia de tu vida.',
       link:    'Falleras mayores vestidas por Cosas Cucas',
       region:  'Fotos de Julia Vizcayno en el Ayuntamiento de València',
       prev:    'Foto anterior',
@@ -4226,8 +4233,9 @@ const translations = {
       pill:    'Vestim la Fallera Major Infantil de València 2027',
       eyebrow: 'Notícia · Octubre 2026',
       title:   'Fallera Major Infantil de València 2027',
-      p1:      "Julia Vizcayno Orero, de la falla Rosari-Plaça Calabuig, és la nova Fallera Major Infantil de València. I a Cosas Cucas l'hem vista créixer. Des de ben menuda, per tradició fallera, venia a la botiga i es quedava entre teles i modistes.",
-      p2:      "Hem tingut l'honor de vestir-la en tota la seua trajectòria fallera, i ara eixe camí culmina de la manera més bonica. El 14 d'octubre, el dia de la seua proclamació, la vam veure pujar les escales de l'Ajuntament vestida pel nostre taller. Se'ns va fer un nus a la gola.",
+      p1:      "Julia Vizcayno Orero, de la falla Rosari-Plaça Calabuig, és la nova Fallera Major Infantil de València. A Cosas Cucas hem tingut el regal de veure-la créixer des de molt menuda, quan venia per tradició familiar i feia del nostre taller el seu racó preferit entre teles i modistes.",
+      p2:      "Vestir-la en tota la seua trajectòria ha sigut un veritable honor, però el 14 d'octubre, en veure-la pujar les escales de l'Ajuntament vestida per la nostra casa, el cor se'ns va omplir de llàgrimes i d'orgull.",
+      p3:      "Julia, gràcies per deixar-nos teixir la història de la teua vida.",
       link:    'Falleres majors vestides per Cosas Cucas',
       region:  "Fotos de Julia Vizcayno a l'Ajuntament de València",
       prev:    'Foto anterior',
@@ -5525,6 +5533,7 @@ function buildNoticia() {
   set('noticia-title', n.title);
   set('noticia-p1', n.p1);
   set('noticia-p2', n.p2);
+  set('noticia-p3', n.p3);
   set('noticia-link', n.link);
 
   document.getElementById('nf').setAttribute('aria-label', n.region);
