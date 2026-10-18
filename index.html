@@ -6003,6 +6003,12 @@ let lectorScrollY = 0;
 let lectorId = null;
 let lectorInertes = [];   /* lo de detrás del lector, inerte mientras está abierto */
 const esNoticiaMas = id => NOTICIAS_MAS.some(x => x.id === id);
+/* todo lo de detrás del lector, inerte (teclado y lectores de pantalla) */
+function inertFuera() {
+  for (const el of document.body.children) {
+    if (el !== lector && !el.inert) { el.inert = true; lectorInertes.push(el); }
+  }
+}
 
 function abrirLector(id) {
   const sec = document.getElementById(id);
@@ -6013,9 +6019,7 @@ function abrirLector(id) {
   if (lector.hidden) {
     lectorScrollY = window.scrollY || document.documentElement.scrollTop || 0;
     lector.hidden = false;
-    for (const el of document.body.children) {
-      if (el !== lector && !el.inert) { el.inert = true; lectorInertes.push(el); }
-    }
+    inertFuera();
     /* mismo bloqueo de scroll que el modal de colecciones (vale en iOS Safari) */
     document.body.style.position = 'fixed';
     document.body.style.top      = `-${lectorScrollY}px`;
@@ -6348,6 +6352,8 @@ renderAll();
   const id = decodeURIComponent(location.hash.slice(1));
   if (esNoticiaMas(id) && abrirLector(id)) {
     history.replaceState({ lector: id, directo: true }, '', location.hash);
+    /* el chat y lo demás que va detrás de este script aún no existe: inerte cuando esté */
+    document.addEventListener('DOMContentLoaded', () => { if (!lector.hidden) inertFuera(); }, { once: true });
     /* Chrome lleva el foco a body al procesar el #ancla de la carga: devolverlo a la × */
     const enfocarCerrar = () => setTimeout(() => {
       if (!lector.hidden) document.getElementById('lector-close').focus({ preventScroll: true });
