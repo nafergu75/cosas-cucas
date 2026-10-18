@@ -1089,11 +1089,17 @@
       margin-bottom: 16px;
       filter: brightness(0.9) sepia(0.3);
     }
-    .footer-brand img.footer-artesania {
+    .footer-sellos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .footer-brand img.footer-sello {
       display: block;
-      width: 150px;
-      height: auto;
-      margin: 28px 0 0;
+      width: auto;
+      height: 103px;
+      margin: 0;
       background: #fff;
       border-radius: 6px;
       filter: none;
@@ -3107,11 +3113,18 @@
         <span class="logo-text-footer" style="display:none;">Cosas Cucas</span>
         <p id="footer-about-text"></p>
         <div class="footer-social" id="footer-social"></div>
-        <img class="footer-artesania"
-             src="ARTESANIA-COMUNIDAD-VALENCIANA-NUEVA.webp"
-             alt="Artesanía Comunitat Valenciana"
-             width="500" height="343"
-             loading="lazy" decoding="async" />
+        <div class="footer-sellos">
+          <img class="footer-sello"
+               src="ARTESANIA-COMUNIDAD-VALENCIANA-NUEVA.webp"
+               alt="Artesanía Comunitat Valenciana"
+               width="500" height="343"
+               loading="lazy" decoding="async" />
+          <img class="footer-sello"
+               src="gremio-sastres-775-aniversario.webp"
+               alt="775 aniversario del Gremio Artesano de Sastres y Modistas de Valencia"
+               width="524" height="600"
+               loading="lazy" decoding="async" />
+        </div>
       </div>
       <!-- COLS generadas por JS -->
       <div id="footer-col-1"></div>
