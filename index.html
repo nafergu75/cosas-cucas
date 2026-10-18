@@ -654,10 +654,10 @@
     }
     .nota:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(26,23,20,.14); }
     .nota:focus-visible { outline: 2px solid var(--color-text); outline-offset: 3px; }
-    /* una o dos fotos, una junto a otra */
+    /* dos fotos verticales 3:4 una junto a otra: la portada 3:2 las deja enteras */
     .nota__img {
       display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr);
-      aspect-ratio: 4 / 3; background: var(--color-bg-alt); overflow: hidden;
+      aspect-ratio: 3 / 2; background: var(--color-bg-alt); overflow: hidden;
     }
     .nota__img img {
       width: 100%; height: 100%; object-fit: cover; display: block; box-sizing: border-box;
@@ -687,17 +687,14 @@
       .mas-noticias { padding: 56px 0 64px; }
       .mas-noticias__title { margin-bottom: 28px; }
       .notas { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-      .nota { flex-direction: row; }
-      .nota__img { width: 44%; flex-shrink: 0; aspect-ratio: 4 / 5; }
-      .nota__body { padding: 14px 16px; gap: 6px; }
-      .nota__title { font-size: 1.05rem; }
+      .nota__body { padding: 16px 18px 18px; gap: 8px; }
+      .nota__title { font-size: 1.15rem; }
       .nota__eyebrow { letter-spacing: .12em; text-wrap: balance; }
       .nota__leer { white-space: nowrap; letter-spacing: .08em; }
       .nota__leer::after { margin-left: 6px; }
     }
     @media (max-width: 360px) {
-      .nota__img { width: 38%; }
-      .nota__body { padding: 12px; }
+      .nota__body { padding: 14px; }
       .nota__leer { letter-spacing: .04em; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -3347,6 +3344,47 @@
       </div>
     </section>
 
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         NOTICIA — II Exposición «Joyas de la Indumentaria» (junio 2026, Salón de
+         Cristal del Ayuntamiento). Textos en t().joyas; fotos en JOYAS_FOTOS.
+    ════════════════════════════════════════════════════════════════════════ -->
+    <section id="noticia-joyas" class="noticia noticia--crema">
+      <div class="container noticia__inner">
+        <div class="noticia__text">
+          <p class="noticia__eyebrow" id="joyas-eyebrow"></p>
+          <h2 class="noticia__title" id="joyas-title"></h2>
+          <p class="noticia__lead" id="joyas-p1"></p>
+          <p class="noticia__lead" id="joyas-p2"></p>
+          <p class="noticia__lead" id="joyas-p3"></p>
+          <p class="noticia__credito" id="joyas-credito"></p>
+        </div>
+        <div class="nf" id="nf-joyas" role="region" aria-roledescription="carrusel">
+          <div class="nf__stage" tabindex="0" role="group">
+            <div class="nf__slides"></div>
+            <button type="button" class="nf__arrow nf__arrow--prev">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button type="button" class="nf__arrow nf__arrow--next">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <div class="nf__ctrls">
+              <button type="button" class="nf__ctrl nf__ctrl--pause">
+                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
+              </button>
+              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+              </button>
+            </div>
+            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
+            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
+          </div>
+          <div class="nf__thumbs"></div>
+          <p class="nf__live" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
     <div class="lector__pie">
       <button type="button" class="lector__volver" id="lector-volver"></button>
     </div>
@@ -4091,6 +4129,30 @@ const translations = {
         'Los zapatos y las medias caladas, bordadas con la inicial M',
       ],
     },
+    joyas: {
+      eyebrow: 'Noticia · Junio 2026',
+      title:   'Nuestros trajes en «Joyas de la Indumentaria»',
+      p1:      'Del 2 al 5 de junio, el Salón de Cristal del Ayuntamiento de València acogió la II Exposición «Joyas de la Indumentaria», que organiza el Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana. Al final se amplió hasta el 12 de junio.',
+      p2:      'Entre trajes de los siglos XVIII y XIX, manteletas bordadas en oro y plata, mantillas, aderezos y peinetas, en Cosas Cucas llevamos dos trajes de nuestro taller: uno de seda rosa y otro de seda oscura con grandes flores, los dos con el pañuelo y el delantal dorados.',
+      p3:      'Ver nuestro trabajo en el Salón de Cristal, junto al de otros talleres del gremio, nos hizo mucha ilusión. Gracias a todos los que pasasteis a verlo.',
+      credito: 'Cartel de la exposición: Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana',
+      region:  'Fotos de los trajes de Cosas Cucas en la exposición «Joyas de la Indumentaria»',
+      alts: [
+        'Los dos trajes de Cosas Cucas en el Salón de Cristal, con el cartel de la casa',
+        'El traje de seda oscura con grandes flores, con el pañuelo y el delantal dorados',
+        'El traje de seda oscura, de perfil',
+        'Detalle de las flores de la falda del traje oscuro',
+        'Detalle de la falda de seda rosa',
+        'Una seda verde con flores, todavía en el telar',
+        'Dos mujeres posan junto a los trajes de Cosas Cucas',
+        'Una mujer posa entre los dos trajes de Cosas Cucas',
+        'Los trajes de la exposición a lo largo del Salón de Cristal',
+        'Otra vista del Salón de Cristal con los trajes expuestos',
+        'Foto de grupo durante la exposición',
+        'Dos asistentes miran los trajes durante la exposición',
+        'Cartel de la II Exposición «Joyas de la Indumentaria», del 2 al 5 de junio en el Salón de Cristal',
+      ],
+    },
     corte: {
       eyebrow: 'Noticia · Octubre 2026',
       title:   'Corte de Honor de la Fallera Mayor de València 2027',
@@ -4614,6 +4676,30 @@ const translations = {
         "Dos vestits de l'exposició, en gris i en rosa",
         "La mantellina de l'ofrena i la banda de fallera major",
         'Les sabates i les calces calades, brodades amb la inicial M',
+      ],
+    },
+    joyas: {
+      eyebrow: 'Notícia · Juny 2026',
+      title:   'Els nostres vestits a «Joyas de la Indumentaria»',
+      p1:      "Del 2 al 5 de juny, el Saló de Cristall de l'Ajuntament de València va acollir la II Exposició «Joyas de la Indumentaria», que organitza el Gremi Artesà de Sastres i Modistes de la Comunitat Valenciana. Al final es va allargar fins al 12 de juny.",
+      p2:      'Entre vestits dels segles XVIII i XIX, manteletes brodades en or i plata, mantellines, adreços i pintes, a Cosas Cucas vam portar dos vestits del nostre taller: un de seda rosa i un altre de seda fosca amb flors grans, tots dos amb el mocador i el davantal daurats.',
+      p3:      "Veure el nostre treball al Saló de Cristall, al costat del d'altres tallers del gremi, ens va fer molta il·lusió. Gràcies a tots els que vau passar a veure'l.",
+      credito: "Cartell de l'exposició: Gremi Artesà de Sastres i Modistes de la Comunitat Valenciana",
+      region:  "Fotos dels vestits de Cosas Cucas a l'exposició «Joyas de la Indumentaria»",
+      alts: [
+        'Els dos vestits de Cosas Cucas al Saló de Cristall, amb el cartell de la casa',
+        'El vestit de seda fosca amb flors grans, amb el mocador i el davantal daurats',
+        'El vestit de seda fosca, de perfil',
+        'Detall de les flors de la falda del vestit fosc',
+        'Detall de la falda de seda rosa',
+        'Una seda verda amb flors, encara al teler',
+        'Dues dones posen al costat dels vestits de Cosas Cucas',
+        'Una dona posa entre els dos vestits de Cosas Cucas',
+        "Els vestits de l'exposició al llarg del Saló de Cristall",
+        'Una altra vista del Saló de Cristall amb els vestits exposats',
+        "Foto de grup durant l'exposició",
+        "Dos assistents miren els vestits durant l'exposició",
+        'Cartell de la II Exposició «Joyas de la Indumentaria», del 2 al 5 de juny al Saló de Cristall',
       ],
     },
     corte: {
@@ -5953,16 +6039,41 @@ function buildMeri() {
   })), { ...t().noticia, region: m.region });
 }
 
+/* Fotos de «Joyas de la Indumentaria» (Ignacio, carpeta «joyas exposicion»), en el orden del
+   carrusel; true = vertical o casi cuadrada (se ve entera sobre fondo difuminado) */
+const JOYAS_FOTOS = [true, true, true, true, true, true, true, true, true, true, false, false, true]
+  .map((vertical, i) => ({ src: `noticias/joyas-${String(i + 1).padStart(2, '0')}`, vertical }));
+
+function buildJoyas() {
+  const j = t().joyas;
+  const set = (id, txt) => { document.getElementById(id).textContent = txt; };
+  set('joyas-eyebrow', j.eyebrow);
+  set('joyas-title', j.title);
+  set('joyas-p1', j.p1);
+  set('joyas-p2', j.p2);
+  set('joyas-p3', j.p3);
+  set('joyas-credito', j.credito);
+  renderCarousel('joyas', document.getElementById('nf-joyas'), JOYAS_FOTOS.map((f, i) => ({
+    src: `${f.src}.webp`, mini: `${f.src}-mini.webp`, vertical: f.vertical,
+    foco: f.vertical ? undefined : 'center 35%', alt: j.alts[i],
+  })), { ...t().noticia, region: j.region });
+}
+
 /* Noticias que salen como tarjeta bajo la principal y se leen en el lector.
-   fotos: una o dos [mini, foco] para la tarjeta (dos van una junto a otra). */
+   fotos: dos [mini, foco] para la tarjeta, una junto a otra; mejor verticales 3:4,
+   que así se ven enteras (la portada es 3:2). */
 const NOTICIAS_MAS = [
   { id: 'corte-2027',   textos: () => t().corte, fotos: [
-    ['noticias/corte-2027/alejandra-01-mini.webp', '37% 30%'],
-    ['noticias/corte-2027/laura-02-mini.webp',     'center 30%'],
+    ['noticias/corte-2027/alejandra-01-mini.webp', 'center'],
+    ['noticias/corte-2027/laura-02-mini.webp',     'center'],
   ] },
   { id: 'noticia-meri', textos: () => t().meri,  fotos: [
-    ['noticias/meri-zalve-04-mini.webp', 'center 30%'],
-    ['noticias/meri-zalve-08-mini.webp', 'center 30%'],
+    ['noticias/meri-zalve-04-mini.webp', 'center'],
+    ['noticias/meri-zalve-11-mini.webp', 'center'],
+  ] },
+  { id: 'noticia-joyas', textos: () => t().joyas, fotos: [
+    ['noticias/joyas-01-mini.webp', 'center'],
+    ['noticias/joyas-02-mini.webp', 'center'],
   ] },
 ];
 
@@ -6279,6 +6390,7 @@ function renderAll() {
   buildNoticia();
   buildCorte();
   buildMeri();
+  buildJoyas();
   buildNoticias();
   initHeroSlider();           /* ImagePlayer: fotos de pasarela en bucle */
   buildArchive(); buildFMDetail(); buildZapatillas(); buildHistoria();
