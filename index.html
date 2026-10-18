@@ -4331,11 +4331,6 @@ function openCollectionModal(drop) {
         <img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" />
         ${p.tag ? `<span class="col-modal__card-tag">${p.tagLabel || p.tag}</span>` : ''}
       </div>
-      <div class="col-modal__card-body">
-        <p class="col-modal__card-name">${p.name}</p>
-        <p class="col-modal__card-desc">${p.desc}</p>
-        <p class="col-modal__card-price">${p.price}</p>
-      </div>
     </div>`).join('');
   document.getElementById('col-modal-cta-note').textContent = notes[currentLang] || notes.es;
   document.getElementById('col-modal-cta').textContent = drop.ctaSecondary.label;
@@ -4469,7 +4464,6 @@ let telaFiltTipo  = 'todos';
 
 function renderProductCard(p) {
   const tagHtml   = p.tag ? `<span class="product-card__tag product-card__tag--${p.tag}">${p.tagLabel || p.tag}</span>` : '';
-  const priceHtml = p.originalPrice ? `<span class="product-card__price--original">${p.originalPrice}</span>${p.price}` : p.price;
   const fibraHtml    = p.fibra    ? `<span class="product-card__fibra ${p.fibra}">${p.fibra === 'seda' ? 'Seda' : 'Rayón'}</span>` : '';
   const tipoHtml     = p.tipo     ? `<span class="product-card__tipo ${p.tipo}">${p.tipo === 'brocatel' ? 'Brocatel' : 'Damasco'}</span>` : '';
   const materialLbl  = { espolin:'Espolín', seda:'Seda', rayon:'Rayón' };
@@ -4480,9 +4474,6 @@ function renderProductCard(p) {
         ${tagHtml}${materialHtml}${fibraHtml}${tipoHtml}
         <span class="product-card__quick-add">${t().footer.viewProduct}</span>
       </div>
-      <h3 class="product-card__name">${p.name}</h3>
-      <p class="product-card__desc">${p.desc}</p>
-      <span class="product-card__price">${priceHtml}</span>
     </article>`;
 }
 
