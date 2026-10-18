@@ -585,8 +585,6 @@
     .noticia--crema .nf__thumb.is-active::after { border-color: var(--color-gold); }
     .noticia--crema .nf__thumb:focus-visible { outline-color: var(--color-text); }
     .noticia--crema .noticia__eyebrow { color: #7A5C1E; }
-    .noticia__inner--alt { grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); }
-    .noticia__inner--alt > .nf { order: -1; }
     .noticia--crema { border-bottom: 1px solid var(--color-border); }
     .noticia__credito { margin-top: 18px; font-size: .72rem; letter-spacing: .04em; }
     .noticia__credito a { color: inherit; opacity: .7; text-decoration: underline; text-underline-offset: 3px; }
@@ -607,14 +605,147 @@
       font-size: clamp(2.2rem, 4.4vw, 3.6rem); line-height: 1.05; color: var(--color-white); margin-bottom: 14px;
     }
     .noticias-cab__text { font-size: .95rem; color: rgba(253,250,243,.7); max-width: 560px; margin: 0 auto 26px; }
-    .noticias-cab__lista { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-    .noticias-cab__item {
-      display: inline-block; padding: 8px 16px; border-radius: 9999px;
-      border: 1px solid rgba(212,177,102,.45); color: var(--color-gold-light);
-      font-size: .72rem; letter-spacing: .04em; transition: background .2s, color .2s;
+
+    /* ── PUNTILLA: remate de encaje donde un bloque oscuro da paso a uno claro (o al revés).
+       Franja entre dos bloques: fondo del de abajo y ondas con calados del de arriba,
+       con una perla dorada en cada onda. Colores en --arriba / --abajo. ── */
+    .puntilla {
+      position: relative; height: 18px;
+      background: var(--abajo); margin-top: -1px;
     }
-    .noticias-cab__item:hover { background: var(--color-gold); color: var(--color-bg-dark); }
-    .noticias-cab__item:focus-visible { outline: 2px solid var(--color-gold-light); outline-offset: 2px; }
+    .puntilla::before, .puntilla::after {
+      content: ''; position: absolute; inset: 0;
+      -webkit-mask-repeat: repeat-x; mask-repeat: repeat-x;
+      -webkit-mask-size: 28px 18px; mask-size: 28px 18px;
+      -webkit-mask-position: center top; mask-position: center top;
+    }
+    .puntilla::before { background: var(--arriba); -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 18'%3E%3Cpath fill-rule='evenodd' d='M0 0H28V6A14 12 0 0 1 0 6ZM2.4 3a1.1 1.1 0 1 0 2.2 0a1.1 1.1 0 1 0 -2.2 0ZM9.4 3a1.1 1.1 0 1 0 2.2 0a1.1 1.1 0 1 0 -2.2 0ZM16.4 3a1.1 1.1 0 1 0 2.2 0a1.1 1.1 0 1 0 -2.2 0ZM23.4 3a1.1 1.1 0 1 0 2.2 0a1.1 1.1 0 1 0 -2.2 0Z'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 18'%3E%3Cpath fill-rule='evenodd' d='M0 0H28V6A14 12 0 0 1 0 6ZM2.4 3a1.1 1.1 0 1 0 2.2 0a1.1 1.1 0 1 0 -2.2 0ZM9.4 3a1.1 1.1 0 1 0 2.2 0a1.1 1.1 0 1 0 -2.2 0ZM16.4 3a1.1 1.1 0 1 0 2.2 0a1.1 1.1 0 1 0 -2.2 0ZM23.4 3a1.1 1.1 0 1 0 2.2 0a1.1 1.1 0 1 0 -2.2 0Z'/%3E%3C/svg%3E"); }
+    .puntilla::after  { background: var(--color-gold); -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 18'%3E%3Ccircle cx='14' cy='11.5' r='1.7'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 18'%3E%3Ccircle cx='14' cy='11.5' r='1.7'/%3E%3C/svg%3E"); }
+    @media (max-width: 600px) {
+      .puntilla { height: 14px; }
+      .puntilla::before, .puntilla::after { -webkit-mask-size: 22px 14px; mask-size: 22px 14px; }
+    }
+
+    /* ── Más noticias: tarjetas con foto y titular que abren el lector ── */
+    .mas-noticias {
+      background: var(--color-bg); padding: 72px 0 88px;
+      border-bottom: 1px solid var(--color-border); scroll-margin-top: var(--header-h);
+    }
+    .mas-noticias[hidden] { display: none; }
+    .mas-noticias__title {
+      font-family: var(--font-display); font-weight: 400; font-style: italic;
+      font-size: clamp(1.9rem, 3.2vw, 2.6rem); line-height: 1.1;
+      text-align: center; color: var(--color-text); margin-bottom: 40px;
+    }
+    .mas-noticias__title::after {
+      content: ''; display: block; width: 48px; height: 1px;
+      background: var(--color-gold); margin: 16px auto 0;
+    }
+    .notas {
+      list-style: none; margin: 0; padding: 0;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 340px));
+      justify-content: center; gap: 28px;
+    }
+    .nota {
+      display: flex; flex-direction: column; height: 100%;
+      background: var(--color-white); color: var(--color-text);
+      border: 1px solid var(--color-gold); border-radius: 4px; overflow: hidden;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .nota:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(26,23,20,.14); }
+    .nota:focus-visible { outline: 2px solid var(--color-text); outline-offset: 3px; }
+    /* una o dos fotos, una junto a otra */
+    .nota__img {
+      display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr);
+      aspect-ratio: 4 / 3; background: var(--color-bg-alt); overflow: hidden;
+    }
+    .nota__img img {
+      width: 100%; height: 100%; object-fit: cover; display: block; box-sizing: border-box;
+      transition: transform .6s ease;
+    }
+    .nota__img img + img { border-left: 2px solid var(--color-gold); }
+    .nota:hover .nota__img img { transform: scale(1.04); }
+    .nota__body { display: flex; flex-direction: column; gap: 10px; flex: 1; padding: 20px 22px 22px; }
+    .nota__eyebrow {
+      font-size: .66rem; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: #7A5C1E;
+    }
+    .nota__title {
+      font-family: var(--font-display); font-weight: 400;
+      font-size: 1.3rem; line-height: 1.25; color: var(--color-text);
+    }
+    .nota__leer {
+      margin-top: auto; padding-top: 6px; font-size: .7rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--color-text);
+    }
+    .nota__leer::after { content: '→'; display: inline-block; margin-left: 8px; transition: transform .2s; }
+    .nota:hover .nota__leer::after { transform: translateX(4px); }
+    @media (min-width: 601px) and (max-width: 800px) {
+      .notas { grid-template-columns: repeat(2, minmax(0, 340px)); }
+    }
+    @media (max-width: 600px) {
+      .mas-noticias { padding: 56px 0 64px; }
+      .mas-noticias__title { margin-bottom: 28px; }
+      .notas { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+      .nota { flex-direction: row; }
+      .nota__img { width: 44%; flex-shrink: 0; aspect-ratio: 4 / 5; }
+      .nota__body { padding: 14px 16px; gap: 6px; }
+      .nota__title { font-size: 1.05rem; }
+      .nota__eyebrow { letter-spacing: .12em; text-wrap: balance; }
+      .nota__leer { white-space: nowrap; letter-spacing: .08em; }
+      .nota__leer::after { margin-left: 6px; }
+    }
+    @media (max-width: 360px) {
+      .nota__img { width: 38%; }
+      .nota__body { padding: 12px; }
+      .nota__leer { letter-spacing: .04em; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .nota, .nota__img img, .nota__leer::after { transition: none; }
+      .nota:hover, .nota:hover .nota__img img, .nota:hover .nota__leer::after { transform: none; }
+    }
+
+    /* ── Lector de noticias (panel a pantalla completa) ── */
+    .lector { position: fixed; inset: 0; z-index: 4000; background: rgba(26,23,20,.6); }
+    .lector[hidden] { display: none; }
+    /* el panel con su propio position:fixed: iOS Safari lo trata como scroll aparte */
+    .lector__panel {
+      position: fixed; inset: 0; max-width: 1180px; margin: 0 auto;
+      background: var(--color-bg); overflow-x: hidden; overflow-y: auto;
+      -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain;
+      box-shadow: 0 0 80px rgba(26,23,20,.3); outline: none;
+    }
+    .lector__topbar {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 12px 24px; background: var(--color-bg); border-bottom: 1px solid var(--color-border);
+    }
+    .lector__topbar-title {
+      font-size: .7rem; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--color-text-muted);
+    }
+    .lector__close {
+      width: 40px; height: 40px; flex-shrink: 0; border: 1px solid var(--color-border);
+      background: none; font-size: 1.4rem; line-height: 1; color: var(--color-text); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: background .2s, color .2s;
+    }
+    .lector__close:hover { background: var(--color-text); color: var(--color-bg); }
+    .lector__close:focus-visible, .lector__volver:focus-visible { outline: 2px solid var(--color-text); outline-offset: 2px; }
+    .lector .noticia { padding: 48px 0 56px; border-bottom: 0; }
+    .lector .noticia::before { display: none; }
+    .lector .noticia:not(.is-open) { display: none; }
+    .lector__pie { padding: 0 24px 64px; text-align: center; }
+    .lector__volver {
+      background: none; border: 1px solid var(--color-gold); padding: 12px 22px; cursor: pointer;
+      font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--color-text); transition: background .2s, color .2s, border-color .2s;
+    }
+    .lector__volver span { margin-right: 8px; }
+    .lector__volver:hover { background: var(--color-text); color: var(--color-bg); border-color: var(--color-text); }
+    @media (max-width: 600px) {
+      .lector__topbar { padding: 10px 24px; }
+      .lector .noticia { padding: 32px 0 40px; }
+    }
     /* pie de foto del carrusel (nombre y falla de la foto que se ve) */
     .nf__caption {
       display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px;
@@ -629,8 +760,7 @@
     .nf:fullscreen .nf__cap-name { color: var(--color-white); }
 
     @media (max-width: 1024px) {
-      .noticia__inner, .noticia__inner--alt { grid-template-columns: 1fr; }
-      .noticia__inner--alt > .nf { order: 0; }
+      .noticia__inner { grid-template-columns: 1fr; }
       .noticia__lead, .noticia__dedica { max-width: 640px; }
     }
     @media (max-width: 600px) {
@@ -2047,6 +2177,15 @@
       color: var(--color-text);
       line-height: 1.25;
     }
+    /* Grupos: Falleras Mayores / Falleras Mayores Infantiles / Cortes de Honor */
+    .fm-grupo + .fm-grupo { margin-top: 52px; }
+    .fm-grupo__title {
+      display: flex; align-items: center; gap: 16px; margin-bottom: 22px;
+      font-family: var(--font-display); font-weight: 400; font-style: italic;
+      font-size: clamp(1.35rem, 2.3vw, 1.8rem); line-height: 1.2; color: var(--color-text);
+    }
+    .fm-grupo__title::after { content: ''; flex: 1; height: 1px; background: var(--color-gold); opacity: .45; }
+    .hist-corts-section .fm-grupo__title { padding-top: 28px; }
     .fm-card__year {
       font-size: 0.6rem;
       font-weight: 700;
@@ -2066,6 +2205,16 @@
       transition: transform 0.5s;
     }
     .cort-card:hover img { transform: scale(1.04); }
+    /* fotos de grupo de las Cortes de Honor: apaisadas, para no cortar a las de los lados */
+    .cortes-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
+    .cortes-grid > .cort-card:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 6px); }
+    /* con .cortes-grid delante para ganar a las reglas de móvil de .cort-card (3:4 y 4:5) */
+    .cortes-grid .cort-card--corte { aspect-ratio: 2 / 1; }
+    .cortes-grid .cort-card--corte img { object-position: center 30%; }
+    @media (max-width: 768px) {
+      .cortes-grid { grid-template-columns: minmax(0, 1fr); }
+      .cortes-grid > .cort-card:last-child:nth-child(odd) { width: 100%; }
+    }
     .cort-card__label {
       position: absolute; bottom: 0; left: 0; right: 0;
       background: linear-gradient(to top, rgba(26,23,20,0.82) 0%, transparent 100%);
@@ -2887,6 +3036,7 @@
       .container {
         width: calc(100% - 28px);
       }
+      .lector__topbar { padding-inline: 38px; }
 
       .products-grid,
       .galeria-grid,
@@ -3052,7 +3202,6 @@
     <p class="noticias-cab__eyebrow" id="noticias-eyebrow"></p>
     <h2 class="noticias-cab__title" id="noticias-title"></h2>
     <p class="noticias-cab__text" id="noticias-text"></p>
-    <nav class="noticias-cab__lista" id="noticias-lista"></nav>
   </div>
 </section>
 
@@ -3094,86 +3243,115 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
-     SEGUNDA NOTICIA — Corte de Honor 2027 (fondo crema, carrusel a la izquierda).
-     Datos y fotos en CORTE_2027 (JS); textos en t().corte. Oculta mientras no haya fotos.
+     MÁS NOTICIAS — tarjetas (foto y titular) que abren cada noticia en el lector.
+     Las tarjetas las genera buildNoticias() a partir de NOTICIAS_MAS.
 ═══════════════════════════════════════════════════════════════════════════ -->
-<section id="corte-2027" class="noticia" hidden>
-  <div class="container noticia__inner">
-    <div class="noticia__text">
-      <p class="noticia__eyebrow" id="corte27-eyebrow"></p>
-      <h2 class="noticia__title" id="corte27-title"></h2>
-      <p class="noticia__lead" id="corte27-p1"></p>
-      <p class="noticia__lead" id="corte27-p2"></p>
-      <p class="noticia__credito" id="corte27-credito"></p>
-    </div>
-    <div class="nf" id="nf-corte" role="region" aria-roledescription="carrusel">
-      <div class="nf__stage" tabindex="0" role="group">
-        <div class="nf__slides"></div>
-        <button type="button" class="nf__arrow nf__arrow--prev">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <button type="button" class="nf__arrow nf__arrow--next">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-        <div class="nf__ctrls">
-          <button type="button" class="nf__ctrl nf__ctrl--pause">
-            <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-            <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
-          </button>
-          <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-          </button>
-        </div>
-        <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
-        <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
-      </div>
-      <p class="nf__caption"><span class="nf__cap-name"></span><span class="nf__cap-falla"></span></p>
-      <div class="nf__thumbs"></div>
-      <p class="nf__live" aria-live="polite"></p>
-    </div>
+<div class="puntilla" style="--arriba:var(--color-bg-dark);--abajo:var(--color-bg)" aria-hidden="true"></div>
+<section id="mas-noticias" class="mas-noticias" aria-labelledby="mas-noticias-title">
+  <div class="container">
+    <h2 class="mas-noticias__title" id="mas-noticias-title"></h2>
+    <ul class="notas" id="notas"></ul>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
-     NOTICIA — Los trajes de Meri (Mª José Zalve), Fallera Mayor 2027 de Pinedo.
-     Textos en t().meri; fotos en MERI_FOTOS (de @jose_espolin_estudio, con crédito).
+     LECTOR DE NOTICIAS — panel a pantalla completa (como el modal de colecciones).
+     Muestra solo la noticia .is-open; se abre con abrirLector(id).
 ═══════════════════════════════════════════════════════════════════════════ -->
-<section id="noticia-meri" class="noticia">
-  <div class="container noticia__inner">
-    <div class="noticia__text">
-      <p class="noticia__eyebrow" id="meri-eyebrow"></p>
-      <h2 class="noticia__title" id="meri-title"></h2>
-      <p class="noticia__lead" id="meri-p1"></p>
-      <p class="noticia__lead" id="meri-p2"></p>
-      <p class="noticia__lead" id="meri-p3"></p>
-      <p class="noticia__credito"><a id="meri-credito" href="https://www.instagram.com/p/DepUnKSjZhr/" target="_blank" rel="noopener"></a></p>
+<div class="lector" id="lector" hidden>
+  <div class="lector__panel" role="dialog" aria-modal="true" tabindex="-1">
+    <div class="lector__topbar">
+      <span class="lector__topbar-title" id="lector-topbar"></span>
+      <button type="button" class="lector__close" id="lector-close">&times;</button>
     </div>
-    <div class="nf" id="nf-meri" role="region" aria-roledescription="carrusel">
-      <div class="nf__stage" tabindex="0" role="group">
-        <div class="nf__slides"></div>
-        <button type="button" class="nf__arrow nf__arrow--prev">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <button type="button" class="nf__arrow nf__arrow--next">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-        <div class="nf__ctrls">
-          <button type="button" class="nf__ctrl nf__ctrl--pause">
-            <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-            <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
-          </button>
-          <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-          </button>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════
+         NOTICIA — Corte de Honor 2027. Datos y fotos en CORTE_2027 (JS); textos en t().corte.
+         Sin fotos queda oculta (hidden) y no sale su tarjeta.
+    ═══════════════════════════════════════════════════════════════════════════ -->
+    <section id="corte-2027" class="noticia noticia--crema" hidden>
+      <div class="container noticia__inner">
+        <div class="noticia__text">
+          <p class="noticia__eyebrow" id="corte27-eyebrow"></p>
+          <h2 class="noticia__title" id="corte27-title"></h2>
+          <p class="noticia__lead" id="corte27-p1"></p>
+          <p class="noticia__lead" id="corte27-p2"></p>
+          <p class="noticia__credito" id="corte27-credito"></p>
         </div>
-        <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
-        <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
+        <div class="nf" id="nf-corte" role="region" aria-roledescription="carrusel">
+          <div class="nf__stage" tabindex="0" role="group">
+            <div class="nf__slides"></div>
+            <button type="button" class="nf__arrow nf__arrow--prev">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button type="button" class="nf__arrow nf__arrow--next">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <div class="nf__ctrls">
+              <button type="button" class="nf__ctrl nf__ctrl--pause">
+                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
+              </button>
+              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+              </button>
+            </div>
+            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
+            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
+          </div>
+          <p class="nf__caption"><span class="nf__cap-name"></span><span class="nf__cap-falla"></span></p>
+          <div class="nf__thumbs"></div>
+          <p class="nf__live" aria-live="polite"></p>
+        </div>
       </div>
-      <div class="nf__thumbs"></div>
-      <p class="nf__live" aria-live="polite"></p>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════
+         NOTICIA — Los trajes de Meri (Mª José Zalve), Fallera Mayor 2027 de Pinedo.
+         Textos en t().meri; fotos en MERI_FOTOS (de @jose_espolin_estudio, con crédito).
+    ═══════════════════════════════════════════════════════════════════════════ -->
+    <section id="noticia-meri" class="noticia noticia--crema">
+      <div class="container noticia__inner">
+        <div class="noticia__text">
+          <p class="noticia__eyebrow" id="meri-eyebrow"></p>
+          <h2 class="noticia__title" id="meri-title"></h2>
+          <p class="noticia__lead" id="meri-p1"></p>
+          <p class="noticia__lead" id="meri-p2"></p>
+          <p class="noticia__lead" id="meri-p3"></p>
+          <p class="noticia__credito"><a id="meri-credito" href="https://www.instagram.com/p/DepUnKSjZhr/" target="_blank" rel="noopener"></a></p>
+        </div>
+        <div class="nf" id="nf-meri" role="region" aria-roledescription="carrusel">
+          <div class="nf__stage" tabindex="0" role="group">
+            <div class="nf__slides"></div>
+            <button type="button" class="nf__arrow nf__arrow--prev">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button type="button" class="nf__arrow nf__arrow--next">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <div class="nf__ctrls">
+              <button type="button" class="nf__ctrl nf__ctrl--pause">
+                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
+              </button>
+              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+              </button>
+            </div>
+            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
+            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
+          </div>
+          <div class="nf__thumbs"></div>
+          <p class="nf__live" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <div class="lector__pie">
+      <button type="button" class="lector__volver" id="lector-volver"></button>
     </div>
   </div>
-</section>
+</div>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
      COLECCIONES (archive + detalle inline — antes "Tienda" era sección aparte)
@@ -3206,6 +3384,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      ZAPATILLAS FALLERAS
 ═══════════════════════════════════════════════════════════════════════════ -->
+<div class="puntilla" style="--arriba:var(--color-bg-alt);--abajo:var(--color-bg-dark)" aria-hidden="true"></div>
 <section id="zapatillas">
   <div class="zap-header">
     <span class="zap-eyebrow" id="zap-eyebrow"></span>
@@ -3223,6 +3402,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      HISTORIA / FALLERAS MAYORES
 ═══════════════════════════════════════════════════════════════════════════ -->
+<div class="puntilla" style="--arriba:var(--color-bg-dark);--abajo:var(--color-bg)" aria-hidden="true"></div>
 <section id="historia">
 
   <!-- Bloque narrativo -->
@@ -3243,14 +3423,22 @@
   <div class="hist-fm-section" id="fm-en-historia">
     <div class="container">
       <p class="hist-gallery-label" id="hist-fm-label"></p>
-      <div class="fm-grid" id="fm-grid"></div>
+      <div class="fm-grupo">
+        <h3 class="fm-grupo__title" id="fm-t-mayor"></h3>
+        <div class="fm-grid" id="fm-grid-mayor"></div>
+      </div>
+      <div class="fm-grupo">
+        <h3 class="fm-grupo__title" id="fm-t-infantil"></h3>
+        <div class="fm-grid" id="fm-grid-infantil"></div>
+      </div>
     </div>
   </div>
 
   <!-- Cortes d'Honor -->
   <div class="hist-corts-section">
     <div class="container">
-      <p class="hist-gallery-label" id="hist-corts-label"></p>
+      <h3 class="fm-grupo__title" id="hist-corts-label"></h3>
+      <div class="cortes-grid" id="cortes-grid"></div>
       <div class="corts-grid" id="corts-grid"></div>
     </div>
   </div>
@@ -3378,6 +3566,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      VÍDEOS
 ═══════════════════════════════════════════════════════════════════════════ -->
+<div class="puntilla" style="--arriba:var(--color-bg-alt);--abajo:var(--color-bg-dark)" aria-hidden="true"></div>
 <section id="videos">
   <div class="container">
     <div class="section-header">
@@ -3394,6 +3583,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      RESEÑAS
 ═══════════════════════════════════════════════════════════════════════════ -->
+<div class="puntilla" style="--arriba:var(--color-bg-dark);--abajo:var(--color-bg)" aria-hidden="true"></div>
 <section id="resenas">
   <div class="container">
     <div class="res-layout">
@@ -3531,6 +3721,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      FOOTER
 ═══════════════════════════════════════════════════════════════════════════ -->
+<div class="puntilla" style="--arriba:var(--color-bg);--abajo:var(--color-bg-dark)" aria-hidden="true"></div>
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -3870,8 +4061,10 @@ const translations = {
       eyebrow: 'Temporada fallera 2027',
       title:   'Noticias del taller',
       text:    'Las falleras que vestimos este año y lo que va pasando en la casa.',
-      ir:      'Ir a la noticia',
-      nav:     'Accesos a las noticias',
+      mas:     'Más noticias',
+      leer:    'Leer la noticia',
+      cerrar:  'Cerrar la noticia',
+      volver:  'Volver a las noticias',
     },
     meri: {
       eyebrow: 'Noticia · Octubre 2026',
@@ -3904,7 +4097,7 @@ const translations = {
       p1:      "Dos de las falleras de la Corte de Honor de la Fallera Mayor de València 2027 visten de Cosas Cucas: Alejandra Blanco Beltrán, de la falla Mestre Rodrigo-General Avilés, y Laura Miquel Obarti, de la falla Avinguda de l'Oest.",
       p2:      'A Alejandra ya la vestimos en 2026, cuando fue Fallera Mayor de su falla. Que las dos lleven nuestros trajes en la corte de València es una alegría más en un año muy especial para la casa.',
       region:  'Fotos de las falleras de la Corte de Honor 2027 vestidas por Cosas Cucas',
-      fotos:   'Fotos en Instagram:',
+      fotos:   'Fotos de Alejandra en Instagram:',
       y:       'y',
       falla:   'Falla',
       role:    'de la Corte de Honor de la Fallera Mayor de València 2027',
@@ -4218,16 +4411,9 @@ const translations = {
         { year: 'Hoy', label: 'Nueva generación\nen el taller' },
       ],
       fmLabel: '✦ Falleras Mayores y Corte de Honor de Valencia vestidas por Cosas Cucas',
-      fm: [
-        { img: IMG.fm16, name: 'Sandra Leiva Herrero',    year: 'Fallera Mayor Infantil de Valencia · 1988' },
-        { img: IMG.fm6,  name: 'Monica Palmer',           year: 'Fallera Mayor de Valencia · 1992' },
-        { img: IMG.fm2,  name: 'Maria Asensi',            year: 'Corte Fallera Mayor Infantil de Valencia · 1993' },
-        { img: IMG.fm3,  name: 'Ana Belén Chardí',        year: 'Fallera Mayor Infantil de Valencia · 1995' },
-        { img: IMG.fm4,  name: 'Carmen Serrano',          year: 'Fallera Mayor Infantil de Valencia · 1998' },
-        { img: IMG.fm1,  name: 'Adriana Polo',            year: 'Fallera Mayor de Valencia · 2001' },
-        { img: IMG.fm5,  name: 'Carmen Serrano',          year: 'Fallera Mayor Infantil de Valencia · 2012' },
-        { img: IMG.fm15, name: 'Begoña Jiménez Tarazona', year: 'Fallera Mayor de Valencia · 2013' },
-      ],
+      grupos: { mayor: 'Falleras Mayores de València', infantil: 'Falleras Mayores Infantiles de València' },
+      cargo:  { mayor: 'Fallera Mayor de València', infantil: 'Fallera Mayor Infantil de València' },
+      corte:  'Corte de Honor',
       fmCurrentLabel: '✦ Falleras Mayores vestidas por Cosas Cucas',
       fmCurrent: [
         { img: IMG.fm9,  name: 'Falla Exposición',                                 year: 'Fallera Mayor 2026' },
@@ -4241,9 +4427,6 @@ const translations = {
       ],
       cortsLabel: 'Cortes de Honor',
       corts: [
-        { img: IMG.cort1,   label: 'Cort d\'Honor · Valencia' },
-        { img: IMG.cort2,   label: 'Cort d\'Honor — Gala' },
-        { img: IMG.cort3,   label: 'Cort d\'Honor en la Plaça' },
         { img: IMG.cortXiq, label: 'Fallera Xiqueta · Cosas Cucas' },
       ],
       cortsText: 'Cada Cort d\'Honor es una historia escrita con hilos de seda, lágrimas contenidas y el orgullo de generaciones. En Cosas Cucas tenemos el privilegio de vestir ese momento —el más luminoso de la fiesta— con la misma devoción con que Valencia honra su tradición desde hace siglos. Falleras que brillan no solo por los bordados, sino por todo lo que llevan dentro.',
@@ -4403,8 +4586,10 @@ const translations = {
       eyebrow: 'Temporada fallera 2027',
       title:   'Notícies del taller',
       text:    'Les falleres que vestim enguany i el que va passant a la casa.',
-      ir:      'Anar a la notícia',
-      nav:     'Accessos a les notícies',
+      mas:     'Més notícies',
+      leer:    'Llegir la notícia',
+      cerrar:  'Tancar la notícia',
+      volver:  'Tornar a les notícies',
     },
     meri: {
       eyebrow: 'Notícia · Octubre 2026',
@@ -4437,7 +4622,7 @@ const translations = {
       p1:      "Dues de les falleres de la Cort d'Honor de la Fallera Major de València 2027 vestixen de Cosas Cucas: Alejandra Blanco Beltrán, de la falla Mestre Rodrigo-General Avilés, i Laura Miquel Obarti, de la falla Avinguda de l'Oest.",
       p2:      "A Alejandra ja la vam vestir en 2026, quan va ser Fallera Major de la seua falla. Que totes dues porten els nostres vestits en la cort de València és una alegria més en un any molt especial per a la casa.",
       region:  "Fotos de les falleres de la Cort d'Honor 2027 vestides per Cosas Cucas",
-      fotos:   'Fotos a Instagram:',
+      fotos:   "Fotos d'Alejandra a Instagram:",
       y:       'i',
       falla:   'Falla',
       role:    "de la Cort d'Honor de la Fallera Major de València 2027",
@@ -4708,16 +4893,9 @@ const translations = {
         { year: 'Avui', label: "Nova generació\nal taller" },
       ],
       fmLabel: "✦ Falleres Majors i Cort d'Honor de València vestides per Cosas Cucas",
-      fm: [
-        { img: IMG.fm16, name: 'Sandra Leiva Herrero',    year: 'Fallera Major Infantil de València · 1988' },
-        { img: IMG.fm6,  name: 'Monica Palmer',            year: 'Fallera Major de València · 1992' },
-        { img: IMG.fm2,  name: 'Maria Asensi',             year: 'Cort Fallera Major Infantil de València · 1993' },
-        { img: IMG.fm3,  name: 'Ana Belén Chardí',         year: 'Fallera Major Infantil de València · 1995' },
-        { img: IMG.fm4,  name: 'Carmen Serrano',           year: 'Fallera Major Infantil de València · 1998' },
-        { img: IMG.fm1,  name: 'Adriana Polo',             year: 'Fallera Major de València · 2001' },
-        { img: IMG.fm5,  name: 'Carmen Serrano',           year: 'Fallera Major Infantil de València · 2012' },
-        { img: IMG.fm15, name: 'Begoña Jiménez Tarazona',  year: 'Fallera Major de València · 2013' },
-      ],
+      grupos: { mayor: 'Falleres Majors de València', infantil: 'Falleres Majors Infantils de València' },
+      cargo:  { mayor: 'Fallera Major de València', infantil: 'Fallera Major Infantil de València' },
+      corte:  "Cort d'Honor",
       fmCurrentLabel: '✦ Falleres Majors vestides per Cosas Cucas',
       fmCurrent: [
         { img: IMG.fm9,  name: 'Falla Exposició',                                  year: 'Fallera Major 2026' },
@@ -4731,9 +4909,6 @@ const translations = {
       ],
       cortsLabel: "Corts d'Honor",
       corts: [
-        { img: IMG.cort1,   label: "Cort d'Honor · València" },
-        { img: IMG.cort2,   label: "Cort d'Honor — Gala" },
-        { img: IMG.cort3,   label: "Cort d'Honor a la Plaça" },
         { img: IMG.cortXiq, label: 'Fallera Xiqueta · Cosas Cucas' },
       ],
       cortsText: "Cada Cort d'Honor és una història escrita amb fils de seda, llàgrimes contingudes i l'orgull de generacions. A Cosas Cucas tenim el privilegi de vestir aquell moment —el més lluminós de la festa— amb la mateixa devoció amb què València honra la seua tradició des de fa segles. Falleres que brillen no sols pels brodats, sinó per tot allò que porten dins.",
@@ -5024,7 +5199,16 @@ function closeCollectionModal() {
   document.body.style.width    = '';
   document.body.style.overflow = '';
   document.documentElement.style.overscrollBehavior = '';
-  window.scrollTo(0, collectionModalScrollY);
+  volverAlScroll(collectionModalScrollY);
+}
+/* Al quitar el bloqueo la página está arriba: volver a su sitio de golpe, sin la
+   animación de scroll-behavior:smooth (si no, se ve bajar la página entera) */
+function volverAlScroll(y) {
+  const html = document.documentElement;
+  const antes = html.style.scrollBehavior;
+  html.style.scrollBehavior = 'auto';
+  window.scrollTo(0, y);
+  html.style.scrollBehavior = antes;
 }
 document.getElementById('col-modal-close').addEventListener('click', closeCollectionModal);
 document.getElementById('col-modal').addEventListener('click', e => {
@@ -5056,8 +5240,9 @@ function initHeroSlider() {
     ...NOTICIA_FOTOS.map((src, i) => ({
       src: `${src}.webp`, foco: NOTICIA_FOCO[i], alt: () => t().noticia.alts[i],
     })),
-    /* las verticales de la corte son pequeñas (900 px) y a lo ancho se verían borrosas */
-    ...CORTE_2027.flatMap(p => p.fotos.filter(f => !f.vertical).map(f => ({
+    /* de la corte, solo las horizontales grandes: en móvil el hueco es apaisado y una
+       vertical se quedaría en una franja; las marcadas portada:false son pequeñas */
+    ...CORTE_2027.flatMap(p => p.fotos.filter(f => !f.vertical && f.portada !== false).map(f => ({
       src: f.src, foco: f.foco || 'center 25%', alt: () => `${p.nombre}, ${t().corte.role}`,
     }))),
   ];
@@ -5115,8 +5300,11 @@ function initHeroSlider() {
     activeEl.removeAttribute('aria-hidden');
     inactiveEl.setAttribute('aria-hidden', 'true');
 
-    /* Precargar la SIGUIENTE imagen en el slot ya invisible */
-    load(inactiveEl, SLIDES[(cur + 1) % SLIDES.length]);
+    /* Precargar la SIGUIENTE imagen en el slot que se va, cuando ya no se ve
+       (el fundido dura 2 s; antes asomaba la siguiente mientras se iba) */
+    const saliente  = inactiveEl;
+    const siguiente = SLIDES[(cur + 1) % SLIDES.length];
+    setTimeout(() => load(saliente, siguiente), 2100);
 
     updateDots(cur);
   }, INTERVAL);
@@ -5259,7 +5447,7 @@ function buildFMDetail() {
   const grid = document.getElementById('fm-detail-grid');
   if (!grid) return;
   /* Indumentaria de Honor: muestra las 2026 (fmCurrent) */
-  const fmDetailData = h.fmCurrent || h.fm;
+  const fmDetailData = h.fmCurrent;
   grid.innerHTML = fmDetailData.map(f => `
     <div class="fm-detail-card">
       <img src="${f.img}" alt="${f.name}" loading="lazy" decoding="async" />
@@ -5412,6 +5600,27 @@ function buildZapatillas() {
     </div>`).join('');
 }
 
+/* Falleras Mayores y Falleras Mayores Infantiles de València vestidas por Cosas Cucas.
+   Nombres y años contrastados con el histórico de fallas.com. Para añadir una, una línea:
+   { tipo: 'mayor' | 'infantil', anyo, nombre, foto: 'falleras-valencia/…webp', foco? } */
+const FALLERAS_VALENCIA = [
+  { tipo: 'mayor',    anyo: 1992, nombre: 'Mónica Palmer Cuenca',    foto: 'falleras-valencia/fm-1992-monica-palmer-cuenca.webp' },
+  { tipo: 'mayor',    anyo: 2001, nombre: 'Adriana Polo Escrich',    foto: 'falleras-valencia/fm-2001-adriana-polo-escrich.webp' },
+  { tipo: 'mayor',    anyo: 2013, nombre: 'Begoña Jiménez Tarazona', foto: 'falleras-valencia/fm-2013-begona-jimenez-tarazona.webp', foco: 'center 40%' },
+  { tipo: 'infantil', anyo: 1988, nombre: 'Sandra Leiva Herrero',    foto: 'falleras-valencia/fmi-1988-sandra-leiva-herrero.webp' },
+  { tipo: 'infantil', anyo: 1992, nombre: 'Carmen Serrano Bononat',  foto: 'falleras-valencia/fmi-1992-carmen-serrano-bononat.webp' },
+  { tipo: 'infantil', anyo: 1993, nombre: 'María Asensi López',      foto: 'falleras-valencia/fmi-1993-maria-asensi-lopez.webp' },
+  { tipo: 'infantil', anyo: 1995, nombre: 'Ana Belén Ferrer Chardí', foto: 'falleras-valencia/fmi-1995-ana-belen-ferrer-chardi.webp' },
+  { tipo: 'infantil', anyo: 1998, nombre: 'Ruth Galán García',       foto: 'falleras-valencia/fmi-1998-ruth-galan-garcia.webp' },
+  { tipo: 'infantil', anyo: 2027, nombre: 'Julia Vizcayno Orero',    foto: 'falleras-valencia/fmi-2027-julia-vizcayno-orero.webp' },
+];
+/* Cortes de Honor de la Fallera Mayor de València (las fotos llevan impresos los nombres) */
+const CORTES_VALENCIA = [
+  { anyo: 1995, foto: 'falleras-valencia/corte-1995.webp' },
+  { anyo: 1997, foto: 'falleras-valencia/corte-1997.webp' },
+  { anyo: 2012, foto: 'falleras-valencia/corte-2012.webp' },
+];
+
 function buildHistoria() {
   const h = t().historia;
   document.getElementById('hist-eyebrow').textContent = h.eyebrow;
@@ -5420,18 +5629,28 @@ function buildHistoria() {
   document.getElementById('hist-timeline').innerHTML  = h.timeline.map(hi =>
     `<div class="hito"><div class="hito__year">${hi.year}</div><div class="hito__label">${hi.label.replace(/\n/g,'<br>')}</div></div>`
   ).join('');
-  /* Historia: muestra las Falleras Mayores históricas (fm1-fm6) */
-  const fmData = h.fm;
+  /* Historia: Falleras Mayores e Infantiles de València, cada grupo por año */
   document.getElementById('hist-fm-label').textContent = h.fmLabel;
-  document.getElementById('fm-grid').innerHTML = fmData.map(f =>
-    `<div class="fm-card">
-      <div class="fm-card__img"><img src="${f.img}" alt="${f.name}" loading="lazy" decoding="async" /></div>
+  for (const tipo of ['mayor', 'infantil']) {
+    document.getElementById(`fm-t-${tipo}`).textContent = h.grupos[tipo];
+    document.getElementById(`fm-grid-${tipo}`).innerHTML = FALLERAS_VALENCIA
+      .filter(f => f.tipo === tipo)
+      .sort((a, b) => a.anyo - b.anyo)
+      .map(f => `<div class="fm-card">
+      <div class="fm-card__img"><img src="${f.foto}" alt="${f.nombre}, ${h.cargo[tipo]} ${f.anyo}" loading="lazy" decoding="async"${f.foco ? ` style="object-position:${f.foco}"` : ''} /></div>
       <div class="fm-card__info">
-        <p class="fm-card__name">${f.name}</p>
-        <p class="fm-card__year">${f.year}</p>
+        <p class="fm-card__name">${f.nombre}</p>
+        <p class="fm-card__year">${f.anyo}</p>
       </div>
     </div>`).join('');
+  }
   document.getElementById('hist-corts-label').textContent = h.cortsLabel;
+  /* Cortes de Honor por año: grandes, dos por fila (la impar, centrada) */
+  document.getElementById('cortes-grid').innerHTML = CORTES_VALENCIA.map(c =>
+    `<div class="cort-card cort-card--corte">
+      <img src="${c.foto}" alt="${h.corte} · ${c.anyo}" loading="lazy" decoding="async" />
+      <div class="cort-card__label">${h.corte} · ${c.anyo}</div>
+    </div>`).join('');
   document.getElementById('corts-grid').innerHTML = h.corts.map(c =>
     `<div class="cort-card">
       <img src="${c.img}" alt="${c.label}" loading="lazy" decoding="async" />
@@ -5669,24 +5888,32 @@ const NOTICIA_VERTICAL = NOTICIA_ORDEN.map(([, , v]) => !!v);
    y sus fotos en la portada aparecen solos al añadir fotos, por ejemplo:
    fotos: [{ src: 'noticias/corte-2027/alejandra-01.webp', mini: 'noticias/corte-2027/alejandra-01-mini.webp',
              vertical: true, foco: 'center 25%' }]
-   vertical: true si la foto es más alta que ancha (se ve entera sobre fondo difuminado);
-   foco: encuadre (object-position) en la portada y, si no es vertical, también en el carrusel. */
+   vertical: true si la foto es más alta que ancha o cuadrada (se ve entera sobre fondo difuminado);
+   foco: encuadre (object-position) en la portada y en las miniaturas;
+   portada: false para que no salga en el pase de la portada (fotos pequeñas). */
 /* Procedencia de las fotos de la corte, para el crédito bajo el texto */
 const CORTE_CREDITOS = [
   { autor: '@edgfotografia',     url: 'https://www.instagram.com/p/DP6x_SkCL7u/' },
   { autor: '@alejandrablaancoo', url: 'https://www.instagram.com/p/DX63EryCNKg/' },
 ];
+/* [número, foco, vertical, portada] -> fotos de noticias/corte-2027/<nombre>-NN.webp */
+const fotosCorte = (nombre, lista) => lista.map(([n, foco, vertical, portada = true]) => {
+  const f = `noticias/corte-2027/${nombre}-${String(n).padStart(2, '0')}`;
+  return { src: `${f}.webp`, mini: `${f}-mini.webp`, foco, vertical: !!vertical, portada };
+});
 const CORTE_2027 = [
-  { nombre: 'Alejandra Blanco Beltrán', falla: 'Mestre Rodrigo-General Avilés', fotos: [
-    ...[[1, 'center 25%', true], [2, 'center 25%', true],
-        [3, '50% 30%'], [4, '62% 30%'], [5, '50% 30%'], [6, '20% 30%'],
-        [7, '45% 30%'], [8, '50% 30%'], [9, '62% 30%'], [10, '35% 30%']]
-      .map(([n, foco, vertical]) => {
-        const f = `noticias/corte-2027/alejandra-${String(n).padStart(2, '0')}`;
-        return { src: `${f}.webp`, mini: `${f}-mini.webp`, foco, vertical: !!vertical };
-      }),
-  ] },
-  { nombre: 'Laura Miquel Obarti',      falla: "Avinguda de l'Oest",            fotos: [] },
+  { nombre: 'Alejandra Blanco Beltrán', falla: 'Mestre Rodrigo-General Avilés', fotos: fotosCorte('alejandra', [
+    [1, 'center 25%', true], [2, 'center 25%', true],
+    [3, '50% 30%'], [4, '62% 30%'], [5, '50% 30%'], [6, '20% 30%'],
+    [7, '45% 30%'], [8, '50% 30%'], [9, '62% 30%'], [10, '35% 30%'],
+  ]) },
+  /* la 4 mide 960 px y no va a la portada */
+  { nombre: 'Laura Miquel Obarti',      falla: "Avinguda de l'Oest",            fotos: fotosCorte('laura', [
+    [1, 'center 25%', true], [2, 'center 30%', true], [3, 'center 25%', true],
+    [4, '50% 30%', false, false], [5, '38% 0%'],
+    [6, 'center 25%', true], [7, 'center 25%', true], [8, '56% 6%'],
+    [9, 'center 20%', true], [10, 'center 30%', true],
+  ]) },
 ];
 
 function buildCorte() {
@@ -5726,23 +5953,170 @@ function buildMeri() {
   })), { ...t().noticia, region: m.region });
 }
 
-/* Apartado de noticias: cabecera con accesos a cada noticia visible y fondos
-   alternos (oscuro / crema, carrusel a la derecha / izquierda) aunque alguna esté oculta */
+/* Noticias que salen como tarjeta bajo la principal y se leen en el lector.
+   fotos: una o dos [mini, foco] para la tarjeta (dos van una junto a otra). */
+const NOTICIAS_MAS = [
+  { id: 'corte-2027',   textos: () => t().corte, fotos: [
+    ['noticias/corte-2027/alejandra-01-mini.webp', '37% 30%'],
+    ['noticias/corte-2027/laura-02-mini.webp',     'center 30%'],
+  ] },
+  { id: 'noticia-meri', textos: () => t().meri,  fotos: [
+    ['noticias/meri-zalve-04-mini.webp', 'center 30%'],
+    ['noticias/meri-zalve-08-mini.webp', 'center 30%'],
+  ] },
+];
+
 function buildNoticias() {
   const n = t().noticias;
   document.getElementById('noticias-eyebrow').textContent = n.eyebrow;
   document.getElementById('noticias-title').textContent   = n.title;
   document.getElementById('noticias-text').textContent    = n.text;
-  const visibles = [...document.querySelectorAll('section.noticia')].filter(sec => !sec.hidden);
-  visibles.forEach((sec, i) => {
-    sec.classList.toggle('noticia--crema', i % 2 === 1);
-    sec.querySelector('.noticia__inner').classList.toggle('noticia__inner--alt', i % 2 === 1);
-  });
-  document.getElementById('noticias-lista').setAttribute('aria-label', n.nav);
-  document.getElementById('noticias-lista').innerHTML = visibles.map(sec =>
-    `<a class="noticias-cab__item" href="#${sec.id}" title="${n.ir}">${sec.querySelector('.noticia__title').textContent}</a>`
-  ).join('');
+  document.getElementById('mas-noticias-title').textContent = n.mas;
+  document.getElementById('lector-topbar').textContent    = n.title;
+  document.getElementById('lector-close').setAttribute('aria-label', n.cerrar);
+  document.getElementById('lector-volver').innerHTML      = `<span aria-hidden="true">←</span>${n.volver}`;
+  /* solo las que tienen contenido (la de la corte se oculta sin fotos) */
+  const visibles = NOTICIAS_MAS.filter(x => !document.getElementById(x.id).hidden);
+  document.getElementById('mas-noticias').hidden = visibles.length === 0;
+  document.getElementById('notas').innerHTML = visibles.map(x => {
+    const tx = x.textos();
+    /* nombre del enlace = titular; la fecha como descripción */
+    return `<li><a class="nota" href="#${x.id}" data-noticia="${x.id}" aria-labelledby="nota-t-${x.id}" aria-describedby="nota-e-${x.id}">
+      <div class="nota__img">${x.fotos.map(([src, foco]) =>
+        `<img src="${src}" alt="" width="360" height="480" loading="lazy" decoding="async" style="object-position:${foco}" />`).join('')}</div>
+      <div class="nota__body">
+        <span class="nota__eyebrow" id="nota-e-${x.id}">${tx.eyebrow}</span>
+        <h3 class="nota__title" id="nota-t-${x.id}">${tx.title}</h3>
+        <span class="nota__leer" aria-hidden="true">${n.leer}</span>
+      </div>
+    </a></li>`;
+  }).join('');
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LECTOR DE NOTICIAS — se abre desde las tarjetas y queda en el historial
+   (#corte-2027, #noticia-meri), así el botón atrás del móvil lo cierra y el
+   enlace a una noticia la abre directamente.
+═══════════════════════════════════════════════════════════════════════════ */
+const lector = document.getElementById('lector');
+let lectorScrollY = 0;
+let lectorId = null;
+let lectorInertes = [];   /* lo de detrás del lector, inerte mientras está abierto */
+const esNoticiaMas = id => NOTICIAS_MAS.some(x => x.id === id);
+
+function abrirLector(id) {
+  const sec = document.getElementById(id);
+  if (!sec || sec.hidden || !lector.contains(sec)) return false;
+  lector.querySelectorAll('.noticia').forEach(el => el.classList.toggle('is-open', el === sec));
+  const panel = lector.querySelector('.lector__panel');
+  panel.setAttribute('aria-labelledby', sec.querySelector('.noticia__title').id);
+  if (lector.hidden) {
+    lectorScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    lector.hidden = false;
+    for (const el of document.body.children) {
+      if (el !== lector && !el.inert) { el.inert = true; lectorInertes.push(el); }
+    }
+    /* mismo bloqueo de scroll que el modal de colecciones (vale en iOS Safari) */
+    document.body.style.position = 'fixed';
+    document.body.style.top      = `-${lectorScrollY}px`;
+    document.body.style.left     = '0';
+    document.body.style.right    = '0';
+    document.body.style.width    = '100%';
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overscrollBehavior = 'none';
+  }
+  lectorId = id;
+  panel.scrollTop = 0;
+  document.getElementById('lector-close').focus({ preventScroll: true });
+  return true;
+}
+
+function cerrarLector() {
+  if (lector.hidden) return;
+  const id = lectorId;
+  const salirPantalla = document.fullscreenElement && lector.contains(document.fullscreenElement)
+    ? document.exitFullscreen() : null;
+  lector.hidden = true;
+  lectorInertes.forEach(el => { el.inert = false; });
+  lectorInertes = [];
+  lector.querySelectorAll('.noticia.is-open').forEach(el => el.classList.remove('is-open'));
+  document.body.style.position = '';
+  document.body.style.top      = '';
+  document.body.style.left     = '';
+  document.body.style.right    = '';
+  document.body.style.width    = '';
+  document.body.style.overflow = '';
+  document.documentElement.style.overscrollBehavior = '';
+  volverAlScroll(lectorScrollY);
+  lectorId = null;
+  /* el foco vuelve a la tarjeta de la noticia (las tarjetas se rehacen al cambiar de idioma);
+     si estaba a pantalla completa, cuando termine de salir */
+  const enfocar = () => {
+    const tarjeta = document.querySelector(`.nota[data-noticia="${id}"]`);
+    if (tarjeta) tarjeta.focus({ preventScroll: true });
+  };
+  if (salirPantalla) salirPantalla.then(enfocar, enfocar);
+  else enfocar();
+}
+
+/* Cerrar: si se abrió desde la web, atrás en el historial (popstate lo cierra);
+   si se entró con el enlace directo, se cierra y se deja la dirección en #mas-noticias */
+function pedirCierreLector() {
+  const st = history.state;
+  if (st && st.lector && !st.directo) history.back();
+  else {
+    /* sin página anterior en la web: dejarla en «Más noticias», junto a las tarjetas
+       (se mide ya cerrado: con la página bloqueada no hay barra de scroll y cambia el ancho) */
+    cerrarLector();
+    const mas = document.getElementById('mas-noticias');
+    const margen = parseFloat(getComputedStyle(mas).scrollMarginTop) || 0;
+    volverAlScroll(Math.max(0, mas.getBoundingClientRect().top + window.scrollY - margen));
+    history.replaceState(null, '', `${location.pathname}${location.search}#mas-noticias`);
+  }
+}
+
+document.getElementById('notas').addEventListener('click', e => {
+  const a = e.target.closest('.nota');
+  if (!a || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+  e.preventDefault();
+  const id = a.dataset.noticia;
+  history.pushState({ lector: id }, '', `#${id}`);   /* antes de bloquear el scroll: guarda la posición */
+  abrirLector(id);
+});
+document.getElementById('lector-close').addEventListener('click', pedirCierreLector);
+document.getElementById('lector-volver').addEventListener('click', pedirCierreLector);
+lector.addEventListener('click', e => { if (e.target === lector) pedirCierreLector(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !lector.hidden && !document.fullscreenElement) pedirCierreLector();
+});
+/* el foco no sale del lector mientras está abierto */
+lector.addEventListener('keydown', e => {
+  if (e.key !== 'Tab') return;
+  const f = [...lector.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')]
+    .filter(el => el.getClientRects().length);
+  if (!f.length) return;
+  /* el foco en el propio panel (tras un clic en texto) cuenta como «antes del primero» */
+  const i = f.indexOf(document.activeElement);
+  if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+  else if (!e.shiftKey && (i === -1 || i === f.length - 1)) { e.preventDefault(); f[0].focus(); }
+});
+window.addEventListener('popstate', () => {
+  const id = history.state && history.state.lector;
+  /* al volver a una entrada con #ancla, Chrome la desplaza después del popstate y
+     deshace volverAlScroll: mientras abre o cierra el lector, el scroll lo pone la web */
+  if (id || !lector.hidden) {
+    history.scrollRestoration = 'manual';
+    setTimeout(() => { history.scrollRestoration = 'auto'; }, 0);
+  }
+  if (!(id && abrirLector(id))) cerrarLector();
+});
+/* enlaces normales a una noticia del lector (por ejemplo desde otra parte de la web) */
+window.addEventListener('hashchange', () => {
+  const id = decodeURIComponent(location.hash.slice(1));
+  if (esNoticiaMas(id) && lectorId !== id && abrirLector(id)) {
+    history.replaceState({ lector: id }, '', location.hash);
+  }
+});
 
 function buildNoticia() {
   const n = t().noticia;
@@ -5970,6 +6344,18 @@ document.querySelectorAll('.lang-btn').forEach(b =>
   b.classList.toggle('active', b.dataset.lang === currentLang));
 document.documentElement.lang = currentLang === 'ca' ? 'ca' : 'es';
 renderAll();
+{
+  const id = decodeURIComponent(location.hash.slice(1));
+  if (esNoticiaMas(id) && abrirLector(id)) {
+    history.replaceState({ lector: id, directo: true }, '', location.hash);
+    /* Chrome lleva el foco a body al procesar el #ancla de la carga: devolverlo a la × */
+    const enfocarCerrar = () => setTimeout(() => {
+      if (!lector.hidden) document.getElementById('lector-close').focus({ preventScroll: true });
+    }, 0);
+    if (document.readyState === 'complete') enfocarCerrar();
+    else addEventListener('load', enfocarCerrar, { once: true });
+  }
+}
 
 /* ── Pedir cita bilingüe ── */
 function updateCitaBtn() {
