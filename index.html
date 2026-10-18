@@ -283,10 +283,6 @@
     .anim-tab:hover { color: var(--color-text); }
     .anim-tab.active { color: transparent; } /* el dorado tapa este texto */
 
-    @media (max-width: 768px) {
-      .nav-desktop { display: none; }
-      .hamburger { display: flex; }
-    }
     /* HEADER ACTIONS */
     .header-actions {
       display: flex;
@@ -342,6 +338,13 @@
       color: var(--color-text);
     }
     .mobile-menu a:hover { color: var(--color-gold); }
+    /* 980 px: por debajo, las pestañas no caben junto al selector de idioma.
+       Va detrás de .hamburger para que su display:none no lo pise */
+    @media (max-width: 980px) {
+      .nav-desktop { display: none; }
+      .hamburger { display: flex; }
+      .header-actions { justify-self: end; } /* sin el menú, a la derecha y no junto al logo */
+    }
 
     /* ═══════════════════════════════════════════════════════════════════════════
        HERO / ÚLTIMO DROP
@@ -562,7 +565,7 @@
     .nf__thumb:hover { opacity: .8; }
     .nf__thumb.is-active { opacity: 1; }
     .nf__thumb.is-active::after { border-color: var(--color-gold-light); }
-    .nf__thumb:focus-visible { outline: 2px solid var(--color-gold-light); outline-offset: -2px; }
+    .nf__thumb:focus-visible { opacity: 1; outline: 2px solid var(--color-gold-light); outline-offset: -2px; }
     .nf__live {
       position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
       overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
@@ -580,8 +583,38 @@
     .noticia--crema .nf__stage { box-shadow: 0 24px 60px rgba(26,23,20,.18), 0 0 0 1px rgba(181,144,58,.35); }
     .noticia--crema .nf__stage:focus-visible { box-shadow: 0 24px 60px rgba(26,23,20,.18), 0 0 0 2px var(--color-text); }
     .noticia--crema .nf__thumb.is-active::after { border-color: var(--color-gold); }
-    .noticia--crema .nf__thumb:focus-visible { outline-color: var(--color-gold); }
+    .noticia--crema .nf__thumb:focus-visible { outline-color: var(--color-text); }
+    .noticia--crema .noticia__eyebrow { color: #7A5C1E; }
     .noticia__inner--alt { grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); }
+    .noticia__inner--alt > .nf { order: -1; }
+    .noticia--crema { border-bottom: 1px solid var(--color-border); }
+    .noticia__credito { margin-top: 18px; font-size: .72rem; letter-spacing: .04em; }
+    .noticia__credito a { color: inherit; opacity: .7; text-decoration: underline; text-underline-offset: 3px; }
+    .noticia__credito a:hover { opacity: 1; }
+
+    /* ── Cabecera del apartado de noticias ── */
+    .noticias-cab {
+      background: var(--color-bg-dark); color: var(--color-white);
+      padding: 72px 0 8px; text-align: center; scroll-margin-top: var(--header-h);
+    }
+    .noticias-cab__eyebrow {
+      font-size: .7rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase;
+      color: var(--color-gold); margin-bottom: 14px;
+    }
+    .noticias-cab__eyebrow::before, .noticias-cab__eyebrow::after { content: '✦'; margin: 0 10px; opacity: .7; }
+    .noticias-cab__title {
+      font-family: var(--font-display); font-weight: 400; font-style: italic;
+      font-size: clamp(2.2rem, 4.4vw, 3.6rem); line-height: 1.05; color: var(--color-white); margin-bottom: 14px;
+    }
+    .noticias-cab__text { font-size: .95rem; color: rgba(253,250,243,.7); max-width: 560px; margin: 0 auto 26px; }
+    .noticias-cab__lista { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .noticias-cab__item {
+      display: inline-block; padding: 8px 16px; border-radius: 9999px;
+      border: 1px solid rgba(212,177,102,.45); color: var(--color-gold-light);
+      font-size: .72rem; letter-spacing: .04em; transition: background .2s, color .2s;
+    }
+    .noticias-cab__item:hover { background: var(--color-gold); color: var(--color-bg-dark); }
+    .noticias-cab__item:focus-visible { outline: 2px solid var(--color-gold-light); outline-offset: 2px; }
     /* pie de foto del carrusel (nombre y falla de la foto que se ve) */
     .nf__caption {
       display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px;
@@ -597,7 +630,7 @@
 
     @media (max-width: 1024px) {
       .noticia__inner, .noticia__inner--alt { grid-template-columns: 1fr; }
-      .noticia__inner--alt .noticia__text { order: -1; }
+      .noticia__inner--alt > .nf { order: 0; }
       .noticia__lead, .noticia__dedica { max-width: 640px; }
     }
     @media (max-width: 600px) {
@@ -3014,6 +3047,15 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      NOTICIA DESTACADA — Fallera Mayor Infantil de València 2027 (textos en t().noticia)
 ═══════════════════════════════════════════════════════════════════════════ -->
+<section id="noticias" class="noticias-cab" aria-labelledby="noticias-title">
+  <div class="container">
+    <p class="noticias-cab__eyebrow" id="noticias-eyebrow"></p>
+    <h2 class="noticias-cab__title" id="noticias-title"></h2>
+    <p class="noticias-cab__text" id="noticias-text"></p>
+    <nav class="noticias-cab__lista" id="noticias-lista"></nav>
+  </div>
+</section>
+
 <section id="noticia" class="noticia">
   <div class="container noticia__inner">
     <div class="noticia__text">
@@ -3055,8 +3097,15 @@
      SEGUNDA NOTICIA — Corte de Honor 2027 (fondo crema, carrusel a la izquierda).
      Datos y fotos en CORTE_2027 (JS); textos en t().corte. Oculta mientras no haya fotos.
 ═══════════════════════════════════════════════════════════════════════════ -->
-<section id="corte-2027" class="noticia noticia--crema" hidden>
-  <div class="container noticia__inner noticia__inner--alt">
+<section id="corte-2027" class="noticia" hidden>
+  <div class="container noticia__inner">
+    <div class="noticia__text">
+      <p class="noticia__eyebrow" id="corte27-eyebrow"></p>
+      <h2 class="noticia__title" id="corte27-title"></h2>
+      <p class="noticia__lead" id="corte27-p1"></p>
+      <p class="noticia__lead" id="corte27-p2"></p>
+      <p class="noticia__credito" id="corte27-credito"></p>
+    </div>
     <div class="nf" id="nf-corte" role="region" aria-roledescription="carrusel">
       <div class="nf__stage" tabindex="0" role="group">
         <div class="nf__slides"></div>
@@ -3082,11 +3131,46 @@
       <div class="nf__thumbs"></div>
       <p class="nf__live" aria-live="polite"></p>
     </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     NOTICIA — Los trajes de Meri (Mª José Zalve), Fallera Mayor 2027 de Pinedo.
+     Textos en t().meri; fotos en MERI_FOTOS (de @jose_espolin_estudio, con crédito).
+═══════════════════════════════════════════════════════════════════════════ -->
+<section id="noticia-meri" class="noticia">
+  <div class="container noticia__inner">
     <div class="noticia__text">
-      <p class="noticia__eyebrow" id="corte27-eyebrow"></p>
-      <h2 class="noticia__title" id="corte27-title"></h2>
-      <p class="noticia__lead" id="corte27-p1"></p>
-      <p class="noticia__lead" id="corte27-p2"></p>
+      <p class="noticia__eyebrow" id="meri-eyebrow"></p>
+      <h2 class="noticia__title" id="meri-title"></h2>
+      <p class="noticia__lead" id="meri-p1"></p>
+      <p class="noticia__lead" id="meri-p2"></p>
+      <p class="noticia__lead" id="meri-p3"></p>
+      <p class="noticia__credito"><a id="meri-credito" href="https://www.instagram.com/p/DepUnKSjZhr/" target="_blank" rel="noopener"></a></p>
+    </div>
+    <div class="nf" id="nf-meri" role="region" aria-roledescription="carrusel">
+      <div class="nf__stage" tabindex="0" role="group">
+        <div class="nf__slides"></div>
+        <button type="button" class="nf__arrow nf__arrow--prev">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button type="button" class="nf__arrow nf__arrow--next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <div class="nf__ctrls">
+          <button type="button" class="nf__ctrl nf__ctrl--pause">
+            <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+            <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
+          </button>
+          <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+          </button>
+        </div>
+        <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
+        <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
+      </div>
+      <div class="nf__thumbs"></div>
+      <p class="nf__live" aria-live="polite"></p>
     </div>
   </div>
 </section>
@@ -3728,6 +3812,7 @@ const translations = {
   es: {
     about: 'Más de cuarenta años cosiendo con las manos lo que ninguna máquina puede igualar. Cada pieza que sale de nuestro taller es única: confeccionada a medida, bordada con paciencia y tejida con el alma que Paquita Martorell puso en esta casa en 1982. Hoy, sus hijas siguen ese mismo camino —hilo a hilo, puntada a puntada— para que la indumentaria valenciana siga viva y tan hermosa como siempre.',
     nav: [
+      { label: 'Noticias',         href: '#noticias'         },
       { label: 'Colecciones',      href: '#drops-archive'    },
       { label: 'Falleras Mayores', href: '#falleras-mayores' },
       { label: 'Deportivas Fallera', href: '#zapatillas'   },
@@ -3781,12 +3866,46 @@ const translations = {
         'Julia Vizcayno con su ramo en un salón del Ayuntamiento',
       ],
     },
+    noticias: {
+      eyebrow: 'Temporada fallera 2027',
+      title:   'Noticias del taller',
+      text:    'Las falleras que vestimos este año y lo que va pasando en la casa.',
+      ir:      'Ir a la noticia',
+      nav:     'Accesos a las noticias',
+    },
+    meri: {
+      eyebrow: 'Noticia · Octubre 2026',
+      title:   'Los trajes de Meri, Fallera Mayor 2027 de Pinedo',
+      p1:      'Mª José Zalve Quilis, Meri, es la Fallera Mayor 2027 de la falla Mossén Josep Cuenca-Pinedo. El 18 de octubre enseñó en una exposición los trajes que llevará durante su reinado, y todos los hemos confeccionado en Cosas Cucas.',
+      p2:      'Hay un «Almudena» azul marino, un «Brunet» rosa antiguo, un «Lazos» gris y otro «Lazos» verde, este exclusivo de la casa. Presidiéndolo todo estaba el espolín «Tetuán» en color champán, que la Compañía Valenciana de la Seda ha vuelto a tejer. Ese traje ya estaba en marcha el día de la dana, y salió adelante.',
+      p3:      'Los aderezos son de Art Antic Joieria y la mantilla que lucirá en la ofrenda, de Santos Textil.',
+      credito: 'Fotos: @jose_espolin_estudio en Instagram',
+      region:  'Fotos de los trajes de Meri, Fallera Mayor 2027 de Pinedo',
+      alts: [
+        'Una joven posa junto al traje de espolín «Tetuán» en la exposición',
+        'El espolín «Tetuán» en color champán, visto de lado, con el «Almudena» al fondo',
+        'Detalle del corpiño y la manteleta del «Tetuán»',
+        'El «Tetuán» con el delantal de encaje dorado',
+        'La espalda del «Tetuán», con el lazo de la cinturilla',
+        'Falda del espolín «Tetuán» con sus flores de colores',
+        'Detalle de las flores tejidas del espolín «Tetuán»',
+        'Traje «Almudena» en azul marino',
+        'Traje «Brunet» en rosa antiguo, detalle del corpiño',
+        'Traje «Lazos» en gris, detalle del corpiño y la joya',
+        'Traje «Lazos» en verde, exclusivo de Cosas Cucas',
+        'Dos trajes de la exposición, en gris y en rosa',
+        'La mantilla de la ofrenda y la banda de fallera mayor',
+        'Los zapatos y las medias caladas, bordadas con la inicial M',
+      ],
+    },
     corte: {
       eyebrow: 'Noticia · Octubre 2026',
       title:   'Corte de Honor de la Fallera Mayor de València 2027',
       p1:      "Dos de las falleras de la Corte de Honor de la Fallera Mayor de València 2027 visten de Cosas Cucas: Alejandra Blanco Beltrán, de la falla Mestre Rodrigo-General Avilés, y Laura Miquel Obarti, de la falla Avinguda de l'Oest.",
       p2:      'A Alejandra ya la vestimos en 2026, cuando fue Fallera Mayor de su falla. Que las dos lleven nuestros trajes en la corte de València es una alegría más en un año muy especial para la casa.',
       region:  'Fotos de las falleras de la Corte de Honor 2027 vestidas por Cosas Cucas',
+      fotos:   'Fotos en Instagram:',
+      y:       'y',
       falla:   'Falla',
       role:    'de la Corte de Honor de la Fallera Mayor de València 2027',
     },
@@ -4226,6 +4345,7 @@ const translations = {
   ca: {
     about: "Més de quaranta anys cosint amb les mans allò que cap màquina pot igualar. Cada peça que ix del nostre taller és única: confeccionada a mida, brodada amb paciència i teixida amb l'ànima que Paquita Martorell va posar en esta casa el 1982. Avui, les seues filles seguixen aquell mateix camí —fil a fil, puntada a puntada— perquè la indumentària valenciana continue viva i tan bella com sempre.",
     nav: [
+      { label: 'Notícies',           href: '#noticias'         },
       { label: "Col·leccions",       href: '#drops-archive'    },
       { label: 'Falleres Majors',    href: '#falleras-mayores' },
       { label: 'Deportives Fallera', href: '#zapatillas'       },
@@ -4279,12 +4399,46 @@ const translations = {
         "Julia Vizcayno amb el seu ram en un saló de l'Ajuntament",
       ],
     },
+    noticias: {
+      eyebrow: 'Temporada fallera 2027',
+      title:   'Notícies del taller',
+      text:    'Les falleres que vestim enguany i el que va passant a la casa.',
+      ir:      'Anar a la notícia',
+      nav:     'Accessos a les notícies',
+    },
+    meri: {
+      eyebrow: 'Notícia · Octubre 2026',
+      title:   'Els vestits de Meri, Fallera Major 2027 de Pinedo',
+      p1:      "Mª José Zalve Quilis, Meri, és la Fallera Major 2027 de la falla Mossén Josep Cuenca-Pinedo. El 18 d'octubre va mostrar en una exposició els vestits que portarà durant el seu regnat, i tots els hem confeccionat a Cosas Cucas.",
+      p2:      "Hi ha un «Almudena» blau marí, un «Brunet» rosa antic, un «Lazos» gris i un altre «Lazos» verd, este exclusiu de la casa. Presidint-ho tot hi havia l'espolí «Tetuán» en color xampany, que la Compañía Valenciana de la Seda ha tornat a teixir. Eixe vestit ja estava en marxa el dia de la dana, i va eixir avant.",
+      p3:      "Els adreços són d'Art Antic Joieria i la mantellina que lluirà en l'ofrena, de Santos Textil.",
+      credito: 'Fotos: @jose_espolin_estudio a Instagram',
+      region:  'Fotos dels vestits de Meri, Fallera Major 2027 de Pinedo',
+      alts: [
+        "Una jove posa al costat del vestit d'espolí «Tetuán» en l'exposició",
+        "L'espolí «Tetuán» en color xampany, vist de costat, amb l'«Almudena» al fons",
+        'Detall del cosset i la manteleta del «Tetuán»',
+        'El «Tetuán» amb el davantal de punta daurada',
+        "L'esquena del «Tetuán», amb el llaç de la cintura",
+        "Falda de l'espolí «Tetuán» amb les seues flors de colors",
+        "Detall de les flors teixides de l'espolí «Tetuán»",
+        'Vestit «Almudena» en blau marí',
+        'Vestit «Brunet» en rosa antic, detall del cosset',
+        'Vestit «Lazos» en gris, detall del cosset i la joia',
+        'Vestit «Lazos» en verd, exclusiu de Cosas Cucas',
+        "Dos vestits de l'exposició, en gris i en rosa",
+        "La mantellina de l'ofrena i la banda de fallera major",
+        'Les sabates i les calces calades, brodades amb la inicial M',
+      ],
+    },
     corte: {
       eyebrow: 'Notícia · Octubre 2026',
       title:   "Cort d'Honor de la Fallera Major de València 2027",
       p1:      "Dues de les falleres de la Cort d'Honor de la Fallera Major de València 2027 vestixen de Cosas Cucas: Alejandra Blanco Beltrán, de la falla Mestre Rodrigo-General Avilés, i Laura Miquel Obarti, de la falla Avinguda de l'Oest.",
       p2:      "A Alejandra ja la vam vestir en 2026, quan va ser Fallera Major de la seua falla. Que totes dues porten els nostres vestits en la cort de València és una alegria més en un any molt especial per a la casa.",
       region:  "Fotos de les falleres de la Cort d'Honor 2027 vestides per Cosas Cucas",
+      fotos:   'Fotos a Instagram:',
+      y:       'i',
       falla:   'Falla',
       role:    "de la Cort d'Honor de la Fallera Major de València 2027",
     },
@@ -4902,7 +5056,8 @@ function initHeroSlider() {
     ...NOTICIA_FOTOS.map((src, i) => ({
       src: `${src}.webp`, foco: NOTICIA_FOCO[i], alt: () => t().noticia.alts[i],
     })),
-    ...CORTE_2027.flatMap(p => p.fotos.map(f => ({
+    /* las verticales de la corte son pequeñas (900 px) y a lo ancho se verían borrosas */
+    ...CORTE_2027.flatMap(p => p.fotos.filter(f => !f.vertical).map(f => ({
       src: f.src, foco: f.foco || 'center 25%', alt: () => `${p.nombre}, ${t().corte.role}`,
     }))),
   ];
@@ -5516,8 +5671,21 @@ const NOTICIA_VERTICAL = NOTICIA_ORDEN.map(([, , v]) => !!v);
              vertical: true, foco: 'center 25%' }]
    vertical: true si la foto es más alta que ancha (se ve entera sobre fondo difuminado);
    foco: encuadre (object-position) en la portada y, si no es vertical, también en el carrusel. */
+/* Procedencia de las fotos de la corte, para el crédito bajo el texto */
+const CORTE_CREDITOS = [
+  { autor: '@edgfotografia',     url: 'https://www.instagram.com/p/DP6x_SkCL7u/' },
+  { autor: '@alejandrablaancoo', url: 'https://www.instagram.com/p/DX63EryCNKg/' },
+];
 const CORTE_2027 = [
-  { nombre: 'Alejandra Blanco Beltrán', falla: 'Mestre Rodrigo-General Avilés', fotos: [] },
+  { nombre: 'Alejandra Blanco Beltrán', falla: 'Mestre Rodrigo-General Avilés', fotos: [
+    ...[[1, 'center 25%', true], [2, 'center 25%', true],
+        [3, '50% 30%'], [4, '62% 30%'], [5, '50% 30%'], [6, '20% 30%'],
+        [7, '45% 30%'], [8, '50% 30%'], [9, '62% 30%'], [10, '35% 30%']]
+      .map(([n, foco, vertical]) => {
+        const f = `noticias/corte-2027/alejandra-${String(n).padStart(2, '0')}`;
+        return { src: `${f}.webp`, mini: `${f}-mini.webp`, foco, vertical: !!vertical };
+      }),
+  ] },
   { nombre: 'Laura Miquel Obarti',      falla: "Avinguda de l'Oest",            fotos: [] },
 ];
 
@@ -5531,11 +5699,49 @@ function buildCorte() {
   document.getElementById('corte27-title').textContent   = c.title;
   document.getElementById('corte27-p1').textContent      = c.p1;
   document.getElementById('corte27-p2').textContent      = c.p2;
+  document.getElementById('corte27-credito').innerHTML = `${c.fotos} ` + CORTE_CREDITOS.map(cr =>
+    `<a href="${cr.url}" target="_blank" rel="noopener">${cr.autor}</a>`).join(` ${c.y} `);
   renderCarousel('corte', document.getElementById('nf-corte'), items.map(it => ({
     src: it.src, mini: it.mini || it.src, vertical: !!it.vertical, foco: it.foco || 'center 25%',
     alt: `${it.nombre}, ${c.role}`,
     caption: { name: it.nombre, falla: `${c.falla} ${it.falla}` },
   })), { ...t().noticia, region: c.region });
+}
+
+/* Fotos de la noticia de Meri (de la publicación de @jose_espolin_estudio, con crédito).
+   Todas se muestran enteras sobre fondo difuminado: casi todas son verticales. */
+const MERI_FOTOS = Array.from({ length: 14 }, (_, i) => `noticias/meri-zalve-${String(i + 1).padStart(2, '0')}`);
+
+function buildMeri() {
+  const m = t().meri;
+  const set = (id, txt) => { document.getElementById(id).textContent = txt; };
+  set('meri-eyebrow', m.eyebrow);
+  set('meri-title', m.title);
+  set('meri-p1', m.p1);
+  set('meri-p2', m.p2);
+  set('meri-p3', m.p3);
+  set('meri-credito', m.credito);
+  renderCarousel('meri', document.getElementById('nf-meri'), MERI_FOTOS.map((src, i) => ({
+    src: `${src}.webp`, mini: `${src}-mini.webp`, vertical: true, alt: m.alts[i],
+  })), { ...t().noticia, region: m.region });
+}
+
+/* Apartado de noticias: cabecera con accesos a cada noticia visible y fondos
+   alternos (oscuro / crema, carrusel a la derecha / izquierda) aunque alguna esté oculta */
+function buildNoticias() {
+  const n = t().noticias;
+  document.getElementById('noticias-eyebrow').textContent = n.eyebrow;
+  document.getElementById('noticias-title').textContent   = n.title;
+  document.getElementById('noticias-text').textContent    = n.text;
+  const visibles = [...document.querySelectorAll('section.noticia')].filter(sec => !sec.hidden);
+  visibles.forEach((sec, i) => {
+    sec.classList.toggle('noticia--crema', i % 2 === 1);
+    sec.querySelector('.noticia__inner').classList.toggle('noticia__inner--alt', i % 2 === 1);
+  });
+  document.getElementById('noticias-lista').setAttribute('aria-label', n.nav);
+  document.getElementById('noticias-lista').innerHTML = visibles.map(sec =>
+    `<a class="noticias-cab__item" href="#${sec.id}" title="${n.ir}">${sec.querySelector('.noticia__title').textContent}</a>`
+  ).join('');
 }
 
 function buildNoticia() {
@@ -5694,6 +5900,8 @@ function renderAll() {
   renderHero(t().drops[0]);
   buildNoticia();
   buildCorte();
+  buildMeri();
+  buildNoticias();
   initHeroSlider();           /* ImagePlayer: fotos de pasarela en bucle */
   buildArchive(); buildFMDetail(); buildZapatillas(); buildHistoria();
   buildEditorial(); buildDossierHistoria(); buildDecoracion(); buildVideos(); buildResenas();
