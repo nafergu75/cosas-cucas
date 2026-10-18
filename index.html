@@ -542,7 +542,7 @@
     }
     .nf__thumbs {
       position: relative; margin-top: 14px;
-      display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 8px;
+      display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 8px;
     }
     .nf__thumb {
       position: relative; aspect-ratio: 3 / 2; padding: 0; overflow: hidden; border-radius: 3px;
@@ -3048,7 +3048,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
           </button>
         </div>
-        <p class="nf__counter" aria-hidden="true"><span id="nf-cur">01</span><span class="nf__sep">/</span><span class="nf__total" id="nf-total">19</span></p>
+        <p class="nf__counter" aria-hidden="true"><span id="nf-cur">01</span><span class="nf__sep">/</span><span class="nf__total" id="nf-total">15</span></p>
         <div class="nf__progress" aria-hidden="true"><span id="nf-bar"></span></div>
       </div>
       <div class="nf__thumbs" id="nf-thumbs"></div>
@@ -3749,18 +3749,14 @@ const translations = {
         'Julia Vizcayno sube las escaleras del Ayuntamiento entre aplausos',
         'Julia Vizcayno en las escaleras, vista desde arriba',
         'Julia Vizcayno llega por la alfombra roja entre aplausos',
-        'Julia Vizcayno sonríe al llegar por la alfombra roja',
         'Julia Vizcayno da la mano a la alcaldesa de València',
-        'Julia Vizcayno, de la mano de la alcaldesa',
         'Julia Vizcayno de espaldas: se ven el lazo y la falda del traje',
         'Julia Vizcayno saluda a la Fallera Mayor de València',
         'Julia Vizcayno camina por el salón con el traje completo',
         'Julia Vizcayno saluda al público',
-        'Julia Vizcayno saluda; se ve el traje de cuerpo entero',
         'Julia Vizcayno en la mesa presidencial del hemiciclo del Ayuntamiento',
         'Julia Vizcayno sonríe sentada en la mesa presidencial',
         'Julia Vizcayno sonríe con su ramo de flores sobre la alfombra roja',
-        'Julia Vizcayno camina por la alfombra roja con su ramo',
         'Julia Vizcayno posa con su ramo junto a un jarrón de cerámica',
         'Julia Vizcayno con su ramo en un salón del Ayuntamiento',
         'Retrato de estudio de Julia Vizcayno con la manteleta blanca y dorada',
@@ -4249,18 +4245,14 @@ const translations = {
         "Julia Vizcayno puja les escales de l'Ajuntament entre aplaudiments",
         'Julia Vizcayno a les escales, vista des de dalt',
         'Julia Vizcayno arriba per la catifa roja entre aplaudiments',
-        'Julia Vizcayno somriu en arribar per la catifa roja',
         "Julia Vizcayno dona la mà a l'alcaldessa de València",
-        "Julia Vizcayno, de la mà de l'alcaldessa",
         "Julia Vizcayno d'esquena: es veuen el llaç i la falda del vestit",
         'Julia Vizcayno saluda la Fallera Major de València',
         'Julia Vizcayno camina pel saló amb el vestit complet',
         'Julia Vizcayno saluda el públic',
-        'Julia Vizcayno saluda; es veu el vestit de cos sencer',
         "Julia Vizcayno a la mesa presidencial de l'hemicicle de l'Ajuntament",
         'Julia Vizcayno somriu asseguda a la mesa presidencial',
         'Julia Vizcayno somriu amb el seu ram de flors sobre la catifa roja',
-        'Julia Vizcayno camina per la catifa roja amb el seu ram',
         "Julia Vizcayno posa amb el seu ram al costat d'un gerro de ceràmica",
         "Julia Vizcayno amb el seu ram en un saló de l'Ajuntament",
         "Retrat d'estudi de Julia Vizcayno amb la manteleta blanca i daurada",
@@ -5485,11 +5477,10 @@ function buildResenas() {
    carrusel sobre un fondo difuminado. Los textos alternativos van en este mismo orden. */
 const NOTICIA_ORDEN = [
   ['01', '42% 25%'], ['02', '50% 25%'], ['03', '52% 25%'],
-  ['13', '47% 30%'], ['14', '48% 30%'], ['15', '42% 25%'], ['16', '42% 25%'],
-  ['17', '50% 30%'], ['18', '38% 25%'],
-  ['04', '48% 25%'], ['05', '47% 25%'], ['06', '52% 25%'],
+  ['14', '48% 30%'], ['15', '42% 25%'], ['17', '50% 30%'], ['18', '38% 25%'],
+  ['04', '48% 25%'], ['05', '47% 25%'],
   ['07', '75% 25%'], ['08', '55% 25%'],
-  ['09', '45% 25%'], ['10', '47% 25%'],
+  ['10', '47% 25%'],
   ['11', 'center 40%', true], ['12', 'center 40%', true], ['19', 'center 30%', true],
 ];
 const NOTICIA_FOTOS    = NOTICIA_ORDEN.map(([n]) => `noticias/julia-vizcayno-${n}`);
