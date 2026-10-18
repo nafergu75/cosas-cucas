@@ -164,6 +164,7 @@ Al abrir la colección salen dos tarjetas con foto: **Espolín** e **Indumentari
 Ordenado de lo más nuevo a lo más antiguo. Cada línea es un trabajo terminado y publicado.
 
 ### 19-10-2026
+- **Semana Santa en filas completas:** 18 fotos (seis filas de 3 en escritorio, nueve de 2 en tablet). Se quitó la 19 («Mantilla Negra de Encaje Floral y Medalla de Cofradía», `ss19`), que se quedaba sola en la última fila; su ruta sigue en `IMG.ss19` por si se recupera.
 - **Telas Valencianas sin el cartel «Nueva»:** quitado de las nueve telas que lo llevaban (t17 a t25, también «Nova» en VAL). Siguen «Exclusivo» (Calanda) y «Destacada» (Sinfonía).
 - **Arreglos de la revisión de «Joyas»:** el cartel de la exposición va sin el zoom lento (se comía los logos del pie) y las dos fotos pequeñas de la inauguración ya no se amplían (clases `nf__slide--fija` y `nf__slide--peq`, con `fija` y `peq` en los datos del carrusel). Tarjetas de «Más noticias»: dos columnas hasta 860 px con la tercera centrada debajo, y tres desde 861 px.
 - **Portadas de «Más noticias» con las fotos enteras:** la portada de cada tarjeta pasa a 3:2, que es lo que ocupan dos fotos verticales 3:4 juntas, así que se ven sin recortar; en móvil la tarjeta va en vertical (fotos arriba, texto debajo) en vez de en tiras estrechas. En la de Meri, el «Lazos» verde en lugar del «Almudena» (tras quitarle el marco, el «Almudena» perdía el bajo). Se probó una galería en mosaico dentro de las noticias, pero Ignacio prefirió quedarse con el carrusel.
