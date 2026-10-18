@@ -591,6 +591,24 @@
     .noticia--crema .noticia__eyebrow { color: #7A5C1E; }
     .noticia--crema { border-bottom: 1px solid var(--color-border); }
     .noticia__credito { margin-top: 18px; font-size: .72rem; letter-spacing: .04em; }
+    /* recuadro «En la prensa» de la noticia de Julia (fondo oscuro) */
+    .noticia__prensa {
+      margin: 22px 0 26px; padding: 14px 18px; max-width: 440px;
+      border-left: 2px solid var(--color-gold); border-radius: 0; background: rgba(253,250,243,.04);
+    }
+    .noticia__prensa-tag {
+      display: block; margin-bottom: 6px; font-size: .62rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase; color: var(--color-gold);
+    }
+    .noticia__prensa-texto { margin: 0 0 10px; font-size: .9rem; line-height: 1.65; color: rgba(253,250,243,.78); }
+    .noticia__prensa-enlace {
+      font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--color-gold-light); text-decoration: none; border-bottom: 1px solid rgba(212,177,102,.4);
+    }
+    .noticia__prensa-enlace::after { content: '→'; margin-left: 8px; }
+    .noticia__prensa-enlace:hover { color: var(--color-white); border-color: var(--color-gold-light); }
+    .noticia__prensa-enlace:focus-visible { outline: 2px solid var(--color-gold-light); outline-offset: 3px; }
+    @media (max-width: 1024px) { .noticia__prensa { max-width: 640px; } }
     .noticia__credito a { color: inherit; opacity: .7; text-decoration: underline; text-underline-offset: 3px; }
     .noticia__credito a:hover { opacity: 1; }
 
@@ -687,10 +705,11 @@
     @media (min-width: 601px) and (max-width: 860px) {
       .notas { grid-template-columns: repeat(2, minmax(0, 340px)); }
       /* si queda una sola en la última fila, centrada */
-      .notas > li:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: min(100%, 340px); }
+      .notas > li:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: min(340px, calc((100% - 28px) / 2)); }
     }
     @media (min-width: 861px) {
       .notas { grid-template-columns: repeat(3, minmax(0, 340px)); }
+      .notas > li:last-child:nth-child(3n + 1) { grid-column: 2; }
     }
     @media (max-width: 600px) {
       .mas-noticias { padding: 56px 0 64px; }
@@ -3219,6 +3238,11 @@
       <p class="noticia__lead" id="noticia-p1"></p>
       <p class="noticia__lead" id="noticia-p2"></p>
       <p class="noticia__dedica" id="noticia-p3"></p>
+      <div class="noticia__prensa">
+        <span class="noticia__prensa-tag" id="noticia-prensa-tag"></span>
+        <p class="noticia__prensa-texto" id="noticia-prensa"></p>
+        <a class="noticia__prensa-enlace" id="noticia-prensa-link" href="https://officialpress.es/traje-julia-vizcayno-orero-una-festa-per-a-tots/" target="_blank" rel="noopener"></a>
+      </div>
       <a class="noticia__link" id="noticia-link" href="#falleras-mayores"></a>
     </div>
     <div class="nf" id="nf" role="region" aria-roledescription="carrusel">
@@ -3368,6 +3392,46 @@
           <p class="noticia__credito" id="joyas-credito"></p>
         </div>
         <div class="nf" id="nf-joyas" role="region" aria-roledescription="carrusel">
+          <div class="nf__stage" tabindex="0" role="group">
+            <div class="nf__slides"></div>
+            <button type="button" class="nf__arrow nf__arrow--prev">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button type="button" class="nf__arrow nf__arrow--next">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <div class="nf__ctrls">
+              <button type="button" class="nf__ctrl nf__ctrl--pause">
+                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
+              </button>
+              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+              </button>
+            </div>
+            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
+            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
+          </div>
+          <div class="nf__thumbs"></div>
+          <p class="nf__live" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         NOTICIA — Premio Joia 2018 del Gremio de Sastres y Modistas a Paquita
+         Martorell (junio de 2018). Textos en t().joia; fotos en JOIA_FOTOS.
+    ════════════════════════════════════════════════════════════════════════ -->
+    <section id="noticia-joia" class="noticia noticia--crema">
+      <div class="container noticia__inner">
+        <div class="noticia__text">
+          <p class="noticia__eyebrow" id="joia-eyebrow"></p>
+          <h2 class="noticia__title" id="joia-title"></h2>
+          <p class="noticia__lead" id="joia-p1"></p>
+          <p class="noticia__lead" id="joia-p2"></p>
+          <p class="noticia__lead" id="joia-p3"></p>
+        </div>
+        <div class="nf" id="nf-joia" role="region" aria-roledescription="carrusel">
           <div class="nf__stage" tabindex="0" role="group">
             <div class="nf__slides"></div>
             <button type="button" class="nf__arrow nf__arrow--prev">
@@ -4077,6 +4141,9 @@ const translations = {
       p2:      'Vestirla en toda su trayectoria ha sido un verdadero honor, pero el 14 de octubre, al verla subir las escaleras del Ayuntamiento vestida por nuestra casa, el corazón se nos llenó de lágrimas y orgullo.',
       p3:      'Julia, gracias por dejarnos tejer la historia de tu vida.',
       link:    'Falleras mayores vestidas por Cosas Cucas',
+      prensaTag:  'En la prensa',
+      prensa:     'En «Una Festa per a Tots», en Nuevo Centro, Julia estrenó su primer traje como Fallera Mayor Infantil: un brocatel de seda y oro de fondo verde, de estilo del siglo XIX, confeccionado en Cosas Cucas. La manteleta, de tul y oro, es de Hijas de Carmen Esteve.',
+      prensaLink: 'Leer la noticia en Official Press',
       region:  'Fotos de Julia Vizcayno en el Ayuntamiento de València',
       prev:    'Foto anterior',
       next:    'Foto siguiente',
@@ -4160,6 +4227,25 @@ const translations = {
         'Foto de grupo durante la exposición',
         'Dos asistentes miran los trajes durante la exposición',
         'Cartel de la II Exposición «Joyas de la Indumentaria», del 2 al 5 de junio en el Salón de Cristal',
+      ],
+    },
+    joia: {
+      eyebrow: 'Noticia · Junio 2018',
+      title:   'Premio Joia 2018 para Paquita Martorell',
+      p1:      'El 15 de junio de 2018, el Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana entregó su Premio Joia a Paquita Martorell, la fundadora de Cosas Cucas, por más de treinta años de trabajo sin interrupción en la indumentaria valenciana.',
+      p2:      'Se lo dio el maestro mayor del Gremio, Fran Tochena, en el acto que se celebró en el Hotel Ayre Astoria Palace de València. El premio es una aguja de oro blanco de estilo barroco hecha por Art Antic. Las menciones de honor de ese año fueron para la empresa textil Tejedores Bartual y para el periodista Guillermo Ortigueira.',
+      p3:      'En el salón expusimos algunos de nuestros trajes, y el 20 de septiembre de ese año cerramos el I Desfile de Indumentaria Valenciana del Gremio, en el Ateneo Mercantil. Para la casa fue el reconocimiento a toda una vida entre telas: la que Paquita empezó en el Cabañal y que hoy siguen sus hijas Noelia, María y Paqui en el taller.',
+      region:  'Fotos del Premio Joia 2018 a Paquita Martorell',
+      alts: [
+        'Una mujer y un hombre posan ante el photocall del Premio Joia, con el escudo del Gremio',
+        'Cinco personas ante el photocall del Gremio y de Art Antic',
+        'Dos mujeres posan ante el photocall del Premio Joia',
+        'Tres mujeres posan ante el photocall del Premio Joia',
+        'Cinco mujeres posan ante el photocall del acto',
+        'Foto de grupo ante el photocall; a la derecha, trajes expuestos',
+        'Trajes de Cosas Cucas expuestos en el salón, con el cartel de la casa y un ramo de rosas',
+        'Trajes de mujer y de hombre expuestos durante el acto',
+        'El salón con los trajes expuestos',
       ],
     },
     corte: {
@@ -4623,6 +4709,9 @@ const translations = {
       p2:      "Vestir-la en tota la seua trajectòria ha sigut un veritable honor, però el 14 d'octubre, en veure-la pujar les escales de l'Ajuntament vestida per la nostra casa, el cor se'ns va omplir de llàgrimes i d'orgull.",
       p3:      "Julia, gràcies per deixar-nos teixir la història de la teua vida.",
       link:    'Falleres majors vestides per Cosas Cucas',
+      prensaTag:  'A la premsa',
+      prensa:     "A «Una Festa per a Tots», a Nuevo Centro, Julia va estrenar el seu primer vestit com a Fallera Major Infantil: un brocatel de seda i or de fons verd, d'estil del segle XIX, confeccionat a Cosas Cucas. La manteleta, de tul i or, és d'Hijas de Carmen Esteve.",
+      prensaLink: 'Llegir la notícia a Official Press',
       region:  "Fotos de Julia Vizcayno a l'Ajuntament de València",
       prev:    'Foto anterior',
       next:    'Foto següent',
@@ -4706,6 +4795,25 @@ const translations = {
         "Foto de grup durant l'exposició",
         "Dos assistents miren els vestits durant l'exposició",
         'Cartell de la II Exposició «Joyas de la Indumentaria», del 2 al 5 de juny al Saló de Cristall',
+      ],
+    },
+    joia: {
+      eyebrow: 'Notícia · Juny 2018',
+      title:   'Premi Joia 2018 per a Paquita Martorell',
+      p1:      'El 15 de juny de 2018, el Gremi Artesà de Sastres i Modistes de la Comunitat Valenciana va lliurar el seu Premi Joia a Paquita Martorell, la fundadora de Cosas Cucas, per més de trenta anys de treball sense interrupció en la indumentària valenciana.',
+      p2:      "Li'l va donar el mestre major del Gremi, Fran Tochena, en l'acte que es va celebrar a l'Hotel Ayre Astoria Palace de València. El premi és una agulla d'or blanc d'estil barroc feta per Art Antic. Les mencions d'honor d'eixe any van ser per a l'empresa tèxtil Tejedores Bartual i per al periodista Guillermo Ortigueira.",
+      p3:      "Al saló vam exposar alguns dels nostres vestits, i el 20 de setembre d'eixe any vam tancar la I Desfilada d'Indumentària Valenciana del Gremi, a l'Ateneu Mercantil. Per a la casa va ser el reconeixement a tota una vida entre teles: la que Paquita va començar al Cabanyal i que hui continuen les seues filles Noelia, María i Paqui al taller.",
+      region:  'Fotos del Premi Joia 2018 a Paquita Martorell',
+      alts: [
+        "Una dona i un home posen davant del photocall del Premi Joia, amb l'escut del Gremi",
+        "Cinc persones davant del photocall del Gremi i d'Art Antic",
+        'Dues dones posen davant del photocall del Premi Joia',
+        'Tres dones posen davant del photocall del Premi Joia',
+        "Cinc dones posen davant del photocall de l'acte",
+        'Foto de grup davant del photocall; a la dreta, vestits exposats',
+        'Vestits de Cosas Cucas exposats al saló, amb el cartell de la casa i un ram de roses',
+        "Vestits de dona i d'home exposats durant l'acte",
+        'El saló amb els vestits exposats',
       ],
     },
     corte: {
@@ -6065,6 +6173,25 @@ function buildJoyas() {
   })), { ...t().noticia, region: j.region });
 }
 
+/* Fotos del Premio Joia 2018 (Ignacio, carpeta «premi joia»), en el orden del carrusel;
+   la 7 es vertical (se ve entera sobre fondo difuminado) */
+const JOIA_FOTOS = [false, false, false, false, false, false, true, false, false]
+  .map((vertical, i) => ({ src: `noticias/joia-${String(i + 1).padStart(2, '0')}`, vertical }));
+
+function buildJoia() {
+  const j = t().joia;
+  const set = (id, txt) => { document.getElementById(id).textContent = txt; };
+  set('joia-eyebrow', j.eyebrow);
+  set('joia-title', j.title);
+  set('joia-p1', j.p1);
+  set('joia-p2', j.p2);
+  set('joia-p3', j.p3);
+  renderCarousel('joia', document.getElementById('nf-joia'), JOIA_FOTOS.map((f, i) => ({
+    src: `${f.src}.webp`, mini: `${f.src}-mini.webp`, vertical: f.vertical,
+    foco: f.vertical ? undefined : 'center 30%', alt: j.alts[i],
+  })), { ...t().noticia, region: j.region });
+}
+
 /* Noticias que salen como tarjeta bajo la principal y se leen en el lector.
    fotos: dos [mini, foco] para la tarjeta, una junto a otra; mejor verticales 3:4,
    que así se ven enteras (la portada es 3:2). */
@@ -6080,6 +6207,10 @@ const NOTICIAS_MAS = [
   { id: 'noticia-joyas', textos: () => t().joyas, fotos: [
     ['noticias/joyas-01-mini.webp', 'center'],
     ['noticias/joyas-02-mini.webp', 'center'],
+  ] },
+  /* una sola foto apaisada: la grande, que la mini se quedaría corta a lo ancho */
+  { id: 'noticia-joia',  textos: () => t().joia,  fotos: [
+    ['noticias/joia-01.webp', 'center 30%'],
   ] },
 ];
 
@@ -6250,6 +6381,9 @@ function buildNoticia() {
   set('noticia-p2', n.p2);
   set('noticia-p3', n.p3);
   set('noticia-link', n.link);
+  set('noticia-prensa-tag', n.prensaTag);
+  set('noticia-prensa', n.prensa);
+  set('noticia-prensa-link', n.prensaLink);
   renderCarousel('julia', document.getElementById('nf'), NOTICIA_FOTOS.map((src, i) => ({
     src: `${src}.webp`, mini: `${src}-mini.webp`, vertical: NOTICIA_VERTICAL[i], alt: n.alts[i],
   })), n);
@@ -6397,6 +6531,7 @@ function renderAll() {
   buildCorte();
   buildMeri();
   buildJoyas();
+  buildJoia();
   buildNoticias();
   initHeroSlider();           /* ImagePlayer: fotos de pasarela en bucle */
   buildArchive(); buildFMDetail(); buildZapatillas(); buildHistoria();
