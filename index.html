@@ -365,7 +365,7 @@
       width: 100%; height: 100%;
       object-fit: cover; object-position: center top;
       opacity: 0;
-      transition: opacity 1.4s ease;
+      transition: opacity 2s ease;
       will-change: opacity;
     }
     .hero-slide.active { opacity: 1; }
@@ -4874,7 +4874,7 @@ function renderHero(drop) {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   IMAGE PLAYER — pase de fotos de la portada (crossfade, 4 s por foto)
+   IMAGE PLAYER — pase de fotos de la portada (crossfade, 7 s por foto)
    Muestra a Julia Vizcayno (FMI 2027) y, cuando tengan fotos, a la Corte 2027
 ═══════════════════════════════════════════════════════════════════════ */
 function initHeroSlider() {
@@ -4898,7 +4898,7 @@ function initHeroSlider() {
     el._slide = slide;
   };
 
-  const INTERVAL = 4000; // 4 s por foto — cómodo para ver cada imagen
+  const INTERVAL = 7000; // 7 s por foto (con 4 s iban demasiado deprisa)
   let cur = 0;
 
   const elA  = document.getElementById('hero-slide-a');
