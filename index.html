@@ -572,49 +572,37 @@
     .nf:fullscreen .nf__stage:focus-visible { box-shadow: 0 0 0 2px var(--color-gold-light); }
     .nf:fullscreen .nf__slide img { object-fit: contain; }
     .nf:fullscreen .nf__thumbs { width: 100%; max-width: 900px; margin: 14px auto 0; }
-    /* ── CORTE DE HONOR 2027 (más discreto que la noticia) ── */
-    .corte27 { background: var(--color-bg-alt); padding: 72px 0; scroll-margin-top: var(--header-h); }
-    .corte27[hidden] { display: none; }
-    .corte27__head { max-width: 640px; margin-bottom: 36px; }
-    .corte27__eyebrow {
-      font-size: .7rem; font-weight: 700; letter-spacing: .2em;
-      text-transform: uppercase; color: var(--color-gold); margin-bottom: 12px;
+    /* ── Segunda noticia (Corte de Honor 2027): fondo crema y carrusel a la izquierda ── */
+    .noticia[hidden] { display: none; }
+    .noticia--crema { background: var(--color-bg); color: var(--color-text); }
+    .noticia--crema .noticia__title { color: var(--color-text); }
+    .noticia--crema .noticia__lead  { color: var(--color-text-muted); }
+    .noticia--crema .nf__stage { box-shadow: 0 24px 60px rgba(26,23,20,.18), 0 0 0 1px rgba(181,144,58,.35); }
+    .noticia--crema .nf__stage:focus-visible { box-shadow: 0 24px 60px rgba(26,23,20,.18), 0 0 0 2px var(--color-text); }
+    .noticia--crema .nf__thumb.is-active::after { border-color: var(--color-gold); }
+    .noticia--crema .nf__thumb:focus-visible { outline-color: var(--color-gold); }
+    .noticia__inner--alt { grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); }
+    /* pie de foto del carrusel (nombre y falla de la foto que se ve) */
+    .nf__caption {
+      display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px;
+      margin: 14px 0 0; min-height: 1.6em;
     }
-    .corte27__title {
-      font-family: var(--font-display); font-weight: 400;
-      font-size: clamp(1.6rem, 2.6vw, 2.2rem); line-height: 1.15; color: var(--color-text); margin-bottom: 12px;
-    }
-    .corte27__text { font-size: .95rem; line-height: 1.75; color: var(--color-text-muted); }
-    .corte27__grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px;
-    }
-    .corte27__fig {
-      margin: 0; background: var(--color-white); border: 1px solid var(--color-border);
-      overflow: hidden; transition: box-shadow .3s;
-    }
-    .corte27__fig:hover { box-shadow: 0 8px 30px rgba(26,23,20,.1); }
-    .corte27__img { aspect-ratio: 4 / 5; overflow: hidden; background: var(--color-bg); }
-    .corte27__img img {
-      width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s;
-    }
-    .corte27__fig:hover .corte27__img img { transform: scale(1.03); }
-    .corte27__cap { padding: 14px 16px 16px; border-top: 1px solid var(--color-border); }
-    .corte27__name { font-family: var(--font-display); font-style: italic; font-size: 1rem; color: var(--color-text); line-height: 1.3; }
-    .corte27__falla {
-      margin-top: 4px; font-size: .62rem; font-weight: 700; letter-spacing: .1em;
+    .nf__cap-name { font-family: var(--font-display); font-style: italic; font-size: 1.15rem; color: var(--color-text); }
+    .nf__cap-falla {
+      font-size: .66rem; font-weight: 700; letter-spacing: .12em;
       text-transform: uppercase; color: var(--color-gold);
     }
+    .nf:fullscreen .nf__caption { justify-content: center; }
+    .nf:fullscreen .nf__cap-name { color: var(--color-white); }
 
     @media (max-width: 1024px) {
-      .noticia__inner { grid-template-columns: 1fr; }
+      .noticia__inner, .noticia__inner--alt { grid-template-columns: 1fr; }
+      .noticia__inner--alt .noticia__text { order: -1; }
       .noticia__lead, .noticia__dedica { max-width: 640px; }
     }
     @media (max-width: 600px) {
       .noticia { padding: 64px 0; }
-      .corte27 { padding: 56px 0; }
-      .corte27__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-      .corte27__cap { padding: 10px 10px 12px; }
-      .corte27__name { font-size: .9rem; }
+      .nf__cap-name { font-size: 1rem; }
       .hero-news { margin-bottom: 16px; }
       .nf__arrow { width: 40px; height: 40px; margin-top: -20px; }
       .nf__arrow--prev { left: 10px; }
@@ -632,7 +620,7 @@
       .hero-news__dot { animation: none; }
       .nf__slide { transition-duration: .2s; }
       .nf__slide.is-active img, .nf__slide.is-leaving img { animation: none; }
-      .nf__progress, #nf-pause { display: none; }
+      .nf__progress, .nf__ctrl--pause { display: none; }
       .hero-slide { transition: none; }
     }
 
@@ -3037,44 +3025,69 @@
       <a class="noticia__link" id="noticia-link" href="#falleras-mayores"></a>
     </div>
     <div class="nf" id="nf" role="region" aria-roledescription="carrusel">
-      <div class="nf__stage" id="nf-stage" tabindex="0" role="group">
-        <div class="nf__slides" id="nf-slides"></div>
-        <button type="button" class="nf__arrow nf__arrow--prev" id="nf-prev">
+      <div class="nf__stage" tabindex="0" role="group">
+        <div class="nf__slides"></div>
+        <button type="button" class="nf__arrow nf__arrow--prev">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-        <button type="button" class="nf__arrow nf__arrow--next" id="nf-next">
+        <button type="button" class="nf__arrow nf__arrow--next">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
         <div class="nf__ctrls">
-          <button type="button" class="nf__ctrl" id="nf-pause">
+          <button type="button" class="nf__ctrl nf__ctrl--pause">
             <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
             <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
           </button>
-          <button type="button" class="nf__ctrl" id="nf-full" hidden>
+          <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
           </button>
         </div>
-        <p class="nf__counter" aria-hidden="true"><span id="nf-cur">01</span><span class="nf__sep">/</span><span class="nf__total" id="nf-total">14</span></p>
-        <div class="nf__progress" aria-hidden="true"><span id="nf-bar"></span></div>
+        <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
+        <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
       </div>
-      <div class="nf__thumbs" id="nf-thumbs"></div>
-      <p class="nf__live" id="nf-live" aria-live="polite"></p>
+      <div class="nf__thumbs"></div>
+      <p class="nf__live" aria-live="polite"></p>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
-     CORTE DE HONOR 2027 — falleras de la corte vestidas por Cosas Cucas.
-     Datos y fotos en CORTE_2027 (JS). Oculto mientras ninguna tenga fotos.
+     SEGUNDA NOTICIA — Corte de Honor 2027 (fondo crema, carrusel a la izquierda).
+     Datos y fotos en CORTE_2027 (JS); textos en t().corte. Oculta mientras no haya fotos.
 ═══════════════════════════════════════════════════════════════════════════ -->
-<section id="corte-2027" class="corte27" hidden>
-  <div class="container">
-    <div class="corte27__head">
-      <p class="corte27__eyebrow" id="corte27-eyebrow"></p>
-      <h2 class="corte27__title" id="corte27-title"></h2>
-      <p class="corte27__text" id="corte27-text"></p>
+<section id="corte-2027" class="noticia noticia--crema" hidden>
+  <div class="container noticia__inner noticia__inner--alt">
+    <div class="nf" id="nf-corte" role="region" aria-roledescription="carrusel">
+      <div class="nf__stage" tabindex="0" role="group">
+        <div class="nf__slides"></div>
+        <button type="button" class="nf__arrow nf__arrow--prev">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button type="button" class="nf__arrow nf__arrow--next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <div class="nf__ctrls">
+          <button type="button" class="nf__ctrl nf__ctrl--pause">
+            <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+            <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
+          </button>
+          <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+          </button>
+        </div>
+        <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
+        <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
+      </div>
+      <p class="nf__caption"><span class="nf__cap-name"></span><span class="nf__cap-falla"></span></p>
+      <div class="nf__thumbs"></div>
+      <p class="nf__live" aria-live="polite"></p>
     </div>
-    <div class="corte27__grid" id="corte27-grid"></div>
+    <div class="noticia__text">
+      <p class="noticia__eyebrow" id="corte27-eyebrow"></p>
+      <h2 class="noticia__title" id="corte27-title"></h2>
+      <p class="noticia__lead" id="corte27-p1"></p>
+      <p class="noticia__lead" id="corte27-p2"></p>
+    </div>
   </div>
 </section>
 
@@ -3769,9 +3782,11 @@ const translations = {
       ],
     },
     corte: {
-      eyebrow: 'Corte de Honor · València 2027',
-      title:   'También en la Corte de Honor',
-      text:    'Dos falleras de la Corte de Honor de la Fallera Mayor de València 2027 visten de Cosas Cucas.',
+      eyebrow: 'Noticia · Octubre 2026',
+      title:   'Corte de Honor de la Fallera Mayor de València 2027',
+      p1:      "Dos de las falleras de la Corte de Honor de la Fallera Mayor de València 2027 visten de Cosas Cucas: Alejandra Blanco Beltrán, de la falla Mestre Rodrigo-General Avilés, y Laura Miquel Obarti, de la falla Avinguda de l'Oest.",
+      p2:      'A Alejandra ya la vestimos en 2026, cuando fue Fallera Mayor de su falla. Que las dos lleven nuestros trajes en la corte de València es una alegría más en un año muy especial para la casa.',
+      region:  'Fotos de las falleras de la Corte de Honor 2027 vestidas por Cosas Cucas',
       falla:   'Falla',
       role:    'de la Corte de Honor de la Fallera Mayor de València 2027',
     },
@@ -4265,9 +4280,11 @@ const translations = {
       ],
     },
     corte: {
-      eyebrow: "Cort d'Honor · València 2027",
-      title:   "També a la Cort d'Honor",
-      text:    "Dues falleres de la Cort d'Honor de la Fallera Major de València 2027 vestixen de Cosas Cucas.",
+      eyebrow: 'Notícia · Octubre 2026',
+      title:   "Cort d'Honor de la Fallera Major de València 2027",
+      p1:      "Dues de les falleres de la Cort d'Honor de la Fallera Major de València 2027 vestixen de Cosas Cucas: Alejandra Blanco Beltrán, de la falla Mestre Rodrigo-General Avilés, i Laura Miquel Obarti, de la falla Avinguda de l'Oest.",
+      p2:      "A Alejandra ja la vam vestir en 2026, quan va ser Fallera Major de la seua falla. Que totes dues porten els nostres vestits en la cort de València és una alegria més en un any molt especial per a la casa.",
+      region:  "Fotos de les falleres de la Cort d'Honor 2027 vestides per Cosas Cucas",
       falla:   'Falla',
       role:    "de la Cort d'Honor de la Fallera Major de València 2027",
     },
@@ -5493,9 +5510,12 @@ const NOTICIA_FOTOS    = NOTICIA_ORDEN.map(([n]) => `noticias/julia-vizcayno-${n
 const NOTICIA_FOCO     = NOTICIA_ORDEN.map(([, foco]) => foco);
 const NOTICIA_VERTICAL = NOTICIA_ORDEN.map(([, , v]) => !!v);
 
-/* Falleras de la Corte de Honor 2027 vestidas por Cosas Cucas. El bloque #corte-2027
+/* Falleras de la Corte de Honor 2027 vestidas por Cosas Cucas. La noticia #corte-2027
    y sus fotos en la portada aparecen solos al añadir fotos, por ejemplo:
-   fotos: [{ src: 'noticias/corte-2027/alejandra-01.webp', foco: 'center 25%' }] */
+   fotos: [{ src: 'noticias/corte-2027/alejandra-01.webp', mini: 'noticias/corte-2027/alejandra-01-mini.webp',
+             vertical: true, foco: 'center 25%' }]
+   vertical: true si la foto es más alta que ancha (se ve entera sobre fondo difuminado);
+   foco: encuadre (object-position) en la portada y, si no es vertical, también en el carrusel. */
 const CORTE_2027 = [
   { nombre: 'Alejandra Blanco Beltrán', falla: 'Mestre Rodrigo-General Avilés', fotos: [] },
   { nombre: 'Laura Miquel Obarti',      falla: "Avinguda de l'Oest",            fotos: [] },
@@ -5509,20 +5529,14 @@ function buildCorte() {
   if (!items.length) return;
   document.getElementById('corte27-eyebrow').textContent = c.eyebrow;
   document.getElementById('corte27-title').textContent   = c.title;
-  document.getElementById('corte27-text').textContent    = c.text;
-  document.getElementById('corte27-grid').innerHTML = items.map(it =>
-    `<figure class="corte27__fig">
-      <div class="corte27__img">
-        <img src="${it.src}" alt="${it.nombre}, ${c.role}" loading="lazy" decoding="async" style="object-position:${it.foco || 'center 25%'}" />
-      </div>
-      <figcaption class="corte27__cap">
-        <p class="corte27__name">${it.nombre}</p>
-        <p class="corte27__falla">${c.falla} ${it.falla}</p>
-      </figcaption>
-    </figure>`).join('');
+  document.getElementById('corte27-p1').textContent      = c.p1;
+  document.getElementById('corte27-p2').textContent      = c.p2;
+  renderCarousel('corte', document.getElementById('nf-corte'), items.map(it => ({
+    src: it.src, mini: it.mini || it.src, vertical: !!it.vertical, foco: it.foco || 'center 25%',
+    alt: `${it.nombre}, ${c.role}`,
+    caption: { name: it.nombre, falla: `${c.falla} ${it.falla}` },
+  })), { ...t().noticia, region: c.region });
 }
-let nfIndex = 0;
-let nfReady = false;
 
 function buildNoticia() {
   const n = t().noticia;
@@ -5535,94 +5549,113 @@ function buildNoticia() {
   set('noticia-p2', n.p2);
   set('noticia-p3', n.p3);
   set('noticia-link', n.link);
+  renderCarousel('julia', document.getElementById('nf'), NOTICIA_FOTOS.map((src, i) => ({
+    src: `${src}.webp`, mini: `${src}-mini.webp`, vertical: NOTICIA_VERTICAL[i], alt: n.alts[i],
+  })), n);
+}
 
-  document.getElementById('nf').setAttribute('aria-label', n.region);
-  document.getElementById('nf-prev').setAttribute('aria-label', n.prev);
-  document.getElementById('nf-next').setAttribute('aria-label', n.next);
-  document.getElementById('nf-stage').setAttribute('aria-label', n.stage);
-  nfLabels();
+/* ═══════════════════════════════════════════════════════════════════════════
+   CARRUSEL (.nf) — lo usan las dos noticias; cada uno guarda su estado en CAR.
+   Avanza cuando termina la barra dorada (animationend), así la pausa por CSS
+   (ratón encima, fuera de pantalla, teclado, botón) también para el pase.
+   slides: [{ src, mini, alt, vertical, foco, caption: { name, falla } }]
+═══════════════════════════════════════════════════════════════════════════ */
+const CAR = {};
 
-  document.getElementById('nf-slides').innerHTML = NOTICIA_FOTOS.map((src, i) => {
-    const v = NOTICIA_VERTICAL[i];
-    return `<figure class="nf__slide${v ? ' nf__slide--v' : ''}" style="--ko:center ${i % 2 ? '70%' : '30%'}">
-      ${v ? `<span class="nf__bg" style="background-image:url('${src}-mini.webp')" aria-hidden="true"></span>` : ''}
-      <img src="${src}.webp" alt="${n.alts[i]}" width="${v ? 1067 : 1600}" height="${v ? 1600 : 1067}" loading="lazy" decoding="async" />
-    </figure>`;
-  }).join('');
-  document.getElementById('nf-thumbs').innerHTML = NOTICIA_FOTOS.map((src, i) =>
-    `<button type="button" class="nf__thumb${NOTICIA_VERTICAL[i] ? ' nf__thumb--v' : ''}" data-i="${i}" aria-label="${n.thumb} ${i + 1}">
-      <img src="${src}-mini.webp" alt="" width="360" height="${NOTICIA_VERTICAL[i] ? 540 : 240}" loading="lazy" decoding="async" />
+function renderCarousel(key, root, slides, labels) {
+  let c = CAR[key];
+  if (!c) { c = CAR[key] = { root, index: 0 }; initCarousel(c); }
+  c.n = labels;
+  c.slides = slides;
+  const $ = sel => root.querySelector(sel);
+  root.setAttribute('aria-label', labels.region);
+  $('.nf__arrow--prev').setAttribute('aria-label', labels.prev);
+  $('.nf__arrow--next').setAttribute('aria-label', labels.next);
+  $('.nf__stage').setAttribute('aria-label', labels.stage);
+  $('.nf__slides').innerHTML = slides.map((sl, i) =>
+    `<figure class="nf__slide${sl.vertical ? ' nf__slide--v' : ''}" style="--ko:center ${i % 2 ? '70%' : '30%'}">
+      ${sl.vertical ? `<span class="nf__bg" style="background-image:url('${sl.mini}')" aria-hidden="true"></span>` : ''}
+      <img src="${sl.src}" alt="${sl.alt}" width="${sl.vertical ? 1067 : 1600}" height="${sl.vertical ? 1600 : 1067}" loading="lazy" decoding="async"${sl.foco && !sl.vertical ? ` style="object-position:${sl.foco}"` : ''} />
+    </figure>`).join('');
+  $('.nf__thumbs').innerHTML = slides.map((sl, i) =>
+    `<button type="button" class="nf__thumb${sl.vertical ? ' nf__thumb--v' : ''}" data-i="${i}" aria-label="${labels.thumb} ${i + 1}">
+      <img src="${sl.mini}" alt="" width="360" height="${sl.vertical ? 540 : 240}" loading="lazy" decoding="async"${sl.foco ? ` style="object-position:${sl.foco}"` : ''} />
     </button>`).join('');
-  document.getElementById('nf-total').textContent = String(NOTICIA_FOTOS.length).padStart(2, '0');
-
-  if (!nfReady) { initNoticiaCarousel(); nfReady = true; }
-  nfGo(nfIndex, false);
+  $('.nf__total').textContent = String(slides.length).padStart(2, '0');
+  carLabels(c);
+  carGo(c, Math.min(c.index, slides.length - 1), false);
 }
 
-function nfLabels() {
-  const n = t().noticia;
-  const paused = document.getElementById('nf').classList.contains('is-paused');
-  document.getElementById('nf-pause').setAttribute('aria-label', paused ? n.play : n.pause);
-  document.getElementById('nf-full').setAttribute('aria-label', document.fullscreenElement ? n.exitFull : n.full);
+function carLabels(c) {
+  const paused = c.root.classList.contains('is-paused');
+  c.root.querySelector('.nf__ctrl--pause').setAttribute('aria-label', paused ? c.n.play : c.n.pause);
+  c.root.querySelector('.nf__ctrl--full').setAttribute('aria-label', document.fullscreenElement === c.root ? c.n.exitFull : c.n.full);
 }
 
-function nfGo(i, announce) {
-  const slides = document.querySelectorAll('#nf-slides .nf__slide');
-  const thumbs = document.querySelectorAll('#nf-thumbs .nf__thumb');
+function carGo(c, i, announce) {
+  const slides = c.root.querySelectorAll('.nf__slide');
+  const thumbs = c.root.querySelectorAll('.nf__thumb');
   const N = slides.length;
   if (!N) return;
-  const prev = nfIndex;
-  nfIndex = (i + N) % N;
+  const prev = c.index;
+  c.index = (i + N) % N;
 
-  slides.forEach((s, k) => {
-    const on = k === nfIndex;
-    s.classList.toggle('is-active', on);
-    s.setAttribute('aria-hidden', on ? 'false' : 'true');
-    if (on) { clearTimeout(s._leave); s.classList.remove('is-leaving'); }
+  slides.forEach((sl, k) => {
+    const on = k === c.index;
+    sl.classList.toggle('is-active', on);
+    sl.setAttribute('aria-hidden', on ? 'false' : 'true');
+    if (on) { clearTimeout(sl._leave); sl.classList.remove('is-leaving'); }
   });
   /* la que sale se queda congelada en su zoom mientras se funde; un temporizador
      por diapositiva para que uno antiguo no le quite la clase a destiempo */
   const leaving = slides[prev];
-  if (leaving && prev !== nfIndex) {
+  if (leaving && prev !== c.index) {
     leaving.classList.add('is-leaving');
     clearTimeout(leaving._leave);
     leaving._leave = setTimeout(() => leaving.classList.remove('is-leaving'), 1300);
   }
 
   thumbs.forEach((b, k) => {
-    b.classList.toggle('is-active', k === nfIndex);
-    b.setAttribute('aria-current', k === nfIndex ? 'true' : 'false');
+    b.classList.toggle('is-active', k === c.index);
+    b.setAttribute('aria-current', k === c.index ? 'true' : 'false');
   });
-  const box = document.getElementById('nf-thumbs');
-  const tb  = thumbs[nfIndex];
+  const box = c.root.querySelector('.nf__thumbs');
+  const tb  = thumbs[c.index];
   if (tb && box.scrollWidth > box.clientWidth) {
     box.scrollTo({ left: tb.offsetLeft - (box.clientWidth - tb.clientWidth) / 2, behavior: 'smooth' });
   }
 
-  document.getElementById('nf-cur').textContent = String(nfIndex + 1).padStart(2, '0');
-  const bar = document.getElementById('nf-bar');
+  const cap = c.root.querySelector('.nf__caption');
+  if (cap) {
+    const info = c.slides[c.index].caption;
+    cap.querySelector('.nf__cap-name').textContent  = info ? info.name : '';
+    cap.querySelector('.nf__cap-falla').textContent = info ? info.falla : '';
+  }
+
+  c.root.querySelector('.nf__cur').textContent = String(c.index + 1).padStart(2, '0');
+  const bar = c.root.querySelector('.nf__bar');
   bar.classList.remove('run');
   void bar.offsetWidth;
   bar.classList.add('run');
 
-  if (announce) document.getElementById('nf-live').textContent = `${t().noticia.photo} ${nfIndex + 1} / ${N}`;
+  if (announce) c.root.querySelector('.nf__live').textContent = `${c.n.photo} ${c.index + 1} / ${N}`;
 }
 
-function initNoticiaCarousel() {
-  const nf    = document.getElementById('nf');
-  const stage = document.getElementById('nf-stage');
+function initCarousel(c) {
+  const root  = c.root;
+  const stage = root.querySelector('.nf__stage');
 
-  document.getElementById('nf-prev').addEventListener('click', () => nfGo(nfIndex - 1, true));
-  document.getElementById('nf-next').addEventListener('click', () => nfGo(nfIndex + 1, true));
-  document.getElementById('nf-thumbs').addEventListener('click', e => {
+  root.querySelector('.nf__arrow--prev').addEventListener('click', () => carGo(c, c.index - 1, true));
+  root.querySelector('.nf__arrow--next').addEventListener('click', () => carGo(c, c.index + 1, true));
+  root.querySelector('.nf__thumbs').addEventListener('click', e => {
     const b = e.target.closest('.nf__thumb');
-    if (b) nfGo(+b.dataset.i, true);
+    if (b) carGo(c, +b.dataset.i, true);
   });
-  document.getElementById('nf-bar').addEventListener('animationend', () => nfGo(nfIndex + 1, false));
+  root.querySelector('.nf__bar').addEventListener('animationend', () => carGo(c, c.index + 1, false));
 
   stage.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft')  { e.preventDefault(); nfGo(nfIndex - 1, true); }
-    if (e.key === 'ArrowRight') { e.preventDefault(); nfGo(nfIndex + 1, true); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); carGo(c, c.index - 1, true); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); carGo(c, c.index + 1, true); }
   });
 
   let x0 = null;
@@ -5631,28 +5664,28 @@ function initNoticiaCarousel() {
     if (x0 === null) return;
     const dx = e.clientX - x0;
     x0 = null;
-    if (Math.abs(dx) > 40) nfGo(nfIndex + (dx < 0 ? 1 : -1), true);
+    if (Math.abs(dx) > 40) carGo(c, c.index + (dx < 0 ? 1 : -1), true);
   });
   stage.addEventListener('pointercancel', () => { x0 = null; });
 
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([en]) => nf.classList.toggle('is-off', !en.isIntersecting), { threshold: 0.25 })
-      .observe(nf);
+    new IntersectionObserver(([en]) => root.classList.toggle('is-off', !en.isIntersecting), { threshold: 0.25 })
+      .observe(root);
   }
 
-  document.getElementById('nf-pause').addEventListener('click', () => {
-    nf.classList.toggle('is-paused');
-    nfLabels();
+  root.querySelector('.nf__ctrl--pause').addEventListener('click', () => {
+    root.classList.toggle('is-paused');
+    carLabels(c);
   });
 
-  const full = document.getElementById('nf-full');
+  const full = root.querySelector('.nf__ctrl--full');
   if (document.fullscreenEnabled) {
     full.hidden = false;
     full.addEventListener('click', () => {
       if (document.fullscreenElement) document.exitFullscreen();
-      else nf.requestFullscreen().catch(() => {});
+      else root.requestFullscreen().catch(() => {});
     });
-    document.addEventListener('fullscreenchange', nfLabels);
+    document.addEventListener('fullscreenchange', () => carLabels(c));
   }
 }
 
