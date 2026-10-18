@@ -399,6 +399,238 @@
     .hero-content {
       padding: 60px 64px;
     }
+    /* ── Píldora de la noticia destacada (enlaza a #noticia) ── */
+    .hero-news {
+      display: inline-flex; align-items: center; gap: 10px;
+      align-self: flex-start;
+      background: var(--color-bg-dark); color: var(--color-white);
+      border: 1px solid var(--color-gold); border-radius: 9999px;
+      padding: 8px 18px 8px 12px; margin-bottom: 22px;
+      font-size: .68rem; letter-spacing: .04em; line-height: 1.35;
+      box-shadow: 0 6px 20px rgba(26,23,20,.18);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .hero-news:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(181,144,58,.35); }
+    .hero-news__dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+      background: var(--color-gold-light);
+      animation: heroNewsPulse 1.6s ease-in-out infinite;
+    }
+    .hero-news__tag { font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--color-gold-light); }
+    .hero-news__text { color: rgba(253,250,243,.88); }
+    @keyframes heroNewsPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(212,177,102,.7); }
+      50%      { box-shadow: 0 0 0 6px rgba(212,177,102,0); }
+    }
+
+    /* ── NOTICIA DESTACADA + carrusel (.nf) ── */
+    .noticia {
+      position: relative; overflow: hidden;
+      background: var(--color-bg-dark); color: var(--color-white);
+      padding: 96px 0;
+      scroll-margin-top: var(--header-h);
+    }
+    .noticia::before {
+      content: ''; position: absolute; left: 0; right: 0; top: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(181,144,58,.7), transparent);
+    }
+    .noticia__inner {
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr);
+      gap: clamp(32px, 5vw, 72px); align-items: center;
+    }
+    .noticia__eyebrow {
+      font-size: .72rem; font-weight: 700; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--color-gold); margin-bottom: 18px;
+    }
+    .noticia__title {
+      font-family: var(--font-display); font-weight: 400;
+      font-size: clamp(2rem, 3.6vw, 3.1rem); line-height: 1.08;
+      color: var(--color-white); margin-bottom: 26px;
+    }
+    .noticia__lead {
+      font-size: 1rem; line-height: 1.8; color: rgba(253,250,243,.74);
+      margin-bottom: 14px; max-width: 440px;
+    }
+    .noticia__link {
+      display: inline-flex; align-items: center; gap: 10px; margin-top: 18px;
+      font-size: .74rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--color-gold-light);
+      border-bottom: 1px solid rgba(212,177,102,.4); padding-bottom: 6px;
+      transition: color .2s, border-color .2s;
+    }
+    .noticia__link::after { content: '→'; transition: transform .2s; }
+    .noticia__link:hover { color: var(--color-white); border-color: var(--color-gold-light); }
+    .noticia__link:hover::after { transform: translateX(4px); }
+
+    .nf { --nf-dur: 6s; position: relative; }
+    .nf__stage {
+      position: relative; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 4px;
+      background: #0f0d0b; touch-action: pan-y; outline: none;
+      box-shadow: 0 30px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(181,144,58,.35);
+    }
+    .nf__stage:focus-visible { box-shadow: 0 30px 80px rgba(0,0,0,.55), 0 0 0 2px var(--color-gold-light); }
+    .nf__stage::after {
+      content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background:
+        linear-gradient(to top, rgba(15,13,11,.6) 0%, rgba(15,13,11,0) 30%),
+        linear-gradient(to bottom, rgba(15,13,11,.25) 0%, rgba(15,13,11,0) 18%);
+    }
+    .nf__slide { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity 1.2s ease; }
+    .nf__slide.is-active { opacity: 1; z-index: 1; }
+    .nf__slide img {
+      position: relative;
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transform-origin: var(--ko, center);
+    }
+    .nf__slide--v img { object-fit: contain; }
+    .nf__bg {
+      position: absolute; inset: -40px;
+      background-size: cover; background-position: center;
+      filter: blur(28px) brightness(.5); transform: scale(1.1);
+    }
+    .nf__slide.is-active img,
+    .nf__slide.is-leaving img { animation: nfKen calc(var(--nf-dur) + 1.2s) ease-out forwards; }
+    .nf__slide.is-leaving img { animation-play-state: paused; }
+    @keyframes nfKen { from { transform: scale(1); } to { transform: scale(1.08); } }
+    .nf__arrow {
+      position: absolute; top: 50%; z-index: 3; width: 48px; height: 48px; margin-top: -24px;
+      display: flex; align-items: center; justify-content: center; border-radius: 50%;
+      background: rgba(26,23,20,.45); border: 1px solid rgba(212,177,102,.55);
+      color: var(--color-white); opacity: .85;
+      -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+      transition: background .2s, transform .2s, opacity .2s;
+    }
+    .nf__arrow:hover { background: var(--color-gold); opacity: 1; transform: scale(1.06); }
+    .nf__arrow:focus-visible { outline: 2px solid var(--color-gold-light); outline-offset: 2px; }
+    .nf__arrow svg { width: 22px; height: 22px; }
+    .nf__arrow--prev { left: 18px; }
+    .nf__arrow--next { right: 18px; }
+    .nf__ctrls { position: absolute; right: 18px; bottom: 18px; z-index: 3; display: flex; gap: 8px; }
+    .nf__ctrl {
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center; border-radius: 50%;
+      background: rgba(26,23,20,.45); border: 1px solid rgba(212,177,102,.45); color: var(--color-white);
+      transition: background .2s;
+    }
+    .nf__ctrl[hidden] { display: none; }
+    .nf__ctrl:hover { background: var(--color-gold); }
+    .nf__ctrl:focus-visible { outline: 2px solid var(--color-gold-light); outline-offset: 2px; }
+    .nf__ctrl svg { width: 17px; height: 17px; }
+    .nf__ico-play { display: none; }
+    .nf.is-paused .nf__ico-play { display: block; }
+    .nf.is-paused .nf__ico-pause { display: none; }
+    .nf__counter {
+      position: absolute; left: 22px; bottom: 18px; z-index: 3; margin: 0;
+      display: flex; align-items: baseline; gap: 6px;
+      font-family: var(--font-display); font-size: 1.5rem; color: var(--color-white);
+    }
+    .nf__counter { text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+    .nf__sep, .nf__total { font-size: .9rem; color: rgba(253,250,243,.88); }
+    .nf__progress { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; height: 3px; background: rgba(253,250,243,.15); }
+    .nf__progress span {
+      display: block; width: 0; height: 100%;
+      background: linear-gradient(90deg, var(--color-gold), var(--color-gold-light));
+    }
+    .nf__progress span.run { animation: nfBar var(--nf-dur) linear forwards; }
+    @keyframes nfBar { from { width: 0; } to { width: 100%; } }
+    /* pausa: fuera de pantalla o navegando con teclado (y al pasar el ratón) */
+    .nf.is-off .nf__progress span, .nf.is-off .nf__slide img,
+    .nf.is-paused .nf__progress span, .nf.is-paused .nf__slide img { animation-play-state: paused; }
+    .nf:has(:focus-visible) .nf__progress span, .nf:has(:focus-visible) .nf__slide img { animation-play-state: paused; }
+    @media (hover: hover) {
+      .nf:not(:fullscreen):hover .nf__progress span, .nf:not(:fullscreen):hover .nf__slide img { animation-play-state: paused; }
+    }
+    .nf__thumbs {
+      position: relative; margin-top: 14px;
+      display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px;
+    }
+    .nf__thumb {
+      position: relative; aspect-ratio: 3 / 2; padding: 0; overflow: hidden; border-radius: 3px;
+      opacity: .45; transition: opacity .3s;
+    }
+    .nf__thumb::after {
+      content: ''; position: absolute; inset: 0; border-radius: 3px;
+      border: 1.5px solid transparent; transition: border-color .3s;
+    }
+    .nf__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .nf__thumb--v img { object-position: center 25%; }
+    .nf__thumb:hover { opacity: .8; }
+    .nf__thumb.is-active { opacity: 1; }
+    .nf__thumb.is-active::after { border-color: var(--color-gold-light); }
+    .nf__thumb:focus-visible { outline: 2px solid var(--color-gold-light); outline-offset: -2px; }
+    .nf__live {
+      position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
+    .nf:fullscreen { background: #000; display: flex; flex-direction: column; justify-content: center; padding: 2vh 3vw; }
+    .nf:fullscreen .nf__stage { aspect-ratio: auto; height: 82vh; box-shadow: none; }
+    .nf:fullscreen .nf__stage:focus-visible { box-shadow: 0 0 0 2px var(--color-gold-light); }
+    .nf:fullscreen .nf__slide img { object-fit: contain; }
+    .nf:fullscreen .nf__thumbs { width: 100%; max-width: 900px; margin: 14px auto 0; }
+    /* ── CORTE DE HONOR 2027 (más discreto que la noticia) ── */
+    .corte27 { background: var(--color-bg-alt); padding: 72px 0; scroll-margin-top: var(--header-h); }
+    .corte27[hidden] { display: none; }
+    .corte27__head { max-width: 640px; margin-bottom: 36px; }
+    .corte27__eyebrow {
+      font-size: .7rem; font-weight: 700; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--color-gold); margin-bottom: 12px;
+    }
+    .corte27__title {
+      font-family: var(--font-display); font-weight: 400;
+      font-size: clamp(1.6rem, 2.6vw, 2.2rem); line-height: 1.15; color: var(--color-text); margin-bottom: 12px;
+    }
+    .corte27__text { font-size: .95rem; line-height: 1.75; color: var(--color-text-muted); }
+    .corte27__grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px;
+    }
+    .corte27__fig {
+      margin: 0; background: var(--color-white); border: 1px solid var(--color-border);
+      overflow: hidden; transition: box-shadow .3s;
+    }
+    .corte27__fig:hover { box-shadow: 0 8px 30px rgba(26,23,20,.1); }
+    .corte27__img { aspect-ratio: 4 / 5; overflow: hidden; background: var(--color-bg); }
+    .corte27__img img {
+      width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s;
+    }
+    .corte27__fig:hover .corte27__img img { transform: scale(1.03); }
+    .corte27__cap { padding: 14px 16px 16px; border-top: 1px solid var(--color-border); }
+    .corte27__name { font-family: var(--font-display); font-style: italic; font-size: 1rem; color: var(--color-text); line-height: 1.3; }
+    .corte27__falla {
+      margin-top: 4px; font-size: .62rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--color-gold);
+    }
+
+    @media (max-width: 1024px) {
+      .noticia__inner { grid-template-columns: 1fr; }
+      .noticia__lead { max-width: 640px; }
+    }
+    @media (max-width: 600px) {
+      .noticia { padding: 64px 0; }
+      .corte27 { padding: 56px 0; }
+      .corte27__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      .corte27__cap { padding: 10px 10px 12px; }
+      .corte27__name { font-size: .9rem; }
+      .hero-news { margin-bottom: 16px; }
+      .nf__arrow { width: 40px; height: 40px; margin-top: -20px; }
+      .nf__arrow--prev { left: 10px; }
+      .nf__arrow--next { right: 10px; }
+      .nf__counter { left: 14px; bottom: 14px; font-size: 1.2rem; }
+      .nf__ctrls { right: 12px; bottom: 12px; }
+      .nf__thumbs {
+        display: flex; overflow-x: auto; gap: 8px; padding-bottom: 4px;
+        scroll-snap-type: x mandatory; scrollbar-width: none;
+      }
+      .nf__thumbs::-webkit-scrollbar { display: none; }
+      .nf__thumb { flex: 0 0 22%; scroll-snap-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-news__dot { animation: none; }
+      .nf__slide { transition-duration: .2s; }
+      .nf__slide.is-active img, .nf__slide.is-leaving img { animation: none; }
+      .nf__progress, #nf-pause { display: none; }
+      .hero-slide { transition: none; }
+    }
+
     .hero-eyebrow {
       font-size: 0.72rem;
       font-weight: 600;
@@ -628,6 +860,7 @@
 
     /* ── Sección Falleras Mayores (en Colecciones) ── */
     #falleras-mayores {
+      scroll-margin-top: var(--header-h);
       margin-top: 64px;
       padding-top: 56px;
       border-top: 2px solid var(--color-border);
@@ -975,7 +1208,7 @@
     }
     .editorial-image-caption {
       position: absolute;
-      bottom: -20px; right: -20px;
+      bottom: -20px; right: 0;   /* con -20px sobresalía de la ventana y salía barra horizontal */
       background: var(--color-bg-dark);
       color: var(--color-gold);
       padding: 20px 24px;
@@ -1969,6 +2202,11 @@
     .contacto-info-val a { color: var(--color-text); border-bottom: 1px solid var(--color-border); transition: color 0.2s, border-color 0.2s; }
     .contacto-info-val a:hover { color: var(--color-gold); border-color: var(--color-gold); }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    /* la versión móvil de arriba (bloque 768px) queda pisada por estas reglas, que van después */
+    @media (max-width: 768px) {
+      .contacto-grid { grid-template-columns: 1fr; gap: 40px; margin-top: 32px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
     .form-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
     .form-field label {
       font-size: 0.67rem; font-weight: 700; letter-spacing: 0.12em;
@@ -2761,6 +2999,11 @@
     <div class="hero-dots" id="hero-dots"></div>
   </div>
   <div class="hero-content">
+    <a class="hero-news" id="hero-news" href="#noticia">
+      <span class="hero-news__dot" aria-hidden="true"></span>
+      <span class="hero-news__tag" id="hero-news-tag"></span>
+      <span class="hero-news__text" id="hero-news-text"></span>
+    </a>
     <p class="hero-eyebrow" id="hero-eyebrow"></p>
     <h1 class="hero-title" id="hero-title"></h1>
     <p class="hero-desc" id="hero-desc"></p>
@@ -2772,6 +3015,60 @@
         <span id="hero-cta-cita-label">WhatsApp</span>
       </a>
     </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     NOTICIA DESTACADA — Fallera Mayor Infantil de València 2027 (textos en t().noticia)
+═══════════════════════════════════════════════════════════════════════════ -->
+<section id="noticia" class="noticia">
+  <div class="container noticia__inner">
+    <div class="noticia__text">
+      <p class="noticia__eyebrow" id="noticia-eyebrow"></p>
+      <h2 class="noticia__title" id="noticia-title"></h2>
+      <p class="noticia__lead" id="noticia-p1"></p>
+      <p class="noticia__lead" id="noticia-p2"></p>
+      <a class="noticia__link" id="noticia-link" href="#falleras-mayores"></a>
+    </div>
+    <div class="nf" id="nf" role="region" aria-roledescription="carrusel">
+      <div class="nf__stage" id="nf-stage" tabindex="0" role="group">
+        <div class="nf__slides" id="nf-slides"></div>
+        <button type="button" class="nf__arrow nf__arrow--prev" id="nf-prev">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button type="button" class="nf__arrow nf__arrow--next" id="nf-next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <div class="nf__ctrls">
+          <button type="button" class="nf__ctrl" id="nf-pause">
+            <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+            <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
+          </button>
+          <button type="button" class="nf__ctrl" id="nf-full" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+          </button>
+        </div>
+        <p class="nf__counter" aria-hidden="true"><span id="nf-cur">01</span><span class="nf__sep">/</span><span class="nf__total" id="nf-total">12</span></p>
+        <div class="nf__progress" aria-hidden="true"><span id="nf-bar"></span></div>
+      </div>
+      <div class="nf__thumbs" id="nf-thumbs"></div>
+      <p class="nf__live" id="nf-live" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     CORTE DE HONOR 2027 — falleras de la corte vestidas por Cosas Cucas.
+     Datos y fotos en CORTE_2027 (JS). Oculto mientras ninguna tenga fotos.
+═══════════════════════════════════════════════════════════════════════════ -->
+<section id="corte-2027" class="corte27" hidden>
+  <div class="container">
+    <div class="corte27__head">
+      <p class="corte27__eyebrow" id="corte27-eyebrow"></p>
+      <h2 class="corte27__title" id="corte27-title"></h2>
+      <p class="corte27__text" id="corte27-text"></p>
+    </div>
+    <div class="corte27__grid" id="corte27-grid"></div>
   </div>
 </section>
 
@@ -3429,6 +3726,46 @@ const translations = {
       'Miembro del Gremio de Sastres y Modistas de Valencia',
       'Nueva colección comunión y fiesta 2026 disponible',
     ],
+    noticia: {
+      pillTag: 'Noticia',
+      pill:    'Vestimos a la Fallera Mayor Infantil de València 2027',
+      eyebrow: 'Noticia · Octubre 2026',
+      title:   'Vestimos a la Fallera Mayor Infantil de València 2027',
+      p1:      'Julia Vizcayno Orero, de la falla Rosari-Plaça Calabuig, es la nueva Fallera Mayor Infantil de València. En Cosas Cucas tenemos el honor de vestirla.',
+      p2:      'Aquí la tenéis el 14 de octubre, el día de su proclamación en el Ayuntamiento. Verla subir las escaleras vestida por nuestro taller nos ha emocionado.',
+      link:    'Falleras mayores vestidas por Cosas Cucas',
+      region:  'Fotos de Julia Vizcayno en el Ayuntamiento de València',
+      prev:    'Foto anterior',
+      next:    'Foto siguiente',
+      full:    'Ver a pantalla completa',
+      exitFull: 'Salir de pantalla completa',
+      pause:   'Pausar el pase de fotos',
+      play:    'Reanudar el pase de fotos',
+      stage:   'Foto actual. Usa las flechas izquierda y derecha para cambiar de foto',
+      thumb:   'Ver foto',
+      photo:   'Foto',
+      alts: [
+        'Retrato de Julia Vizcayno con el traje de fallera y la peineta',
+        'Julia Vizcayno sube las escaleras del Ayuntamiento entre aplausos',
+        'Julia Vizcayno en las escaleras, vista desde arriba',
+        'Julia Vizcayno camina por el salón con el traje completo',
+        'Julia Vizcayno saluda al público',
+        'Julia Vizcayno saluda; se ve el traje de cuerpo entero',
+        'Julia Vizcayno en la mesa presidencial del hemiciclo del Ayuntamiento',
+        'Julia Vizcayno sonríe sentada en la mesa presidencial',
+        'Julia Vizcayno sonríe con su ramo de flores sobre la alfombra roja',
+        'Julia Vizcayno camina por la alfombra roja con su ramo',
+        'Julia Vizcayno posa con su ramo junto a un jarrón de cerámica',
+        'Julia Vizcayno con su ramo en un salón del Ayuntamiento',
+      ],
+    },
+    corte: {
+      eyebrow: 'Corte de Honor · València 2027',
+      title:   'También en la Corte de Honor',
+      text:    'Dos falleras de la Corte de Honor de la Fallera Mayor de València 2027 visten de Cosas Cucas.',
+      falla:   'Falla',
+      role:    'de la Corte de Honor de la Fallera Mayor de València 2027',
+    },
     drops: [
       {
         id: 'falles-2027-mujer', title: 'Indumentaria Femenina', subtitle: 'Fallas 2027 · La Luz de la Tradición',
@@ -3756,7 +4093,7 @@ const translations = {
         { img: IMG.fm11, name: 'Falla Rosario · Plaza Calabuig · Lourdes Oreo',   year: 'Fallera Mayor 2026' },
         { img: IMG.fm12, name: 'Falla Conserva · Berenguer Mallol · Kira Vila',   year: 'Fallera Mayor 2026' },
         { img: IMG.fm8,  name: 'Falla Maestro Rodrigo · General Avilés',          year: 'Fallera Mayor 2026' },
-        { img: IMG.fm13, name: 'Falla Maestro Rodrigo · Alejandra Blasco Beltrán', year: 'Fallera Mayor 2026' },
+        { img: IMG.fm13, name: 'Falla Maestro Rodrigo · Alejandra Blanco Beltrán', year: 'Fallera Mayor 2026' },
         { img: IMG.fm14, name: 'Falla La Manta al Coll · Alguenet',               year: 'Fallera Infantil 2026' },
       ],
       cortsLabel: 'Cortes de Honor',
@@ -3882,6 +4219,46 @@ const translations = {
       'Membre del Gremi de Sastres i Modistes de València',
       "Nova col·lecció comunió i festa 2026 disponible",
     ],
+    noticia: {
+      pillTag: 'Notícia',
+      pill:    'Vestim la Fallera Major Infantil de València 2027',
+      eyebrow: 'Notícia · Octubre 2026',
+      title:   'Vestim la Fallera Major Infantil de València 2027',
+      p1:      "Julia Vizcayno Orero, de la falla Rosari-Plaça Calabuig, és la nova Fallera Major Infantil de València. A Cosas Cucas tenim l'honor de vestir-la.",
+      p2:      "Ací la teniu el 14 d'octubre, el dia de la seua proclamació a l'Ajuntament. Veure-la pujar les escales vestida pel nostre taller ens ha emocionat.",
+      link:    'Falleres majors vestides per Cosas Cucas',
+      region:  "Fotos de Julia Vizcayno a l'Ajuntament de València",
+      prev:    'Foto anterior',
+      next:    'Foto següent',
+      full:    'Veure a pantalla completa',
+      exitFull: 'Eixir de pantalla completa',
+      pause:   'Pausar el passe de fotos',
+      play:    'Reprendre el passe de fotos',
+      stage:   'Foto actual. Usa les fletxes esquerra i dreta per a canviar de foto',
+      thumb:   'Veure la foto',
+      photo:   'Foto',
+      alts: [
+        'Retrat de Julia Vizcayno amb el vestit de fallera i la pinta',
+        "Julia Vizcayno puja les escales de l'Ajuntament entre aplaudiments",
+        'Julia Vizcayno a les escales, vista des de dalt',
+        'Julia Vizcayno camina pel saló amb el vestit complet',
+        'Julia Vizcayno saluda el públic',
+        'Julia Vizcayno saluda; es veu el vestit de cos sencer',
+        "Julia Vizcayno a la mesa presidencial de l'hemicicle de l'Ajuntament",
+        'Julia Vizcayno somriu asseguda a la mesa presidencial',
+        'Julia Vizcayno somriu amb el seu ram de flors sobre la catifa roja',
+        'Julia Vizcayno camina per la catifa roja amb el seu ram',
+        "Julia Vizcayno posa amb el seu ram al costat d'un gerro de ceràmica",
+        "Julia Vizcayno amb el seu ram en un saló de l'Ajuntament",
+      ],
+    },
+    corte: {
+      eyebrow: "Cort d'Honor · València 2027",
+      title:   "També a la Cort d'Honor",
+      text:    "Dues falleres de la Cort d'Honor de la Fallera Major de València 2027 vestixen de Cosas Cucas.",
+      falla:   'Falla',
+      role:    "de la Cort d'Honor de la Fallera Major de València 2027",
+    },
     drops: [
       {
         id: 'falles-2027-dona', title: 'Indumentària Femenina', subtitle: 'Falles 2027 · La Llum de la Tradició',
@@ -4166,7 +4543,7 @@ const translations = {
         { img: IMG.fm11, name: 'Falla Rosario · Plaza Calabuig · Lourdes Oreo',   year: 'Fallera Major 2026' },
         { img: IMG.fm12, name: 'Falla Conserva · Berenguer Mallol · Kira Vila',   year: 'Fallera Major 2026' },
         { img: IMG.fm8,  name: 'Falla Mestre Rodrigo · General Avilés',           year: 'Fallera Major 2026' },
-        { img: IMG.fm13, name: 'Falla Mestre Rodrigo · Alejandra Blasco Beltrán', year: 'Fallera Major 2026' },
+        { img: IMG.fm13, name: 'Falla Mestre Rodrigo · Alejandra Blanco Beltrán', year: 'Fallera Major 2026' },
         { img: IMG.fm14, name: 'Falla La Manta al Coll · Alguenet',              year: 'Fallera Infantil 2026' },
       ],
       cortsLabel: "Corts d'Honor",
@@ -4483,37 +4860,29 @@ function renderHero(drop) {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   IMAGE PLAYER — Hero slideshow (traducido del componente React)
-   18 fotos de pasarela, crossfade suave, 4 s por foto
+   IMAGE PLAYER — pase de fotos de la portada (crossfade, 4 s por foto)
+   Muestra a Julia Vizcayno (FMI 2027) y, cuando tengan fotos, a la Corte 2027
 ═══════════════════════════════════════════════════════════════════════ */
 function initHeroSlider() {
   /* Solo una vez: renderAll() se vuelve a llamar al cambiar de idioma y
      cada llamada creaba otro setInterval (más cambios y más descargas) */
-  if (initHeroSlider.started) return;
+  if (initHeroSlider.started) { initHeroSlider.relabel(); return; }
   initHeroSlider.started = true;
 
   const SLIDES = [
-    'tienda nueva.jpeg',
-    'pasarela/_ADL4063.jpg',
-    'pasarela/_ADL4065.jpg',
-    'pasarela/_ADL4068.jpg',
-    'pasarela/_ADL4069.jpg',
-    'pasarela/_ADL4071.jpg',
-    'pasarela/_ADL4076.jpg',
-    'pasarela/_ADL4077.jpg',
-    'pasarela/_ADL4080.jpg',
-    'pasarela/_ADL4081.jpg',
-    'pasarela/_ADL4083.jpg',
-    'pasarela/_ADL4087.jpg',
-    'pasarela/_ADL4091.jpg',
-    'pasarela/_ADL4093.jpg',
-    'pasarela/_ADL4095.jpg',
-    'pasarela/_ADL4097.jpg',
-    'pasarela/_ADL4101.jpg',
-    'pasarela/_ADL4111.jpg',
-    'pasarela/_ADL4169.jpg',
-    'pasarela/foto prueba.jpg',
+    ...NOTICIA_FOTOS.map((src, i) => ({
+      src: `${src}.webp`, foco: NOTICIA_FOCO[i], alt: () => t().noticia.alts[i],
+    })),
+    ...CORTE_2027.flatMap(p => p.fotos.map(f => ({
+      src: f.src, foco: f.foco || 'center 25%', alt: () => `${p.nombre}, ${t().corte.role}`,
+    }))),
   ];
+  const load = (el, slide) => {
+    el.src = slide.src;
+    el.alt = slide.alt();
+    el.style.objectPosition = slide.foco;
+    el._slide = slide;
+  };
 
   const INTERVAL = 4000; // 4 s por foto — cómodo para ver cada imagen
   let cur = 0;
@@ -4535,12 +4904,19 @@ function initHeroSlider() {
     dotEls.forEach((d, i) => d.classList.toggle('on', i === idx));
   }
 
+  /* al cambiar de idioma: textos alternativos en el idioma nuevo */
+  initHeroSlider.relabel = () => [elA, elB].forEach(el => { if (el._slide) el.alt = el._slide.alt(); });
+
   /* ── Cargar primera imagen y mostrarla ── */
-  elA.src = SLIDES[0];
+  load(elA, SLIDES[0]);
   elA.classList.add('active');
+  elB.setAttribute('aria-hidden', 'true');
+
+  /* Con "reducir movimiento" la portada se queda en la primera foto */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   /* ── Precargar segunda imagen en el slot inactivo ── */
-  elB.src = SLIDES[1 % SLIDES.length];
+  load(elB, SLIDES[1 % SLIDES.length]);
 
   /* ── Bucle de crossfade ── */
   setInterval(() => {
@@ -4552,9 +4928,11 @@ function initHeroSlider() {
 
     /* Rotar referencias */
     [activeEl, inactiveEl] = [inactiveEl, activeEl];
+    activeEl.removeAttribute('aria-hidden');
+    inactiveEl.setAttribute('aria-hidden', 'true');
 
     /* Precargar la SIGUIENTE imagen en el slot ya invisible */
-    inactiveEl.src = SLIDES[(cur + 1) % SLIDES.length];
+    load(inactiveEl, SLIDES[(cur + 1) % SLIDES.length]);
 
     updateDots(cur);
   }, INTERVAL);
@@ -5083,9 +5461,186 @@ function buildResenas() {
   }).join('');
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   NOTICIA DESTACADA — carrusel de Julia Vizcayno (Fallera Mayor Infantil 2027)
+   Avanza solo cuando termina la barra dorada (evento animationend), así la
+   pausa por CSS (ratón encima, fuera de pantalla, teclado) también para el pase.
+═══════════════════════════════════════════════════════════════════════════ */
+const NOTICIA_FOTOS = Array.from({ length: 12 }, (_, i) => `noticias/julia-vizcayno-${String(i + 1).padStart(2, '0')}`);
+/* Encuadre (object-position) de cada foto en la portada: en escritorio el hueco es vertical
+   y recorta los lados de las apaisadas; en móvil es apaisado y recorta las verticales */
+const NOTICIA_FOCO = ['42% 25%', '50% 25%', '52% 25%', '48% 25%', '47% 25%', '52% 25%',
+                      '75% 25%', '55% 25%', '45% 25%', '47% 25%', 'center 40%', 'center 40%'];
+/* Fotos verticales: en el carrusel se ven enteras sobre un fondo difuminado de la propia foto */
+const NOTICIA_VERTICAL = [false, false, false, false, false, false, false, false, false, false, true, true];
+
+/* Falleras de la Corte de Honor 2027 vestidas por Cosas Cucas. El bloque #corte-2027
+   y sus fotos en la portada aparecen solos al añadir fotos, por ejemplo:
+   fotos: [{ src: 'noticias/corte-2027/alejandra-01.webp', foco: 'center 25%' }] */
+const CORTE_2027 = [
+  { nombre: 'Alejandra Blanco Beltrán', falla: 'Mestre Rodrigo-General Avilés', fotos: [] },
+  { nombre: 'Laura Miquel Obarti',      falla: "Avinguda de l'Oest",            fotos: [] },
+];
+
+function buildCorte() {
+  const c     = t().corte;
+  const sec   = document.getElementById('corte-2027');
+  const items = CORTE_2027.flatMap(p => p.fotos.map(f => ({ ...f, nombre: p.nombre, falla: p.falla })));
+  sec.hidden = items.length === 0;
+  if (!items.length) return;
+  document.getElementById('corte27-eyebrow').textContent = c.eyebrow;
+  document.getElementById('corte27-title').textContent   = c.title;
+  document.getElementById('corte27-text').textContent    = c.text;
+  document.getElementById('corte27-grid').innerHTML = items.map(it =>
+    `<figure class="corte27__fig">
+      <div class="corte27__img">
+        <img src="${it.src}" alt="${it.nombre}, ${c.role}" loading="lazy" decoding="async" style="object-position:${it.foco || 'center 25%'}" />
+      </div>
+      <figcaption class="corte27__cap">
+        <p class="corte27__name">${it.nombre}</p>
+        <p class="corte27__falla">${c.falla} ${it.falla}</p>
+      </figcaption>
+    </figure>`).join('');
+}
+let nfIndex = 0;
+let nfReady = false;
+
+function buildNoticia() {
+  const n = t().noticia;
+  const set = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+  set('hero-news-tag', n.pillTag);
+  set('hero-news-text', n.pill);
+  set('noticia-eyebrow', n.eyebrow);
+  set('noticia-title', n.title);
+  set('noticia-p1', n.p1);
+  set('noticia-p2', n.p2);
+  set('noticia-link', n.link);
+
+  document.getElementById('nf').setAttribute('aria-label', n.region);
+  document.getElementById('nf-prev').setAttribute('aria-label', n.prev);
+  document.getElementById('nf-next').setAttribute('aria-label', n.next);
+  document.getElementById('nf-stage').setAttribute('aria-label', n.stage);
+  nfLabels();
+
+  document.getElementById('nf-slides').innerHTML = NOTICIA_FOTOS.map((src, i) => {
+    const v = NOTICIA_VERTICAL[i];
+    return `<figure class="nf__slide${v ? ' nf__slide--v' : ''}" style="--ko:center ${i % 2 ? '70%' : '30%'}">
+      ${v ? `<span class="nf__bg" style="background-image:url('${src}-mini.webp')" aria-hidden="true"></span>` : ''}
+      <img src="${src}.webp" alt="${n.alts[i]}" width="${v ? 1067 : 1600}" height="${v ? 1600 : 1067}" loading="lazy" decoding="async" />
+    </figure>`;
+  }).join('');
+  document.getElementById('nf-thumbs').innerHTML = NOTICIA_FOTOS.map((src, i) =>
+    `<button type="button" class="nf__thumb${NOTICIA_VERTICAL[i] ? ' nf__thumb--v' : ''}" data-i="${i}" aria-label="${n.thumb} ${i + 1}">
+      <img src="${src}-mini.webp" alt="" width="360" height="${NOTICIA_VERTICAL[i] ? 540 : 240}" loading="lazy" decoding="async" />
+    </button>`).join('');
+  document.getElementById('nf-total').textContent = String(NOTICIA_FOTOS.length).padStart(2, '0');
+
+  if (!nfReady) { initNoticiaCarousel(); nfReady = true; }
+  nfGo(nfIndex, false);
+}
+
+function nfLabels() {
+  const n = t().noticia;
+  const paused = document.getElementById('nf').classList.contains('is-paused');
+  document.getElementById('nf-pause').setAttribute('aria-label', paused ? n.play : n.pause);
+  document.getElementById('nf-full').setAttribute('aria-label', document.fullscreenElement ? n.exitFull : n.full);
+}
+
+function nfGo(i, announce) {
+  const slides = document.querySelectorAll('#nf-slides .nf__slide');
+  const thumbs = document.querySelectorAll('#nf-thumbs .nf__thumb');
+  const N = slides.length;
+  if (!N) return;
+  const prev = nfIndex;
+  nfIndex = (i + N) % N;
+
+  slides.forEach((s, k) => {
+    const on = k === nfIndex;
+    s.classList.toggle('is-active', on);
+    s.setAttribute('aria-hidden', on ? 'false' : 'true');
+    if (on) { clearTimeout(s._leave); s.classList.remove('is-leaving'); }
+  });
+  /* la que sale se queda congelada en su zoom mientras se funde; un temporizador
+     por diapositiva para que uno antiguo no le quite la clase a destiempo */
+  const leaving = slides[prev];
+  if (leaving && prev !== nfIndex) {
+    leaving.classList.add('is-leaving');
+    clearTimeout(leaving._leave);
+    leaving._leave = setTimeout(() => leaving.classList.remove('is-leaving'), 1300);
+  }
+
+  thumbs.forEach((b, k) => {
+    b.classList.toggle('is-active', k === nfIndex);
+    b.setAttribute('aria-current', k === nfIndex ? 'true' : 'false');
+  });
+  const box = document.getElementById('nf-thumbs');
+  const tb  = thumbs[nfIndex];
+  if (tb && box.scrollWidth > box.clientWidth) {
+    box.scrollTo({ left: tb.offsetLeft - (box.clientWidth - tb.clientWidth) / 2, behavior: 'smooth' });
+  }
+
+  document.getElementById('nf-cur').textContent = String(nfIndex + 1).padStart(2, '0');
+  const bar = document.getElementById('nf-bar');
+  bar.classList.remove('run');
+  void bar.offsetWidth;
+  bar.classList.add('run');
+
+  if (announce) document.getElementById('nf-live').textContent = `${t().noticia.photo} ${nfIndex + 1} / ${N}`;
+}
+
+function initNoticiaCarousel() {
+  const nf    = document.getElementById('nf');
+  const stage = document.getElementById('nf-stage');
+
+  document.getElementById('nf-prev').addEventListener('click', () => nfGo(nfIndex - 1, true));
+  document.getElementById('nf-next').addEventListener('click', () => nfGo(nfIndex + 1, true));
+  document.getElementById('nf-thumbs').addEventListener('click', e => {
+    const b = e.target.closest('.nf__thumb');
+    if (b) nfGo(+b.dataset.i, true);
+  });
+  document.getElementById('nf-bar').addEventListener('animationend', () => nfGo(nfIndex + 1, false));
+
+  stage.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); nfGo(nfIndex - 1, true); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); nfGo(nfIndex + 1, true); }
+  });
+
+  let x0 = null;
+  stage.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') x0 = e.clientX; });
+  stage.addEventListener('pointerup', e => {
+    if (x0 === null) return;
+    const dx = e.clientX - x0;
+    x0 = null;
+    if (Math.abs(dx) > 40) nfGo(nfIndex + (dx < 0 ? 1 : -1), true);
+  });
+  stage.addEventListener('pointercancel', () => { x0 = null; });
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([en]) => nf.classList.toggle('is-off', !en.isIntersecting), { threshold: 0.25 })
+      .observe(nf);
+  }
+
+  document.getElementById('nf-pause').addEventListener('click', () => {
+    nf.classList.toggle('is-paused');
+    nfLabels();
+  });
+
+  const full = document.getElementById('nf-full');
+  if (document.fullscreenEnabled) {
+    full.hidden = false;
+    full.addEventListener('click', () => {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else nf.requestFullscreen().catch(() => {});
+    });
+    document.addEventListener('fullscreenchange', nfLabels);
+  }
+}
+
 function renderAll() {
   buildStripe(); buildNav();
   renderHero(t().drops[0]);
+  buildNoticia();
+  buildCorte();
   initHeroSlider();           /* ImagePlayer: fotos de pasarela en bucle */
   buildArchive(); buildFMDetail(); buildZapatillas(); buildHistoria();
   buildEditorial(); buildDossierHistoria(); buildDecoracion(); buildVideos(); buildResenas();
