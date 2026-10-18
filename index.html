@@ -1426,6 +1426,37 @@
       max-width: 780px; margin-bottom: 56px;
       padding-left: 24px; border-left: 3px solid var(--color-gold);
     }
+    .col-modal__families {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 48px;
+    }
+    .col-modal__families[hidden] { display: none; }
+    .col-modal__family {
+      position: relative; display: block; padding: 0; overflow: hidden; cursor: pointer;
+      aspect-ratio: 4/3; background: var(--color-bg-alt);
+      border: 2px solid transparent; transition: border-color .25s, box-shadow .25s;
+    }
+    .col-modal__family img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center 25%;
+      transition: transform .5s;
+    }
+    .col-modal__family::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,23,20,.75) 0%, rgba(26,23,20,0) 55%);
+    }
+    .col-modal__family-name {
+      position: absolute; left: 0; right: 0; bottom: 22px; z-index: 1; text-align: center;
+      font-family: var(--font-display); font-size: clamp(1.2rem, 2.4vw, 1.7rem);
+      color: #FDFAF3; letter-spacing: .02em;
+    }
+    .col-modal__family:hover img { transform: scale(1.04); }
+    .col-modal__family:hover { box-shadow: 0 8px 40px rgba(26,23,20,.12); }
+    .col-modal__family.active { border-color: var(--color-gold); }
+    .col-modal__family:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
+    @media (max-width: 480px) {
+      .col-modal__families { gap: 10px; margin-bottom: 32px; }
+      .col-modal__family { aspect-ratio: 3/4; }
+      .col-modal__family-name { bottom: 14px; }
+    }
     .col-modal__grid-label {
       font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em;
       text-transform: uppercase; color: var(--color-gold); margin-bottom: 28px;
@@ -2933,6 +2964,7 @@
     </div>
     <div class="col-modal__body">
       <p class="col-modal__desc" id="col-modal-desc"></p>
+      <div class="col-modal__families" id="col-modal-families" hidden></div>
       <p class="col-modal__grid-label" id="col-modal-grid-label"></p>
       <div class="col-modal__grid" id="col-modal-grid"></div>
       <div class="col-modal__cta-row">
@@ -3405,6 +3437,10 @@ const translations = {
         heroImage: IMG.portada, archiveImage: IMG.archive1, badge: 'Disponible Ahora',
         ctaPrimary: { label: 'Ver la colección', href: '#drops-archive' },
         ctaSecondary: { label: 'Pedir cita', href: 'mailto:info@cosascucas.es' },
+        families: [
+          { id:'espolin',      label:'Espolín',                 image:IMG.esp1 },
+          { id:'indumentaria', label:'Indumentaria Valenciana', image:IMG.p8, rest:true },
+        ],
         products: [
           /* ── ESPOLÍN ── */
           { id:'p1', material:'espolin', name:'Espolín Negro · Flores Multicolor y Delantal Dorado',
@@ -3853,15 +3889,20 @@ const translations = {
         heroImage: IMG.portada, archiveImage: IMG.archive1, badge: 'Disponible Ara',
         ctaPrimary: { label: "Veure la col·lecció", href: '#drops-archive' },
         ctaSecondary: { label: 'Demanar cita', href: 'mailto:info@cosascucas.es' },
+        families: [
+          { id:'espolin',      label:'Espolí',                   image:IMG.esp1 },
+          { id:'indumentaria', label:'Indumentària Valenciana', image:IMG.p8, rest:true },
+        ],
         products: [
-          { id:'p1',  name:"Manteleta Brodada a Mà",        desc:'Seda natural amb brodat floral exclusiu. Disseny siglo XVIII.',               price:'Consultar', image:IMG.p1,  tag:'new', tagLabel:'Nova' },
-          { id:'p2',  name:'Davantal de Seda Valenciana',   desc:"Seda teixida a València, brodada amb fils d'or i plata.",                     price:'Consultar', image:IMG.p2,  tag:null },
-          { id:'p3',  name:'Cotilla Artesanal',             desc:'Confeccionada a mida al nostre taller. Brocats exclusius.',                   price:'A mida',    image:IMG.p3,  tag:null },
-          { id:'p4',  name:"Adreç Complet",                 desc:"Conjunt de joies de plata daurada per a indumentària valenciana.",            price:'Consultar', image:IMG.p4,  tag:null },
-          { id:'p5',  name:'Saia Siglo XVIII',              desc:'Recreació fidel del vestit del segle XVIII. Teles exclusives.',               price:'A mida',    image:IMG.p5,  tag:'new', tagLabel:'Nova' },
-          { id:'p6',  name:'Panyuelo de Coll Brodat',       desc:'Batista fina amb brodats artesanals de motius florals valencians.',          price:'Consultar', image:IMG.p6,  tag:null },
-          { id:'p7',  name:'Enagua amb Volants',            desc:'Tela de cotó blanc amb volants brodats. Talla única ajustable.',             price:'Consultar', image:IMG.p7,  tag:null },
-          { id:'p8',  name:"Jubó de Vellut",                desc:'Vellut sevillà amb passamaneria daurada. Confecció artesanal.',              price:'A mida',    image:IMG.p8,  tag:null },
+          { id:'p1',   material:'espolin', name:'Espolí negre amb flors de colors i davantal daurat', desc:'', price:'Consultar', image:IMG.p1,   tag:'new', tagLabel:'Espolí' },
+          { id:'p2',   material:'espolin', name:'Espolí blau cel amb flors',                          desc:'', price:'Consultar', image:IMG.p2,   tag:null },
+          { id:'p3',   material:'espolin', name:'Espolí negre de nit',                                desc:'', price:'Consultar', image:IMG.p3,   tag:null },
+          { id:'p4',   material:'espolin', name:'Espolí verd fosc, de costat',                        desc:'', price:'Consultar', image:IMG.p4,   tag:null },
+          { id:'p5',   material:'espolin', name:'Espolí verd fosc, de front',                         desc:'', price:'Consultar', image:IMG.p5,   tag:null },
+          { id:'p7',   material:'espolin', name:'Espolí verd, esquena i vol',                         desc:'', price:'Consultar', image:IMG.p7,   tag:null },
+          { id:'esp1', material:'espolin', name:'Espolí verd oliva de Marta Capella',                 desc:'', price:'Consultar', image:IMG.esp1, tag:'new', tagLabel:'Espolí' },
+          { id:'p6',   material:'seda',    name:'Seda marró fosc amb davantal de punta i banda',      desc:'', price:'Consultar', image:IMG.p6,   tag:null },
+          { id:'p8',   material:'seda',    name:'Seda blanca amb flors en plata i rosa',              desc:'', price:'Consultar', image:IMG.p8,   tag:null },
         ],
       },
       {
@@ -4351,14 +4392,48 @@ function openCollectionModal(drop) {
   document.getElementById('col-modal-title').textContent = drop.title;
   document.getElementById('col-modal-sub').textContent   = drop.subtitle;
   document.getElementById('col-modal-desc').textContent  = drop.description;
-  document.getElementById('col-modal-grid-label').textContent = labels[currentLang] || labels.es;
-  document.getElementById('col-modal-grid').innerHTML = drop.products.map(p =>
+  const gridLabel = document.getElementById('col-modal-grid-label');
+  const grid      = document.getElementById('col-modal-grid');
+  const famsBox   = document.getElementById('col-modal-families');
+  const cardHtml  = p =>
     `<div class="col-modal__card">
       <div class="col-modal__card-img">
         <img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" />
         ${p.tag ? `<span class="col-modal__card-tag">${p.tagLabel || p.tag}</span>` : ''}
       </div>
-    </div>`).join('');
+    </div>`;
+
+  const fams = drop.families || null;
+  if (fams) {
+    /* Cada pieza sale en la familia de su "family"; las que no lo llevan, en la familia "rest" */
+    const inFamily = (f, p) => p.family ? p.family === f.id : !!f.rest;
+    const showFamily = id => {
+      const f = fams.find(x => x.id === id);
+      famsBox.querySelectorAll('.col-modal__family').forEach(b =>
+        b.classList.toggle('active', b.dataset.family === id));
+      gridLabel.textContent = f.label;
+      grid.innerHTML = drop.products.filter(p => inFamily(f, p)).map(cardHtml).join('');
+      gridLabel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    famsBox.innerHTML = fams.map(f =>
+      `<button type="button" class="col-modal__family" data-family="${f.id}">
+        <img src="${f.image}" alt="" loading="lazy" decoding="async" />
+        <span class="col-modal__family-name">${f.label}</span>
+      </button>`).join('');
+    famsBox.onclick = e => {
+      const b = e.target.closest('.col-modal__family');
+      if (b) showFamily(b.dataset.family);
+    };
+    famsBox.hidden = false;
+    gridLabel.textContent = currentLang === 'ca' ? 'Tria una família' : 'Elige una familia';
+    grid.innerHTML = '';
+  } else {
+    famsBox.hidden = true;
+    famsBox.innerHTML = '';
+    famsBox.onclick = null;
+    gridLabel.textContent = labels[currentLang] || labels.es;
+    grid.innerHTML = drop.products.map(cardHtml).join('');
+  }
   document.getElementById('col-modal-cta-note').textContent = notes[currentLang] || notes.es;
   document.getElementById('col-modal-cta').textContent = drop.ctaSecondary.label;
   document.getElementById('col-modal-cta').href        = drop.ctaSecondary.href;
