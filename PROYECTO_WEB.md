@@ -99,7 +99,7 @@ Al abrir la colección salen dos tarjetas con foto: **Espolín** e **Indumentari
 - Se configura con `families` dentro de la colección (en `es` y en `ca`).
 - Cada pieza sale en la familia que diga su campo `family`. Las piezas sin `family` van a la familia marcada con `rest:true` (Indumentaria Valenciana). El `material` de la pieza ya no decide la familia.
 - **Espolín:** foto de la tarjeta Marta Capella (`IMG.esp1`). **Ahora está vacía por dentro** a petición de Ignacio, hasta que pase todas las fotos de espolín.
-- **Indumentaria Valenciana:** foto de la tarjeta `IMG.p8`. Tiene las 9 fotos que había en la colección, incluidas las de espolín y la de Marta Capella, que Ignacio pidió dejar aquí.
+- **Indumentaria Valenciana:** foto de la tarjeta `IMG.p8`. Tiene 10 fotos: la primera, la fallera con mantilla de encaje y ramo de rosas (`p17`, `coleccion 2027/fallera-mantilla-ramo.webp`, añadida el 19-10-2026; el fichero original se llamaba `fallera-mantilla-ramo-iricharl.jpg`), y las 9 que había en la colección, incluidas las de espolín y la de Marta Capella, que Ignacio pidió dejar aquí.
 - Cuando lleguen las fotos de espolín: copiarlas en `espolin/`, añadir cada una a `products` (en `es` y `ca`) con `family:'espolin'`, y subir.
 - Las demás colecciones no tienen `families` y muestran todas sus fotos directamente.
 
@@ -166,6 +166,7 @@ Al abrir la colección salen dos tarjetas con foto: **Espolín** e **Indumentari
 Ordenado de lo más nuevo a lo más antiguo. Cada línea es un trabajo terminado y publicado.
 
 ### 19-10-2026
+- **Indumentaria Valenciana (Todas las colecciones › Indumentaria Femenina):** nueva foto, la fallera con mantilla de encaje blanco y ramo de rosas, la primera de la familia.
 - **Falleras Mayores: Alba Carrero Macián (2025):** nueva tarjeta «Falla José María Haro-Poeta Mas y Ros · Alba Carrero Macián» / «Fallera Mayor 2025», la novena (rejilla completa de 3×3 en escritorio). La foto es un fotograma de su reel de @cosascucass (29-11-2024), el retrato sonriendo, a 720×1280 (lo que da el vídeo), con un poco de limpieza y enfoque. Datos del texto del reel. También en `landing.html`.
 - **Falleras Mayores 2026, pie de Matías Perelló:** la tarjeta pasa a «Falla Matías Perelló-Luis Santángel · Cristina Huerta Pérez» / «Fallera Mayor 2026» (en VAL, «Lluís Santàngel»); antes no llevaba nombre y el «·» hacía parecer que Luis Santángel era una persona. Nombre y falla, del texto del reel de @cosascucass (21-10-2025). La foto no cambia. También en `landing.html`.
 - **Bloque Falleras Mayores 2026:** el subtítulo pasa a «Confección exclusiva de Cosas Cucas» («Confecció exclusiva de Cosas Cucas» en VAL), en lugar de «Las Falleras Mayores de las fiestas 2026, vestidas con nuestros diseños exclusivos».
