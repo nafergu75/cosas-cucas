@@ -429,14 +429,12 @@
        FLIP REVEAL — filtros de categoría (traducción de flip-reveal.tsx)
     ═══════════════════════════════════════════════════════════════════════ */
 
-    /* Oculta items fuera de la categoría activa (equivale a hideClass="hidden") */
-    .flip-hide { display: none !important; }
 
-    /* Durante la animación GSAP Flip se deshabilitan las transiciones de hover */
-    .g-grid.is-flipping .g-cell img,
-    .g-grid.is-flipping .g-cell__overlay { transition: none; }
-
-    /* Grupo de botones de filtro — replica el ToggleGroup de shadcn */
+    /* Pestañas «Indumentaria femenina» / «Indumentaria masculina» (mismo estilo que los antiguos filtros) */
+    .g-tabs-wrap { background: var(--color-bg-alt); padding: 36px 16px 0; }
+    .g-section[hidden] { display: none; }
+    .g-section--tab { background: var(--color-bg-alt); padding-top: 8px; }
+    .g-section-title + .g-grid { margin-bottom: 48px; }
     .flip-filters {
       display: flex;
       justify-content: center;
@@ -447,13 +445,13 @@
     .flip-btn {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      padding: 9px 20px;
+      gap: 9px;
+      padding: 13px 26px;
       border: 1.5px solid var(--color-border);
       background: var(--color-bg);
       color: var(--color-text-muted);
       font-family: var(--font-body);
-      font-size: 0.73rem;
+      font-size: 0.8rem;
       font-weight: 600;
       letter-spacing: 0.11em;
       text-transform: uppercase;
@@ -475,6 +473,7 @@
       color: var(--color-white);
     }
     .flip-btn.active:hover { transform: none; }
+    .flip-btn:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
 
     /* Icono de categoría dentro del botón */
     .flip-btn svg {
@@ -504,8 +503,9 @@
 
     @media (max-width: 600px) {
       .flip-filters { gap: 5px; }
-      .flip-btn { padding: 8px 14px; font-size: 0.68rem; gap: 5px; }
+      .flip-btn { padding: 11px 14px; font-size: 0.7rem; gap: 6px; flex: 1 1 0; justify-content: center; }
       .flip-btn__count { display: none; }
+      .g-tabs-wrap { padding: 24px 16px 0; }
     }
   </style>
 </head>
@@ -527,56 +527,34 @@
   <p class="g-hero__sub">Falleras Mayores, Cortes de Honor e indumentaria valenciana artesanal desde 1982</p>
 </div>
 
-<!-- SECCIÓN: PASARELA -->
-<section class="g-section" id="sec-pasarela">
-  <p class="g-section-title">Pasarela · Colección 2027</p>
-  <div class="g-grid" id="grid-pasarela"></div>
-</section>
-
-<!-- SECCIÓN: INSTAGRAM (se añade cuando se descarguen las fotos) -->
-<section class="g-section" id="sec-instagram" style="display:none;">
-  <p class="g-section-title">Instagram · @cosascucass</p>
-  <div class="g-grid" id="grid-instagram"></div>
-</section>
-
-<!-- SECCIÓN: MOMENTOS EN TIENDA — ClippedGoeyGallery + FlipReveal filters -->
-<section class="g-section" id="sec-galeria" style="background: var(--color-bg-alt);">
-  <p class="g-section-title">Nuestra Tienda · Colecciones por Categoría</p>
-
-  <!-- ToggleGroup → filtros de categoría con animación GSAP Flip -->
-  <div class="flip-filters" id="flip-filters" role="group" aria-label="Filtrar por categoría">
-
-    <button class="flip-btn active" data-cat="all">
-      <!-- todas las personas -->
-      <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M3 20v-2a6 6 0 0 1 6-6"/><circle cx="17" cy="7" r="3"/><path d="M21 20v-2a4 4 0 0 0-4-4h-1"/></svg>
-      Todas
-      <span class="flip-btn__count" id="cnt-all">27</span>
+<!-- DOS APARTADOS: indumentaria femenina y masculina (pestañas; #femenina / #masculina) -->
+<div class="g-tabs-wrap">
+  <div class="flip-filters" role="tablist" aria-label="Apartados de la galería">
+    <button type="button" class="flip-btn active" role="tab" id="tab-femenina" data-tab="femenina" aria-controls="femenina" aria-selected="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M12 12v8m-3-3h6"/></svg>
+      Indumentaria femenina
+      <span class="flip-btn__count" id="cnt-femenina"></span>
     </button>
-
-    <button class="flip-btn" data-cat="mujer">
-      <!-- icono mujer -->
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M12 12v8m-3-3h6"/></svg>
-      Mujer
-      <span class="flip-btn__count" id="cnt-mujer">0</span>
+    <button type="button" class="flip-btn" role="tab" id="tab-masculina" data-tab="masculina" aria-controls="masculina" aria-selected="false" tabindex="-1">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M8 20v-5a4 4 0 0 1 8 0v5"/></svg>
+      Indumentaria masculina
+      <span class="flip-btn__count" id="cnt-masculina"></span>
     </button>
-
-    <button class="flip-btn" data-cat="hombre">
-      <!-- icono hombre -->
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M8 20v-5a4 4 0 0 1 8 0v5"/></svg>
-      Hombre
-      <span class="flip-btn__count" id="cnt-hombre">0</span>
-    </button>
-
-    <button class="flip-btn" data-cat="nino">
-      <!-- icono niño/niña -->
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/><path d="M9 14l1.5 2 2-3 2 3 1.5-2"/></svg>
-      Niño · Niña
-      <span class="flip-btn__count" id="cnt-nino">0</span>
-    </button>
-
   </div>
+</div>
 
-  <div class="g-grid" id="grid-galeria"></div>
+<section class="g-section g-section--tab" id="femenina" role="tabpanel" aria-labelledby="tab-femenina">
+  <h2 class="g-section-title">Pasarela</h2>
+  <div class="g-grid" id="grid-femenina-pasarela"></div>
+  <h2 class="g-section-title">Nuestras falleras</h2>
+  <div class="g-grid" id="grid-femenina-clientas"></div>
+</section>
+
+<section class="g-section g-section--tab" id="masculina" role="tabpanel" aria-labelledby="tab-masculina" hidden>
+  <h2 class="g-section-title">Pasarela</h2>
+  <div class="g-grid" id="grid-masculina-pasarela"></div>
+  <h2 class="g-section-title">Nuestros falleros</h2>
+  <div class="g-grid" id="grid-masculina-clientas"></div>
 </section>
 
 <!-- LIGHTBOX -->
@@ -589,9 +567,6 @@
   <p class="lightbox__counter" id="lb-counter"></p>
 </div>
 
-<!-- GSAP + Flip plugin (MIT) — FlipReveal gallery filters -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
 
 <!-- FOOTER -->
 <footer class="g-footer">
@@ -599,17 +574,19 @@
 </footer>
 
 <script>
+  /* Cada foto va a un apartado: 'femenina' o 'masculina'. Las de la pasarela son de mujer o niña
+     salvo las tres de chicos, marcadas con tipo: 'masculina'. */
   const PASARELA = [
     { img: 'pasarela/_ADL4063.jpg',  caption: 'Pasarela Cosas Cucas · Falles 2027' },
     { img: 'pasarela/_ADL4065.jpg',  caption: 'Indumentaria valenciana completa' },
     { img: 'pasarela/_ADL4068.jpg',  caption: 'Detalle de bordado artesanal' },
     { img: 'pasarela/_ADL4069.jpg',  caption: 'Seda valenciana exclusiva' },
-    { img: 'pasarela/_ADL4071.jpg',  caption: 'Manteleta bordada a mano' },
+    { img: 'pasarela/_ADL4071.jpg',  caption: 'Pasarela · faller infantil con chaleco gris y zaragüelles azules', tipo: 'masculina' },
     { img: 'pasarela/_ADL4076.jpg',  caption: 'Elegancia tradicional valenciana' },
     { img: 'pasarela/_ADL4077.jpg',  caption: 'Colección Falles 2027' },
     { img: 'pasarela/_ADL4080.jpg',  caption: 'Cotilla artesanal a medida' },
-    { img: 'pasarela/_ADL4081.jpg',  caption: 'Pasarela — confección exclusiva' },
-    { img: 'pasarela/_ADL4083.jpg',  caption: 'Aderezo y complementos de gala' },
+    { img: 'pasarela/_ADL4081.jpg',  caption: 'Pasarela · faller con chaleco rojo y medias de rayas', tipo: 'masculina' },
+    { img: 'pasarela/_ADL4083.jpg',  caption: 'Pasarela · faller con chaleco rojo bordado', tipo: 'masculina' },
     { img: 'pasarela/_ADL4087.jpg',  caption: 'Indumentaria de Fallera Mayor' },
     { img: 'pasarela/_ADL4091.jpg',  caption: 'Telas de seda valenciana' },
     { img: 'pasarela/_ADL4093.jpg',  caption: 'Bordados en hilo de oro' },
@@ -620,15 +597,8 @@
     { img: 'pasarela/_ADL4169.jpg',  caption: 'La tradición valenciana en todo su esplendor' },
   ];
 
-  /* Las fotos de Instagram se añaden aquí cuando se descarguen en /fotos */
-  const INSTAGRAM = [
-    /* Ejemplo: { img: 'fotos/foto1.jpg', caption: 'Fallera Mayor · Cosas Cucas' }, */
-  ];
-
-  /* ── GALERÍA TIENDA: 27 fotos — categorías identificadas visualmente ──
-     mujer × 14 · nino × 12 · hombre × 1
-     (única foto con traje masculino visible es la pareja llauradora)
-  ── */
+  /* ── Fotos de clientas (carpeta /galeria): cat 'mujer' y 'nino' (todas niñas) van a
+     indumentaria femenina; 'hombre' (la pareja de labradores) a la masculina ── */
   const GALERIA_TIENDA = [
     /* 1  */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.02.59_db5bbd11.jpg', caption: 'Fallera Mayor · indumentaria de gala',       cat: 'mujer'  },
     /* 2  */ { img: 'galeria/Imagen de WhatsApp 2025-03-04 a las 18.02.59_39f86f7f.jpg', caption: 'Fallera infantil · traje floral verd',        cat: 'nino'   },
@@ -668,9 +638,22 @@
     /* 36 */ { img: 'galeria/WhatsApp Image 2026-05-11 at 23.37.262.jpeg', caption: 'Fallera Major · jardí exterior, verd salvia',    cat: 'mujer'  },
   ];
 
-  /* ── Shapes y degradados para ClippedGoeyGallery ── */
-  const GOEY_CLIPS  = ['clip-goey1','clip-goey2','clip-goey3','clip-goey4','clip-goey5','clip-goey6'];
-  const GOEY_GRADS  = ['goey-grad-1','goey-grad-2','goey-grad-3','goey-grad-4','goey-grad-5','goey-grad-6'];
+  /* ── Falleros (carpeta /hombre, las mismas fotos reales de la colección «Indumentaria
+     Masculina» de la portada, más dos de la carpeta; fuera las generadas con IA) ── */
+  const HOMBRE = [
+    { img: 'hombre/WhatsApp Image 2026-04-30 at 19.00.45.jpeg', caption: 'Jubón paisley gris plata · padre e hijo' },
+    { img: 'hombre/WhatsApp Image 2026-04-30 at 19.36.15.jpeg', caption: 'Jubón brocado marrón chocolate' },
+    { img: 'hombre/WhatsApp Image 2026-04-30 at 19.28.05.jpeg', caption: 'Jubón azul cobalto con chaleco de flores doradas' },
+    { img: 'hombre/WhatsApp Image 2026-04-30 at 19.42.08.jpeg', caption: 'Jubón gris plateado · pasarela Cosas Cucas' },
+    { img: 'hombre/WhatsApp Image 2026-04-30 at 19.15.38.jpeg', caption: 'Jubón negro jacquard · conjunto de gala' },
+    { img: 'hombre/WhatsApp Image 2026-04-30 at 19.10.46.jpeg', caption: 'Chaleco floral marrón con manta valenciana' },
+    { img: 'hombre/WhatsApp Image 2026-04-30 at 19.09.15.jpeg', caption: 'Chaleco brocado crema y dorado · infantil' },
+    { img: 'hombre/WhatsApp Image 2026-04-30 at 19.14.02.jpeg', caption: 'Jubón jacquard rosa empolvado' },
+    { img: 'hombre/WhatsApp Image 2026-04-30 at 19.07.57.jpeg', caption: 'Faller infantil · jubón negro y sombrero' },
+    { img: 'hombre/4ca11417-a67f-424f-8f06-213ba5c849de.png',    caption: 'Jubón negro bordado · faller infantil' },
+    { img: 'hombre/Imagen de WhatsApp 2025-03-04 a las 18.03.01_eccd94e6.jpg', caption: 'Faller infantil · chaleco gris y zaragüelles azules' },
+    { img: 'hombre/Imagen de WhatsApp 2025-03-04 a las 18.04.38_f841fae2.jpg', caption: 'Faller infantil · chaqueta marrón y zaragüelles blancos' },
+  ];
 
   /* ── Lightbox ── */
   let allItems = [];
@@ -711,55 +694,12 @@
     if (e.key === 'ArrowRight')  navLb(1);
   });
 
-  /* ── Render galería de tienda: fotos limpias sin efectos ──
-     Usa el mismo .g-cell que la sección de pasarela.
-     Añade data-flip="${it.cat}" para que GSAP Flip pueda filtrar.
-  ── */
-  function renderGoeyGrid(containerId, items) {
-    const el = document.getElementById(containerId);
-    if (!el) return;
-
-    el.innerHTML = items.map((it, i) => {
-      const src = it.img.replace(/ /g, '%20');
-      return `<div class="g-cell"
-            data-idx="${i}"
-            data-flip="${it.cat}"
-            tabindex="0" role="button"
-            aria-label="${it.caption}">
-        <img src="${src}" alt="${it.caption}" loading="lazy" />
-        <div class="g-cell__overlay">
-          <div class="g-cell__zoom">
-            <svg viewBox="0 0 24 24">
-              <circle cx="11" cy="11" r="7"/>
-              <line x1="16.5" y1="16.5" x2="22" y2="22"/>
-              <line x1="11" y1="8"   x2="11" y2="14"/>
-              <line x1="8"  y1="11"  x2="14" y2="11"/>
-            </svg>
-          </div>
-          <span class="g-cell__caption">${it.caption}</span>
-        </div>
-      </div>`;
-    }).join('');
-
-    /* Click / tecla → lightbox */
-    el.addEventListener('click', e => {
-      const cell = e.target.closest('.g-cell');
-      if (cell) openLb(items, +cell.dataset.idx);
-    });
-    el.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        const cell = e.target.closest('.g-cell');
-        if (cell) { e.preventDefault(); openLb(items, +cell.dataset.idx); }
-      }
-    });
-  }
-
-  /* ── Render grid (cuadrícula clásica) ── */
-  function renderGrid(containerId, items) {
+  /* ── Rejilla: cada celda abre el visor con todas las fotos del apartado ── */
+  function renderGrid(containerId, items, todas, desde) {
     const el = document.getElementById(containerId);
     el.innerHTML = items.map((it, i) => `
-      <div class="g-cell" data-idx="${i}" tabindex="0" role="button" aria-label="${it.caption}">
-        <img src="${it.img}" alt="${it.caption}" loading="lazy" />
+      <div class="g-cell" data-idx="${desde + i}" tabindex="0" role="button" aria-label="${it.caption}">
+        <img src="${it.img.replace(/ /g, '%20')}" alt="${it.caption}" loading="lazy" decoding="async" />
         <div class="g-cell__overlay">
           <div class="g-cell__zoom">
             <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
@@ -767,99 +707,56 @@
           <span class="g-cell__caption">${it.caption}</span>
         </div>
       </div>`).join('');
-    el.addEventListener('click', e => {
-      const cell = e.target.closest('.g-cell');
-      if (cell) openLb(items, +cell.dataset.idx);
-    });
-  }
-
-  /* ═══════════════════════════════════════════════════════════════════════
-     FLIP REVEAL — traducción exacta de flip-reveal.tsx usando GSAP Flip
-     ─────────────────────────────────────────────────────────────────────
-     • Equivale a <FlipReveal keys={[cat]} showClass="" hideClass="flip-hide">
-     • Captura estado ANTES del cambio de clases (Flip.getState)
-     • Anima de la posición anterior a la nueva (Flip.from)
-     • onEnter: fadeIn + scale desde 0  — onLeave: fadeOut + scale a 0
-  ═══════════════════════════════════════════════════════════════════════ */
-  function initFlipReveal() {
-    const wrapper = document.getElementById('grid-galeria');
-    if (!wrapper) return;
-
-    /* Contar ítems por categoría y actualizar badges */
-    const counts = { all: 0, mujer: 0, hombre: 0, nino: 0 };
-    wrapper.querySelectorAll('[data-flip]').forEach(el => {
-      const k = el.getAttribute('data-flip');
-      if (counts[k] !== undefined) counts[k]++;
-      counts.all++;
-    });
-    ['all','mujer','hombre','nino'].forEach(k => {
-      const badge = document.getElementById('cnt-' + k);
-      if (badge) badge.textContent = counts[k];
-    });
-
-    /* Si GSAP no está disponible → solo muestra/oculta sin animación */
-    const hasGsap = typeof gsap !== 'undefined' && typeof Flip !== 'undefined';
-    if (hasGsap) gsap.registerPlugin(Flip);
-
-    function applyFilter(cat) {
-      const items = wrapper.querySelectorAll('[data-flip]');
-
-      if (!hasGsap) {
-        /* Fallback sin animación */
-        items.forEach(el => {
-          const key = el.getAttribute('data-flip');
-          el.classList.toggle('flip-hide', cat !== 'all' && key !== cat);
-        });
-        return;
+    const abrir = cell => cell && openLb(todas, +cell.dataset.idx);
+    el.addEventListener('click', e => abrir(e.target.closest('.g-cell')));
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        const cell = e.target.closest('.g-cell');
+        if (cell) { e.preventDefault(); abrir(cell); }
       }
-
-      /* ── GSAP Flip: misma lógica que useGSAP() en flip-reveal.tsx ── */
-      const state = Flip.getState(items);          /* 1. capturar posiciones actuales */
-
-      wrapper.classList.add('is-flipping');        /* deshabilitar hover-transitions */
-
-      items.forEach(el => {                        /* 2. cambiar clases (show/hide) */
-        const key = el.getAttribute('data-flip');
-        const show = cat === 'all' || key === cat;
-        el.classList.toggle('flip-hide', !show);
-      });
-
-      Flip.from(state, {                           /* 3. animar desde las posiciones anteriores */
-        duration : 0.6,
-        scale    : true,
-        ease     : 'power1.inOut',
-        stagger  : 0.05,
-        absolute : true,
-        onEnter  : els => gsap.fromTo(els,
-          { opacity: 0, scale: 0 },
-          { opacity: 1, scale: 1, duration: 0.8 }
-        ),
-        onLeave    : els => gsap.to(els, { opacity: 0, scale: 0, duration: 0.8 }),
-        onComplete : ()  => wrapper.classList.remove('is-flipping'),
-      });
-    }
-
-    /* ── Eventos de los botones de filtro ── */
-    document.querySelectorAll('.flip-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const cat = btn.dataset.cat;
-        document.querySelectorAll('.flip-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        applyFilter(cat);
-      });
     });
   }
 
-  /* ── Init ── */
-  renderGrid('grid-pasarela', PASARELA);
-  if (INSTAGRAM.length > 0) {
-    document.getElementById('sec-instagram').style.display = '';
-    renderGrid('grid-instagram', INSTAGRAM);
+  /* ── Los dos apartados ── */
+  const APARTADOS = {
+    femenina: {
+      pasarela: PASARELA.filter(f => f.tipo !== 'masculina'),
+      clientas: GALERIA_TIENDA.filter(f => f.cat !== 'hombre'),
+    },
+    masculina: {
+      pasarela: PASARELA.filter(f => f.tipo === 'masculina'),
+      clientas: [...GALERIA_TIENDA.filter(f => f.cat === 'hombre'), ...HOMBRE],
+    },
+  };
+  Object.entries(APARTADOS).forEach(([k, a]) => {
+    const todas = [...a.pasarela, ...a.clientas];
+    renderGrid(`grid-${k}-pasarela`, a.pasarela, todas, 0);
+    renderGrid(`grid-${k}-clientas`, a.clientas, todas, a.pasarela.length);
+    document.getElementById(`cnt-${k}`).textContent = todas.length;
+  });
+
+  /* ── Pestañas (con flechas del teclado y #femenina / #masculina en la dirección) ── */
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+  function mostrar(k, foco) {
+    tabs.forEach(t => {
+      const on = t.dataset.tab === k;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.dataset.tab).hidden = !on;
+      if (on && foco) t.focus();
+    });
+    history.replaceState(null, '', '#' + k);
   }
-  /* ClippedGoeyGallery — fotos de la carpeta /galeria */
-  renderGoeyGrid('grid-galeria', GALERIA_TIENDA);
-  /* FlipReveal — inicializar filtros por categoría */
-  initFlipReveal();
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => mostrar(t.dataset.tab));
+    t.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      mostrar(tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length].dataset.tab, true);
+    });
+  });
+  if (location.hash === '#masculina') mostrar('masculina');
 </script>
 </body>
 </html>

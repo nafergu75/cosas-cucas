@@ -39,7 +39,7 @@ Fundada por Paquita Martorell en el Cabañal. Hoy la llevan sus hijas Noelia, Ma
 | Archivo | Qué es |
 |---|---|
 | `index.html` | La web principal. Casi todo está aquí. |
-| `galeria.html` | Galería de fotos con filtros (mujer, niño, hombre). |
+| `galeria.html` | Galería en dos apartados con pestañas: «Indumentaria femenina» (50 fotos) e «Indumentaria masculina» (16), cada uno con «Pasarela» y «Nuestras falleras» / «Nuestros falleros». Enlaces directos `galeria.html#femenina` y `#masculina`. Datos: `PASARELA` (con `tipo: 'masculina'` en las 3 de chicos), `GALERIA_TIENDA` (`cat: 'hombre'` va a masculina) y `HOMBRE` (fotos reales de `hombre/`; las generadas con ChatGPT no entran). |
 | `landing.html` | Página de captación «Trajes de fallera en Valencia». |
 | `cartel-traslado.html` | Cartel del traslado a Burriana. |
 | `aviso-legal.html`, `politica-privacidad.html` | Textos legales. |
@@ -166,6 +166,7 @@ Al abrir la colección salen dos tarjetas con foto: **Espolín** e **Indumentari
 Ordenado de lo más nuevo a lo más antiguo. Cada línea es un trabajo terminado y publicado.
 
 ### 19-10-2026
+- **Galería en dos apartados:** al entrar, pestañas «Indumentaria femenina» e «Indumentaria masculina», cada foto en el suyo (las niñas en femenina, los niños en masculina). La masculina se completa con las 12 fotos reales de falleros de la carpeta `hombre/`. Fuera los filtros Todas/Mujer/Hombre/Niño, la animación GSAP y la sección vacía de Instagram. Corregidos tres pies de la pasarela que no cuadraban con la foto (p. ej. «Manteleta bordada a mano» en un niño). Pendiente: los pies de la pasarela dicen «Falles 2027», pero la foto de grupo enseña el cartel del I Desfile de Indumentaria del Gremio (Ateneo Mercantil); y en «Nuestras falleras» hay una captura de pantalla de móvil (`WhatsApp Image 2026-05-07 at 19.39.010.jpeg`).
 - **Noticia «Cosas Cucas abre en la calle Burriana, 21»:** quinta tarjeta de «Más noticias», con texto en ES y VAL sobre el traslado, la zona y el ambiente fallero, y diez fotos de la tienda (siete del día de la apertura). La cabecera del apartado pasa a «Noticias Cosas Cucas». En escritorio la rejilla pasa a seis medias columnas para que la última fila, si no está llena, vaya centrada.
 - **Julia en la prensa:** recuadro «En la prensa» en su noticia con el artículo de Official Press sobre el traje que estrenó en «Una Festa per a Tots» (confeccionado en Cosas Cucas), con enlace.
 - **Noticia del Premio Joia 2018 a Paquita Martorell:** cuarta tarjeta de «Más noticias» (en escritorio, la cuarta va centrada debajo de las otras tres), con texto en ES y VAL y 9 fotos de Ignacio.
