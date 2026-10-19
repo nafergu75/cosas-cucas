@@ -5737,8 +5737,8 @@ function buildFMDetail() {
   const labelSrc = (h.fmCurrentLabel || h.fmLabel).replace('✦ ', '');
   if (title)   title.innerHTML = labelSrc.replace(' vestidas por Cosas Cucas', '<br><span style="color:var(--color-gold)">vestidas por Cosas Cucas</span>');
   if (sub)     sub.textContent = currentLang === 'ca'
-    ? "Les Falleres Majors de les festes 2026, vestides amb els nostres dissenys exclusius."
-    : 'Las Falleras Mayores de las fiestas 2026, vestidas con nuestros diseños exclusivos.';
+    ? 'Confecció exclusiva de Cosas Cucas.'
+    : 'Confección exclusiva de Cosas Cucas.';
 
   /* Grid de fotos con año y falla */
   const grid = document.getElementById('fm-detail-grid');
