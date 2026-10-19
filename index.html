@@ -2216,6 +2216,10 @@
     }
     .fm-grupo__title::after { content: ''; flex: 1; height: 1px; background: var(--color-gold); opacity: .45; }
     .hist-corts-section .fm-grupo__title { padding-top: 28px; }
+    /* Falleras de la Corte de Honor, una a una (nombre, año y falla) */
+    .corte-personas { margin-bottom: 28px; }
+    .fm-card__falla { font-size: 0.72rem; line-height: 1.35; color: var(--color-text-muted); }
+    .fm-card__credito { font-size: 0.6rem; color: var(--color-text-muted); opacity: .8; }
     .fm-card__year {
       font-size: 0.6rem;
       font-weight: 700;
@@ -3597,6 +3601,7 @@
   <div class="hist-corts-section">
     <div class="container">
       <h3 class="fm-grupo__title" id="hist-corts-label"></h3>
+      <div class="fm-grid corte-personas" id="corte-personas"></div>
       <div class="cortes-grid" id="cortes-grid"></div>
       <div class="corts-grid" id="corts-grid"></div>
     </div>
@@ -5905,6 +5910,14 @@ const FALLERAS_VALENCIA = [
   { tipo: 'infantil', anyo: 1998, nombre: 'Ruth Galán García',       foto: 'falleras-valencia/fmi-1998-ruth-galan-garcia.webp' },
   { tipo: 'infantil', anyo: 2027, nombre: 'Julia Vizcayno Orero',    foto: 'falleras-valencia/fmi-2027-julia-vizcayno-orero.webp' },
 ];
+/* Falleras de la Corte de Honor de la Fallera Mayor de València vestidas por Cosas Cucas, una a una.
+   Marta Capella: candidata a FMV 2026 (la elegida fue Carmen Prades; las demás forman la Corte).
+   Alejandra y Laura: Corte 2027, las mismas de la noticia (retratos de la noticia). */
+const CORTE_PERSONAS = [
+  { anyo: 2026, nombre: 'Marta Capella Guanter',    falla: "Carretera d'Escrivà-Cooperativa de Sant Ferran", foto: 'falleras-valencia/corte-2026-marta-capella-guanter.webp', foco: 'center 10%' },
+  { anyo: 2027, nombre: 'Alejandra Blanco Beltrán', falla: 'Mestre Rodrigo-General Avilés', foto: 'noticias/corte-2027/alejandra-01.webp', foco: 'center 25%', credito: '@edgfotografia' },
+  { anyo: 2027, nombre: 'Laura Miquel Obarti',      falla: "Avinguda de l'Oest",            foto: 'noticias/corte-2027/laura-02.webp',     foco: 'center 30%' },
+];
 /* Cortes de Honor de la Fallera Mayor de València (las fotos llevan impresos los nombres) */
 const CORTES_VALENCIA = [
   { anyo: 1995, foto: 'falleras-valencia/corte-1995.webp' },
@@ -5936,6 +5949,15 @@ function buildHistoria() {
     </div>`).join('');
   }
   document.getElementById('hist-corts-label').textContent = h.cortsLabel;
+  document.getElementById('corte-personas').innerHTML = CORTE_PERSONAS.map(p => `<div class="fm-card">
+      <div class="fm-card__img"><img src="${p.foto}" alt="${p.nombre}, ${h.corte} ${p.anyo}" loading="lazy" decoding="async" style="object-position:${p.foco}" /></div>
+      <div class="fm-card__info">
+        <p class="fm-card__name">${p.nombre}</p>
+        <p class="fm-card__year">${h.corte} · ${p.anyo}</p>
+        <p class="fm-card__falla">Falla ${p.falla}</p>
+        ${p.credito ? `<p class="fm-card__credito">Foto: ${p.credito}</p>` : ''}
+      </div>
+    </div>`).join('');
   /* Cortes de Honor por año: grandes, dos por fila (la impar, centrada) */
   document.getElementById('cortes-grid').innerHTML = CORTES_VALENCIA.map(c =>
     `<div class="cort-card cort-card--corte">
