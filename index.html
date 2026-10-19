@@ -708,8 +708,11 @@
       .notas > li:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: min(340px, calc((100% - 28px) / 2)); }
     }
     @media (min-width: 861px) {
-      .notas { grid-template-columns: repeat(3, minmax(0, 340px)); }
-      .notas > li:last-child:nth-child(3n + 1) { grid-column: 2; }
+      /* seis medias columnas y cada tarjeta ocupa dos: así la última fila, si no está llena, va centrada */
+      .notas { grid-template-columns: repeat(6, minmax(0, 156px)); }
+      .notas > li { grid-column: span 2; }
+      .notas > li:nth-last-child(2):nth-child(3n + 1) { grid-column: 2 / span 2; }
+      .notas > li:last-child:nth-child(3n + 1) { grid-column: 3 / span 2; }
     }
     @media (max-width: 600px) {
       .mas-noticias { padding: 56px 0 64px; }
@@ -758,6 +761,8 @@
     .lector__close:focus-visible, .lector__volver:focus-visible { outline: 2px solid var(--color-text); outline-offset: 2px; }
     .lector .noticia { padding: 48px 0 56px; border-bottom: 0; }
     .lector .noticia::before { display: none; }
+    /* la noticia de la tienda tiene mucho texto: el carrusel, arriba y no a media altura */
+    @media (min-width: 1025px) { #noticia-tienda .noticia__inner { align-items: start; } }
     .lector .noticia:not(.is-open) { display: none; }
     .lector__pie { padding: 0 24px 64px; text-align: center; }
     .lector__volver {
@@ -3458,6 +3463,49 @@
       </div>
     </section>
 
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         NOTICIA — Cosas Cucas abre en la calle Burriana, 21 (julio de 2026).
+         Textos en t().tienda; fotos en TIENDA_FOTOS.
+    ════════════════════════════════════════════════════════════════════════ -->
+    <section id="noticia-tienda" class="noticia noticia--crema">
+      <div class="container noticia__inner">
+        <div class="noticia__text">
+          <p class="noticia__eyebrow" id="tienda-eyebrow"></p>
+          <h2 class="noticia__title" id="tienda-title"></h2>
+          <p class="noticia__lead" id="tienda-p1"></p>
+          <p class="noticia__lead" id="tienda-p2"></p>
+          <p class="noticia__lead" id="tienda-p3"></p>
+          <p class="noticia__lead" id="tienda-p4"></p>
+          <p class="noticia__lead" id="tienda-p5"></p>
+          <p class="noticia__credito"><a id="tienda-video" href="https://www.instagram.com/cosascucass/reel/DdYruMCMT4v/" target="_blank" rel="noopener"></a></p>
+        </div>
+        <div class="nf" id="nf-tienda" role="region" aria-roledescription="carrusel">
+          <div class="nf__stage" tabindex="0" role="group">
+            <div class="nf__slides"></div>
+            <button type="button" class="nf__arrow nf__arrow--prev">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button type="button" class="nf__arrow nf__arrow--next">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <div class="nf__ctrls">
+              <button type="button" class="nf__ctrl nf__ctrl--pause">
+                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
+              </button>
+              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+              </button>
+            </div>
+            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
+            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
+          </div>
+          <div class="nf__thumbs"></div>
+          <p class="nf__live" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
     <div class="lector__pie">
       <button type="button" class="lector__volver" id="lector-volver"></button>
     </div>
@@ -4173,7 +4221,7 @@ const translations = {
     },
     noticias: {
       eyebrow: 'Temporada fallera 2027',
-      title:   'Noticias del taller',
+      title:   'Noticias Cosas Cucas',
       text:    'Las falleras que vestimos este año y lo que va pasando en la casa.',
       mas:     'Más noticias',
       leer:    'Leer la noticia',
@@ -4246,6 +4294,29 @@ const translations = {
         'Trajes de Cosas Cucas expuestos en el salón, con el cartel de la casa y un ramo de rosas',
         'Trajes de mujer y de hombre expuestos durante el acto',
         'El salón con los trajes expuestos',
+      ],
+    },
+    tienda: {
+      eyebrow: 'Noticia · Julio 2026',
+      title:   'Cosas Cucas abre en la calle Burriana, 21',
+      p1:      'Desde el 1 de julio, nuestra tienda principal está en la calle Burriana, 21, en la esquina con Joaquín Costa. Nos hemos movido poco: desde Grabador Esteve son unos diez minutos andando, cruzando la Gran Vía. Seguimos en el Ensanche, ahora en el barrio de la Gran Vía, a un paso de Ruzafa.',
+      p2:      'Es un barrio de fincas levantadas entre los años veinte y los cincuenta, a dos manzanas de la Gran Vía Marqués del Turia y a cinco minutos del jardín del Turia. El metro de Russafa (línea 10) está al final de la calle, y los mercados de Colón y de Ruzafa, a unos ocho minutos a pie.',
+      p3:      'Y es una zona muy fallera. En la misma esquina se planta la falla Joaquín Costa-Burriana, que organiza en el cruce la Trobada de dolçainers «Joan Blasco». A tres minutos están Almirante Cadarso-Conde Altea y Reino de Valencia-Duque de Calabria, dos fallas de Sección Especial. Al final de la calle está la fuente del Maestro Serrano, el autor de «El fallero», donde el 18 de marzo se le rinde homenaje dentro del programa oficial de las Fallas. Y las luces de Ruzafa quedan a un cuarto de hora.',
+      p4:      'La tienda nueva es luminosa y se abre a la calle con un escaparate grande. Las telas están a la vista, en rollos colgados de la pared, para que podáis verlas y tocarlas, y los trajes de fallera y de hombre, en sus maniquíes.',
+      p5:      'Os esperamos en Burriana, 21 (963 511 556). La tienda del Cabañal sigue abierta en Vicent Gallart, 49.',
+      video:   'Vídeo de la tienda en nuestro Instagram',
+      region:  'Fotos de la tienda de Cosas Cucas en la calle Burriana, 21',
+      alts: [
+        'Fachada de la tienda en la calle Burriana, 21, con los toldos negros y el nombre de Cosas Cucas',
+        'Trajes de fallera y de hombre en sus maniquíes, con las telas en la pared',
+        'Rollos de brocados de colores en la pared, junto a dos maniquíes',
+        'Un rincón con un traje de fallera, un traje de hombre y una vitrina',
+        'Al fondo de la tienda, una mesa con sillas bajo una lámpara de araña, junto a las cortinas',
+        'La pared de telas, con un espejo y una estantería de zapatos',
+        'Telas colgadas junto a una tela enmarcada y una mesa de cristal',
+        'Trajes de ceremonia infantiles junto a una cómoda y un espejo',
+        'Interior de la tienda: telas en la pared y trajes de fallera y de hombre en maniquíes',
+        'La tienda vista desde el escaparate',
       ],
     },
     corte: {
@@ -4741,7 +4812,7 @@ const translations = {
     },
     noticias: {
       eyebrow: 'Temporada fallera 2027',
-      title:   'Notícies del taller',
+      title:   'Notícies Cosas Cucas',
       text:    'Les falleres que vestim enguany i el que va passant a la casa.',
       mas:     'Més notícies',
       leer:    'Llegir la notícia',
@@ -4814,6 +4885,29 @@ const translations = {
         'Vestits de Cosas Cucas exposats al saló, amb el cartell de la casa i un ram de roses',
         "Vestits de dona i d'home exposats durant l'acte",
         'El saló amb els vestits exposats',
+      ],
+    },
+    tienda: {
+      eyebrow: 'Notícia · Juliol 2026',
+      title:   'Cosas Cucas obri al carrer Burriana, 21',
+      p1:      "Des de l'1 de juliol, la nostra tenda principal és al carrer Burriana, 21, a la cantonada amb Joaquim Costa. Ens hem mogut poc: des de Gravador Esteve són uns deu minuts a peu, creuant la Gran Via. Continuem a l'Eixample, ara al barri de la Gran Via, a un pas de Russafa.",
+      p2:      "És un barri de finques alçades entre els anys vint i els cinquanta, a dues illes de la Gran Via del Marqués del Túria i a cinc minuts del jardí del Túria. El metro de Russafa (línia 10) és al final del carrer, i els mercats de Colom i de Russafa, a uns huit minuts a peu.",
+      p3:      "I és una zona molt fallera. A la mateixa cantonada es planta la falla Joaquim Costa-Borriana, que organitza a l'encreuament la Trobada de dolçainers «Joan Blasco». A tres minuts hi ha Almirall Cadarso-Comte d'Altea i Regne de València-Duc de Calàbria, dues falles de Secció Especial. Al final del carrer hi ha la font del Mestre Serrano, l'autor d'«El faller», on el 18 de març se li ret homenatge dins del programa oficial de les Falles. I les llums de Russafa queden a un quart d'hora.",
+      p4:      "La tenda nova és lluminosa i s'obri al carrer amb un aparador gran. Les teles estan a la vista, en rotllos penjats a la paret, perquè les pugueu veure i tocar, i els vestits de fallera i d'home, en els seus maniquins.",
+      p5:      'Vos esperem a Burriana, 21 (963 511 556). La tenda del Cabanyal continua oberta a Vicent Gallart, 49.',
+      video:   'Vídeo de la tenda al nostre Instagram',
+      region:  'Fotos de la tenda de Cosas Cucas al carrer Burriana, 21',
+      alts: [
+        "Façana de la tenda al carrer Burriana, 21, amb els tendals negres i el nom de Cosas Cucas",
+        "Vestits de fallera i d'home en els seus maniquins, amb les teles a la paret",
+        'Rotllos de brocats de colors a la paret, al costat de dos maniquins',
+        "Un racó amb un vestit de fallera, un vestit d'home i una vitrina",
+        "Al fons de la tenda, una taula amb cadires davall d'un llum d'aranya, al costat de les cortines",
+        'La paret de teles, amb un espill i una prestatgeria de sabates',
+        "Teles penjades al costat d'una tela emmarcada i una taula de vidre",
+        "Vestits de cerimònia infantils al costat d'una calaixera i un espill",
+        "Interior de la tenda: teles a la paret i vestits de fallera i d'home en maniquins",
+        "La tenda vista des de l'aparador",
       ],
     },
     corte: {
@@ -6192,6 +6286,25 @@ function buildJoia() {
   })), { ...t().noticia, region: j.region });
 }
 
+/* Fotos de la tienda de Burriana, 21: la fachada (fotograma del reel de @cosascucass
+   «¡Os esperamos en Burriana 21!»), siete del día de la apertura (carpeta del proyecto
+   «fotos burriana», 1-7-2026) y dos de Ignacio (carpeta «fotos tienda»).
+   true = vertical (se ve entera sobre fondo difuminado) */
+const TIENDA_FOTOS = [true, true, true, true, true, true, true, true, true, false]
+  .map((vertical, i) => ({ src: `noticias/tienda-${String(i + 1).padStart(2, '0')}`, vertical }));
+
+function buildTienda() {
+  const n = t().tienda;
+  const set = (id, txt) => { document.getElementById(id).textContent = txt; };
+  set('tienda-eyebrow', n.eyebrow);
+  set('tienda-title', n.title);
+  ['p1', 'p2', 'p3', 'p4', 'p5', 'video'].forEach(k => set(`tienda-${k}`, n[k]));
+  renderCarousel('tienda', document.getElementById('nf-tienda'), TIENDA_FOTOS.map((f, i) => ({
+    src: `${f.src}.webp`, mini: `${f.src}-mini.webp`, vertical: f.vertical,
+    foco: f.vertical ? undefined : 'center 40%', alt: n.alts[i],
+  })), { ...t().noticia, region: n.region });
+}
+
 /* Noticias que salen como tarjeta bajo la principal y se leen en el lector.
    fotos: dos [mini, foco] para la tarjeta, una junto a otra; mejor verticales 3:4,
    que así se ven enteras (la portada es 3:2). */
@@ -6203,6 +6316,10 @@ const NOTICIAS_MAS = [
   { id: 'noticia-meri', textos: () => t().meri,  fotos: [
     ['noticias/meri-zalve-04-mini.webp', 'center'],
     ['noticias/meri-zalve-11-mini.webp', 'center'],
+  ] },
+  { id: 'noticia-tienda', textos: () => t().tienda, fotos: [
+    ['noticias/tienda-01-mini.webp', 'center 75%'],
+    ['noticias/tienda-02-mini.webp', 'center'],
   ] },
   { id: 'noticia-joyas', textos: () => t().joyas, fotos: [
     ['noticias/joyas-01-mini.webp', 'center'],
@@ -6532,6 +6649,7 @@ function renderAll() {
   buildMeri();
   buildJoyas();
   buildJoia();
+  buildTienda();
   buildNoticias();
   initHeroSlider();           /* ImagePlayer: fotos de pasarela en bucle */
   buildArchive(); buildFMDetail(); buildZapatillas(); buildHistoria();
