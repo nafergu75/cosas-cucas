@@ -426,86 +426,75 @@
     }
 
     /* ═══════════════════════════════════════════════════════════════════════
-       FLIP REVEAL — filtros de categoría (traducción de flip-reveal.tsx)
+       DOS VENTANAS: «Indumentaria femenina» e «Indumentaria masculina».
+       Al entrar solo se ven las dos; al pinchar una (#femenina / #masculina) salen sus fotos.
     ═══════════════════════════════════════════════════════════════════════ */
-
-
-    /* Pestañas «Indumentaria femenina» / «Indumentaria masculina» (mismo estilo que los antiguos filtros) */
-    .g-tabs-wrap { background: var(--color-bg-alt); padding: 36px 16px 0; }
-    .g-section[hidden] { display: none; }
-    .g-section--tab { background: var(--color-bg-alt); padding-top: 8px; }
-    .g-section-title + .g-grid { margin-bottom: 48px; }
-    .flip-filters {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      padding: 4px 0 28px;
-      flex-wrap: wrap;
+    .g-elige {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 420px));
+      justify-content: center; gap: 28px;
+      padding: 52px 24px 88px; background: var(--color-bg-alt);
     }
-    .flip-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 13px 26px;
-      border: 1.5px solid var(--color-border);
-      background: var(--color-bg);
-      color: var(--color-text-muted);
-      font-family: var(--font-body);
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.11em;
-      text-transform: uppercase;
-      cursor: pointer;
-      border-radius: 3px;
-      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
-      position: relative;
-      overflow: hidden;
+    .g-elige[hidden] { display: none; }
+    .g-ventana {
+      position: relative; display: block; overflow: hidden; aspect-ratio: 4 / 5;
+      border: 1px solid var(--color-gold); border-radius: 4px;
+      color: var(--color-white); text-decoration: none; background: var(--color-bg-dark);
+      box-shadow: 0 14px 34px rgba(26,23,20,.14);
     }
-    .flip-btn:hover {
-      border-color: var(--color-text);
-      color: var(--color-text);
-      transform: translateY(-1px);
+    .g-ventana img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; display: block; transition: transform .7s ease;
     }
-    /* Estado activo = ToggleGroupItem [data-state=on] */
-    .flip-btn.active {
-      background: var(--color-bg-dark);
-      border-color: var(--color-bg-dark);
-      color: var(--color-white);
+    .g-ventana::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,23,20,.88) 0%, rgba(26,23,20,.35) 38%, rgba(26,23,20,0) 62%);
     }
-    .flip-btn.active:hover { transform: none; }
-    .flip-btn:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
-
-    /* Icono de categoría dentro del botón */
-    .flip-btn svg {
-      width: 15px; height: 15px;
-      stroke: currentColor; fill: none; stroke-width: 1.8;
-      flex-shrink: 0;
+    .g-ventana:hover img { transform: scale(1.04); }
+    .g-ventana:focus-visible { outline: 3px solid var(--color-gold); outline-offset: 4px; }
+    .g-ventana__txt {
+      position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
+      padding: 30px 30px 32px; display: flex; flex-direction: column; gap: 8px;
     }
-
-    /* Contador de ítems por categoría */
-    .flip-btn__count {
-      display: inline-flex;
-      align-items: center; justify-content: center;
-      min-width: 18px; height: 18px;
-      padding: 0 4px;
-      border-radius: 9px;
-      background: rgba(181,144,58,0.18);
-      color: var(--color-gold);
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0;
-      transition: background 0.2s, color 0.2s;
-    }
-    .flip-btn.active .flip-btn__count {
-      background: rgba(181,144,58,0.35);
+    .g-ventana__num {
+      font-size: .7rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
       color: var(--color-gold-light);
     }
+    .g-ventana__tit {
+      font-family: var(--font-display); font-weight: 400; line-height: 1.12;
+      font-size: clamp(1.6rem, 2.8vw, 2.25rem);
+    }
+    .g-ventana__ver {
+      align-self: flex-start; margin-top: 8px; padding-bottom: 3px;
+      font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+      border-bottom: 1px solid var(--color-gold-light);
+    }
+    .g-ventana__ver::after { content: '→'; margin-left: 10px; }
 
-    @media (max-width: 600px) {
-      .flip-filters { gap: 5px; }
-      .flip-btn { padding: 11px 14px; font-size: 0.7rem; gap: 6px; flex: 1 1 0; justify-content: center; }
-      .flip-btn__count { display: none; }
-      .g-tabs-wrap { padding: 24px 16px 0; }
+    /* Apartado abierto */
+    .g-section[hidden] { display: none; }
+    .g-section--apartado { background: var(--color-bg-alt); scroll-margin-top: 70px; }
+    .g-apartado__nav {
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px 24px;
+      margin-bottom: 14px;
+    }
+    .g-link {
+      font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--color-text-muted); text-decoration: none; transition: color .2s;
+    }
+    .g-link:hover { color: var(--color-gold); }
+    .g-link:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
+    .g-apartado__tit {
+      font-family: var(--font-display); font-weight: 400; color: var(--color-text);
+      font-size: clamp(1.7rem, 3.2vw, 2.4rem); line-height: 1.15; margin-bottom: 30px;
+    }
+    .g-apartado__tit:focus { outline: none; }
+    .g-section-title + .g-grid { margin-bottom: 48px; }
+
+    @media (max-width: 640px) {
+      .g-elige { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 28px 16px 56px; }
+      .g-ventana { aspect-ratio: 5 / 4; }
+      .g-ventana__txt { padding: 20px 20px 22px; gap: 6px; }
+      .g-section--apartado { scroll-margin-top: 64px; }
     }
   </style>
 </head>
@@ -527,33 +516,47 @@
   <p class="g-hero__sub">Falleras Mayores, Cortes de Honor e indumentaria valenciana artesanal desde 1982</p>
 </div>
 
-<!-- DOS APARTADOS: indumentaria femenina y masculina (pestañas; #femenina / #masculina) -->
-<div class="g-tabs-wrap">
-  <div class="flip-filters" role="tablist" aria-label="Apartados de la galería">
-    <button type="button" class="flip-btn active" role="tab" id="tab-femenina" data-tab="femenina" aria-controls="femenina" aria-selected="true">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M12 12v8m-3-3h6"/></svg>
-      Indumentaria femenina
-      <span class="flip-btn__count" id="cnt-femenina"></span>
-    </button>
-    <button type="button" class="flip-btn" role="tab" id="tab-masculina" data-tab="masculina" aria-controls="masculina" aria-selected="false" tabindex="-1">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M8 20v-5a4 4 0 0 1 8 0v5"/></svg>
-      Indumentaria masculina
-      <span class="flip-btn__count" id="cnt-masculina"></span>
-    </button>
-  </div>
-</div>
+<!-- DOS VENTANAS: al pinchar una se ven sus fotos (#femenina / #masculina) -->
+<nav class="g-elige" id="g-elige" aria-label="Apartados de la galería">
+  <a class="g-ventana" href="#femenina">
+    <img src="galeria/Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2018.03.02_91962d31.jpg" alt="" style="object-position: center 22%" />
+    <span class="g-ventana__txt">
+      <span class="g-ventana__num" id="cnt-femenina"></span>
+      <span class="g-ventana__tit">Indumentaria femenina</span>
+      <span class="g-ventana__ver">Ver las fotos</span>
+    </span>
+  </a>
+  <a class="g-ventana" href="#masculina">
+    <img src="hombre/WhatsApp%20Image%202026-04-30%20at%2019.36.15.jpeg" alt="" style="object-position: center 10%" />
+    <span class="g-ventana__txt">
+      <span class="g-ventana__num" id="cnt-masculina"></span>
+      <span class="g-ventana__tit">Indumentaria masculina</span>
+      <span class="g-ventana__ver">Ver las fotos</span>
+    </span>
+  </a>
+</nav>
 
-<section class="g-section g-section--tab" id="femenina" role="tabpanel" aria-labelledby="tab-femenina">
-  <h2 class="g-section-title">Pasarela</h2>
+<section class="g-section g-section--apartado" id="femenina" hidden>
+  <div class="g-apartado__nav">
+    <a class="g-link" href="#">← Volver a la galería</a>
+    <a class="g-link" href="#masculina">Indumentaria masculina →</a>
+  </div>
+  <h2 class="g-apartado__tit" tabindex="-1">Indumentaria femenina</h2>
+  <h3 class="g-section-title">Pasarela</h3>
   <div class="g-grid" id="grid-femenina-pasarela"></div>
-  <h2 class="g-section-title">Nuestras falleras</h2>
+  <h3 class="g-section-title">Nuestras falleras</h3>
   <div class="g-grid" id="grid-femenina-clientas"></div>
 </section>
 
-<section class="g-section g-section--tab" id="masculina" role="tabpanel" aria-labelledby="tab-masculina" hidden>
-  <h2 class="g-section-title">Pasarela</h2>
+<section class="g-section g-section--apartado" id="masculina" hidden>
+  <div class="g-apartado__nav">
+    <a class="g-link" href="#">← Volver a la galería</a>
+    <a class="g-link" href="#femenina">Indumentaria femenina →</a>
+  </div>
+  <h2 class="g-apartado__tit" tabindex="-1">Indumentaria masculina</h2>
+  <h3 class="g-section-title">Pasarela</h3>
   <div class="g-grid" id="grid-masculina-pasarela"></div>
-  <h2 class="g-section-title">Nuestros falleros</h2>
+  <h3 class="g-section-title">Nuestros falleros</h3>
   <div class="g-grid" id="grid-masculina-clientas"></div>
 </section>
 
@@ -732,31 +735,24 @@
     const todas = [...a.pasarela, ...a.clientas];
     renderGrid(`grid-${k}-pasarela`, a.pasarela, todas, 0);
     renderGrid(`grid-${k}-clientas`, a.clientas, todas, a.pasarela.length);
-    document.getElementById(`cnt-${k}`).textContent = todas.length;
+    document.getElementById(`cnt-${k}`).textContent = `${todas.length} fotos`;
   });
 
-  /* ── Pestañas (con flechas del teclado y #femenina / #masculina en la dirección) ── */
-  const tabs = [...document.querySelectorAll('[role="tab"]')];
-  function mostrar(k, foco) {
-    tabs.forEach(t => {
-      const on = t.dataset.tab === k;
-      t.classList.toggle('active', on);
-      t.setAttribute('aria-selected', on);
-      t.tabIndex = on ? 0 : -1;
-      document.getElementById(t.dataset.tab).hidden = !on;
-      if (on && foco) t.focus();
-    });
-    history.replaceState(null, '', '#' + k);
+  /* ── Qué se ve: las dos ventanas (sin #) o las fotos de un apartado (#femenina / #masculina).
+     Con el # en la dirección, el botón atrás del navegador vuelve a las dos ventanas ── */
+  function vista(desdeClic) {
+    const k = location.hash.slice(1);
+    const abierto = APARTADOS[k] ? k : null;
+    document.getElementById('g-elige').hidden = !!abierto;
+    Object.keys(APARTADOS).forEach(a => { document.getElementById(a).hidden = a !== abierto; });
+    if (abierto && desdeClic) {
+      const sec = document.getElementById(abierto);
+      sec.scrollIntoView();
+      sec.querySelector('.g-apartado__tit').focus({ preventScroll: true });
+    }
   }
-  tabs.forEach((t, i) => {
-    t.addEventListener('click', () => mostrar(t.dataset.tab));
-    t.addEventListener('keydown', e => {
-      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-      e.preventDefault();
-      mostrar(tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length].dataset.tab, true);
-    });
-  });
-  if (location.hash === '#masculina') mostrar('masculina');
+  window.addEventListener('hashchange', () => vista(true));
+  vista(false);
 </script>
 </body>
 </html>
