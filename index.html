@@ -2218,6 +2218,7 @@
     .hist-corts-section .fm-grupo__title { padding-top: 28px; }
     /* Falleras de la Corte de Honor, una a una (nombre, año y falla) */
     .corte-personas { margin-bottom: 28px; }
+    .corte-personas .fm-card__img { aspect-ratio: 3 / 4; }
     .fm-card__falla { font-size: 0.72rem; line-height: 1.35; color: var(--color-text-muted); }
     .fm-card__credito { font-size: 0.6rem; color: var(--color-text-muted); opacity: .8; }
     .fm-card__year {
@@ -5911,12 +5912,14 @@ const FALLERAS_VALENCIA = [
   { tipo: 'infantil', anyo: 2027, nombre: 'Julia Vizcayno Orero',    foto: 'falleras-valencia/fmi-2027-julia-vizcayno-orero.webp' },
 ];
 /* Falleras de la Corte de Honor de la Fallera Mayor de València vestidas por Cosas Cucas, una a una.
-   Marta Capella: candidata a FMV 2026 (la elegida fue Carmen Prades; las demás forman la Corte).
-   Alejandra y Laura: Corte 2027, las mismas de la noticia (retratos de la noticia). */
+   Marta Capella y Laura Llobell: candidatas a FMV 2026 (la elegida fue Carmen Prades; las demás forman la Corte).
+   Alejandra y Laura: Corte 2027, las mismas de la noticia (fotos de la noticia recortadas en vertical).
+   Fotos de cuerpo entero, con el traje completo: la tarjeta es vertical 3:4 y no cuadrada. */
 const CORTE_PERSONAS = [
-  { anyo: 2026, nombre: 'Marta Capella Guanter',    falla: "Carretera d'Escrivà-Cooperativa de Sant Ferran", foto: 'falleras-valencia/corte-2026-marta-capella-guanter.webp', foco: 'center 10%' },
-  { anyo: 2027, nombre: 'Alejandra Blanco Beltrán', falla: 'Mestre Rodrigo-General Avilés', foto: 'noticias/corte-2027/alejandra-01.webp', foco: 'center 25%', credito: '@edgfotografia' },
-  { anyo: 2027, nombre: 'Laura Miquel Obarti',      falla: "Avinguda de l'Oest",            foto: 'noticias/corte-2027/laura-02.webp',     foco: 'center 30%' },
+  { anyo: 2026, nombre: 'Marta Capella Guanter',    falla: "Carretera d'Escrivà-Cooperativa de Sant Ferran", foto: 'falleras-valencia/corte-2026-marta-capella-guanter.webp', foco: 'center' },
+  { anyo: 2026, nombre: 'Laura Llobell López',      falla: 'Exposició-Micer Mascó', foto: 'falleras-valencia/corte-2026-laura-llobell-lopez.webp', foco: 'center' },
+  { anyo: 2027, nombre: 'Alejandra Blanco Beltrán', falla: 'Mestre Rodrigo-General Avilés', foto: 'falleras-valencia/corte-2027-alejandra-blanco-beltran.webp', foco: 'center', credito: '@alejandrablaancoo' },
+  { anyo: 2027, nombre: 'Laura Miquel Obarti',      falla: "Avinguda de l'Oest",            foto: 'falleras-valencia/corte-2027-laura-miquel-obarti.webp',     foco: 'center' },
 ];
 /* Cortes de Honor de la Fallera Mayor de València (las fotos llevan impresos los nombres) */
 const CORTES_VALENCIA = [
