@@ -2775,7 +2775,7 @@
     #decoracion { padding: 90px 0; background: var(--color-bg); position: relative; scroll-margin-top: var(--header-h); }
     /* ── TELÓN de Decoración: al llegar a la sección, dos paños de cortina en crema con galón dorado
        se recogen hacia los lados (1,2 s) y el contenido va apareciendo detrás. Solo una vez por visita.
-       Lo arma el <script> que va justo después de la sección (clases .telon → .is-open → .telon-fin);
+       Lo arma el script que va justo después de la sección (clases .telon → .is-open → .telon-fin);
        sin JS, con «reducir movimiento» o si la sección ya se ve al cargar, no hay telón. ── */
     #decoracion.telon::before, #decoracion.telon::after {
       content: ''; position: absolute; top: 0; width: 50.5%;
@@ -7726,97 +7726,277 @@ function updateCitaBtn() {
 (function () {
   'use strict';
 
+  /* Idioma de la página (setLang cambia <html lang>): respuestas, sugerencias y textos
+     del panel salen en castellano o en valenciano. */
+  function lg() { return document.documentElement.lang === 'ca' ? 'ca' : 'es'; }
+  function L(v) { return (v && typeof v === 'object') ? (v[lg()] || v.es) : v; }
+
+  /* Base de conocimiento revisada y ampliada el 20-10-2026: cada dato está contrastado con
+     fuentes (listadas en ASISTENTE_FUENTES.md, que no se publica). El orden importa: si dos
+     entradas empatan gana la primera, así que las concretas van antes que las generales
+     (mangas, corpiño, falda, telas, metros, épocas, historia, partes) y al final precio,
+     tienda, hola y gracias. Las claves evitan contener palabras vacías («que», «mas»…). */
   var KB = [
-    { id:'partes',
-      keys:['partes','componentes','elementos','traje','que lleva','como es','que es'],
-      title:'El traje de fallera',
-      body:'El traje tiene tres bloques:\n\n<b>Prendas exteriores</b>\nFalda · Delantal · Corpino · Mangas · Manteleta\n\n<b>Peinado y adornos</b>\nTres rodetes · Peinetas · Aderezo\n\n<b>Calzado y finales</b>\nZapatos · Mantilla · Ramillete'
-    },
-    { id:'falda',
-      keys:['falda','basquina','vuelo','plisada','raso','enagua','metros'],
-      title:'Falda o Basquina',
-      body:'La parte mas vistosa. Amplia y plisada en <b>seda o raso estampado</b>.\n\nCae desde la cintura hasta los zapatos.\nRequiere <b>4 a 5 metros de tela</b>.\nSu vuelo se logra con enaguas interiores.'
-    },
-    { id:'corpino',
-      keys:['corpino','cuerpo','torso','escote','cordones','terciopelo'],
-      title:'Corpino o Cuerpo',
-      body:'Prenda superior que <b>moldea el torso</b>.\n\n- Seda o terciopelo a juego con la falda\n- Escote bajo con cordones laterales\n- Cuerpo principal + mangas independientes'
-    },
-    { id:'mangas',
-      keys:['manga','mangas','farol','francesa','manga larga','manga corta'],
-      title:'Mangas del Corpino',
-      body:'Tres tipos, todas bordadas:\n\n- <b>Farol:</b> Voluminosas en hombros\n- <b>Francesa:</b> Cortas y abullonadas\n- <b>Larga:</b> Cenidas, para actos solemnes'
-    },
-    { id:'delantal',
-      keys:['delantal','faldeta','tul','muselina','batista','bordado','arabescos'],
-      title:'Delantal o Faldeta',
-      body:'Panel rectangular sobre la falda.\n\n- Tul, muselina o batista\n- <b>Bordado en oro y plata</b> con flores y arabescos\n- Se abrocha atras cubriendo el regazo'
-    },
-    { id:'manteleta',
-      keys:['manteleta','pico','panoleta','hombros','cabeza','velo'],
-      title:'Manteleta',
-      body:'Complemento <b>imprescindible</b> sobre hombros y cabeza.\n\n- Pico/Panoleta de tul o muselina\n- Cubre hombros, escote y espalda\n- Se fija con horquillas'
-    },
-    { id:'peinado',
-      keys:['peinado','rodete','rodetes','mono','recogido','liso'],
-      title:'Peinado Tradicional',
-      body:'Tres rodetes: dos laterales y uno posterior.\n\nCabello completamente <b>liso y recogido</b>.\nSujeto con peinetas artesanales.'
-    },
-    { id:'peinetas',
-      keys:['peineta','peinetas','nacar','carey','concha'],
-      title:'Peinetas',
-      body:'Piezas ornamentales en nacar, carey o concha.\n\n- Altas y curvadas\n- Las de <b>Fallera Mayor</b> son grandes\n- Se llevan por parejas o trios'
-    },
-    { id:'aderezo',
-      keys:['aderezo','joyas','joya','pendientes','colgante','broche','herencia'],
-      title:'Aderezo',
-      body:'Conjunto completo de joyas:\n\n- Pendientes largos\n- Broches para peinetas\n- Colgantes para cuello y hombros\n- Oro o plata con piedras\n\nSe hereda de generacion en generacion.'
-    },
-    { id:'calzado',
-      keys:['zapato','zapatos','calzado','tacon','saten','medias','piel'],
-      title:'Calzado',
-      body:'Sencillo para no competir con el traje.\n\n- Tacon bajo: <b>3 a 5 cm</b>\n- Piel o saten negro o blanco\n- Con lazos o flores bordadas\n- Se combinan con medias'
-    },
-    { id:'mantilla',
-      keys:['mantilla','encaje negro','encaje blanco','solemne'],
-      title:'Mantilla',
-      body:'Complemento <b>opcional</b> para actos solemnes.\n\n- Encaje negro o blanco\n- Se coloca sobre los hombros'
-    },
-    { id:'ramillete',
-      keys:['ramillete','flores','ramo','bouquet','rosas','claveles','ofrena'],
-      title:'Ramillete',
-      body:'Bouquet de flores naturales para actos oficiales.\n\n- Rosas y claveles\n- Se usa en la <b>Ofrena de Flors</b> a la Virgen'
-    },
-    { id:'tienda',
-      keys:['tienda','horario','cita','visita','donde','direccion','telefono','contacto','llamar'],
-      title:'Visitanos',
-      body:'<b>Tienda Principal</b>\nBurriana 21, 46005 Valencia — 963 511 556\n\n<b>Tienda Cabanyal</b>\nVicent Gallart 49, Valencia — 963 714 997\n\nLun-Vie: 10:00-13:30 / 17:00-20:00\nSabados: 10:30-13:30\n\nWhatsApp: <b>667 775 501</b>'
-    },
-    { id:'precio',
-      keys:['precio','cuanto','presupuesto','vale','coste','cuesta'],
-      title:'Presupuesto',
-      body:'El precio varia segun <b>telas, bordados y confeccion</b>.\n\nPresupuesto sin compromiso:\n963 511 556 o 963 714 997\nWhatsApp: <b>667 775 501</b>'
-    },
-    { id:'hola',
-      keys:['hola','buenos','buenas','saludos','hey'],
-      title:null,
-      body:'Hola! Soy la asistente de <b>Cosas Cucas</b>. Puedo explicarte cualquier elemento del traje de fallera valenciana. Sobre que quieres saber?'
-    },
-    { id:'gracias',
-      keys:['gracias','perfecto','genial','muy bien','entendido'],
-      title:null,
-      body:'De nada! Si tienes mas dudas, aqui estoy. Fins aviat!'
-    }
+    { id:"cancan",
+      keys:["cancán", "cancan", "ahuecador", "vuelo", "volumen", "almidón", "almidon", "sayas", "saies"],
+      title:{ es:"El cancán", ca:"El cancan" },
+      body:{
+        es:"Ha sustituido a las sayas almidonadas que se ponían una encima de otra. Hoy esas sayas solo se ven en un vestir más historicista.\n\nSe elige según lo que pese la falda: más firme para sedas muy tramadas, telas con metales o lanas gruesas, y más ligero para sedas salvajes, percales o indianas. Suele ir unos 5 cm más corto que la falda, medido desde debajo de la cinturilla. Con el uso pierde algo de vuelo.",
+        ca:"Ha substituït les saies emmidonades que es posaven una damunt de l'altra. Hui eixes saies només es veuen en un vestir més historicista.\n\nEs tria segons el pes de la falda: més ferm per a sedes molt tramades, teles amb metalls o llanes gruixudes, i més lleuger per a sedes salvatges, percals o indianes. Sol anar uns 5 cm més curt que la falda, mesurat des de davall de la pretina. Amb l'ús perd una mica de vol." } },
+    { id:"interior",
+      keys:["enagua", "enagües", "enagues", "sinagües", "sinagues", "pololo", "camisa interior", "ropa interior", "roba interior", "debajo", "davall", "orden", "ordre", "vestirme", "vestir-me"],
+      title:{ es:"Lo que va debajo", ca:"El que va per dins" },
+      body:{
+        es:"Por orden: primero las medias, de seda o de algodón. Luego los pololos y la camisa interior. Después el cancán, y encima las enaguas, que dan más cuerpo a la falda.\n\nNormalmente son de algodón. Las enaguas suelen ser blancas y a juego con la camisa interior.",
+        ca:"Per orde: primer les calces, de seda o de cotó. Després els pololos i la camisa interior. A continuació el cancan, i damunt les sinagües, que donen més cos a la falda.\n\nNormalment són de cotó. Les sinagües solen ser blanques i a joc amb la camisa interior." } },
+    { id:"delantal",
+      keys:["delantal", "davantal", "muselina", "mussolina", "batista", "nipi"],
+      title:{ es:"El delantal", ca:"El davantal" },
+      body:{
+        es:"Va a juego con la manteleta y lleva el mismo dibujo. Puede ser cuadrado o redondeado.\n\nSe hace en tul, muselina, batista o nipi, bordado con hilo de oro o plata, o a cadeneta con lentejuelas. Se ata a la cintura con cintas y cubre solo una parte de la delantera de la falda.\n\nEn valenciano se llama <b>davantal</b>. Ojo: «faldeta» quiere decir falda, no delantal.",
+        ca:"Va a joc amb la manteleta i en porta el mateix dibuix. Pot ser quadrat o arredonit.\n\nEs fa en tul, mussolina, batista o nipi, brodat amb fil d'or o de plata, o a cadeneta amb lluentons. Es lliga a la cintura amb cintes i només cobrix una part del davant de la falda.\n\nCompte: «faldeta» vol dir falda, no davantal." } },
+    { id:"manteleta",
+      keys:["manteleta", "manteletes", "esclavina", "pico", "organza", "tul", "lentejuela", "lluentó", "lluento"],
+      title:{ es:"La manteleta", ca:"La manteleta" },
+      body:{
+        es:"Es una esclavina grande, con dos puntas largas por delante. Va sobre los hombros y el corpiño, nunca en la cabeza.\n\nSe hace de tul, seda, organza, batista o muselina, bordada en oro o plata y a veces con lentejuelas. Su pareja es el delantal, con el mismo dibujo.\nEn el traje del XIX se cose al escote redondo, se sujeta con una cinta de raso y los picos se cruzan sobre el pecho.",
+        ca:"És una esclavina gran, amb dues puntes llargues per davant. Va sobre els muscles i el cosset, mai al cap.\n\nEs fa de tul, seda, organza, batista o mussolina, brodada amb or o plata i de vegades amb lluentons. La seua parella és el davantal, amb el mateix dibuix.\nEn el vestit del XIX es cus a l'escot redó, es subjecta amb una cinta de setí i les puntes es creuen sobre el pit." } },
+    { id:"mocador-coll",
+      keys:["pañuelo de cuello", "pañuelo de hombros", "mocador de coll", "pañoleta", "panoleta"],
+      title:{ es:"El pañuelo de cuello", ca:"El mocador de coll" },
+      body:{
+        es:"No es lo mismo que la manteleta, aunque se confunden a menudo. Es un cuadrado de tela de 90 a 130 cm de lado, con encaje en las orillas, que se dobla en triángulo.\nSe bordaba a cadeneta en dos esquinas, por caras distintas, para que al doblarlo se vieran los dos bordados.\n\nEn el traje histórico tapaba el pecho, porque el justillo y el jubón eran muy escotados.",
+        ca:"No és el mateix que la manteleta, encara que sovint es confonen. És un quadrat de tela de 90 a 130 cm de costat, amb punta a les vores, que es doblega en triangle.\nEs brodava a cadeneta en dos cantons, per cares diferents, de manera que, en doblegar-lo, es veien els dos brodats.\n\nEn el vestit històric tapava el pit, perquè el justillo i el gipó eren molt escotats." } },
+    { id:"justillo",
+      keys:["justillo", "cotilla", "jubón", "casaca", "coteta", "corset", "corsé", "corse"],
+      title:{ es:"Jubón, justillo y cotilla", ca:"Gipó, justillo i cotilla" },
+      body:{
+        es:"Son prendas del traje histórico.\n\nEl <b>jubón</b> (gipó en valenciano) cubre de los hombros a la cintura, va ceñido y lleva mangas. En las dotes antiguas casi siempre era de seda y muchas veces negro.\nEl <b>justillo</b> o cotilla no tenía mangas. Iba armado, era muy escotado y dejaba ver las mangas de la camisa, así que el escote se tapaba con el pañuelo de cuello.",
+        ca:"Són peces del vestit històric.\n\nEl <b>gipó</b> cobrix des dels muscles fins a la cintura, va cenyit i té mànegues. En els inventaris de dot antics quasi sempre era de seda i moltes vegades negre.\nEl <b>justillo</b> o cotilla no tenia mànegues. Anava armat, era molt escotat i deixava veure les mànegues de la camisa, així que l'escot es tapava amb el mocador de coll." } },
+    { id:"mantilla",
+      keys:["mantilla", "mantellina", "mantellines", "velo", "dengue", "toalla", "blonda", "encaje"],
+      title:{ es:"La mantilla", ca:"La mantellina" },
+      body:{
+        es:"Va en la cabeza, no sobre los hombros. Se lleva sobre todo en actos religiosos, como la Ofrenda a la Virgen o la misa de San José.\n\nLas hay de media luna, de tres picos, de toalla y dengue. Las oficiales de la JCF son de color marfil o crudo, bordadas a mano sobre tul u organza, casi siempre a cadeneta.\n\nEn la tienda tenemos mantillas de encaje negro o blanco.",
+        ca:"Va al cap, no sobre els muscles. Es porta sobretot en actes religiosos, com l'Ofrena a la Mare de Déu o la missa de Sant Josep.\n\nN'hi ha de mitja lluna, de tres pics, de «toalla» i de dengue. Les oficials de la JCF són de color ivori o cru, brodades a mà sobre tul o organza, quasi sempre a cadeneta.\n\nA la botiga tenim mantellines de punta negra o blanca." } },
+    { id:"postizos",
+      keys:["postizo", "postís", "postis", "pelo corto", "poco pelo", "cabell curt", "poc cabell", "malla", "trenza", "trena", "moño cosido", "monyo cosit", "cojín", "cojin", "coixí", "coixi", "dormir"],
+      title:{ es:"Postizos y moños cosidos", ca:"Postissos i monyos cosits" },
+      body:{
+        es:"Si no tienes pelo suficiente, el moño se hace con postizo. Los rodetes se pueden coser a mano con pelo natural, a medida del color y del tamaño de tu pelo, y las trenzas del moño de atrás se hacen con mallas.\n\nUn peinado completo lleva unos 25 minutos, algo menos con moño cosido. Muchas falleras se peinan el 15 de marzo y no se quitan los moños hasta el 19.",
+        ca:"Si no tens prou cabell, el monyo es fa amb postís. Els rodets es poden cosir a mà amb cabell natural, a mida del color i de la grandària del teu cabell, i les trenes del monyo de darrere es fan amb malles.\n\nUn pentinat complet costa uns 25 minuts, una mica menys amb monyo cosit. Moltes falleres es pentinen el 15 de març i no es lleven els monyos fins al 19." } },
+    { id:"peinetas",
+      keys:["peineta", "pinta", "pintes", "pinteta", "rascamoños", "rascamonos", "rascamonyos", "latón", "laton", "llautó", "llauto", "cincelado", "cisellat", "flor de agua", "flor d'aigua"],
+      title:{ es:"Las peinetas", ca:"Les pintes" },
+      body:{
+        es:"Se hacen en latón cincelado, plateado o dorado. Las oficiales llevan baño de oro.\n\nLo normal es un juego de tres: la <b>pinta</b>, que es la grande del moño de atrás, y dos pequeñas para los rodetes. Con el traje del XVIII, históricamente, solo una.\nLa peineta acabada en punta es muy valenciana; también las hay redondeadas o en forma de cuchara.\n\nEn la tienda tenemos peinetas artesanales.",
+        ca:"Es fan de llautó cisellat, platejat o daurat. Les oficials porten bany d'or.\n\nEl normal és un joc de tres: la <b>pinta</b>, que és la gran del monyo de darrere, i dues xicotetes per als rodets. Amb el vestit del XVIII, històricament, només una.\nLa pinta acabada en punta és molt valenciana; també n'hi ha d'arredonides o en forma de cullera.\n\nA la botiga tenim pintes artesanals." } },
+    { id:"aderezo",
+      keys:["aderezo", "joya", "joia", "joies", "pendiente", "pendents", "arracada", "arracades", "pinchos", "punxa", "punxes", "manilla", "collar", "broche", "fermall", "orfebre", "de a tres", "barquillo", "heredar", "heretar", "herencia", "herència", "aguja", "agulla"],
+      title:{ es:"El aderezo", ca:"L'adreç (aderezo)" },
+      body:{
+        es:"Son las joyas del traje, normalmente hechas a mano por un orfebre.\n\nLa <b>joia</b> es el broche de pecho: va en lo alto del corpiño, junto al escote, o sobre el pañuelo. Además lleva pendientes («de a tres», «barquillo»...), pinchos y agujas para el moño de atrás, horquillas y manilla. A veces, collar y aguja de mantilla.\nLos hay de plata de ley, de oro o de latón con baño de oro. Los de nuestra colección son de plata dorada.",
+        ca:"Són les joies del vestit, normalment fetes a mà per un orfebre.\n\nLa <b>joia</b> és el fermall de pit: va dalt del cosset, al costat de l'escot, o sobre el mocador. A més porta arracades («de a tres», «barquillo»...), punxes i agulles per al monyo de darrere, forquilles i manilla. De vegades, collar i agulla de mantellina.\nN'hi ha de plata de llei, d'or o de llautó amb bany d'or. Els de la nostra col·lecció són de plata daurada." } },
+    { id:"peinado",
+      keys:["peinado", "peinar", "pentinat", "pentinar", "moño", "mono", "monyo", "rodete", "rodet", "raya", "ratlla", "clenxa", "tres moños", "tres monyos", "agujas pasaderas", "agulla passadora", "ondas"],
+      title:{ es:"El peinado", ca:"El pentinat" },
+      body:{
+        es:"Con el traje del XIX se llevan <b>tres moños</b> y raya en T: el de atrás, hecho con trenzas, y dos rodetes, moñitos en forma de caracol junto a las orejas. Suelen marcarse ondas cerca de las puntas.\nCon el del XVIII, históricamente, un solo moño; en 2023 la JCF volvió a admitir los tres también con este traje.\n\nSe sujetan con agujas pasaderas y horquillas. Las peinetas van encima y adornan.",
+        ca:"Amb el vestit del XIX es porten <b>tres monyos</b> i ratlla en T: el de darrere, fet amb trenes, i dos rodets, monyets en forma de caragol al costat de les orelles. Es solen marcar ones prop de les puntes.\nAmb el del XVIII, històricament, un sol monyo; el 2023 la JCF va tornar a admetre els tres també amb este vestit.\n\nEs subjecten amb agulles passadores i forquilles. Les pintes van damunt i adornen." } },
+    { id:"mantilla-poner",
+      keys:["se pone la mantilla", "poner la mantilla", "colocar", "col·locar", "posa la mantellina", "tres picos", "tres pics"],
+      title:{ es:"Cómo se pone la mantilla", ca:"Com es posa la mantellina" },
+      body:{
+        es:"<b>De tres picos</b>: cógela por el centro del lado largo y pon ese centro delante de las peinetas, sujeto con agujas de cabeza o ganchos dobles. Los picos de los lados caen sobre los brazos y un broche la une al moño de atrás.\n<b>De media luna</b>: se apoya en la peineta y se sujeta al moño, sin broche.\n\nAlgunos aderezos traen su propia aguja de mantilla.",
+        ca:"<b>De tres pics</b>: agafa-la pel centre del costat llarg i posa eixe centre davant de les pintes, subjectat amb agulles de cap o ganxos dobles. Els pics dels costats cauen sobre els braços i un fermall la unix al monyo de darrere.\n<b>De mitja lluna</b>: es recolza en la pinta i es subjecta al monyo, sense fermall.\n\nAlguns adreços porten la seua pròpia agulla de mantellina." } },
+    { id:"calzado",
+      keys:["zapato", "sabata", "sabates", "calzado", "calçat", "tacó", "taco", "medias", "mitges", "forrado", "folrat"],
+      title:{ es:"Zapatos y medias", ca:"Sabates i calces" },
+      body:{
+        es:"Los zapatos suelen ir forrados con la misma tela del traje, y muchos se hacen a mano, a juego con el corpiño.\n\nLas medias son de seda o de algodón y suelen ir bordadas.",
+        ca:"Les sabates solen anar folrades amb la mateixa tela del vestit, i moltes es fan a mà, a joc amb el cosset.\n\nLes calces són de seda o de cotó i solen anar brodades." } },
+    { id:"ramo",
+      keys:["ramo", "ram", "ramillete", "clavel", "clavell", "flores", "flors", "vestidores", "vestidors"],
+      title:{ es:"El ramo de la Ofrenda", ca:"El ram de l'Ofrena" },
+      body:{
+        es:"La JCF recomienda un bouquet de 35 a 40 cm, con el verde por debajo de las flores y sin agujas de hierro. El color lo asigna a cada comisión.\n\nLa flor es el <b>clavel</b>: dura más, aguanta mejor y no pierde pétalos. Con los ramos, los Vestidores de la Virgen van formando el manto en la plaza de la Virgen. El dibujo se guarda en secreto hasta el final.",
+        ca:"La JCF recomana un ram de 35 a 40 cm, amb el verd per davall de les flors i sense agulles de ferro. El color l'assigna a cada comissió.\n\nLa flor és el <b>clavell</b>: dura més, aguanta millor i no perd pètals. Amb els rams, els Vestidors de la Mare de Déu van formant el mant a la plaça de la Mare de Déu. El dibuix es guarda en secret fins al final." } },
+    { id:"ofrenda",
+      keys:["ofrenda", "ofrena", "desfil", "fila", "blus", "brusó", "bruso", "reglamento", "reglament", "normas"],
+      title:{ es:"La Ofrenda", ca:"L'Ofrena" },
+      body:{
+        es:"En 2026 fue el 17 y el 18 de marzo. Las normas de la JCF obligan a desfilar con indumentaria tradicional, según los artículos 64 y 65 del Reglamento Fallero, y sancionan ir con ropa de calle o con blusón. La fallera debe llevar el traje de valenciana.\n\nSe desfila en filas de cinco como mínimo. Si no salen las cuentas, se admiten filas de cuatro y una de tres, siempre al final de la comisión.",
+        ca:"En 2026 va ser el 17 i el 18 de març. Les normes de la JCF obliguen a desfilar amb indumentària tradicional, segons els articles 64 i 65 del Reglament Faller, i sancionen anar amb roba de carrer o amb brusó. La fallera ha de portar el vestit de valenciana.\n\nEs desfila en files de cinc com a mínim. Si no ixen els comptes, s'admeten files de quatre i una de tres, sempre al final de la comissió." } },
+    { id:"banda",
+      keys:["banda", "fajín", "fajin", "faixí", "faixi", "presidente", "president", "vocal", "escudo", "escut"],
+      title:{ es:"Fajín y banda", ca:"Faixí i banda" },
+      body:{
+        es:"El fallero completa el traje con un fajín y la fallera con una banda, con el escudo de la JCF o de la falla.\n\nColores del Reglamento: amarillo, presidente de la JCF; gris, secretario general y vicepresidentes; verde, vocales de la JCF; rojo, presidente de falla; azul, directivos; morado, vocales de falla.\nLa banda de la Fallera Mayor lleva los colores de la bandera nacional, y la de su Corte, los de la Senyera.",
+        ca:"El faller completa el vestit amb un faixí i la fallera amb una banda, amb l'escut de la JCF o de la falla.\n\nColors del Reglament: groc, president de la JCF; gris, secretari general i vicepresidents; verd, vocals de la JCF; roig, president de falla; blau, directius; morat, vocals de falla.\nLa banda de la Fallera Major porta els colors de la bandera nacional, i la de la seua Cort, els de la Senyera." } },
+    { id:"saraguells",
+      keys:["saragüell", "saraguell", "zaragüell", "zaraguell", "torrentí", "torrenti", "jupetí", "jupeti", "calzón"],
+      title:{ es:"Saragüells y torrentí", ca:"Saragüells i torrentí" },
+      body:{
+        es:"Los <b>saragüells</b> son unos calzones muy anchos, de lienzo de lino o de algodón, que van de la cintura a encima de la rodilla. Se ciñen con una cinta, llevan pliegues y se combinan con calcetas altas.\n\nEl <b>torrentí</b> es más formal: un calzón más ceñido, corto y con botones a los lados, y el jupetí, una especie de chaleco o chaquetilla. Se puede llevar con alpargatas o con zapato.",
+        ca:"Els <b>saragüells</b> són uns calçons molt amples, de llenç de lli o de cotó, que van de la cintura fins a damunt del genoll. Es cenyixen amb una cinta, porten plecs i es combinen amb calces altes.\n\nEl <b>torrentí</b> és més formal: un calçó més cenyit, curt i amb botons als costats, i el jupetí, una mena d'armilla o jaqueta curta. Es pot portar amb espardenyes o amb sabata." } },
+    { id:"mocador-cap",
+      keys:["pañuelo de cabeza", "pañuelo en la cabeza", "mocador de cap", "mocador al cap", "anudar", "nudo", "nugar", "fumeral", "pirata"],
+      title:{ es:"El pañuelo de cabeza", ca:"El mocador de cap" },
+      body:{
+        es:"Con el traje de hombre se lleva pañuelo en la cabeza, también debajo del sombrero. Va por encima de las orejas, sin taparlas, y sin puntas colgando por detrás «a lo pirata».\n\nLo más tradicional es anudarlo atrás y rematar las puntas con un segundo nudo pequeño delante. Otra forma es la de «fumeral», con un hueco arriba, como una chimenea. El de seda es el que mejor se anuda.",
+        ca:"Amb el vestit d'home es porta mocador al cap, també davall del barret. Va per damunt de les orelles, sense tapar-les, i sense puntes penjant per darrere «a la pirata».\n\nEl més tradicional és nugar-lo darrere i rematar les puntes amb un segon nuet xicotet davant. Una altra manera és la de «fumeral», amb un buit dalt, com una xemeneia. El de seda és el que millor es nuga." } },
+    { id:"hombre",
+      keys:["hombre", "home", "mascul", "fallero", "chaleco", "armilla", "faja", "faixa", "manta", "alpargata", "espardenya", "sombrero", "barret", "niño", "nino"],
+      title:{ es:"El traje de hombre", ca:"El vestit d'home" },
+      body:{
+        es:"El Reglamento Fallero pide al fallero el traje del IV Congreso General Fallero o cualquier otro traje tradicional valenciano.\n\nLleva pañuelo o sombrero en la cabeza, camisa blanca, chaleco, saragüells y alpargatas, que suelen atarse con cintas. La faja es obligatoria y marca el cargo. A veces se añade la manta.\n\nEn Cosas Cucas lo confeccionamos a medida, para adulto y para niño.",
+        ca:"El Reglament Faller demana al faller el vestit del IV Congrés General Faller o qualsevol altre vestit tradicional valencià.\n\nPorta mocador o barret al cap, camisa blanca, armilla, saragüells i espardenyes, que es solen lligar amb cintes. La faixa és obligatòria i marca el càrrec. De vegades s'hi afig la manta.\n\nA Cosas Cucas el confeccionem a mida, per a adult i per a xiquet." } },
+    { id:"espolin",
+      keys:["espolín", "espolí", "espolinado", "espolinat", "telar", "teler", "lanzadera", "llançadora", "llancadora", "jacquard", "revés", "reves"],
+      title:{ es:"El espolín", ca:"L'espolí" },
+      body:{
+        es:"Es una seda estrecha, de unos 54 cm, tejida a mano en telar Jacquard sin motor. El tejedor pasa a mano lanzaderas pequeñas, una por color, solo donde va el dibujo. En la fábrica Garín avanza unos 3 cm por hora, y la tela de un traje puede llevar hasta tres meses.\n\n¿Cómo reconocerlo? Dale la vuelta: por el revés se ve el dibujo, con los hilos cortados y rematados. La tela hecha a máquina queda lisa por detrás.",
+        ca:"És una seda estreta, d'uns 54 cm, teixida a mà en teler Jacquard sense motor. El teixidor passa a mà llançadores xicotetes, una per color, només on va el dibuix. A la fàbrica Garín avança uns 3 cm per hora, i la tela d'un vestit pot costar fins a tres mesos de faena.\n\nCom es reconeix? Gira la tela: pel revés es veu el dibuix, amb els fils tallats i rematats. La tela feta a màquina queda llisa per darrere." } },
+    { id:"seda-rayon",
+      keys:["seda", "rayón", "rayon", "raió", "raio", "viscosa"],
+      title:{ es:"Seda natural o rayón", ca:"Seda natural o raió" },
+      body:{
+        es:"La seda natural sale del gusano de seda. El rayón, o viscosa, es una fibra artificial de celulosa que nació en 1884 como «seda artificial». Brilla, es suave y puede imitar el tacto de la seda, pero algunos tipos pierden resistencia al mojarse y conviene limpiarlo en seco.\n\nLa falda puede ser de una o de otra, y muchos dibujos se tejen en espolín, en seda estrecha o en rayón.",
+        ca:"La seda natural ix del cuc de seda. El raió, o viscosa, és una fibra artificial de cel·lulosa que va nàixer el 1884 com a «seda artificial». Brilla, és suau i pot imitar el tacte de la seda, però alguns tipus perden resistència en mullar-se i convé netejar-lo en sec.\n\nLa falda pot ser de l'una o de l'altra, i molts dibuixos es teixixen en espolí, en seda estreta o en raió." } },
+    { id:"seda-historia",
+      keys:["historia de la seda", "velluters", "vellut", "terciopelo", "lonja", "llotja", "pebrina", "morera", "gusano", "museo", "museu", "garín", "garin", "sedero", "sedera", "seder"],
+      title:{ es:"Valencia y la seda", ca:"València i la seda" },
+      body:{
+        es:"Valencia llegó a ser el principal centro de fabricación de seda del país. En 1547 las Cortes valencianas declararon la seda el principal fruto del Reino, y en 1788 trabajaban en ella 7.764 personas. La pebrina, una epidemia del gusano de seda que llegó en 1854, casi acabó con el sector.\n\nHoy se puede visitar el <b>Museo de la Seda</b>, en el Colegio del Arte Mayor de la Seda (calle del Hospital), y la Lonja, Patrimonio de la Humanidad.",
+        ca:"València va arribar a ser el principal centre de fabricació de seda del país. El 1547 les Corts valencianes van declarar la seda el principal fruit del Regne, i el 1788 hi treballaven 7.764 persones. La pebrina, una epidèmia del cuc de seda que va arribar el 1854, quasi va acabar amb el sector.\n\nHui es pot visitar el <b>Museu de la Seda</b>, al Col·legi de l'Art Major de la Seda (carrer de l'Hospital), i la Llotja, Patrimoni de la Humanitat." } },
+    { id:"guardar",
+      keys:["guardar", "guardo", "guarde", "guardarlo", "guardar-lo", "polilla", "arna", "naftalina", "penjador", "funda", "armario", "armari", "humedad", "humitat"],
+      title:{ es:"Cómo guardar el traje", ca:"Com guardar el vestit" },
+      body:{
+        es:"Antes de guardarlo, llévalo a una tintorería especializada o, por lo menos, déjalo 24 horas aireándose a la sombra.\nPerchas acolchadas y fundas de algodón o lino, mejor que plástico, que guarda humedad. Papel de seda en pliegues y bordados, y el cancán en su funda, sin aplastar. Busca un sitio seco, fresco y oscuro.\n\nContra la polilla, guárdalo limpio y usa cedro o lavanda. La OCU considera la naftalina muy tóxica.",
+        ca:"Abans de guardar-lo, porta'l a una tintoreria especialitzada o, almenys, deixa'l 24 hores airejant-se a l'ombra.\nPenjadors encoixinats i fundes de cotó o de lli, millor que plàstic, que guarda humitat. Paper de seda en plecs i brodats, i el cancan en la seua funda, sense aixafar-lo. Busca un lloc sec, fresc i fosc.\n\nContra l'arna, guarda'l net i usa cedre o espígol. L'OCU considera la naftalina molt tòxica." } },
+    { id:"limpieza",
+      keys:["limpiar", "limpieza", "limpio", "netejar", "neteja", "tintorería", "tintoreria", "mancha", "taca", "lluvia", "pluja", "mojado", "mojada", "moja", "mullat", "mullada", "mulla", "sudor", "suor", "secador", "assecador", "lavar", "rentar"],
+      title:{ es:"Limpieza y lluvia", ca:"Neteja i pluja" },
+      body:{
+        es:"Llévalo a una tintorería especializada al acabar cada temporada, aunque no parezca sucio: el sudor puede dejar zonas amarillas en el corpiño al cabo de un año. En casa, nada de trapos ni productos normales, que destiñen y dejan cercos.\n\nSi se moja, ni secador ni calor, y no cuelgues la falda mojada en una percha, que los pliegues se juntan. Luego, a una tintorería especializada en indumentaria.",
+        ca:"Porta'l a una tintoreria especialitzada en acabar cada temporada, encara que no semble brut: la suor pot deixar zones grogues en el cosset al cap d'un any. A casa, res de draps ni productes normals, que destinyen i deixen rodals.\n\nSi es mulla, ni assecador ni calor, i no penges la falda mullada en un penjador, que els plecs s'ajunten. Després, a una tintoreria especialitzada en indumentària." } },
+    { id:"infantil",
+      keys:["niña", "nina", "nena", "infantil", "hija", "filla", "crecer", "créixer", "creixer", "arreglo", "arranjament", "sacar", "traure", "lorza"],
+      title:{ es:"Trajes de niña", ca:"Vestits de xiqueta" },
+      body:{
+        es:"Se piden igual que los de adulta: el traje completo y, si quieres, un corpiño de manga larga. Llevan algo menos de tela.\n\nCuando a una niña se le queda pequeño, el arreglo más pedido es sacar tela. Y los cancanes de niña suelen llevar una lorza que se suelta cuando crece, para ganar largo.\n\nPregúntanos y te asesoramos.",
+        ca:"Es demanen igual que els d'adulta: el vestit complet i, si vols, un cosset de mànega llarga. Porten una mica menys de tela.\n\nQuan a una xiqueta se li queda xicotet, l'arranjament més demanat és traure tela. I els cancans de xiqueta solen portar un plec cosit que es desfà quan creix, per a guanyar llargària.\n\nPregunta'ns i t'assessorem." } },
+    { id:"encargo",
+      keys:["encargo", "encargar", "encàrrec", "encarrec", "encarregar", "a medida", "a mida", "plazo", "termini", "cuanto tarda", "quant tarda", "tardáis", "tardais", "tardeu", "agenda"],
+      title:{ es:"Encargar un traje", ca:"Encarregar un vestit" },
+      body:{
+        es:"Al encargarlo, aclara quién pone la tela y qué piezas entran: cancán, cintas, puntillas, forros, manteleta, zapatos...\n\nNo hay un plazo fijo, pero los talleres se llenan pronto: en 2019, a tres meses de Fallas, la mayoría ya tenía la agenda completa. Cuanto antes vengas, mejor.\n\nPide cita en la tienda o escríbenos al WhatsApp <b>667 775 501</b>.",
+        ca:"En encarregar-lo, aclarix qui posa la tela i quines peces hi entren: cancan, cintes, puntes, folres, manteleta, sabates...\n\nNo hi ha un termini fix, però els tallers s'omplin prompte: el 2019, a tres mesos de Falles, la majoria ja tenia l'agenda plena. Com més prompte vingues, millor.\n\nDemana cita a la botiga o escriu-nos al WhatsApp <b>667 775 501</b>." } },
+    { id:"mangas",
+      keys:["manga", "mànega", "manega", "mànegues", "manegues", "màniga", "maniga", "farol", "farolet", "fanalet", "francesa", "codera", "tres cuartos", "tres quarts"],
+      title:{ es:"Las mangas", ca:"Les mànegues" },
+      body:{
+        es:"No son una pieza suelta: van unidas al corpiño.\n\n<b>Farol</b>: la del traje del XIX. Corta, fruncida, con vuelo y puntillas.\n<b>XVIII</b>: hasta el codo, tres cuartos o larga, rematada con puntilla o con un lazo.\n<b>Manga larga</b>: se hace un corpiño entero aparte, que se combina con la misma falda.\n\nLa «manga francesa» no tiene una definición fija. Mejor enséñanos el modelo que te gusta.",
+        ca:"No són una peça solta: van unides al cosset.\n\n<b>Farolet</b>: la del vestit del XIX. Curta, arrufada, amb vol i puntes.\n<b>XVIII</b>: fins al colze, de tres quarts o llarga, rematada amb punta o amb un llaç.\n<b>Mànega llarga</b>: es fa un cosset sencer a banda, que es combina amb la mateixa falda.\n\nLa «mànega francesa» no té una definició fixa. Millor ensenya'ns el model que t'agrada." } },
+    { id:"corpino",
+      keys:["corpiño", "corpino", "cosset", "gipó", "gipo", "cuerpo", "escote", "escot", "ballena", "balena", "esparto", "espart", "envarado", "envarat", "cordón", "cordon", "a juego", "a joc"],
+      title:{ es:"El corpiño", ca:"El cosset o gipó" },
+      body:{
+        es:"Es la parte de arriba del traje, con sus mangas. Suele hacerse con la misma tela que la falda, o en seda lisa del mismo tono.\n\nEn el traje del XVIII va armado por dentro con ballenas, esparto o varillas de madera, para que quede rígido y marque la cintura. Algunos se cierran con cordón por delante.\nEn el del XIX el escote es redondo y la manteleta va cosida a él.",
+        ca:"És la part de dalt del vestit, amb les mànegues. Es sol fer amb la mateixa tela que la falda, o en seda llisa del mateix to.\n\nEn el vestit del XVIII va armat per dins amb balenes, espart o vares de fusta, perquè quede rígid i marque la cintura. Alguns es tanquen amb cordó per davant.\nEn el del XIX l'escot és redó i la manteleta hi va cosida." } },
+    { id:"falda",
+      keys:["falda", "faldeta", "faldilla", "largo", "llargària", "llargaria", "tobillo", "turmell"],
+      title:{ es:"La falda", ca:"La falda" },
+      body:{
+        es:"Es la pieza que más se ve. Suele ser de seda o de rayón, estampada con flores o brocatelada. En seda también hay faldas de espolín, brocatel, damasco o lampás.\n\nEn el traje del XVIII queda por encima del tobillo y deja ver los zapatos. El vuelo se lo dan el cancán y las enaguas que van debajo.\n\nEn valenciano también se dice faldeta. Los metros dependen del ancho de la tela: pregúntanos.",
+        ca:"És la peça que més es veu. Sol ser de seda o de raió, estampada amb flors o de brocatell. En seda també n'hi ha d'espolí, de brocatell, de domàs o de lampàs.\n\nEn el vestit del XVIII queda per damunt del turmell i deixa veure les sabates. El vol li'l donen el cancan i les sinagües que van davall.\n\nTambé se'n diu faldeta. Els metres depenen de l'amplària de la tela: pregunta'ns." } },
+    { id:"telas",
+      keys:["tela", "damasco", "domàs", "brocado", "brocat", "brocatel", "brocatell", "lampás", "lampas", "raso", "setí", "seti", "satén", "saten", "tafetán", "tafetan", "tafetà", "tafeta", "tejido", "teixit"],
+      title:{ es:"Damasco, brocado, lampás...", ca:"Domàs, brocat, lampàs..." },
+      body:{
+        es:"<b>Damasco</b>: el dibujo sale del propio tejido; es plano y se ve por las dos caras.\n<b>Brocado</b>: lleva una trama añadida, a menudo de oro o plata. Parece bordado, pero está tejido. El espolín es una forma de brocado.\n<b>Brocatel</b>: seda con el dibujo en relieve.\n<b>Lampás</b>: seda labrada con tramas que flotan sobre el fondo.\n<b>Raso</b>: no es una fibra, sino un ligamento de cara lisa y brillante.",
+        ca:"<b>Domàs</b>: el dibuix ix del mateix teixit; és pla i es veu per les dues cares.\n<b>Brocat</b>: porta una trama afegida, sovint d'or o de plata. Pareix brodat, però està teixit. L'espolí n'és una forma.\n<b>Brocatell</b>: seda amb el dibuix en relleu.\n<b>Lampàs</b>: seda llavorada amb trames que suren sobre el fons.\n<b>Setí</b>: no és una fibra, sinó un lligament de cara llisa i brillant." } },
+    { id:"metros",
+      keys:["metro", "metros", "metre", "metres", "cuántos metros", "quants metres", "cuánta tela", "quanta tela", "ancho", "amplària", "amplaria"],
+      title:{ es:"¿Cuántos metros de tela?", ca:"Quants metres de tela?" },
+      body:{
+        es:"No hay una cifra fija: depende del ancho de la tela, de la talla y del vuelo.\n\nComo referencia, el espolín se teje a 54 cm de ancho. Para el traje completo de la Fallera Mayor de València se encargan <b>13,50 m</b> (12,50 m para la infantil), más 3,50 m de seda lisa para el corpiño de manga larga.\n\nTenemos telas a metro. Ven y te asesoramos sin compromiso.",
+        ca:"No hi ha una xifra fixa: depén de l'amplària de la tela, de la talla i del vol.\n\nCom a referència, l'espolí es teixix a 54 cm d'ample. Per al vestit complet de la Fallera Major de València s'encarreguen <b>13,50 m</b> (12,50 m per a la infantil), i a més 3,50 m de seda llisa per al cosset de mànega llarga.\n\nTenim teles a metre. Vine i t'assessorem sense compromís." } },
+    { id:"epocas",
+      keys:["xviii", "xix", "dieciocho", "diecinueve", "divuit", "dinou", "época", "epoca", "almenas", "merlets"],
+      title:{ es:"Traje del XVIII y del XIX", ca:"Vestit del XVIII i del XIX" },
+      body:{
+        es:"<b>Siglo XIX</b>: la manga de farol, corta, fruncida y con puntillas, forma parte del corpiño. El corpiño se corta en la cintura y va por dentro de la falda. Se peina con tres moños.\n\n<b>Siglo XVIII</b>: el corpiño va por fuera de la falda, acaba en almenas y va armado para que quede rígido. La falda queda por encima del tobillo. Históricamente, un solo moño.\n\nLa Fallera Mayor de València tiene los dos como trajes oficiales.",
+        ca:"<b>Segle XIX</b>: la mànega de farolet, curta, arrufada i amb puntes, forma part del cosset. El cosset es talla a la cintura i va per dins de la falda. Es pentina amb tres monyos.\n\n<b>Segle XVIII</b>: el cosset va per fora de la falda, acaba en merlets i va armat perquè quede rígid. La falda queda per damunt del turmell. Històricament, un sol monyo.\n\nLa Fallera Major de València té els dos com a vestits oficials." } },
+    { id:"historia",
+      keys:["historia", "història", "origen", "labradora", "llauradora", "antiguamente", "antigament", "de donde viene"],
+      title:{ es:"De dónde viene el traje", ca:"D'on ve el vestit" },
+      body:{
+        es:"Según el investigador Vicent Ferrandis, el traje que se llevaba a diario en Valencia, más o menos entre 1670 y 1830, es una cosa, y el de labradora, otra: este se fue formando en Madrid a partir de 1834 y lo fijaron los pintores costumbristas valencianos.\n\nLas falleras mayores lo empezaron a llevar a menudo desde 1930; antes solían ir con vestido de salón. Los modelos de hoy se asentaron entre 1975 y 1985.",
+        ca:"Segons l'investigador Vicent Ferrandis, el vestit que es portava cada dia a València, més o menys entre 1670 i 1830, és una cosa, i el de llauradora, una altra: este es va anar formant a Madrid a partir de 1834 i el van fixar els pintors costumistes valencians.\n\nLes falleres majors el van començar a portar sovint des de 1930; abans solien anar amb vestit de saló. Els models d'ara es van assentar entre 1975 i 1985." } },
+    { id:"partes",
+      keys:["partes", "piezas", "prendas", "elementos", "parts", "peces", "peça", "peca"],
+      title:{ es:"Las piezas del traje", ca:"Les peces del vestit" },
+      body:{
+        es:"Hoy hay dos modelos de traje de valenciana: el inspirado en el <b>siglo XVIII</b> y el del <b>XIX</b>, el de manga de farol.\n\nPor fuera: falda, corpiño con sus mangas, y manteleta y delantal a juego.\nPor dentro: camisa, medias, pololos, cancán y enaguas.\nEn la cabeza: moños, peinetas y las agujas del aderezo.\nLos zapatos suelen ir forrados con la misma tela del traje.",
+        ca:"Hui hi ha dos models de vestit de valenciana: l'inspirat en el <b>segle XVIII</b> i el del <b>XIX</b>, el de mànega de farolet.\n\nPer fora: falda, cosset amb les mànegues, i manteleta i davantal a joc.\nPer dins: camisa, calces, pololos, cancan i sinagües.\nAl cap: monyos, pintes i les agulles de l'adreç.\nLes sabates solen anar folrades amb la mateixa tela del vestit." } },
+    { id:"faldas-antiguas",
+      keys:["guardapiés", "guardapies", "guardapeu", "sagaleco", "sagalec", "zagalejo", "basquin"],
+      title:{ es:"Guardapiés, sagaleco y basquiña", ca:"Guardapeu, sagaleco i basquinya" },
+      body:{
+        es:"Son faldas del traje histórico, cada una para un uso.\n\n<b>Guardapiés</b>: la falda larga de vestir, casi siempre de seda. Los más comunes eran azules o verdes.\n<b>Sagaleco</b>: la de diario, más pobre, de lana o de lienzo.\n<b>Basquiña</b>: una sobrefalda oscura para salir a la calle, sobre todo a misa. Se llevaba con mantilla y sin delantal. Hoy se ve en procesiones y misas.",
+        ca:"Són faldes del vestit històric, cadascuna per a un ús.\n\n<b>Guardapeu</b>: la falda llarga de vestir, quasi sempre de seda. Els més comuns eren blaus o verds.\n<b>Sagaleco</b>: la de cada dia, més pobra, de llana o de llenç.\n<b>Basquinya</b>: una sobrefalda fosca per a eixir al carrer, sobretot a missa. Es portava amb mantellina i sense davantal. Hui es veu en processons i misses." } },
+    { id:"precio",
+      keys:["precio", "preu", "presupuesto", "pressupost", "cuest", "costa", "coste", "cuanto vale", "quant val", "caro", "barato"],
+      title:{ es:"Presupuesto", ca:"Pressupost" },
+      body:{
+        es:"El precio depende sobre todo de la tela y de las joyas, y también de los bordados y de la confección. Un espolín tejido a mano lo encarece mucho, según el dibujo, los metales y el tipo de hilo.\n\nPregunta qué piezas entran en el presupuesto. Te lo hacemos sin compromiso:\n963 511 556 o 963 714 997\nWhatsApp: <b>667 775 501</b>",
+        ca:"El preu depén sobretot de la tela i de les joies, i també dels brodats i de la confecció. Un espolí teixit a mà l'encarix molt, segons el dibuix, els metalls i el tipus de fil.\n\nPregunta quines peces entren en el pressupost. Te'l fem sense compromís:\n963 511 556 o 963 714 997\nWhatsApp: <b>667 775 501</b>" } },
+    { id:"tienda",
+      keys:["tienda", "botiga", "horario", "horari", "abierto", "abrís", "abris", "obert", "obriu", "sábado", "sabado", "dissabte", "domingo", "diumenge", "donde", "on sou", "dirección", "adreça", "adreca", "teléfono", "telefono", "telèfon", "telefon", "llamar", "cridar", "whatsapp", "correo", "email", "contact", "cita", "visita", "mapa", "cabañal", "cabanyal", "burriana", "gallart"],
+      title:{ es:"Visítanos", ca:"Visita'ns" },
+      body:{
+        es:"<b>Tienda Principal</b>\nC/ Burriana, 21 · 46005 Valencia\nTel. 963 511 556\n\n<b>Tienda Cabañal</b>\nC/ Vicent Gallart, 49 · 46011 Valencia\nTel. 963 714 997\n\nLun–Vie: 10:00–13:30 y 17:00–20:00\nSábado: 10:30–13:30 · Domingo: cerrado\n\nWhatsApp: <b>667 775 501</b>\n\nPara pedir cita, escríbenos por WhatsApp o llámanos.",
+        ca:"<b>Botiga Principal</b>\nC/ Burriana, 21 · 46005 València\nTel. 963 511 556\n\n<b>Botiga Cabanyal</b>\nC/ Vicent Gallart, 49 · 46011 València\nTel. 963 714 997\n\nDl–dv: 10:00–13:30 i 17:00–20:00\nDissabte: 10:30–13:30 · Diumenge: tancat\n\nWhatsApp: <b>667 775 501</b>\n\nPer a demanar cita, escriu-nos per WhatsApp o telefona'ns." } },
+    { id:"hola",
+      keys:["hola", "buenas", "buenos", "bon dia", "saludos", "salutacions", "bones", "hey"],
+      title:{ es:"", ca:"" },
+      body:{
+        es:"¡Hola! Soy la asistente de <b>Cosas Cucas</b>. Pregúntame por cualquier pieza del traje de valenciana o de fallero, por las telas o por cómo cuidarlo. ¿Qué quieres saber?",
+        ca:"Hola! Sóc l'assistent de <b>Cosas Cucas</b>. Pregunta'm per qualsevol peça del vestit de valenciana o de faller, per les teles o per com cuidar-lo. Què vols saber?" } },
+    { id:"gracias",
+      keys:["gracias", "gràcies", "gracies", "merci", "genial", "entendido", "entesos"],
+      title:{ es:"", ca:"" },
+      body:{
+        es:"¡De nada! Si te surge otra duda, aquí estoy. ¡Fins aviat!",
+        ca:"De res! Si et sorgix un altre dubte, ací estic. Fins prompte!" } }
   ];
 
-  var SUGGS = [
-    'Que es la falda?',
-    'Para que sirve el delantal?',
-    'Tipos de mangas?',
-    'Que es la manteleta?',
-    'Que es el aderezo?',
-    'Horario y tiendas'
-  ];
+  var SUGGS = {
+    es: ["¿Qué piezas lleva el traje?", "Traje del XVIII o del XIX", "¿Qué es el espolín?", "¿Cómo se pone la mantilla?", "¿Cómo guardo el traje?", "Horario y tiendas"],
+    ca: ["Quines peces porta el vestit?", "Vestit del XVIII o del XIX", "Què és l'espolí?", "Com es posa la mantellina?", "Com guarde el vestit?", "Horari i botigues"]
+  };
+
+  var BIENVENIDA = {
+    es: '¡Hola! Soy la asistente de <b>Cosas Cucas</b>. Pregúntame por el traje de valenciana o de fallero, las telas, cómo cuidarlo o la tienda.',
+    ca: "Hola! Sóc l'assistent de <b>Cosas Cucas</b>. Pregunta'm pel vestit de valenciana o de faller, les teles, com cuidar-lo o la botiga."
+  };
+  var NO_ENTIENDO = {
+    es: 'No he entendido la pregunta. Prueba con una pieza del traje (<b>falda, corpiño, manteleta, peinado</b>…), las <b>telas</b>, cómo <b>guardar</b> el traje o la <b>tienda y el horario</b>.',
+    ca: "No he entés la pregunta. Prova amb una peça del vestit (<b>falda, cosset, manteleta, pentinat</b>…), les <b>teles</b>, com <b>guardar</b> el vestit o la <b>botiga i l'horari</b>."
+  };
+  var UI = {
+    es: { fab: 'Abrir asistente virtual', panel: 'Asistente virtual Cosas Cucas', nombre: 'Asistente Cosas Cucas',
+          estado: 'Experta en indumentaria valenciana', ph: 'Pregunta sobre el traje…', cerrar: 'Cerrar', enviar: 'Enviar' },
+    ca: { fab: "Obrir l'assistent virtual", panel: 'Assistent virtual Cosas Cucas', nombre: 'Assistent Cosas Cucas',
+          estado: 'Experta en indumentària valenciana', ph: 'Pregunta sobre el vestit…', cerrar: 'Tancar', enviar: 'Enviar' }
+  };
+
+  /* Palabras que no cuentan al buscar (si no, «más» casaba con «damasco» o «quin» con «basquiña») */
+  var STOP = {que:1,del:1,los:1,las:1,con:1,por:1,para:1,una:1,uno:1,com:1,per:1,les:1,els:1,des:1,esta:1,este:1,
+              quin:1,quina:1,quins:1,amb:1,son:1,hay:1,mes:1,mas:1,cal:1,dir:1,vol:1,fer:1,ser:1,como:1,cual:1,
+              cuales:1,pero:1,sus:1,tus:1,mis:1,mejor:1,millor:1,the:1,and:1};
 
   /* Normalizar: minusculas, sin tildes, sin puntuacion */
   function norm(s) {
@@ -7837,7 +8017,7 @@ function updateCitaBtn() {
   /* Encontrar mejor respuesta */
   function findAnswer(txt) {
     var q    = norm(txt);
-    var toks = q.split(' ').filter(function(t){ return t.length > 2; });
+    var toks = q.split(' ').filter(function(t){ return t.length > 2 && !STOP[t]; });
     var best = null, top = 0;
     for (var i = 0; i < KB.length; i++) {
       var entry = KB[i], sc = 0;
@@ -7885,8 +8065,9 @@ function updateCitaBtn() {
       if (tp.parentNode) tp.parentNode.removeChild(tp);
       var w = document.createElement('div');
       w.className = 'ch-bot';
-      var th = entry.title ? '<span class="ch-topic">' + entry.title + '</span>' : '';
-      var bh = entry.body.replace(/\n/g, '<br>');
+      var tt = L(entry.title);
+      var th = tt ? '<span class="ch-topic">' + tt + '</span>' : '';
+      var bh = L(entry.body).replace(/\n/g, '<br>');
       w.innerHTML = '<div class="ch-bot-av">CC</div><div class="ch-bubble">' + th + bh + '</div>';
       msgs.appendChild(w);
       if (msgs.querySelectorAll('.ch-bot').length === 1) addSuggs();
@@ -7909,7 +8090,7 @@ function updateCitaBtn() {
     for (var i = 0; i < old.length; i++) if (old[i].parentNode) old[i].parentNode.removeChild(old[i]);
     var div = document.createElement('div');
     div.className = 'ch-suggs';
-    SUGGS.forEach(function(s) {
+    SUGGS[lg()].forEach(function(s) {
       var b = document.createElement('button');
       b.className = 'ch-sugg';
       b.textContent = s;
@@ -7935,7 +8116,7 @@ function updateCitaBtn() {
     if (e) {
       addBot(e);
     } else {
-      addBot({ title:null, body:'No entendi la pregunta. Puedes preguntarme sobre la <b>falda, corpino, delantal, manteleta, aderezo</b> o la <b>tienda y horarios</b>.' }, 500);
+      addBot({ title:null, body:NO_ENTIENDO }, 500);
       setTimeout(addSuggs, 1500);
     }
   }
@@ -7958,11 +8139,31 @@ function updateCitaBtn() {
     if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
   });
 
+  /* Textos del panel en el idioma de la página; al cambiar de idioma se cambian también
+     el saludo (si aún no se ha preguntado nada) y las sugerencias que estén a la vista. */
+  function textosUI() {
+    var u = UI[lg()];
+    fab.setAttribute('aria-label', u.fab);
+    panel.setAttribute('aria-label', u.panel);
+    var n = panel.querySelector('.ch-name'); if (n) n.textContent = u.nombre;
+    var st = panel.querySelector('.ch-status'); if (st && st.lastChild) st.lastChild.textContent = u.estado;
+    inp.placeholder = u.ph;
+    if (cc) cc.setAttribute('aria-label', u.cerrar);
+    if (cs) cs.setAttribute('aria-label', u.enviar);
+  }
+  textosUI();
+  new MutationObserver(function () {
+    textosUI();
+    var bots = msgs.querySelectorAll('.ch-bot');
+    if (bots.length === 1 && !msgs.querySelector('.ch-user')) {
+      var bb = bots[0].querySelector('.ch-bubble');
+      if (bb) bb.innerHTML = L(BIENVENIDA).replace(/\n/g, '<br>');
+    }
+    if (msgs.querySelector('.ch-suggs')) addSuggs();
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+
   /* Mensaje de bienvenida */
-  addBot({
-    title: null,
-    body: 'Hola! Soy la asistente de <b>Cosas Cucas</b>. Preguntame sobre el traje de fallera, las telas, el aderezo o la tienda.'
-  }, 900);
+  addBot({ title: null, body: BIENVENIDA }, 900);
 
 })();
 </script>
