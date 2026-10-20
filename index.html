@@ -4191,7 +4191,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      CONTENIDO BILINGÜE — Edita aquí los textos en ES y VAL
 ═══════════════════════════════════════════════════════════════════════════ -->
-<script src="regional-datos.js?v=1"></script>
+<script src="regional-datos.js?v=2"></script>
 <script>
 /* ═══════════════════════════════════════════════════════════════════════
    CONTENIDO BILINGÜE  ·  ES = Castellano  ·  CA = Valencià
@@ -4236,6 +4236,7 @@ const IMG = {
   p19: 'coleccion%202027/fallera-tienda-brocado-marron-verde.webp',
   p20: 'coleccion%202027/nina-rosa-encaje.webp',
   p21: 'coleccion%202027/fallera-verde-brocado-flores.webp',
+  p22: 'coleccion%202027/fallera-tienda-brocado-gris-flores.webp',
   /* Aderezos */
   pa1: 'coleccion%202027/Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2018.00.53_f91954f5.jpg',
   pa2: 'galeria/Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2018.03.00_b3a2c16e.jpg',
@@ -4297,6 +4298,7 @@ const IMG = {
   esp7: 'espolin/esp-carpio-gris-antiguo.webp',
   esp8: 'espolin/esp-tetuan.webp',
   esp9: 'espolin/esp-lidon-coral.webp',
+  esp10: 'espolin/esp-postiguet-gris.webp',
   /* Cortes d'Honor grupales */
   cort1: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_c4ffba71.jpg',
   cort2: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_38136dc0.jpg',
@@ -4697,6 +4699,7 @@ const translations = {
           { id:'p19', name:'Fallera en la tienda con traje de brocado marrón y verde de flores, manteleta de encaje y delantal bordado', desc:'', price:'Consultar', image:IMG.p19, tag:null },
           { id:'p20', name:'Niña con traje rosa de flores, jubón rosa y manteleta y delantal de encaje', desc:'', price:'Consultar', image:IMG.p20, tag:null },
           { id:'p21', name:'Fallera con jubón de brocado verde de flores, falda verde y delantal de encaje dorado', desc:'', price:'Consultar', image:IMG.p21, tag:null },
+          { id:'p22', name:'Fallera en la tienda con traje de brocado gris azulado de flores y delantal de encaje blanco', desc:'', price:'Consultar', image:IMG.p22, tag:null },
           /* ── ESPOLÍN ── */
           { id:'p1', material:'espolin', name:'Espolín Negro · Flores Multicolor y Delantal Dorado',
             desc:'Traje de espolín negro de gran impacto visual. La falda vuela con amplitud extraordinaria mostrando en su base una guirnalda de flores en rojo intenso, naranja y blanco tejidas directamente en el espolín. Corpino de terciopelo negro con mangas largas. Manteleta cruzada en blanco con bordados barrocos en hilo de oro. Delantal central en tul con arabescos y medallones florales en hilo de oro. Cinturón de seda negro. Conjunto de máxima distinción para gala.',
@@ -4722,6 +4725,7 @@ const translations = {
           { id:'e9', family:'espolin', material:'espolin', modelo:'Lidón', color:'fondo coral', name:'Fallera con banda y traje de espolín «Lidón» de fondo coral', desc:'', price:'Consultar', image:IMG.esp9, tag:null },
           { id:'e7', family:'espolin', material:'espolin', modelo:'Carpio', color:'gris antiguo', name:'Traje infantil de espolín «Carpio» en gris antiguo', desc:'', price:'Consultar', image:IMG.esp7, tag:null },
           { id:'e8', family:'espolin', material:'espolin', modelo:'Tetuán', name:'Traje de espolín «Tetuán» expuesto en un maniquí', desc:'', price:'Consultar', image:IMG.esp8, tag:null },
+          { id:'e10', family:'espolin', material:'espolin', modelo:'Postiguet', color:'fondo gris', name:'Fallera de perfil con traje de espolín «Postiguet» de fondo gris, jubón gris y manteleta dorada', desc:'', price:'Consultar', image:IMG.esp10, tag:null },
         ],
       },
       {
@@ -5376,6 +5380,7 @@ const translations = {
           { id:'p19', name:'Fallera a la tenda amb vestit de brocat marró i verd de flors, manteleta de punta i davantal brodat', desc:'', price:'Consultar', image:IMG.p19, tag:null },
           { id:'p20', name:'Xiqueta amb vestit rosa de flors, gipó rosa i manteleta i davantal de punta', desc:'', price:'Consultar', image:IMG.p20, tag:null },
           { id:'p21', name:'Fallera amb gipó de brocat verd de flors, falda verda i davantal de punta daurada', desc:'', price:'Consultar', image:IMG.p21, tag:null },
+          { id:'p22', name:'Fallera a la tenda amb vestit de brocat gris blavós de flors i davantal de punta blanca', desc:'', price:'Consultar', image:IMG.p22, tag:null },
           { id:'p1',   material:'espolin', name:'Espolí negre amb flors de colors i davantal daurat', desc:'', price:'Consultar', image:IMG.p1,   tag:'new', tagLabel:'Espolí' },
           { id:'p3',   material:'espolin', name:'Espolí negre de nit',                                desc:'', price:'Consultar', image:IMG.p3,   tag:null },
           { id:'p6',   material:'seda',    name:'Seda marró fosc amb davantal de punta i banda',      desc:'', price:'Consultar', image:IMG.p6,   tag:null },
@@ -5389,6 +5394,7 @@ const translations = {
           { id:'e9', family:'espolin', material:'espolin', modelo:'Lidón', color:'fons coral', name:'Fallera amb banda i vestit d\'espolí «Lidón» de fons coral', desc:'', price:'Consultar', image:IMG.esp9, tag:null },
           { id:'e7', family:'espolin', material:'espolin', modelo:'Carpio', color:'gris antic', name:'Vestit infantil d\'espolí «Carpio» en gris antic', desc:'', price:'Consultar', image:IMG.esp7, tag:null },
           { id:'e8', family:'espolin', material:'espolin', modelo:'Tetuán', name:'Vestit d\'espolí «Tetuán» exposat en un maniquí', desc:'', price:'Consultar', image:IMG.esp8, tag:null },
+          { id:'e10', family:'espolin', material:'espolin', modelo:'Postiguet', color:'fons gris', name:'Fallera de perfil amb vestit d\'espolí «Postiguet» de fons gris, gipó gris i manteleta daurada', desc:'', price:'Consultar', image:IMG.esp10, tag:null },
         ],
       },
       {

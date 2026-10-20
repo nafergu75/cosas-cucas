@@ -40,6 +40,8 @@ window.INDUMENTARIA_REGIONAL = [
   { id: "segorbe", nombre: { es: "Segorbe", ca: "Segorbe" },
     portada: "indumentaria-regional/segorbe-ariadna-llop-joli.webp",
     fotos: [
+      { img: "indumentaria-regional/segorbe-amelia-rico.webp",
+        nombre: "Amelia Rico Furió", cargo: { es: "Corte de Honor de las Fiestas de Segorbe 2026", ca: "Cort d'Honor de les Festes de Segorbe 2026" } },
       { img: "indumentaria-regional/segorbe-ariadna-llop-joli.webp",
         nombre: "Ariadna Llop Joli", cargo: { es: "Corte de Honor Infantil de las Fiestas de Segorbe 2023", ca: "Cort d'Honor Infantil de les Festes de Segorbe 2023" } },
     ] },
