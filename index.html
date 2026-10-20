@@ -3671,6 +3671,58 @@
     </section>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
+         NOTICIA — Cosas Cucas en la I Exposición «Joies de la Indumentària» (26-30 de septiembre de 2022,
+         Saló de Cristall, 775 aniversario del Gremio). Textos en t().joies22; fotos en JOIES22_FOTOS (de Ignacio).
+    ════════════════════════════════════════════════════════════════════════ -->
+    <section id="noticia-joies-2022" class="noticia noticia--crema">
+      <div class="container noticia__inner revista">
+        <div class="noticia__text">
+          <p class="noticia__eyebrow" id="joies22-eyebrow"></p>
+          <h2 class="noticia__title" id="joies22-title"></h2>
+          <p class="noticia__lead" id="joies22-p1"></p>
+          <p class="noticia__lead" id="joies22-p2"></p>
+        </div>
+        <div class="nf" id="nf-joies22" role="region" aria-roledescription="carrusel">
+          <div class="nf__stage" tabindex="0" role="group">
+            <div class="nf__slides"></div>
+            <button type="button" class="nf__arrow nf__arrow--prev">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button type="button" class="nf__arrow nf__arrow--next">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <div class="nf__ctrls">
+              <button type="button" class="nf__ctrl nf__ctrl--pause">
+                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
+              </button>
+              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+              </button>
+            </div>
+            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
+            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
+          </div>
+          <div class="nf__thumbs"></div>
+          <p class="nf__live" aria-live="polite"></p>
+        </div>
+        <div class="revista__segunda">
+          <figure class="revista__figura">
+            <img id="joies22-figura" src="noticias/joies22-02.webp" width="900" height="1200" alt="" loading="lazy" decoding="async">
+          </figure>
+          <div class="revista__texto">
+            <p class="noticia__lead" id="joies22-p3"></p>
+            <p class="noticia__lead" id="joies22-p4"></p>
+            <p class="noticia__lead" id="joies22-p5"></p>
+            <p class="noticia__lead noticia__enlace"><a id="joies22-otra" href="#noticia-joyas"></a></p>
+            <p class="noticia__lead" id="joies22-p6"></p>
+            <p class="noticia__credito" id="joies22-credito"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
          NOTICIA — Cosas Cucas en el desfile Tradicions (III edición, sábado 13-11-2021, Museu de les
          Ciències). Textos en t().tradicions; fotos en TRADICIONS_FOTOS: 9 de Ignacio (antes del desfile)
          y 10 de la pasarela, del álbum «Cosas Cucas en el Desfile Tradicions» (Facebook de Tradicions, 13-12-2021).
@@ -4773,6 +4825,30 @@ const translations = {
         'Una fallera con traje rosa y dorado posa junto a una mujer ante el photocall de la Desfilada',
       ],
     },
+    joies22: {
+      eyebrow:  "Noticia · Septiembre 2022",
+      title:    "Cosas Cucas en la primera exposición «Joies de la Indumentària»",
+      p1:       "Del 26 al 30 de septiembre de 2022, el Salón de Cristal del Ayuntamiento de València acogió la primera exposición «Joies de la Indumentària», con la que el Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana celebraba sus 775 años. En Cosas Cucas fuimos una de las dieciséis firmas que expusieron.",
+      p2:       "Llevamos tres trajes de nuestro taller: uno de fondo rojo con grandes ramos de flores, manga corta con encaje y manteleta y delantal de tul bordado en oro; otro con jubón gris de manga larga y falda gris de flores azules, amarillas y rosas, también con oro en la manteleta y el delantal; y un traje de niño, con chaqueta negra de vivos verdes, chaleco turquesa de flores y calzón negro.",
+      p3:       "A su lado había trajes de los siglos XVIII y XIX en seda, seda ancha, seda estrecha y espolín, aderezos de orfebres, manteletas y mantillas, todo hecho por talleres del gremio, entre ellos Art Antic, Hijas de Carmen Esteve y Santos Textil.",
+      p4:       "A la inauguración asistieron Borja Sanjuán, concejal de Hacienda y teniente de alcalde, y Fran Tochena, maestro mayor del Gremio, con la vicepresidenta, Amparo Fabra. La exposición abría de 8.00 a 14.00 y la entrada era libre.",
+      p5:       "Aquella primera edición tuvo continuación: en junio de 2026 volvimos al Salón de Cristal con la segunda.",
+      otra:     "La segunda edición, en otra noticia →",
+      p6:       "Gracias al Gremio por contar con nosotras y a todos los que os acercasteis al Salón de Cristal.",
+      credito:  "Cartel de la exposición: Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana",
+      region:   "Fotos de Cosas Cucas en la exposición «Joies de la Indumentària» de 2022",
+      alts: [
+        "Los tres trajes de Cosas Cucas en el Salón de Cristal, con nuestra tarjeta",
+        "El cartel de la exposición «Joies de la Indumentària», del 26 al 30 de septiembre de 2022",
+        "Los tres trajes de cerca: el rojo de flores, el de niño y el del jubón gris",
+        "Traje de fondo rojo con grandes flores, manga corta con encaje y delantal de tul bordado en oro",
+        "Traje con jubón gris de manga larga y falda gris de flores",
+        "Traje de niño con chaqueta negra de vivos verdes y chaleco turquesa de flores",
+        "Con los tres trajes en el Salón de Cristal",
+        "Junto a los trajes de Cosas Cucas en la exposición",
+        "Junto al traje del jubón gris",
+      ],
+    },
     tradicions: {
       eyebrow:  "Noticia · Noviembre 2021",
       title:    "Cosas Cucas en el desfile Tradicions",
@@ -5531,6 +5607,30 @@ const translations = {
         'Foto de grup amb falleres, una xiqueta i un xiquet davant del photocall de la Desfilada',
         "Foto de grup davant del photocall de la Desfilada d'Indumentària Valenciana",
         "Una fallera amb vestit rosa i daurat posa al costat d'una dona davant del photocall de la Desfilada",
+      ],
+    },
+    joies22: {
+      eyebrow:  "Notícia · Setembre 2022",
+      title:    "Cosas Cucas a la primera exposició «Joies de la Indumentària»",
+      p1:       "Del 26 al 30 de setembre de 2022, el Saló de Cristall de l'Ajuntament de València va acollir la primera exposició «Joies de la Indumentària», amb la qual el Gremi Artesà de Sastres i Modistes de la Comunitat Valenciana celebrava els seus 775 anys. A Cosas Cucas vam ser una de les setze firmes que hi van exposar.",
+      p2:       "Vam portar tres vestits del nostre taller: un de fons roig amb grans rams de flors, mànega curta amb punta i manteleta i davantal de tul brodat en or; un altre amb gipó gris de mànega llarga i falda grisa de flors blaves, grogues i roses, també amb or a la manteleta i al davantal; i un vestit de xiquet, amb jaqueta negra de vius verds, armilla turquesa de flors i calçó negre.",
+      p3:       "Al seu costat hi havia vestits dels segles XVIII i XIX en seda, seda ampla, seda estreta i espolí, adreços d'orfebres, manteletes i mantellines, tot fet per tallers del gremi, entre ells Art Antic, Hijas de Carmen Esteve i Santos Textil.",
+      p4:       "A la inauguració van assistir Borja Sanjuán, regidor d'Hisenda i tinent d'alcalde, i Fran Tochena, mestre major del Gremi, amb la vicepresidenta, Amparo Fabra. L'exposició obria de 8.00 a 14.00 i l'entrada era lliure.",
+      p5:       "Aquella primera edició va tindre continuació: el juny de 2026 vam tornar al Saló de Cristall amb la segona.",
+      otra:     "La segona edició, en una altra notícia →",
+      p6:       "Gràcies al Gremi per comptar amb nosaltres i a tots els que vos vau acostar al Saló de Cristall.",
+      credito:  "Cartell de l'exposició: Gremi Artesà de Sastres i Modistes de la Comunitat Valenciana",
+      region:   "Fotos de Cosas Cucas a l'exposició «Joies de la Indumentària» de 2022",
+      alts: [
+        "Els tres vestits de Cosas Cucas al Saló de Cristall, amb la nostra targeta",
+        "El cartell de l'exposició «Joies de la Indumentària», del 26 al 30 de setembre de 2022",
+        "Els tres vestits de prop: el roig de flors, el de xiquet i el del gipó gris",
+        "Vestit de fons roig amb grans flors, mànega curta amb punta i davantal de tul brodat en or",
+        "Vestit amb gipó gris de mànega llarga i falda grisa de flors",
+        "Vestit de xiquet amb jaqueta negra de vius verds i armilla turquesa de flors",
+        "Amb els tres vestits al Saló de Cristall",
+        "Al costat dels vestits de Cosas Cucas a l'exposició",
+        "Al costat del vestit del gipó gris",
       ],
     },
     tradicions: {
@@ -7228,6 +7328,27 @@ function buildAmanda() {
   })), { ...t().noticia, region: n.region });
 }
 
+/* Cosas Cucas en la I Exposición «Joies de la Indumentària» (26-30/09/2022, Saló de Cristall): 9 fotos de
+   Ignacio, elegidas entre 19 (fuera las repetidas, las de poca resolución y una torcida). La 2, el cartel,
+   sale también junto al texto. */
+const JOIES22_FOTOS = [false, true, false, true, true, true, false, false, true]
+  .map((vertical, i) => ({ src: `noticias/joies22-${String(i + 1).padStart(2, '0')}`, vertical }));
+
+function buildJoies22() {
+  const n = t().joies22;
+  const set = (id, txt) => { document.getElementById(id).textContent = txt; };
+  set('joies22-eyebrow', n.eyebrow);
+  set('joies22-title', n.title);
+  ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'].forEach(k => set(`joies22-${k}`, n[k]));
+  set('joies22-otra', n.otra);
+  set('joies22-credito', n.credito);
+  document.getElementById('joies22-figura').alt = n.alts[1];
+  renderCarousel('joies22', document.getElementById('nf-joies22'), JOIES22_FOTOS.map((f, i) => ({
+    src: `${f.src}.webp`, mini: `${f.src}-mini.webp`, vertical: f.vertical,
+    foco: f.vertical ? undefined : 'center 45%', alt: n.alts[i],
+  })), { ...t().noticia, region: n.region });
+}
+
 /* Cosas Cucas en el desfile Tradicions (13-11-2021): 20 fotos. De la 1 a la 9, de Ignacio, antes del
    desfile (dentro del museo, fuera al atardecer, photocall); de la 10 a la 19, la pasarela (álbum de
    Tradicions en Facebook, 13-12-2021); la 20, de noche junto al agua. La 20 sale también junto al texto. */
@@ -7299,6 +7420,10 @@ const NOTICIAS_MAS = [
   { id: 'noticia-joyas', textos: () => t().joyas, fotos: [
     ['noticias/joyas-01-mini.webp', 'center'],
     ['noticias/joyas-02-mini.webp', 'center'],
+  ] },
+  { id: 'noticia-joies-2022', textos: () => t().joies22, fotos: [
+    ['noticias/joies22-04-mini.webp', 'center'],
+    ['noticias/joies22-05-mini.webp', 'center'],
   ] },
   { id: 'noticia-tradicions', textos: () => t().tradicions, fotos: [
     ['noticias/tradicions-04-mini.webp', 'center'],
@@ -7633,6 +7758,7 @@ function renderAll() {
   buildJoia();
   buildTienda();
   buildDesfilada();
+  buildJoies22();
   buildTradicions();
   buildMeriTetuan();
   buildAmanda();
