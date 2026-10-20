@@ -2326,6 +2326,33 @@
       font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
     }
 
+    /* Reinas de Burriana: la foto centrada y, debajo, nombre y cargo de cada una */
+    .hist-burriana__title { margin-top: 48px; }
+    .hist-burriana { display: grid; gap: 28px; justify-items: center; }
+    .hist-burriana__foto { margin: 0; width: 100%; max-width: 640px; }
+    .hist-burriana__foto img {
+      width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; display: block;
+      border-radius: 6px; box-shadow: 0 8px 40px rgba(26,23,20,.14);
+    }
+    .hist-burriana__foto figcaption {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 36px;
+      margin-top: 16px; text-align: center;
+    }
+    .hist-burriana__persona { display: flex; flex-direction: column; gap: 2px; }
+    .hist-burriana__persona strong {
+      font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: 1.05rem; color: var(--color-text);
+      text-transform: none; letter-spacing: .01em;
+    }
+    .hist-burriana__persona {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-gold);
+    }
+    /* Indumentaria regional: ventanas por localidad (mismo aspecto que las familias de la colección) */
+    .hist-regional[hidden] { display: none; }
+    .hist-regional__title { margin-top: 48px; }
+    .hist-regional__ventanas { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-bottom: 36px; }
+    .hist-regional__ventanas .col-modal__family { flex: 0 1 calc((100% - 40px) / 3); }
+    @media (max-width: 768px) { .hist-regional__ventanas .col-modal__family { flex-basis: calc((100% - 20px) / 2); } }
+    .hist-regional__elige { text-align: center; }
     .hist-corts-text {
       grid-column: span 2;
       display: flex; flex-direction: column;
@@ -3791,6 +3818,17 @@
       <div class="fm-grid corte-personas" id="corte-personas"></div>
       <div class="cortes-grid" id="cortes-grid"></div>
       <div class="corts-grid" id="corts-grid"></div>
+      <!-- Reinas de las Fallas de Burriana y su Corte de Honor (datos en REINAS_BURRIANA) -->
+      <h3 class="fm-grupo__title hist-burriana__title" id="hist-burriana-label"></h3>
+      <div class="hist-burriana" id="hist-burriana"></div>
+      <!-- Indumentaria regional: una ventana por localidad (datos en INDUMENTARIA_REGIONAL).
+           Oculto mientras no haya ninguna localidad con fotos -->
+      <div class="hist-regional" id="hist-regional" hidden>
+        <h3 class="fm-grupo__title hist-regional__title" id="hist-regional-label"></h3>
+        <div class="hist-regional__ventanas" id="hist-regional-ventanas"></div>
+        <p class="col-modal__grid-label hist-regional__elige" id="hist-regional-elige" aria-live="polite"></p>
+        <div class="col-modal__grid" id="hist-regional-grid"></div>
+      </div>
     </div>
   </div>
 
@@ -4221,7 +4259,7 @@ const IMG = {
   fm6: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_ac29bca3.jpg',
   /* Falleras Mayores 2026 — carpeta propia */
   fm7:  'falleras%20mayores/fallera%20mayor2026%20Mat%C3%ADas%20perellolluis%20Sant%C3%A1ngel.jpeg',
-  fm8:  'falleras%20mayores/fallera%20mayor2026%20falla%20maestro%20rodrigo%20general%20avil%C3%A9s.jpeg',
+  fm8:  'falleras%20mayores/fmi-2026-la-manta-al-coll-miranda-munoz-gomez.webp',
   fm9:  'falleras%20mayores/fallera%20mayor%202026%20falla%20exposicion.jpg',
   fm10: 'falleras%20mayores/fallera%20mayor%202026%20falla%20blocs%20platja.jpeg',
   fm11: 'falleras%20mayores/fallera%20mayor%202026%20falla%20rosario%20plaza%20calabuig%20lourdes%20oreo.jpeg',
@@ -4951,9 +4989,9 @@ const translations = {
         { img: IMG.fm7,  name: 'Falla Matías Perelló-Luis Santángel · Cristina Huerta Pérez', year: 'Fallera Mayor 2026' },
         { img: IMG.fm11, name: 'Falla Rosario · Plaza Calabuig · Lourdes Oreo',   year: 'Fallera Mayor 2026' },
         { img: IMG.fm12, name: 'Falla Conserva · Berenguer Mallol · Kira Vila',   year: 'Fallera Mayor 2026' },
-        { img: IMG.fm8,  name: 'Falla Maestro Rodrigo · General Avilés',          year: 'Fallera Mayor 2026' },
         { img: IMG.fm13, name: 'Falla Maestro Rodrigo · Alejandra Blanco Beltrán', year: 'Fallera Mayor 2026' },
-        { img: IMG.fm14, name: 'Falla La Manta al Coll · Alguenet',               year: 'Fallera Infantil 2026' },
+        { img: IMG.fm14, name: 'Falla La Manta al Coll de Alginet · Miranda Muñoz Gómez', year: 'Fallera Mayor Infantil 2026' },
+        { img: IMG.fm8,  name: 'Falla La Manta al Coll de Alginet · Miranda Muñoz Gómez', year: 'Fallera Mayor Infantil 2026' },
         { img: IMG.fm10, name: 'Falla Blocs · Platja · María Chuliá Zaragoza',    year: 'Fallera Mayor 2025' },
         { img: IMG.fm17, name: 'Falla José María Haro-Poeta Mas y Ros · Alba Carrero Macián', year: 'Fallera Mayor 2025' },
         { img: IMG.esp1, name: 'Falla Carretera Escrivá-Cooperativa San Fernando · Marta Capella Guanter', year: 'Fallera Mayor 2025' },
@@ -4966,6 +5004,9 @@ const translations = {
         { img: IMG.fm22, name: 'Falla Santa Bárbara de Benifaió · Teresa Alepuz', year: 'Fallera Mayor 2023' },
       ],
       cortsLabel: 'Cortes de Honor',
+      regionalLabel: 'Indumentaria regional',
+      regionalElige: 'Elige una localidad',
+      burrianaLabel: 'Reinas de Burriana y Corte de Honor',
       corts: [
         { img: IMG.cortXiq, label: 'Fallera Xiqueta · Cosas Cucas' },
       ],
@@ -5588,9 +5629,9 @@ const translations = {
         { img: IMG.fm7,  name: 'Falla Matías Perelló-Lluís Santàngel · Cristina Huerta Pérez', year: 'Fallera Major 2026' },
         { img: IMG.fm11, name: 'Falla Rosario · Plaza Calabuig · Lourdes Oreo',   year: 'Fallera Major 2026' },
         { img: IMG.fm12, name: 'Falla Conserva · Berenguer Mallol · Kira Vila',   year: 'Fallera Major 2026' },
-        { img: IMG.fm8,  name: 'Falla Mestre Rodrigo · General Avilés',           year: 'Fallera Major 2026' },
         { img: IMG.fm13, name: 'Falla Mestre Rodrigo · Alejandra Blanco Beltrán', year: 'Fallera Major 2026' },
-        { img: IMG.fm14, name: 'Falla La Manta al Coll · Alguenet',              year: 'Fallera Infantil 2026' },
+        { img: IMG.fm14, name: 'Falla La Manta al Coll d\'Alginet · Miranda Muñoz Gómez', year: 'Fallera Major Infantil 2026' },
+        { img: IMG.fm8,  name: 'Falla La Manta al Coll d\'Alginet · Miranda Muñoz Gómez', year: 'Fallera Major Infantil 2026' },
         { img: IMG.fm10, name: 'Falla Blocs · Platja · María Chuliá Zaragoza',    year: 'Fallera Major 2025' },
         { img: IMG.fm17, name: 'Falla José María Haro-Poeta Mas y Ros · Alba Carrero Macián', year: 'Fallera Major 2025' },
         { img: IMG.esp1, name: 'Falla Carretera d\'Escrivà-Cooperativa de Sant Ferran · Marta Capella Guanter', year: 'Fallera Major 2025' },
@@ -5603,6 +5644,9 @@ const translations = {
         { img: IMG.fm22, name: 'Falla Santa Bàrbara de Benifaió · Teresa Alepuz', year: 'Fallera Major 2023' },
       ],
       cortsLabel: "Corts d'Honor",
+      regionalLabel: 'Indumentària regional',
+      regionalElige: 'Tria una localitat',
+      burrianaLabel: 'Reines de Borriana i Cort d\'Honor',
       corts: [
         { img: IMG.cortXiq, label: 'Fallera Xiqueta · Cosas Cucas' },
       ],
@@ -6328,6 +6372,53 @@ const CORTE_PERSONAS = [
   { anyo: 2027, nombre: 'Alejandra Blanco Beltrán', falla: 'Mestre Rodrigo-General Avilés', foto: 'falleras-valencia/corte-2027-alejandra-blanco-beltran.webp', foco: 'center', credito: '@alejandrablaancoo' },
   { anyo: 2027, nombre: 'Laura Miquel Obarti',      falla: "Avinguda de l'Oest",            foto: 'falleras-valencia/corte-2027-laura-miquel-obarti.webp',     foco: 'center' },
 ];
+/* Indumentaria regional (Historia): una ventana por localidad, como las familias de
+   Indumentaria Femenina (Espolín / Indumentaria Valenciana). El bloque solo se ve cuando hay
+   alguna localidad con fotos. Para añadir una:
+   { id: 'burriana', nombre: { es: 'Burriana', ca: 'Borriana' }, portada: 'carpeta/foto.webp',
+     fotos: [ { img: 'carpeta/foto.webp', texto: { es: '…', ca: '…' } } ] } */
+const INDUMENTARIA_REGIONAL = [];
+function buildRegional() {
+  const box = document.getElementById('hist-regional');
+  const locs = INDUMENTARIA_REGIONAL.filter(l => l.fotos && l.fotos.length);
+  box.hidden = !locs.length;
+  if (!locs.length) return;
+  const h = t().historia;
+  const lg = currentLang === 'ca' ? 'ca' : 'es';
+  const ventanas = document.getElementById('hist-regional-ventanas');
+  const etiqueta = document.getElementById('hist-regional-elige');
+  const grid = document.getElementById('hist-regional-grid');
+  document.getElementById('hist-regional-label').textContent = h.regionalLabel;
+  ventanas.innerHTML = locs.map(l => `<button type="button" class="col-modal__family" data-loc="${l.id}" aria-pressed="false">
+      <img src="${l.portada}" alt="" loading="lazy" decoding="async" />
+      <span class="col-modal__family-name">${l.nombre[lg]}</span>
+    </button>`).join('');
+  etiqueta.textContent = h.regionalElige;
+  grid.innerHTML = '';
+  ventanas.onclick = e => {
+    const b = e.target.closest('.col-modal__family');
+    if (!b) return;
+    const l = locs.find(x => x.id === b.dataset.loc);
+    ventanas.querySelectorAll('.col-modal__family').forEach(x => {
+      x.classList.toggle('active', x === b);
+      x.setAttribute('aria-pressed', x === b);
+    });
+    etiqueta.textContent = l.nombre[lg];
+    grid.innerHTML = l.fotos.map(f => `<div class="col-modal__card">
+      <div class="col-modal__card-img"><img src="${f.img}" alt="${f.texto[lg]}" loading="lazy" decoding="async" /></div>
+      <p class="col-modal__card-modelo">${f.texto[lg]}</p>
+    </div>`).join('');
+  };
+}
+/* Reinas de las Fallas de Burriana (Borriana) con su Corte de Honor: una foto por año */
+const REINAS_BURRIANA = [
+  { anyo: 2025, foto: 'falleras-valencia/reinas-burriana-2025.webp',
+    alt: { es: 'Claudia Sabater Llopis, Reina Fallera de Burriana 2025, con traje rojo y banda, junto a Valeria Cuadros Marco, Reina Fallera Infantil, con traje verde; detrás, su corte', ca: 'Claudia Sabater Llopis, Reina Fallera de Borriana 2025, amb vestit roig i banda, al costat de Valeria Cuadros Marco, Reina Fallera Infantil, amb vestit verd; darrere, la seua cort' },
+    personas: [
+      { nombre: 'Claudia Sabater Llopis', cargo: { es: 'Reina Fallera de Burriana 2025', ca: 'Reina Fallera de Borriana 2025' } },
+      { nombre: 'Valeria Cuadros Marco', cargo: { es: 'Reina Fallera Infantil de Burriana 2025', ca: 'Reina Fallera Infantil de Borriana 2025' } },
+    ] },
+];
 /* Cortes de Honor de la Fallera Mayor de València (las fotos llevan impresos los nombres) */
 const CORTES_VALENCIA = [
   { anyo: 1995, foto: 'falleras-valencia/corte-1995.webp' },
@@ -6359,6 +6450,13 @@ function buildHistoria() {
     </div>`).join('');
   }
   document.getElementById('hist-corts-label').textContent = h.cortsLabel;
+  document.getElementById('hist-burriana-label').textContent = h.burrianaLabel;
+  buildRegional();
+  const lg = currentLang === 'ca' ? 'ca' : 'es';
+  document.getElementById('hist-burriana').innerHTML = REINAS_BURRIANA.map(r => `<figure class="hist-burriana__foto">
+      <img src="${r.foto}" alt="${r.alt[lg]}" width="1080" height="1080" loading="lazy" decoding="async" />
+      <figcaption>${r.personas.map(p => `<span class="hist-burriana__persona"><strong>${p.nombre}</strong>${p.cargo[lg]}</span>`).join('')}</figcaption>
+    </figure>`).join('');
   const cargoCorte = p => p.cargo ? p.cargo[currentLang === 'ca' ? 'ca' : 'es'] : h.corte;
   document.getElementById('corte-personas').innerHTML = CORTE_PERSONAS.map(p => `<div class="fm-card">
       <div class="fm-card__img"><img src="${p.foto}" alt="${p.nombre}, ${cargoCorte(p)} ${p.anyo}" loading="lazy" decoding="async" style="object-position:${p.foco}" /></div>
