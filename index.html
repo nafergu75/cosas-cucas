@@ -3315,10 +3315,6 @@
       <button type="button" class="lector__close" id="lector-close">&times;</button>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════════════════════
-         NOTICIA — Corte de Honor 2027. Datos y fotos en CORTE_2027 (JS); textos en t().corte.
-         Sin fotos queda oculta (hidden) y no sale su tarjeta.
-    ═══════════════════════════════════════════════════════════════════════════ -->
     <!-- ═══════════════════════════════════════════════════════════════════════
          NOTICIA — Los trajes de Amanda Dàries Ricart, FMI 2027 de la falla Malvarrosa.
          Textos en t().amanda; fotos en AMANDA_FOTOS; vídeo (el reel) en noticias/amanda-video.mp4.
@@ -3336,7 +3332,7 @@
           <p class="noticia__lead" id="amanda-p6"></p>
           <figure class="noticia__video" id="amanda-video-box">
             <video id="amanda-video" controls playsinline preload="none" width="720" height="1280"
-                   poster="noticias/amanda-video-poster.webp" src="noticias/amanda-video.mp4"></video>
+                   data-poster="noticias/amanda-video-poster.webp" src="noticias/amanda-video.mp4"></video>
           </figure>
           <p class="noticia__credito"><a id="amanda-video-link" href="https://www.instagram.com/cosascucass/" target="_blank" rel="noopener"></a></p>
         </div>
@@ -3367,6 +3363,10 @@
       </div>
     </section>
 
+    <!-- ═══════════════════════════════════════════════════════════════════════════
+         NOTICIA — Corte de Honor 2027. Datos y fotos en CORTE_2027 (JS); textos en t().corte.
+         Sin fotos queda oculta (hidden) y no sale su tarjeta.
+    ═══════════════════════════════════════════════════════════════════════════ -->
     <section id="corte-2027" class="noticia noticia--crema" hidden>
       <div class="container noticia__inner">
         <div class="noticia__text">
@@ -3585,7 +3585,7 @@
           <p class="noticia__credito" id="desfilada-credito"></p>
           <figure class="noticia__video" id="desfilada-video-box">
             <video id="desfilada-video" controls playsinline preload="none" width="720" height="960"
-                   poster="noticias/desfilada-video-poster.webp" src="noticias/desfilada-video.mp4"></video>
+                   data-poster="noticias/desfilada-video-poster.webp" src="noticias/desfilada-video.mp4"></video>
           </figure>
           <p class="noticia__credito"><a id="desfilada-video-link" href="https://www.instagram.com/p/DZ7mLVHjOeW/" target="_blank" rel="noopener"></a></p>
         </div>
@@ -4474,10 +4474,10 @@ const translations = {
       eyebrow: 'Noticia · Octubre 2026',
       title:   'Los trajes de Amanda, Fallera Mayor Infantil 2027 de la falla Malvarrosa',
       p1:      "Amanda Dàries Ricart es la Fallera Mayor Infantil 2027 de la falla Avinguda Malva-rosa-Antoni Ponz-Cavite y ya ha presentado en una exposición los trajes que llevará durante su reinado. Todos los hemos confeccionado en Cosas Cucas.",
-      p2:      'Su traje verde es de la Compañía Valenciana de la Seda, modelo «Carpio»: rosas y flores azules y amarillas sobre fondo verde. Amanda fue a ver la tela cuando todavía estaba en el telar de madera, con un carrete de hilo en la mano. En el taller la convertimos en su traje. Un día se lo probó, mientras le colocaban la manteleta de encaje, y en la exposición posó a su lado con una sonrisa enorme.',
+      p2:      'La tela de su traje verde es de la Compañía Valenciana de la Seda, modelo «Carpio»: rosas y flores azules y amarillas sobre fondo verde. Amanda fue a ver la tela cuando todavía estaba en el telar de madera, con un carrete de hilo en la mano. En el taller la convertimos en su traje. Un día se lo probó, mientras le colocaban la manteleta de encaje, y en la exposición posó a su lado con una sonrisa enorme.',
       p3:      'Junto a él estaban los demás trajes de su reinado, con sus manteletas y delantales, un jubón blanco y los zapatos a juego.',
       p4:      'Para nosotras es muy especial. Ya tuvimos el honor de vestir a su hermana Julia, Fallera Mayor Infantil de la falla en 2023 y Corte de Honor de la Fallera Mayor Infantil de València en 2024. Es una familia que siempre ha confiado en Cosas Cucas para todos sus trajes.',
-      p5:      "La falla Malvarrosa plantó su primera falla oficial en 1944 y tiene el casal en la avenida de la Malvarrosa desde los años sesenta. En 2027 su falla infantil vuelve a la sección Especial, con Xavi Gurrea, y la grande compite en Primera B, con Ferni Llopis. Su calle es además una de las iluminadas de la categoría A del concurso, en la que quedó tercera en 2026.",
+      p5:      "La falla Malvarrosa plantó su primera falla oficial en 1944 y tiene el casal en la avenida de la Malvarrosa desde los años sesenta. En 2027 su falla infantil planta en la sección Especial, con Xavi Gurrea, y la grande compite en Primera B, con Ferni Llopis. Su calle es además una de las iluminadas de la categoría A del concurso, en la que quedó tercera en 2026.",
       p6:      'Gracias a Amanda y a su familia por confiar en nosotras para vestir su año.',
       video:   'Más en nuestro Instagram',
       videoLabel: 'Vídeo de los trajes de Amanda, Fallera Mayor Infantil 2027 de la falla Malvarrosa',
@@ -4491,18 +4491,18 @@ const translations = {
         'El traje verde terminado, en un maniquí',
         'El traje verde en la exposición, con la manteleta y el delantal dorados',
         'El cuerpo del traje verde, con la manteleta dorada y un collar de perlas',
-        'Detalle de la manga del traje verde, con flores y puntilla',
-        'Un cuerpo de traje con lazo azul en el cuello y manteleta dorada',
+        'Un jubón blanco con dibujos dorados',
+        'El cuerpo de un traje azul de flores, con cinta azul al cuello, manteleta dorada y joyas de perlas',
         'Detalle de la manga con una gran flor rosa, el lazo azul y la puntilla',
-        'Un traje claro con flores rojas, manteleta bordada y faja roja',
-        'Detalle de la manga de flores rojas, la puntilla y la faja roja',
+        'Zapatos de tela verde con flores y lazo',
+        'Detalle de la manga del traje verde, con flores y puntilla',
         'Un traje en tonos mostaza con rayas, manteleta de encaje y faja azul',
         'La falda del traje mostaza con delantal de encaje',
         'Un jubón mostaza con una manteleta de encaje',
-        'Una manteleta de encaje junto a otro traje de la exposición',
-        'Un jubón blanco con dibujos dorados',
+        'El jubón mostaza en su pie de madera, con encajes largos que caen hasta el suelo',
+        'Un traje claro con flores rojas, manteleta bordada y faja roja',
         'Zapatos de tela azul con flores y lazo',
-        'Zapatos de tela verde con flores y lazo',
+        'Detalle de la manga de flores rojas, la puntilla y la faja roja',
       ],
     },
     corte: {
@@ -5140,10 +5140,10 @@ const translations = {
       eyebrow: 'Notícia · Octubre 2026',
       title:   "Els vestits d'Amanda, Fallera Major Infantil 2027 de la falla Malva-rosa",
       p1:      "Amanda Dàries Ricart és la Fallera Major Infantil 2027 de la falla Avinguda Malva-rosa-Antoni Ponz-Cavite i ja ha presentat en una exposició els vestits que portarà durant el seu regnat. Tots els hem confeccionat a Cosas Cucas.",
-      p2:      "El seu vestit verd és de la Companyia Valenciana de la Seda, model «Carpio»: roses i flors blaves i grogues sobre fons verd. Amanda va anar a veure la tela quan encara estava al teler de fusta, amb un rodet de fil a la mà. Al taller la vam convertir en el seu vestit. Un dia se'l va provar, mentre li col·locaven la manteleta d'encaix, i a l'exposició va posar al seu costat amb un somriure enorme.",
+      p2:      "La tela del seu vestit verd és de la Compañía Valenciana de la Seda, model «Carpio»: roses i flors blaves i grogues sobre fons verd. Amanda va anar a veure la tela quan encara estava al teler de fusta, amb un rodet de fil a la mà. Al taller la vam convertir en el seu vestit. Un dia se'l va provar, mentre li col·locaven la manteleta d'encaix, i a l'exposició va posar al seu costat amb un somriure enorme.",
       p3:      "Al seu costat hi havia la resta de vestits del seu regnat, amb les manteletes i els davantals, un gipó blanc i les sabates a joc.",
       p4:      "Per a nosaltres és molt especial. Ja vam tindre l'honor de vestir la seua germana Julia, Fallera Major Infantil de la falla el 2023 i Cort d'Honor de la Fallera Major Infantil de València el 2024. És una família que sempre ha confiat en Cosas Cucas per a tots els seus vestits.",
-      p5:      "La falla Malva-rosa va plantar la seua primera falla oficial el 1944 i té el casal a l'avinguda de la Malva-rosa des dels anys seixanta. El 2027 la seua falla infantil torna a la secció Especial, amb Xavi Gurrea, i la gran competix en Primera B, amb Ferni Llopis. El seu carrer és, a més, un dels il·luminats de la categoria A del concurs, en què va quedar tercer el 2026.",
+      p5:      "La falla Malva-rosa va plantar la seua primera falla oficial el 1944 i té el casal a l'avinguda de la Malva-rosa des dels anys seixanta. El 2027 la seua falla infantil planta en la secció Especial, amb Xavi Gurrea, i la gran competix en Primera B, amb Ferni Llopis. El seu carrer és, a més, un dels il·luminats de la categoria A del concurs, en què va quedar tercer el 2026.",
       p6:      "Gràcies a Amanda i a la seua família per confiar en nosaltres per a vestir el seu any.",
       video:   'Més al nostre Instagram',
       videoLabel: "Vídeo dels vestits d'Amanda, Fallera Major Infantil 2027 de la falla Malva-rosa",
@@ -5157,18 +5157,18 @@ const translations = {
         'El vestit verd acabat, en un maniquí',
         "El vestit verd a l'exposició, amb la manteleta i el davantal daurats",
         'El cos del vestit verd, amb la manteleta daurada i un collar de perles',
-        'Detall de la mànega del vestit verd, amb flors i punta',
-        'Un cos de vestit amb llaç blau al coll i manteleta daurada',
+        'Un gipó blanc amb dibuixos daurats',
+        "El cos d'un vestit blau de flors, amb cinta blava al coll, manteleta daurada i joies de perles",
         'Detall de la mànega amb una gran flor rosa, el llaç blau i la punta',
-        'Un vestit clar amb flors roges, manteleta brodada i faixa roja',
-        'Detall de la mànega de flors roges, la punta i la faixa roja',
+        'Sabates de tela verda amb flors i llaç',
+        'Detall de la mànega del vestit verd, amb flors i punta',
         "Un vestit en tons mostassa amb ratlles, manteleta d'encaix i faixa blava",
         "La falda del vestit mostassa amb davantal d'encaix",
         "Un gipó mostassa amb una manteleta d'encaix",
-        "Una manteleta d'encaix al costat d'un altre vestit de l'exposició",
-        'Un gipó blanc amb dibuixos daurats',
+        "El gipó mostassa en el seu peu de fusta, amb encaixos llargs que cauen fins a terra",
+        'Un vestit clar amb flors roges, manteleta brodada i faixa roja',
         'Sabates de tela blava amb flors i llaç',
-        'Sabates de tela verda amb flors i llaç',
+        'Detall de la mànega de flors roges, la punta i la faixa roja',
       ],
     },
     corte: {
@@ -6599,8 +6599,9 @@ const DESFILADA_FOTOS = Array.from({ length: 18 }, (_, i) => ({
   src: `noticias/desfilada-${String(i + 1).padStart(2, '0')}`, ...(i === 0 ? { fija: true } : {}),
 }));
 
-/* Los trajes de Amanda Dàries Ricart (FMI 2027 de la falla Malvarrosa): 20 fotos, primero la
-   historia del traje verde (telar, prueba) y luego la exposición. Vídeo (el reel) en el texto. */
+/* Los trajes de Amanda Dàries Ricart (FMI 2027 de la falla Malvarrosa): 20 fotos. La 1, Amanda en la
+   exposición; de la 2 a la 6, el telar, la prueba y el traje verde terminado; luego el resto de la
+   exposición. Vídeo (el reel) en el texto. */
 const AMANDA_FOTOS = [false, true, true, true, true, true, true, true, true, false, true, false, true, true, true, true, true, false, true, true]
   .map((vertical, i) => ({ src: `noticias/amanda-${String(i + 1).padStart(2, '0')}`, vertical }));
 
@@ -6724,6 +6725,8 @@ function abrirLector(id) {
   const sec = document.getElementById(id);
   if (!sec || sec.hidden || !lector.contains(sec)) return false;
   lector.querySelectorAll('.noticia').forEach(el => el.classList.toggle('is-open', el === sec));
+  /* la portada del vídeo se pide al abrir la noticia, no en cada visita a la página */
+  sec.querySelectorAll('video[data-poster]').forEach(v => { if (!v.getAttribute('poster')) v.setAttribute('poster', v.dataset.poster); });
   const panel = lector.querySelector('.lector__panel');
   panel.setAttribute('aria-labelledby', sec.querySelector('.noticia__title').id);
   if (lector.hidden) {

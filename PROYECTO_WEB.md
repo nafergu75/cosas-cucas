@@ -167,6 +167,161 @@ Al abrir la colección salen dos tarjetas con foto: **Espolín** e **Indumentari
 - **Textos de producto:** unas 90 descripciones largas siguen sin revisar. Ahora no se ven en la web, así que no corre prisa.
 - **Archivos sueltos en la carpeta** que no están en el repositorio (fotos, logos, vídeos, `fotos burriana/`, `fotos tienda/`…). No se han tocado.
 
+### Al dar la web por definitiva: auditoría y blindaje de seguridad (orden de Ignacio, 20-10-2026)
+
+**No ejecutar todavía.** Ignacio la dejó guardada el 20-10-2026 mientras se termina la web. Se ejecuta SOLO cuando él diga que la web está definitiva. Llegado ese momento, seguir esta orden tal cual: empezar por la FASE 1 sin modificar ningún archivo, entregarle el informe y pedirle confirmación antes de cada fase con cambios.
+
+```text
+Actúa como un ingeniero sénior de ciberseguridad web especializado en sitios estáticos, HTML/CSS/JavaScript sin frameworks, alojados en Vercel y GitHub Pages.
+
+Mi web es HTML estático hecho a mano:
+- Archivo principal: index.html, con CSS y JavaScript embebidos o en archivos locales.
+- Otras páginas: galeria.html, landing.html, aviso legal, política de privacidad y 404.html.
+- No usa WordPress, React, Next.js, Laravel, Wix, base de datos ni proceso de compilación.
+- Está publicada en dos sitios con los mismos archivos:
+  1. Vercel: https://cosas-cucas.vercel.app
+  2. GitHub Pages: https://nafergu75.github.io/cosas-cucas
+- El archivo server.js de Node.js es solo para uso local: asistente «Cuca» con IA y formulario. No está publicado ni debe exponerse.
+- El chat público usa respuestas guardadas en la propia página.
+- El formulario de contacto abre WhatsApp con un mensaje predefinido.
+
+OBJETIVO:
+Auditar y blindar la web pública frente a ataques, manipulación, inyección de código, robo masivo de imágenes, hotlinking, phishing, suplantación y accesos no autorizados. Proteger también el código, diseño, estructura, textos, imágenes y repositorio, sin romper el diseño, el carrusel, el lector, el chat local ni la experiencia en castellano y valenciano.
+
+IMPORTANTE:
+- No modifiques nada en la primera fase.
+- No inventes archivos, rutas, dependencias ni configuraciones: inspecciona primero el proyecto real.
+- Ten en cuenta que GitHub Pages no permite cabeceras HTTP personalizadas; aplica allí únicamente soluciones compatibles con HTML estático.
+- En Vercel, usa vercel.json para cabeceras de seguridad.
+- No rompas el SEO, la accesibilidad, el rendimiento ni las funciones existentes.
+- Trabaja por fases y pídeme confirmación antes de cambios estructurales importantes.
+
+FASE 1 — AUDITORÍA ESTÁTICA
+Analiza todos los archivos públicos y el repositorio:
+1. index.html, galeria.html, landing.html, páginas legales y 404.
+2. CSS, JavaScript, imágenes, fuentes, iconos, vídeos y cualquier recurso externo.
+3. Enlaces, formularios, atributos target, iframes, scripts externos, metadatos y comentarios.
+4. Posibles fugas de información: correos personales, teléfonos, rutas internas, claves, tokens, comentarios de desarrollo, nombres de archivos sensibles, backups, archivos .env, .git expuesto o configuraciones.
+5. Riesgos de XSS mediante contenido dinámico, innerHTML, document.write, eval, setTimeout con strings, URLs manipulables o datos insertados sin escapar.
+6. Riesgos de clickjacking, iframe embedding, mixed content, enlaces inseguros http://, target="_blank" sin rel seguro, y recursos de terceros innecesarios.
+7. Riesgos de exposición del repositorio: archivos que no deberían publicarse, historial con secretos, server.js accesible, credenciales, claves API o datos privados.
+
+Entrega un informe con:
+- Nivel de riesgo: crítico, alto, medio o bajo.
+- Archivo y línea.
+- Problema detectado.
+- Impacto real.
+- Solución concreta.
+- Prioridad.
+- Si requiere cambios en Vercel, GitHub, Cloudflare o solo en el HTML.
+
+No hagas cambios todavía.
+
+FASE 2 — CABECERAS DE SEGURIDAD EN VERCEL
+Crea o corrige vercel.json para aplicar cabeceras a todas las rutas públicas. Usa primero Content-Security-Policy-Report-Only para verificar que no rompe nada; después propón la versión enforce.
+
+Configura como mínimo:
+- Strict-Transport-Security.
+- X-Content-Type-Options: nosniff.
+- Referrer-Policy.
+- Permissions-Policy mínima.
+- X-Frame-Options: DENY o CSP frame-ancestors 'none', salvo que la web necesite insertarse en otro sitio.
+- Content-Security-Policy adaptada al proyecto real.
+- CSP que permita solo los orígenes realmente necesarios: 'self', imágenes locales, WhatsApp si se usa, fuentes o CDN usados, y ningún comodín innecesario.
+- CSP que controle script-src, style-src, img-src, connect-src, font-src, frame-src, object-src, base-uri y form-action.
+- Reglas de caché adecuadas para HTML, CSS, JS e imágenes.
+- Cabeceras para impedir que los navegadores interpreten incorrectamente tipos de archivo.
+
+Explica cada cabecera, su efecto y cómo probarla. No apliques una CSP restrictiva sin antes analizar todos los scripts, estilos, imágenes y recursos externos usados en index.html, galeria.html y landing.html.
+
+FASE 3 — MEDIDAS DENTRO DEL HTML PARA GITHUB PAGES
+Como GitHub Pages no permite cabeceras personalizadas, implementa en el HTML lo que sea compatible:
+- Meta CSP solo si es útil y no interfiere con Vercel; explica sus limitaciones.
+- Revisa que todos los recursos usen HTTPS.
+- Añade rel="noopener noreferrer" a enlaces externos con target="_blank".
+- Evita iframes innecesarios y controla los existentes con sandbox y allowlist.
+- Elimina scripts externos innecesarios.
+- Sustituye http:// por https:// en todos los recursos y enlaces.
+- Revisa el formulario de WhatsApp para que no permita inyección de contenido ni manipulación peligrosa de parámetros.
+- Escapa o valida cualquier dato que se inserte dinámicamente en el DOM.
+- Evita exponer información técnica, rutas internas o comentarios sensibles.
+
+FASE 4 — PROTECCIÓN DE IMÁGENES
+Implementa una protección realista y multicapa para las imágenes de la web:
+1. Revisa cómo se sirven actualmente: rutas, formatos, tamaños, nombres y accesibilidad pública.
+2. Impide el hotlinking en Vercel si es técnicamente viable; si no, propón la solución con Cloudflare o cambio de CDN.
+3. Añade marca de agua visible a las imágenes originales o a las versiones públicas.
+4. Sirve en la web versiones optimizadas, comprimidas y de resolución limitada; guarda los originales fuera del repositorio público.
+5. Renombra imágenes sensibles con nombres no descriptivos o UUID si procede.
+6. Evita exponer imágenes originales en alta resolución si no son necesarias.
+7. Añade aviso visible de propiedad intelectual y política de uso.
+8. Implementa medidas disuasorias sin romper accesibilidad:
+   - Bloqueo de arrastre de imágenes.
+   - Bloqueo de clic derecho sobre imágenes.
+   - Prevención de selección de imágenes.
+   - Overlay transparente sobre imágenes de galería cuando no perjudique la usabilidad.
+9. No prometas protección total: explica que las capturas de pantalla y las herramientas del navegador no se pueden bloquear al 100%.
+10. Si hay imágenes especialmente valiosas, propón la mejor opción entre marca de agua, CDN protegido, Cloudflare, imágenes de baja resolución o venta/descarga controlada.
+
+FASE 5 — PROTECCIÓN DEL CÓDIGO, DISEÑO Y ESTRUCTURA
+- Minifica CSS y JavaScript de producción sin romper funcionalidad.
+- No ofusques de forma agresiva si dificulta el mantenimiento; propón solo una opción razonable.
+- Elimina comentarios sensibles, rutas internas, datos personales innecesarios, claves, tokens y código de pruebas del código publicado.
+- No publiques mapas de código fuente.
+- Revisa que no existan archivos accesibles como .env, .git, backups, configuraciones, server.js, documentación interna, notas o archivos temporales.
+- Añade o revisa robots.txt para controlar la indexación de páginas o recursos que no deban aparecer en buscadores.
+- Revisa sitemap.xml si existe.
+- Añade meta robots o X-Robots-Tag cuando corresponda.
+- Comprueba que la página 404 no revele información sensible.
+- Revisa favicon, manifest, metadatos y Open Graph para que no expongan rutas privadas.
+
+FASE 6 — REPOSITORIO GITHUB Y DESPLIEGUE
+- Audita el repositorio nafergu75/cosas-cucas.
+- Comprueba que no haya secretos, claves API, contraseñas, tokens, correos privados innecesarios ni datos personales en el historial.
+- Revisa .gitignore y añade exclusiones para:
+  - .env
+  - node_modules
+  - backups
+  - archivos temporales
+  - imágenes originales privadas
+  - credenciales
+  - logs
+  - system files
+- Revisa permisos del repositorio, colaboradores, tokens de acceso personal y claves SSH.
+- Comprueba que el despliegue no publique carpetas o archivos privados.
+- Recomienda cómo mantener server.js y cualquier clave de IA fuera del repositorio público.
+- Si hay GitHub Actions, revisa permisos mínimos, secretos y riesgo de modificación del despliegue.
+
+FASE 7 — PROTECCIÓN CONTRA PHISHING Y SUPLANTACIÓN
+- Comprueba que el dominio, si existe, tenga DNS seguro y HTTPS correcto.
+- Revisa que no haya mixed content.
+- Añade aviso legal claro de titularidad de la web, textos, imágenes y marca.
+- Revisa que los enlaces a WhatsApp usen el número correcto y no permitan suplantación sencilla.
+- Recomienda medidas para detectar copias fraudulentas de la web, como búsquedas periódicas del nombre, alertas de Google, vigilancia de dominios parecidos y registro de marca si procede.
+
+FASE 8 — PRUEBAS FINALES
+Después de cada cambio:
+1. Indica archivos creados o modificados.
+2. Explica el cambio en lenguaje claro.
+3. Explica cómo probarlo en Vercel y GitHub Pages.
+4. Comprueba que el carrusel, lector, chat local, formulario de WhatsApp, galería, landing, páginas legales y 404 siguen funcionando.
+5. Comprueba escritorio y móvil.
+6. Indica cómo revertir el cambio si algo falla.
+7. Entrega un checklist final con estado: implementado, pendiente, requiere acción externa o no aplicable en GitHub Pages.
+
+REGLA FINAL:
+Prioriza en este orden:
+1. Evitar fuga de secretos y archivos privados.
+2. Prevenir XSS, inyección y manipulación del DOM.
+3. Aplicar cabeceras de seguridad en Vercel.
+4. Proteger imágenes contra hotlinking, descarga masiva y reutilización.
+5. Reducir exposición del código y la estructura.
+6. Añadir medidas disuasorias de copia.
+7. Mejorar monitorización, backups y respuesta ante incidentes.
+
+Empieza ahora con la FASE 1. No modifiques ningún archivo todavía. Analiza el proyecto real y entrégame el informe de vulnerabilidades, riesgos y plan de remediación priorizado.
+```
+
 ---
 
 ## Historial de trabajos
@@ -174,6 +329,8 @@ Al abrir la colección salen dos tarjetas con foto: **Espolín** e **Indumentari
 Ordenado de lo más nuevo a lo más antiguo. Cada línea es un trabajo terminado y publicado.
 
 ### 20-10-2026
+- **Orden de seguridad guardada:** auditoría y blindaje en 8 fases (secretos, XSS, cabeceras en Vercel, imágenes, código, repositorio, suplantación y pruebas), en «Pendiente». Se ejecuta cuando Ignacio dé la web por definitiva, empezando por la FASE 1 sin tocar nada.
+- **Revisión de la noticia de Amanda (ya publicada):** cinco textos alternativos del carrusel estaban cambiados de foto y dos se precisan; «La tela de su traje verde es de la Compañía…» (antes «Su traje verde es de…»); «planta en la sección Especial» (antes «vuelve», y ya estaba en Especial); en VAL «Compañía» sin traducir, como en el resto de la web; la portada de los vídeos (Amanda y Desfilada) se pide al abrir la noticia y no en cada visita (`data-poster`).
 - **Nuestra Historia:** la foto grande (`historia/cosascucas_1.jpg`, la de las sillas tapizadas doradas) es la tienda antigua de C/ Grabador Esteve, 30 · 46004; el pie decía Burriana, 21 y ahora dice «Nuestra tienda de la calle Grabador Esteve, 30 · 46004 Valencia» (VAL «Gravador Esteve»). Nuevo bloque «Una casa nueva en Burriana» (`block3Title/p1/p2` en `t().dossier`, ES y VAL) con el paso a la tienda de Burriana, 21 (1-7-2026) y la del Cabañal, que sigue en Vicent Gallart, 49.
 - **Noticia de Amanda Dàries Ricart, FMI 2027 de la falla Malvarrosa:** primera tarjeta de «Más noticias», con texto en ES y VAL, 20 fotos (la historia del traje verde de la Compañía Valenciana de la Seda, modelo «Carpio», y la exposición de los trajes de su reinado) y el reel como vídeo.
 - **Fuera Paqui de los textos:** donde salían las tres hijas («Noelia, María y Paqui») ahora pone «Noelia y María»: bloque editorial de la portada, Historia, noticia del Premio Joia (ES y VAL), `landing.html` y las instrucciones del asistente Cuca (`server.js`). El bloque «Nuestra Historia» ya decía solo «Noelia y María».
