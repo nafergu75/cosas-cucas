@@ -22,7 +22,7 @@ Web de la tienda Cosas Cucas, indumentaria valenciana artesanal desde 1982.
 | Email | info@cosascucas.es |
 | Instagram | @cosascucas |
 
-Fundada por Paquita Martorell en el Cabañal. Hoy la llevan sus hijas Noelia, María y Paqui.
+Fundada por Paquita Martorell en el Cabañal. Hoy la llevan sus hijas Noelia y María (desde el 20-10-2026 Paqui ya no sale en la web).
 
 ---
 
@@ -173,6 +173,7 @@ Al abrir la colección salen dos tarjetas con foto: **Espolín** e **Indumentari
 Ordenado de lo más nuevo a lo más antiguo. Cada línea es un trabajo terminado y publicado.
 
 ### 20-10-2026
+- **Fuera Paqui de los textos:** donde salían las tres hijas («Noelia, María y Paqui») ahora pone «Noelia y María»: bloque editorial de la portada, Historia, noticia del Premio Joia (ES y VAL), `landing.html` y las instrucciones del asistente Cuca (`server.js`). El bloque «Nuestra Historia» ya decía solo «Noelia y María».
 - **Regla nueva:** cuando se renueve la noticia principal, la anterior pasa automáticamente a «Más noticias» (pasos en el apartado de Noticias, arriba).
 - **Aderezos y Peinetas:** foto de la «Peineta Dorada con Rosas — Conjunto de Gala» (`a4`) cambiada por la versión retocada que dejó Ignacio en la carpeta del proyecto (746×811), ahora `aderezos/peineta-dorada-rosas.jpg`. **Ojo:** al cambiar una foto hay que darle un nombre nuevo; con el mismo nombre los navegadores siguen enseñando la vieja (Vercel la guarda en caché un día y hasta una semana más mientras revalida).
 - **Carruseles de las noticias, siempre en marcha:** ya no se paran con el ratón encima (en el lector el ratón solía quedarse sobre el carrusel al abrir la noticia y parecía estático) ni cuando el sistema tiene las animaciones reducidas (entonces van sin el zoom lento, con la barra y el botón de pausa a la vista). Se siguen parando con el botón de pausa, al navegar con el teclado dentro del carrusel y cuando no se ven en pantalla.

@@ -19,7 +19,7 @@ const BRAVE_URL      = 'https://api.search.brave.com/res/v1/web/search';
 const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5-20251001';
 
 // ── System prompt de Cuca ───────────────────────────────────────────
-const CUCA_SYSTEM = `Eres Cuca, la asistente virtual experta de Cosas Cucas, una tienda de indumentaria valenciana artesanal en Valencia, España, fundada en 1982 por Paquita Martorell. Actualmente la llevan sus hijas Noelia, María y Paqui.
+const CUCA_SYSTEM = `Eres Cuca, la asistente virtual experta de Cosas Cucas, una tienda de indumentaria valenciana artesanal en Valencia, España, fundada en 1982 por Paquita Martorell. Actualmente la llevan sus hijas Noelia y María.
 
 INFORMACIÓN DE LA TIENDA:
 - Tienda Principal: C/ Burriana 21, 46005 Valencia · Tel: 963 511 556 · WhatsApp: 667 775 501
