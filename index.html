@@ -4276,7 +4276,7 @@ const IMG = {
   fm21: 'falleras%20mayores/fm-2023-laura-castillo-llorens.webp',
   fm22: 'falleras%20mayores/fm-2023-teresa-alepuz.webp',
   fm23: 'falleras%20mayores/fm-2025-begona-sancho-lozano-2.webp',
-  /* Reina de las Fiestas de Navajas 2025 (fiestas patronales; programa oficial del Ayuntamiento) */
+  /* Reina de las Fiestas de Navajas 2025 (fiestas patronales; programa oficial del Ayuntamiento); va en Indumentaria regional */
   fm24: 'falleras%20mayores/reina-navajas-elena-saez-martinez.webp',
   /* Espolín — colección Indumentaria Femenina */
   esp1: 'espolin/esp-marta-capella-1.webp',
@@ -4998,7 +4998,6 @@ const translations = {
         { img: IMG.esp1, name: 'Falla Carretera Escrivá-Cooperativa San Fernando · Marta Capella Guanter', year: 'Fallera Mayor 2025' },
         { img: IMG.fm18, name: 'Falla Plaça del Mercat de Turís · Begoña Sancho Lozano', year: 'Fallera Mayor 2025' },
         { img: IMG.fm23, name: 'Falla Plaça del Mercat de Turís · Begoña Sancho Lozano', year: 'Fallera Mayor 2025' },
-        { img: IMG.fm24, name: 'Navajas · Elena Sáez Martínez',                    year: 'Reina de las Fiestas 2025' },
         { img: IMG.fm20, name: 'Falla Plaza Jesús · Ana María Villalba Layunta', year: 'Fallera Mayor 2024' },
         { img: IMG.fm19, name: 'Falla Mossén Josep Cuenca-Pinedo · Carolina San Ramón Quilis', year: 'Fallera Mayor Infantil 2024' },
         { img: IMG.fm21, name: 'Falla Doctor García Brustenga-Vicente Barrera Cambra · Laura Castillo Llorens', year: 'Fallera Mayor 2023' },
@@ -5639,7 +5638,6 @@ const translations = {
         { img: IMG.esp1, name: 'Falla Carretera d\'Escrivà-Cooperativa de Sant Ferran · Marta Capella Guanter', year: 'Fallera Major 2025' },
         { img: IMG.fm18, name: 'Falla Plaça del Mercat de Turís · Begoña Sancho Lozano', year: 'Fallera Major 2025' },
         { img: IMG.fm23, name: 'Falla Plaça del Mercat de Turís · Begoña Sancho Lozano', year: 'Fallera Major 2025' },
-        { img: IMG.fm24, name: 'Navajas · Elena Sáez Martínez',                    year: 'Reina de les Festes 2025' },
         { img: IMG.fm20, name: 'Falla Plaça Jesús · Ana María Villalba Layunta', year: 'Fallera Major 2024' },
         { img: IMG.fm19, name: 'Falla Mossén Josep Cuenca-Pinedo · Carolina San Ramón Quilis', year: 'Fallera Major Infantil 2024' },
         { img: IMG.fm21, name: 'Falla Doctor García Brustenga-Vicente Barrera Cambra · Laura Castillo Llorens', year: 'Fallera Major 2023' },
@@ -6368,8 +6366,6 @@ const FALLERAS_VALENCIA = [
    Alejandra y Laura: Corte 2027, las mismas de la noticia (fotos de la noticia recortadas en vertical).
    Fotos de cuerpo entero, con el traje completo: la tarjeta es vertical 3:4 y no cuadrada. */
 const CORTE_PERSONAS = [
-  /* Blanca Nebot Campos es de la Corte de Honor de Vila-real, no de la de València */
-  { anyo: 2025, nombre: 'Blanca Nebot Campos', cargo: { es: 'Corte de Honor de Vila-real', ca: 'Cort d\'Honor de Vila-real' }, lugar: { es: 'Fiestas patronales de Vila-real', ca: 'Festes patronals de Vila-real' }, foto: 'falleras-valencia/corte-2025-vila-real-blanca-nebot-campos.webp', foco: 'center 40%' },
   { anyo: 2026, nombre: 'Marta Capella Guanter',    falla: "Carretera d'Escrivà-Cooperativa de Sant Ferran", foto: 'falleras-valencia/corte-2026-marta-capella-guanter.webp', foco: 'center' },
   { anyo: 2026, nombre: 'Laura Llobell López',      falla: 'Exposició-Micer Mascó', foto: 'falleras-valencia/corte-2026-laura-llobell-lopez.webp', foco: 'center' },
   { anyo: 2027, nombre: 'Alejandra Blanco Beltrán', falla: 'Mestre Rodrigo-General Avilés', foto: 'falleras-valencia/corte-2027-alejandra-blanco-beltran.webp', foco: 'center', credito: '@alejandrablaancoo' },
@@ -6380,7 +6376,16 @@ const CORTE_PERSONAS = [
    localidad con fotos, solo sale el título y una frase de «muy pronto». Para añadir una:
    { id: 'burriana', nombre: { es: 'Burriana', ca: 'Borriana' }, portada: 'carpeta/foto.webp',
      fotos: [ { img: 'carpeta/foto.webp', texto: { es: '…', ca: '…' } } ] } */
-const INDUMENTARIA_REGIONAL = [];
+const INDUMENTARIA_REGIONAL = [
+  { id: 'navajas', nombre: { es: 'Navajas', ca: 'Navajas' }, portada: IMG.fm24,
+    fotos: [
+      { img: IMG.fm24, texto: { es: 'Elena Sáez Martínez · Reina de las Fiestas de Navajas 2025', ca: 'Elena Sáez Martínez · Reina de les Festes de Navajas 2025' } },
+    ] },
+  { id: 'vila-real', nombre: { es: 'Vila-real', ca: 'Vila-real' }, portada: 'falleras-valencia/corte-2025-vila-real-blanca-nebot-campos.webp',
+    fotos: [
+      { img: 'falleras-valencia/corte-2025-vila-real-blanca-nebot-campos.webp', texto: { es: 'Blanca Nebot Campos · Corte de Honor de las Fiestas de Vila-real 2025', ca: "Blanca Nebot Campos · Cort d'Honor de les Festes de Vila-real 2025" } },
+    ] },
+];
 function buildRegional() {
   const box = document.getElementById('hist-regional');
   const locs = INDUMENTARIA_REGIONAL.filter(l => l.fotos && l.fotos.length);
