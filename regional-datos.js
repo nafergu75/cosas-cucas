@@ -34,6 +34,8 @@ window.INDUMENTARIA_REGIONAL = [
         nombre: "Elena Sáez Martínez", cargo: { es: "Reina de las Fiestas de Navajas 2025", ca: "Reina de les Festes de Navajas 2025" } },
       { img: "indumentaria-regional/navajas-natalia-corbaton-cubells.webp",
         nombre: "Natalia Corbatón Cubells", cargo: { es: "Corte de Honor de la Reina de las Fiestas de Navajas 2023", ca: "Cort d'Honor de la Reina de les Festes de Navajas 2023" } },
+      { img: "indumentaria-regional/navajas-carla-aliaga-soriano.webp",
+        nombre: "Carla Aliaga Soriano", cargo: { es: "Reina de las Fiestas de Navajas 2022", ca: "Reina de les Festes de Navajas 2022" } },
       { img: "indumentaria-regional/navajas-ana-castillo-carsi.webp",
         nombre: "Ana Castillo Carsí", cargo: { es: "Reina de las Fiestas de Navajas 2018", ca: "Reina de les Festes de Navajas 2018" } },
     ] },
