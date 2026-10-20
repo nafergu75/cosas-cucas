@@ -338,6 +338,8 @@ Empieza ahora con la FASE 1. No modifiques ningún archivo todavía. Analiza el 
 Ordenado de lo más nuevo a lo más antiguo. Cada línea es un trabajo terminado y publicado.
 
 ### 20-10-2026
+- **Espolín:** nueva foto, fallera de espaldas en una pasarela con espolín «Rica» de fondo verde agua y lazo de cinta verde agua (pieza `e11`, `espolin/esp-rica-verde-agua.webp`; modelo dado por Ignacio). La foto es cuadrada y lleva la firma del fotógrafo («© Fran Ros»). Son 11. 
+- **Espolín › Lidón (`e9`):** foto cambiada por la de las 22.52.13 que dejó Ignacio (fallera de pie en un salón, espolín «Lidón» de fondo coral, manteleta y delantal bordados en oro; lleva el logo del fotógrafo «Tamayo»). Nombre nuevo por la caché, `espolin/esp-lidon-coral-tamayo.webp`; la anterior (con banda) está en `_originales/espolin/`. Se quitó «con banda» de la descripción.
 - **Cabecera de Noticias:** el subtítulo pasa de «Las falleras que vestimos este año y lo que va pasando en la casa.» a «Las falleras que vestimos este año y lo que queda por lucir…» (VAL: «Les falleres que vestim enguany i el que queda per lluir…»), como pidió Ignacio.
 - **Reseñas:** «+500 clientas satisfechas» pasa a **+2000** (dato de Ignacio), en la etiqueta y en la cifra. En valenciano decía «clients satisfets» y ahora «clientes satisfetes», en femenino como en castellano.
 - **Noticia del traje de Meri, ampliada:** título «Del telar a Cosas Cucas…», párrafo de la confección en Cosas Cucas (todas las pruebas en la tienda de Burriana) y enlace a la otra noticia de Meri. Después, a petición de Ignacio, «Ella misma ha contado el camino en su Instagram, fecha a fecha» pasó a «paso a paso» (VAL «pas a pas»); el último párrafo también dice «paso a paso» y se le ofreció cambiarlo para no repetirlo.
