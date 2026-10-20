@@ -2116,9 +2116,9 @@
       .footer-grid { grid-template-columns: 1fr; }
       .footer-social { gap: 12px; }
 
-      /* CHATBOT — encima del WA en móvil */
-      #chat-fab   { bottom: 90px; right: 14px; width: 50px; height: 50px; }
-      #chat-panel { bottom: 155px; right: 8px; left: 8px; width: auto; }
+      /* CHATBOT — abajo a la derecha (WhatsApp va a la izquierda) */
+      #chat-fab   { bottom: 20px; right: 14px; width: 50px; height: 50px; }
+      #chat-panel { bottom: 82px; right: 8px; left: 8px; width: auto; }
 
       /* RESEÑAS */
       #res-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
@@ -3026,13 +3026,13 @@
     }
 
     /* ═══════════════════════════════════════════════════════════════════════════
-       WHATSAPP FLOTANTE
+       WHATSAPP FLOTANTE — abajo a la izquierda (el asistente va abajo a la derecha)
     ═══════════════════════════════════════════════════════════════════════════ */
     .wa-float {
       position: fixed;
-      bottom: 28px; right: 28px;
+      bottom: 28px; left: 28px;
       z-index: 999;
-      display: flex; align-items: center; gap: 0;
+      display: flex; flex-direction: row-reverse; align-items: center; gap: 0;
       cursor: pointer; text-decoration: none;
     }
     .wa-float__tooltip {
@@ -3042,10 +3042,10 @@
       font-size: 0.75rem; font-weight: 600;
       letter-spacing: 0.06em;
       padding: 10px 16px;
-      border-radius: 4px 0 0 4px;
+      border-radius: 0 4px 4px 0;
       white-space: nowrap;
       opacity: 0;
-      transform: translateX(8px);
+      transform: translateX(-8px);
       transition: opacity 0.25s, transform 0.25s;
       pointer-events: none;
     }
@@ -3082,7 +3082,7 @@
       100% { transform: scale(1.6); opacity: 0; }
     }
     @media (max-width: 480px) {
-      .wa-float { bottom: 20px; right: 18px; }
+      .wa-float { bottom: 20px; left: 18px; }
       .wa-float__btn { width: 52px; height: 52px; }
       .wa-float__tooltip { display: none; }
     }
@@ -7510,10 +7510,10 @@ function updateCitaBtn() {
       aderezo, calzado, mantilla, ramillete + tienda, precios)
 ════════════════════════════════════════════════════════════════════════ -->
 <style>
-  /* ── FAB flotante — encima del botón WhatsApp (bottom-right) ── */
+  /* ── FAB flotante — abajo a la derecha (WhatsApp va abajo a la izquierda) ── */
   #chat-fab {
     position: fixed;
-    bottom: 98px;   /* 28px (WA) + 58px (WA btn) + 12px (gap) */
+    bottom: 28px;
     right: 28px;
     z-index: 2100;
     width: 58px; height: 58px; border-radius: 50%;
@@ -7536,11 +7536,11 @@ function updateCitaBtn() {
   /* ── Panel del chat — se abre hacia arriba-izquierda desde el FAB ── */
   #chat-panel {
     position: fixed;
-    bottom: 168px;  /* 98px (FAB bottom) + 58px (FAB) + 12px (gap) */
+    bottom: 98px;   /* 28px (FAB bottom) + 58px (FAB) + 12px (gap) */
     right: 28px;
     z-index: 2099;
     width: 340px;
-    max-height: min(530px, calc(100svh - 190px));
+    max-height: min(530px, calc(100svh - 120px));
     display: flex; flex-direction: column;
     background: var(--color-bg-dark);
     border: 1px solid rgba(181,144,58,.35);
@@ -7684,9 +7684,9 @@ function updateCitaBtn() {
   .ch-send svg { width: 14px; height: 14px; fill: var(--color-bg-dark); }
 
   @media (max-width: 480px) {
-    /* WA móvil: bottom 20px right 18px, botón 52px → chat FAB: bottom 84px */
-    #chat-fab   { bottom: 84px; right: 18px; width: 52px; height: 52px; }
-    #chat-panel { right: 12px; left: 12px; width: auto; bottom: 148px; max-height: min(480px, calc(100svh - 170px)); }
+    /* Chat FAB abajo a la derecha (bottom 20px, 52px) → panel: bottom 84px */
+    #chat-fab   { bottom: 20px; right: 18px; width: 52px; height: 52px; }
+    #chat-panel { right: 12px; left: 12px; width: auto; bottom: 84px; max-height: min(480px, calc(100svh - 106px)); }
   }
 </style>
 
