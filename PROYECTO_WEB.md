@@ -167,6 +167,7 @@ Al abrir la colección salen dos tarjetas con foto: **Espolín** e **Indumentari
 Ordenado de lo más nuevo a lo más antiguo. Cada línea es un trabajo terminado y publicado.
 
 ### 20-10-2026
+- **Aderezos y Peinetas:** foto de la «Peineta Dorada con Rosas — Conjunto de Gala» (`aderezos/591ef1e7….jpg`, `a4`) cambiada por la versión retocada que dejó Ignacio en la carpeta del proyecto (746×811).
 - **Carruseles de las noticias, siempre en marcha:** ya no se paran con el ratón encima (en el lector el ratón solía quedarse sobre el carrusel al abrir la noticia y parecía estático) ni cuando el sistema tiene las animaciones reducidas (entonces van sin el zoom lento, con la barra y el botón de pausa a la vista). Se siguen parando con el botón de pausa, al navegar con el teclado dentro del carrusel y cuando no se ven en pantalla.
 
 ### 19-10-2026
