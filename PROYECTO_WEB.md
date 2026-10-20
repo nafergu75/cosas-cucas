@@ -338,6 +338,7 @@ Empieza ahora con la FASE 1. No modifiques ningún archivo todavía. Analiza el 
 Ordenado de lo más nuevo a lo más antiguo. Cada línea es un trabajo terminado y publicado.
 
 ### 20-10-2026
+- **Cabecera de Noticias:** el subtítulo pasa de «Las falleras que vestimos este año y lo que va pasando en la casa.» a «Las falleras que vestimos este año y lo que queda por lucir…» (VAL: «Les falleres que vestim enguany i el que queda per lluir…»), como pidió Ignacio.
 - **Reseñas:** «+500 clientas satisfechas» pasa a **+2000** (dato de Ignacio), en la etiqueta y en la cifra. En valenciano decía «clients satisfets» y ahora «clientes satisfetes», en femenino como en castellano.
 - **Noticia del traje de Meri, ampliada:** título «Del telar a Cosas Cucas…», párrafo de la confección en Cosas Cucas (todas las pruebas en la tienda de Burriana) y enlace a la otra noticia de Meri.
 - **Noticia nueva en «Más noticias»: el traje de proclamación de Meri** (`#noticia-meri-tetuan`, primera tarjeta). Del telar a la prueba, con las 17 fotos de la publicación de @merizalve y datos de la falla de Pinedo comprobados (ver la sección de Noticias). Sin datos de la proclamación porque no están publicados.
