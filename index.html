@@ -1942,6 +1942,16 @@
       transition: transform 0.5s;
     }
     .col-modal__card:hover .col-modal__card-img img { transform: scale(1.04); }
+    /* Modelo de la tela bajo la foto (familia Espolín) */
+    .col-modal__card-modelo {
+      margin: 0; padding: 12px 14px 14px; text-align: center; line-height: 1.3;
+      font-family: var(--font-display); font-size: 1.02rem; color: var(--color-text);
+    }
+    .col-modal__card-modelo span {
+      display: block; margin-top: 4px;
+      font-family: var(--font-body); font-size: .64rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--color-gold);
+    }
     .col-modal__card-tag {
       position: absolute; top: 12px; left: 12px;
       background: var(--color-gold); color: white;
@@ -4649,14 +4659,14 @@ const translations = {
             price:'Consultar', image:IMG.p8, tag:null },
           /* ── RAYÓN — reservado para incorporar próximas fotos ── */
           /* ── FAMILIA ESPOLÍN (family:'espolin'; fotos de la carpeta espolin/, 20-10-2026) ── */
-          { id:'e1', family:'espolin', material:'espolin', name:'Marta Capella con traje de espolín «Espigas de Montserrat» y banda', desc:'', price:'Consultar', image:IMG.esp1, tag:null },
-          { id:'e2', family:'espolin', material:'espolin', name:'Marta Capella con el mismo espolín y jubón verde de manga larga', desc:'', price:'Consultar', image:IMG.esp2, tag:null },
-          { id:'e3', family:'espolin', material:'espolin', name:'Traje de espolín «Espigas Belmonte» en azul antiguo', desc:'', price:'Consultar', image:IMG.esp3, tag:null },
-          { id:'e4', family:'espolin', material:'espolin', name:'Traje de espolín «Árabe» en rojo Valentino', desc:'', price:'Consultar', image:IMG.esp4, tag:null },
-          { id:'e5', family:'espolin', material:'espolin', name:'Traje de espolín «Lidón» de fondo borgoña, de frente', desc:'', price:'Consultar', image:IMG.esp5, tag:null },
-          { id:'e6', family:'espolin', material:'espolin', name:'Traje de espolín «Lidón» de fondo borgoña, de lado', desc:'', price:'Consultar', image:IMG.esp6, tag:null },
-          { id:'e7', family:'espolin', material:'espolin', name:'Traje infantil de espolín «Carpio» en gris antiguo', desc:'', price:'Consultar', image:IMG.esp7, tag:null },
-          { id:'e8', family:'espolin', material:'espolin', name:'Traje de espolín «Tetuán» expuesto en un maniquí', desc:'', price:'Consultar', image:IMG.esp8, tag:null },
+          { id:'e1', family:'espolin', material:'espolin', modelo:'Espigas de Montserrat', name:'Marta Capella con traje de espolín «Espigas de Montserrat» y banda', desc:'', price:'Consultar', image:IMG.esp1, tag:null },
+          { id:'e2', family:'espolin', material:'espolin', modelo:'Espigas de Montserrat', name:'Marta Capella con el mismo espolín y jubón verde de manga larga', desc:'', price:'Consultar', image:IMG.esp2, tag:null },
+          { id:'e3', family:'espolin', material:'espolin', modelo:'Espigas Belmonte', color:'azul antiguo', name:'Traje de espolín «Espigas Belmonte» en azul antiguo', desc:'', price:'Consultar', image:IMG.esp3, tag:null },
+          { id:'e4', family:'espolin', material:'espolin', modelo:'Árabe', color:'rojo Valentino', name:'Traje de espolín «Árabe» en rojo Valentino', desc:'', price:'Consultar', image:IMG.esp4, tag:null },
+          { id:'e5', family:'espolin', material:'espolin', modelo:'Lidón', color:'fondo borgoña', name:'Traje de espolín «Lidón» de fondo borgoña, de frente', desc:'', price:'Consultar', image:IMG.esp5, tag:null },
+          { id:'e6', family:'espolin', material:'espolin', modelo:'Lidón', color:'fondo borgoña', name:'Traje de espolín «Lidón» de fondo borgoña, de lado', desc:'', price:'Consultar', image:IMG.esp6, tag:null },
+          { id:'e7', family:'espolin', material:'espolin', modelo:'Carpio', color:'gris antiguo', name:'Traje infantil de espolín «Carpio» en gris antiguo', desc:'', price:'Consultar', image:IMG.esp7, tag:null },
+          { id:'e8', family:'espolin', material:'espolin', modelo:'Tetuán', name:'Traje de espolín «Tetuán» expuesto en un maniquí', desc:'', price:'Consultar', image:IMG.esp8, tag:null },
           { id:'e9', family:'espolin', material:'espolin', name:'Laura con traje de espolín azul noche, mantilla y ramo de flores', desc:'', price:'Consultar', image:IMG.esp9, tag:null },
         ],
       },
@@ -5304,14 +5314,14 @@ const translations = {
           { id:'p7',   material:'espolin', name:'Espolí verd, esquena i vol',                         desc:'', price:'Consultar', image:IMG.p7,   tag:null },
           { id:'p6',   material:'seda',    name:'Seda marró fosc amb davantal de punta i banda',      desc:'', price:'Consultar', image:IMG.p6,   tag:null },
           { id:'p8',   material:'seda',    name:'Seda blanca amb flors en plata i rosa',              desc:'', price:'Consultar', image:IMG.p8,   tag:null },
-          { id:'e1', family:'espolin', material:'espolin', name:'Marta Capella amb vestit d\'espolí «Espigas de Montserrat» i banda', desc:'', price:'Consultar', image:IMG.esp1, tag:null },
-          { id:'e2', family:'espolin', material:'espolin', name:'Marta Capella amb el mateix espolí i gipó verd de màniga llarga', desc:'', price:'Consultar', image:IMG.esp2, tag:null },
-          { id:'e3', family:'espolin', material:'espolin', name:'Vestit d\'espolí «Espigas Belmonte» en blau antic', desc:'', price:'Consultar', image:IMG.esp3, tag:null },
-          { id:'e4', family:'espolin', material:'espolin', name:'Vestit d\'espolí «Árabe» en roig Valentino', desc:'', price:'Consultar', image:IMG.esp4, tag:null },
-          { id:'e5', family:'espolin', material:'espolin', name:'Vestit d\'espolí «Lidón» de fons bordeus, de front', desc:'', price:'Consultar', image:IMG.esp5, tag:null },
-          { id:'e6', family:'espolin', material:'espolin', name:'Vestit d\'espolí «Lidón» de fons bordeus, de costat', desc:'', price:'Consultar', image:IMG.esp6, tag:null },
-          { id:'e7', family:'espolin', material:'espolin', name:'Vestit infantil d\'espolí «Carpio» en gris antic', desc:'', price:'Consultar', image:IMG.esp7, tag:null },
-          { id:'e8', family:'espolin', material:'espolin', name:'Vestit d\'espolí «Tetuán» exposat en un maniquí', desc:'', price:'Consultar', image:IMG.esp8, tag:null },
+          { id:'e1', family:'espolin', material:'espolin', modelo:'Espigas de Montserrat', name:'Marta Capella amb vestit d\'espolí «Espigas de Montserrat» i banda', desc:'', price:'Consultar', image:IMG.esp1, tag:null },
+          { id:'e2', family:'espolin', material:'espolin', modelo:'Espigas de Montserrat', name:'Marta Capella amb el mateix espolí i gipó verd de màniga llarga', desc:'', price:'Consultar', image:IMG.esp2, tag:null },
+          { id:'e3', family:'espolin', material:'espolin', modelo:'Espigas Belmonte', color:'blau antic', name:'Vestit d\'espolí «Espigas Belmonte» en blau antic', desc:'', price:'Consultar', image:IMG.esp3, tag:null },
+          { id:'e4', family:'espolin', material:'espolin', modelo:'Árabe', color:'roig Valentino', name:'Vestit d\'espolí «Árabe» en roig Valentino', desc:'', price:'Consultar', image:IMG.esp4, tag:null },
+          { id:'e5', family:'espolin', material:'espolin', modelo:'Lidón', color:'fons bordeus', name:'Vestit d\'espolí «Lidón» de fons bordeus, de front', desc:'', price:'Consultar', image:IMG.esp5, tag:null },
+          { id:'e6', family:'espolin', material:'espolin', modelo:'Lidón', color:'fons bordeus', name:'Vestit d\'espolí «Lidón» de fons bordeus, de costat', desc:'', price:'Consultar', image:IMG.esp6, tag:null },
+          { id:'e7', family:'espolin', material:'espolin', modelo:'Carpio', color:'gris antic', name:'Vestit infantil d\'espolí «Carpio» en gris antic', desc:'', price:'Consultar', image:IMG.esp7, tag:null },
+          { id:'e8', family:'espolin', material:'espolin', modelo:'Tetuán', name:'Vestit d\'espolí «Tetuán» exposat en un maniquí', desc:'', price:'Consultar', image:IMG.esp8, tag:null },
           { id:'e9', family:'espolin', material:'espolin', name:'Laura amb vestit d\'espolí blau nit, mantellina i ram de flors', desc:'', price:'Consultar', image:IMG.esp9, tag:null },
         ],
       },
@@ -5809,6 +5819,7 @@ function openCollectionModal(drop) {
         <img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" />
         ${p.tag ? `<span class="col-modal__card-tag">${p.tagLabel || p.tag}</span>` : ''}
       </div>
+      ${p.modelo ? `<p class="col-modal__card-modelo">${p.modelo}${p.color ? `<span>${p.color}</span>` : ''}</p>` : ''}
     </div>`;
 
   const fams = drop.families || null;
