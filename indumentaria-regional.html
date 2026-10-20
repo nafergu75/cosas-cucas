@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Indumentaria regional — Cosas Cucas. Reinas, falleras y cortes de honor de distintas localidades vestidas por Cosas Cucas." />
+  <title>Indumentaria regional · Cosas Cucas</title>
+  <link rel="canonical" href="https://cosascucas.es/indumentaria-regional" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Indumentaria regional · Cosas Cucas" />
+  <meta property="og:description" content="Reinas, falleras y cortes de honor de distintas localidades vestidas por Cosas Cucas." />
+  <meta property="og:url" content="https://cosascucas.es/indumentaria-regional" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:image" content="https://cosas-cucas.vercel.app/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --color-bg:        #F4EDD8;
+      --color-bg-alt:    #EDE5CE;
+      --color-bg-dark:   #1A1714;
+      --color-gold:      #B5903A;
+      --color-gold-light:#D4B166;
+      --color-text:      #1A1714;
+      --color-text-muted:#6B5D4F;
+      --color-border:    #D9CEB4;
+      --color-white:     #FDFAF3;
+      --font-body:       'Space Grotesk', sans-serif;
+      --font-display:    'Playfair Display', serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body); background: var(--color-bg); color: var(--color-text); min-height: 100vh; overflow-x: hidden; }
+    a { color: inherit; }
+
+    /* ── CABECERA (como la de la galería) ── */
+    .r-header {
+      background: var(--color-bg-dark); padding: 22px 40px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .r-header__logo { font-family: var(--font-display); font-size: 1.35rem; color: var(--color-gold); text-decoration: none; letter-spacing: 0.05em; }
+    .r-header__der { display: flex; align-items: center; gap: 22px; }
+    .r-lang { display: flex; gap: 2px; }
+    .r-lang button {
+      background: none; border: 1px solid transparent; cursor: pointer; padding: 5px 8px;
+      font: 700 0.7rem/1 var(--font-body); letter-spacing: 0.12em; color: rgba(255,255,255,0.6);
+    }
+    .r-lang button[aria-pressed="true"] { color: var(--color-gold); border-color: rgba(181,144,58,.6); }
+    .r-header__back {
+      display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.65); text-decoration: none;
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s;
+    }
+    .r-header__back:hover { color: var(--color-gold); }
+    .r-header__back svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    /* ── CABECERA DE LA PÁGINA: el nombre de la población ── */
+    .r-hero { background: var(--color-bg-dark); padding: 56px 40px 52px; text-align: center; }
+    .r-hero__eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-gold); margin-bottom: 14px; }
+    .r-hero__title { font-family: var(--font-display); font-size: clamp(2.2rem, 6vw, 3.6rem); color: var(--color-white); font-weight: 400; line-height: 1.1; margin-bottom: 14px; }
+    .r-hero__sub { color: rgba(253,250,243,0.55); font-size: 0.88rem; letter-spacing: 0.04em; }
+
+    /* ── FOTOS EN GRANDE, enteras (sin recortar) ── */
+    .r-main { max-width: 1180px; margin: 0 auto; padding: 48px 24px 72px; }
+    .r-fotos { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px 32px; }
+    .r-foto { margin: 0; flex: 0 1 520px; max-width: 100%; }
+    .r-foto img {
+      display: block; width: 100%; height: auto; border-radius: 6px;
+      box-shadow: 0 8px 40px rgba(26,23,20,.16); background: var(--color-bg-alt);
+    }
+    /* pie con la misma letra que el de las Reinas de Burriana en la portada */
+    .r-foto figcaption { display: flex; flex-direction: column; gap: 2px; margin-top: 14px; text-align: center;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-gold); }
+    .r-foto figcaption strong { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: 1.05rem;
+      color: var(--color-text); text-transform: none; letter-spacing: .01em; }
+
+    /* ── OTRAS LOCALIDADES ── */
+    .r-otras { margin-top: 64px; padding-top: 36px; border-top: 1px solid var(--color-border); text-align: center; }
+    .r-otras__titulo { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-gold); margin-bottom: 18px; }
+    .r-otras__lista { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .r-otras__lista a {
+      text-decoration: none; padding: 9px 18px; border: 1px solid var(--color-gold);
+      font-family: var(--font-display); font-size: 1rem; color: var(--color-text); transition: background .2s, color .2s;
+    }
+    .r-otras__lista a:hover, .r-otras__lista a:focus-visible { background: var(--color-gold); color: var(--color-white); }
+
+    /* ── SIN LOCALIDAD EN LA DIRECCIÓN: todas las ventanas ── */
+    .r-ventanas { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+    .r-ventana {
+      position: relative; display: block; overflow: hidden; text-decoration: none; aspect-ratio: 4 / 3;
+      flex: 0 1 calc((100% - 40px) / 3); border: 2px solid transparent; background: var(--color-bg-alt);
+    }
+    .r-ventana img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; transition: transform .5s; }
+    .r-ventana::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,23,20,.75) 0%, rgba(26,23,20,0) 55%); }
+    .r-ventana span { position: absolute; left: 0; right: 0; bottom: 22px; z-index: 1; text-align: center;
+      font-family: var(--font-display); font-size: clamp(1.2rem, 2.4vw, 1.7rem); color: #FDFAF3; }
+    .r-ventana:hover img { transform: scale(1.04); }
+    .r-ventana:hover, .r-ventana:focus-visible { border-color: var(--color-gold); }
+
+    .r-pie { background: var(--color-bg-dark); color: rgba(253,250,243,.5); text-align: center; padding: 26px 20px; font-size: 0.78rem; letter-spacing: .04em; }
+    .r-pie a { color: var(--color-gold); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .r-header { padding: 16px; }
+      .r-header__der { gap: 12px; }
+      .r-hero { padding: 38px 18px 34px; }
+      .r-main { padding: 32px 16px 56px; }
+      .r-fotos { gap: 32px; }
+      .r-ventana { flex-basis: calc((100% - 20px) / 2); aspect-ratio: 3 / 4; }
+      .r-ventana span { bottom: 14px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .r-ventana img { transition: none; } }
+  </style>
+</head>
+<body>
+
+<header class="r-header">
+  <a href="index.html" class="r-header__logo">Cosas Cucas</a>
+  <div class="r-header__der">
+    <div class="r-lang" role="group" aria-label="Idioma">
+      <button type="button" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" data-lang="ca" aria-pressed="false">VAL</button>
+    </div>
+    <a href="index.html#hist-regional" class="r-header__back" id="r-volver">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      <span id="r-volver-txt">Volver</span>
+    </a>
+  </div>
+</header>
+
+<div class="r-hero">
+  <p class="r-hero__eyebrow" id="r-eyebrow">Indumentaria regional</p>
+  <h1 class="r-hero__title" id="r-titulo">Indumentaria regional</h1>
+  <p class="r-hero__sub" id="r-sub"></p>
+</div>
+
+<main class="r-main" id="r-main"></main>
+
+<footer class="r-pie">
+  <a href="index.html">Cosas Cucas</a> · <span id="r-pie-txt">Indumentaria valenciana artesanal desde 1982</span>
+</footer>
+
+<script src="regional-datos.js?v=1"></script>
+<script>
+  /* Página de cada localidad de «Indumentaria regional»: indumentaria-regional.html#<id>.
+     Los datos (localidades y fotos) están en regional-datos.js, el mismo archivo que usa la portada. */
+  const LOCS = (window.INDUMENTARIA_REGIONAL || []).filter(l => l.fotos && l.fotos.length);
+  const TXT = {
+    es: { eyebrow: 'Indumentaria regional', volver: 'Volver', otras: 'Otras localidades', elige: 'Elige una localidad',
+          foto: n => n === 1 ? '1 foto' : n + ' fotos', pie: 'Indumentaria valenciana artesanal desde 1982' },
+    ca: { eyebrow: 'Indumentària regional', volver: 'Tornar', otras: 'Altres localitats', elige: 'Tria una localitat',
+          foto: n => n === 1 ? '1 foto' : n + ' fotos', pie: 'Indumentària valenciana artesanal des de 1982' },
+  };
+  /* el mismo idioma que en la portada (se guarda en el navegador con la misma clave) */
+  let lang = 'es';
+  try { if (localStorage.getItem('cc-lang') === 'ca') lang = 'ca'; } catch (e) {}
+
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  function pintar() {
+    const T = TXT[lang];
+    const id = decodeURIComponent(location.hash.slice(1));
+    const loc = LOCS.find(l => l.id === id);
+    document.documentElement.lang = lang === 'ca' ? 'ca' : 'es';
+    document.querySelectorAll('.r-lang button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === lang));
+    document.getElementById('r-volver-txt').textContent = T.volver;
+    document.getElementById('r-eyebrow').textContent = T.eyebrow;
+    document.getElementById('r-pie-txt').textContent = T.pie;
+    const main = document.getElementById('r-main');
+
+    if (!loc) {   /* sin localidad (o una que no existe): todas las ventanas */
+      document.title = `${T.eyebrow} · Cosas Cucas`;
+      document.getElementById('r-titulo').textContent = T.eyebrow;
+      document.getElementById('r-sub').textContent = T.elige;
+      main.innerHTML = `<div class="r-ventanas">${LOCS.map(l => `<a class="r-ventana" href="#${esc(l.id)}">
+          <img src="${esc(l.portada)}" alt="" loading="lazy" decoding="async" /><span>${esc(l.nombre[lang])}</span></a>`).join('')}</div>`;
+      return;
+    }
+
+    document.title = `${loc.nombre[lang]} · ${T.eyebrow} · Cosas Cucas`;
+    document.getElementById('r-titulo').textContent = loc.nombre[lang];
+    document.getElementById('r-sub').textContent = T.foto(loc.fotos.length);
+    const otras = LOCS.filter(l => l !== loc);
+    main.innerHTML = `<div class="r-fotos">${loc.fotos.map((f, i) => `<figure class="r-foto">
+        <img src="${esc(f.img)}" alt="${esc(f.nombre)}, ${esc(f.cargo[lang])}" ${i > 1 ? 'loading="lazy" ' : ''}decoding="async" />
+        <figcaption><strong>${esc(f.nombre)}</strong>${esc(f.cargo[lang])}</figcaption>
+      </figure>`).join('')}</div>` +
+      (otras.length ? `<nav class="r-otras" aria-label="${esc(T.otras)}"><p class="r-otras__titulo">${esc(T.otras)}</p>
+        <div class="r-otras__lista">${otras.map(l => `<a href="#${esc(l.id)}">${esc(l.nombre[lang])}</a>`).join('')}</div></nav>` : '');
+  }
+
+  document.querySelector('.r-lang').addEventListener('click', e => {
+    const b = e.target.closest('button[data-lang]');
+    if (!b) return;
+    lang = b.dataset.lang;
+    try { localStorage.setItem('cc-lang', lang); } catch (e2) {}
+    pintar();
+  });
+  window.addEventListener('hashchange', () => { pintar(); window.scrollTo(0, 0); });
+  pintar();
+</script>
+</body>
+</html>

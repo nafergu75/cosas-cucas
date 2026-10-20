@@ -33,6 +33,10 @@
       "destination": "/galeria.html"
     },
     {
+      "source": "/indumentaria-regional",
+      "destination": "/indumentaria-regional.html"
+    },
+    {
       "source": "/aviso-legal",
       "destination": "/aviso-legal.html"
     },

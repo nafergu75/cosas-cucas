@@ -18,6 +18,7 @@
 # Paginas
 !/index.html
 !/galeria.html
+!/indumentaria-regional.html
 !/landing.html
 !/aviso-legal.html
 !/politica-privacidad.html
@@ -26,6 +27,7 @@
 
 # Estilos, icono, imagen para redes y SEO
 !/styles.css
+!/regional-datos.js
 !/favicon.png
 !/og-image.jpg
 !/robots.txt

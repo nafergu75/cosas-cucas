@@ -2354,6 +2354,7 @@
     @media (max-width: 768px) { .hist-regional__ventanas .col-modal__family { flex-basis: calc((100% - 20px) / 2); } }
     .hist-regional__elige { text-align: center; }
     .hist-regional__ventanas:empty { display: none; }
+    a.col-modal__family { text-decoration: none; color: inherit; }
     .hist-corts-text {
       grid-column: span 2;
       display: flex; flex-direction: column;
@@ -3827,8 +3828,7 @@
       <div class="hist-regional" id="hist-regional">
         <h3 class="fm-grupo__title hist-regional__title" id="hist-regional-label"></h3>
         <div class="hist-regional__ventanas" id="hist-regional-ventanas"></div>
-        <p class="col-modal__grid-label hist-regional__elige" id="hist-regional-elige" aria-live="polite"></p>
-        <div class="col-modal__grid" id="hist-regional-grid"></div>
+        <p class="col-modal__grid-label hist-regional__elige" id="hist-regional-elige"></p>
       </div>
     </div>
   </div>
@@ -4191,6 +4191,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      CONTENIDO BILINGÜE — Edita aquí los textos en ES y VAL
 ═══════════════════════════════════════════════════════════════════════════ -->
+<script src="regional-datos.js?v=1"></script>
 <script>
 /* ═══════════════════════════════════════════════════════════════════════
    CONTENIDO BILINGÜE  ·  ES = Castellano  ·  CA = Valencià
@@ -4233,6 +4234,8 @@ const IMG = {
   p17: 'coleccion%202027/fallera-mantilla-ramo.webp',
   p18: 'coleccion%202027/nina-damasco-azul-lazo-granate.webp',
   p19: 'coleccion%202027/fallera-tienda-brocado-marron-verde.webp',
+  p20: 'coleccion%202027/nina-rosa-encaje.webp',
+  p21: 'coleccion%202027/fallera-verde-brocado-flores.webp',
   /* Aderezos */
   pa1: 'coleccion%202027/Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2018.00.53_f91954f5.jpg',
   pa2: 'galeria/Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2018.03.00_b3a2c16e.jpg',
@@ -4692,6 +4695,8 @@ const translations = {
             price:'Consultar', image:IMG.p17, tag:null },
           { id:'p18', name:'Niña con traje de damasco azul marino, mantón blanco y lazo granate', desc:'', price:'Consultar', image:IMG.p18, tag:null },
           { id:'p19', name:'Fallera en la tienda con traje de brocado marrón y verde de flores, manteleta de encaje y delantal bordado', desc:'', price:'Consultar', image:IMG.p19, tag:null },
+          { id:'p20', name:'Niña con traje rosa de flores, jubón rosa y manteleta y delantal de encaje', desc:'', price:'Consultar', image:IMG.p20, tag:null },
+          { id:'p21', name:'Fallera con jubón de brocado verde de flores, falda verde y delantal de encaje dorado', desc:'', price:'Consultar', image:IMG.p21, tag:null },
           /* ── ESPOLÍN ── */
           { id:'p1', material:'espolin', name:'Espolín Negro · Flores Multicolor y Delantal Dorado',
             desc:'Traje de espolín negro de gran impacto visual. La falda vuela con amplitud extraordinaria mostrando en su base una guirnalda de flores en rojo intenso, naranja y blanco tejidas directamente en el espolín. Corpino de terciopelo negro con mangas largas. Manteleta cruzada en blanco con bordados barrocos en hilo de oro. Delantal central en tul con arabescos y medallones florales en hilo de oro. Cinturón de seda negro. Conjunto de máxima distinción para gala.',
@@ -5369,6 +5374,8 @@ const translations = {
           { id:'p17',  name:'Mantellina de punta blanca, manteleta daurada i ram de roses', desc:"Fallera amb mantellina de punta blanca, manteleta brodada en or creuada sobre el cos blanc i falda clara amb flors en or i tons pastel. Porta un ram de roses blanques.", price:'Consultar', image:IMG.p17, tag:null },
           { id:'p18', name:'Xiqueta amb vestit de damasc blau marí, mocador blanc i llaç granat', desc:'', price:'Consultar', image:IMG.p18, tag:null },
           { id:'p19', name:'Fallera a la tenda amb vestit de brocat marró i verd de flors, manteleta de punta i davantal brodat', desc:'', price:'Consultar', image:IMG.p19, tag:null },
+          { id:'p20', name:'Xiqueta amb vestit rosa de flors, gipó rosa i manteleta i davantal de punta', desc:'', price:'Consultar', image:IMG.p20, tag:null },
+          { id:'p21', name:'Fallera amb gipó de brocat verd de flors, falda verda i davantal de punta daurada', desc:'', price:'Consultar', image:IMG.p21, tag:null },
           { id:'p1',   material:'espolin', name:'Espolí negre amb flors de colors i davantal daurat', desc:'', price:'Consultar', image:IMG.p1,   tag:'new', tagLabel:'Espolí' },
           { id:'p3',   material:'espolin', name:'Espolí negre de nit',                                desc:'', price:'Consultar', image:IMG.p3,   tag:null },
           { id:'p6',   material:'seda',    name:'Seda marró fosc amb davantal de punta i banda',      desc:'', price:'Consultar', image:IMG.p6,   tag:null },
@@ -6385,82 +6392,22 @@ const CORTE_PERSONAS = [
   { anyo: 2027, nombre: 'Alejandra Blanco Beltrán', falla: 'Mestre Rodrigo-General Avilés', foto: 'falleras-valencia/corte-2027-alejandra-blanco-beltran.webp', foco: 'center', credito: '@alejandrablaancoo' },
   { anyo: 2027, nombre: 'Laura Miquel Obarti',      falla: "Avinguda de l'Oest",            foto: 'falleras-valencia/corte-2027-laura-miquel-obarti.webp',     foco: 'center' },
 ];
-/* Indumentaria regional (Historia): una ventana por localidad, como las familias de
-   Indumentaria Femenina (Espolín / Indumentaria Valenciana). Mientras no haya ninguna
-   localidad con fotos, solo sale el título y una frase de «muy pronto». Para añadir una:
-   { id: 'burriana', nombre: { es: 'Burriana', ca: 'Borriana' }, portada: 'carpeta/foto.webp',
-     fotos: [ { img: 'carpeta/foto.webp', texto: { es: '…', ca: '…' } } ] } */
-const INDUMENTARIA_REGIONAL = [
-  /* fotos para la web en indumentaria-regional/; los originales de Ignacio, en «indumentaria regional» (no se publica) */
-  { id: 'almenara', nombre: { es: 'Almenara', ca: 'Almenara' }, portada: 'indumentaria-regional/almenara-sara-royo.webp',
-    fotos: [
-      { img: 'indumentaria-regional/almenara-sara-royo.webp', texto: { es: 'Sara Royo · Festera de Almenara 2024', ca: "Sara Royo · Festera d'Almenara 2024" } },
-    ] },
-  { id: 'burriana', nombre: { es: 'Burriana', ca: 'Borriana' }, portada: 'indumentaria-regional/burriana-alejandra-morcillo-ballester.webp',
-    fotos: [
-      { img: 'indumentaria-regional/burriana-alejandra-morcillo-ballester.webp', texto: { es: 'Alejandra Morcillo Ballester · Falla Societat Centre Espanya · Corte de Honor 2025', ca: "Alejandra Morcillo Ballester · Falla Societat Centre Espanya · Cort d'Honor 2025" } },
-    ] },
-  { id: 'navajas', nombre: { es: 'Navajas', ca: 'Navajas' }, portada: IMG.fm24,
-    fotos: [
-      { img: 'indumentaria-regional/navajas-carla-bernat-garcia.webp', texto: { es: 'Carla Bernat García · Corte de Honor de la Reina de las Fiestas de Navajas 2026', ca: "Carla Bernat García · Cort d'Honor de la Reina de les Festes de Navajas 2026" } },
-      { img: 'indumentaria-regional/navajas-carla-bernat-garcia-2.webp', texto: { es: 'Carla Bernat García · Corte de Honor de la Reina de las Fiestas de Navajas 2026', ca: "Carla Bernat García · Cort d'Honor de la Reina de les Festes de Navajas 2026" } },
-      { img: IMG.fm24, texto: { es: 'Elena Sáez Martínez · Reina de las Fiestas de Navajas 2025', ca: 'Elena Sáez Martínez · Reina de les Festes de Navajas 2025' } },
-      { img: 'indumentaria-regional/navajas-elena-saez-martinez-2.webp', texto: { es: 'Elena Sáez Martínez · Reina de las Fiestas de Navajas 2025', ca: 'Elena Sáez Martínez · Reina de les Festes de Navajas 2025' } },
-      { img: 'indumentaria-regional/navajas-natalia-corbaton-cubells.webp', texto: { es: 'Natalia Corbatón Cubells · Corte de Honor de la Reina de las Fiestas de Navajas 2023', ca: "Natalia Corbatón Cubells · Cort d'Honor de la Reina de les Festes de Navajas 2023" } },
-      { img: 'indumentaria-regional/navajas-ana-castillo-carsi.webp', texto: { es: 'Ana Castillo Carsí · Reina de las Fiestas de Navajas 2018', ca: 'Ana Castillo Carsí · Reina de les Festes de Navajas 2018' } },
-    ] },
-  { id: 'segorbe', nombre: { es: 'Segorbe', ca: 'Segorbe' }, portada: 'indumentaria-regional/segorbe-ariadna-llop-joli.webp',
-    fotos: [
-      { img: 'indumentaria-regional/segorbe-ariadna-llop-joli.webp', texto: { es: 'Ariadna Llop Joli · Corte de Honor Infantil de las Fiestas de Segorbe 2023', ca: 'Ariadna Llop Joli · Cort d\'Honor Infantil de les Festes de Segorbe 2023' } },
-    ] },
-  { id: 'vila-real', nombre: { es: 'Vila-real', ca: 'Vila-real' }, portada: 'indumentaria-regional/vila-real-blanca-nebot-campos.webp',
-    fotos: [
-      { img: 'indumentaria-regional/vila-real-blanca-nebot-campos.webp', texto: { es: 'Blanca Nebot Campos · Corte de Honor de las Fiestas de Vila-real 2025', ca: "Blanca Nebot Campos · Cort d'Honor de les Festes de Vila-real 2025" } },
-    ] },
-  /* Vinaròs: damas de la Fira i Festes de Sant Joan i Sant Pere 2023 (Club de Tenis Vinaròs;
-     apellidos según El Diariet, 24-06-2023, confirmados por Ignacio) */
-  { id: 'vinaros', nombre: { es: 'Vinaròs', ca: 'Vinaròs' }, portada: 'indumentaria-regional/vinaros-carla-2023.webp',
-    fotos: [
-      { img: 'indumentaria-regional/vinaros-carla-2023.webp', texto: { es: 'Carla Aragüete Sales · Dama de las Fiestas de Sant Joan y Sant Pere de Vinaròs 2023', ca: 'Carla Aragüete Sales · Dama de la Fira i Festes de Sant Joan i Sant Pere de Vinaròs 2023' } },
-      { img: 'indumentaria-regional/vinaros-julia-2023.webp', texto: { es: 'Julia Royo Sales · Dama infantil de las Fiestas de Sant Joan y Sant Pere de Vinaròs 2023', ca: 'Julia Royo Sales · Dama infantil de la Fira i Festes de Sant Joan i Sant Pere de Vinaròs 2023' } },
-    ] },
-];
+/* Indumentaria regional (Historia): una ventana por localidad, con el mismo aspecto que las
+   familias de Indumentaria Femenina; al pinchar, se abre su página (indumentaria-regional.html#<id>)
+   con el nombre de la población y las fotos en grande. Los datos están en regional-datos.js. */
+const INDUMENTARIA_REGIONAL = window.INDUMENTARIA_REGIONAL || [];
 function buildRegional() {
   const box = document.getElementById('hist-regional');
   const locs = INDUMENTARIA_REGIONAL.filter(l => l.fotos && l.fotos.length);
   const h = t().historia;
   const lg = currentLang === 'ca' ? 'ca' : 'es';
-  const ventanas = document.getElementById('hist-regional-ventanas');
-  const etiqueta = document.getElementById('hist-regional-elige');
-  const grid = document.getElementById('hist-regional-grid');
   box.hidden = false;
   document.getElementById('hist-regional-label').textContent = h.regionalLabel;
-  if (!locs.length) {
-    ventanas.innerHTML = '';
-    grid.innerHTML = '';
-    etiqueta.textContent = h.regionalVacio;
-    return;
-  }
-  ventanas.innerHTML = locs.map(l => `<button type="button" class="col-modal__family" data-loc="${l.id}" aria-pressed="false">
+  document.getElementById('hist-regional-elige').textContent = locs.length ? h.regionalElige : h.regionalVacio;
+  document.getElementById('hist-regional-ventanas').innerHTML = locs.map(l => `<a class="col-modal__family" href="indumentaria-regional.html#${l.id}">
       <img src="${l.portada}" alt="" loading="lazy" decoding="async" />
       <span class="col-modal__family-name">${l.nombre[lg]}</span>
-    </button>`).join('');
-  etiqueta.textContent = h.regionalElige;
-  grid.innerHTML = '';
-  ventanas.onclick = e => {
-    const b = e.target.closest('.col-modal__family');
-    if (!b) return;
-    const l = locs.find(x => x.id === b.dataset.loc);
-    ventanas.querySelectorAll('.col-modal__family').forEach(x => {
-      x.classList.toggle('active', x === b);
-      x.setAttribute('aria-pressed', x === b);
-    });
-    etiqueta.textContent = l.nombre[lg];
-    grid.innerHTML = l.fotos.map(f => `<div class="col-modal__card">
-      <div class="col-modal__card-img"><img src="${f.img}" alt="${f.texto[lg]}" loading="lazy" decoding="async" /></div>
-      <p class="col-modal__card-modelo">${f.texto[lg]}</p>
-    </div>`).join('');
-  };
+    </a>`).join('');
 }
 /* Reinas de las Fallas de Burriana (Borriana) con su Corte de Honor: una foto por año */
 const REINAS_BURRIANA = [
