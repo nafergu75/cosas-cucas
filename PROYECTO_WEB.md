@@ -329,6 +329,7 @@ Empieza ahora con la FASE 1. No modifiques ningún archivo todavía. Analiza el 
 Ordenado de lo más nuevo a lo más antiguo. Cada línea es un trabajo terminado y publicado.
 
 ### 20-10-2026
+- **Amanda, maquetación tipo revista:** arriba, título y dos primeros párrafos junto al carrusel (acaban casi a la misma altura); debajo, a todo el ancho y tras una línea, el vídeo vertical con el resto del texto al lado (`.am-revista`, `.am-segunda`). En móvil, todo en una columna. Antes el texto largo dejaba más de 1.000 px vacíos bajo las fotos. Si gusta, se puede usar en otras noticias largas.
 - **Amanda, zapatos:** los zapatos de la exposición son de Trinidad Meléndez (etiqueta en las fotos), firma que colabora con Cosas Cucas; ahora el texto lo dice (ES y VAL).
 - **Orden de seguridad guardada:** auditoría y blindaje en 8 fases (secretos, XSS, cabeceras en Vercel, imágenes, código, repositorio, suplantación y pruebas), en «Pendiente». Se ejecuta cuando Ignacio dé la web por definitiva, empezando por la FASE 1 sin tocar nada.
 - **Revisión de la noticia de Amanda (ya publicada):** cinco textos alternativos del carrusel estaban cambiados de foto y dos se precisan; «La tela de su traje verde es de la Compañía…» (antes «Su traje verde es de…»); «planta en la sección Especial» (antes «vuelve», y ya estaba en Especial); en VAL «Compañía» sin traducir, como en el resto de la web; la portada de los vídeos (Amanda y Desfilada) se pide al abrir la noticia y no en cada visita (`data-poster`).

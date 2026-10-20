@@ -767,8 +767,24 @@
     @media (min-width: 1025px) { #noticia-tienda .noticia__inner { align-items: start; } }
     @media (min-width: 1025px) { #noticia-desfilada .noticia__inner { align-items: start; } }
     @media (min-width: 1025px) { #noticia-amanda .noticia__inner { align-items: start; } }
-    #noticia-amanda .noticia__video { max-width: 300px; }
+    /* Amanda, maquetación tipo revista: arriba texto + carrusel; debajo, a todo el ancho,
+       el vídeo vertical con el resto del texto al lado (sin huecos bajo las fotos) */
+    #noticia-amanda .am-segunda {
+      grid-column: 1 / -1; display: grid; grid-template-columns: 240px minmax(0, 1fr);
+      gap: clamp(28px, 4vw, 56px); align-items: center;
+      padding-top: clamp(28px, 4vw, 44px); border-top: 1px solid var(--color-border);
+    }
+    #noticia-amanda .noticia__video { margin: 0; max-width: 240px; }
     #noticia-amanda .noticia__video video { aspect-ratio: 9 / 16; }
+    #noticia-amanda .am-segunda__texto .noticia__lead { max-width: 720px; }
+    @media (max-width: 1024px) {
+      #noticia-amanda .am-segunda { grid-column: auto; grid-template-columns: 200px minmax(0, 1fr); }
+      #noticia-amanda .noticia__video { max-width: 200px; }
+    }
+    @media (max-width: 640px) {
+      #noticia-amanda .am-segunda { grid-template-columns: minmax(0, 1fr); }
+      #noticia-amanda .noticia__video { max-width: 280px; margin: 0 auto; }
+    }
     .lector .noticia:not(.is-open) { display: none; }
     .lector__pie { padding: 0 24px 64px; text-align: center; }
     .lector__volver {
@@ -3320,21 +3336,12 @@
          Textos en t().amanda; fotos en AMANDA_FOTOS; vídeo (el reel) en noticias/amanda-video.mp4.
     ════════════════════════════════════════════════════════════════════════ -->
     <section id="noticia-amanda" class="noticia noticia--crema">
-      <div class="container noticia__inner">
+      <div class="container noticia__inner am-revista">
         <div class="noticia__text">
           <p class="noticia__eyebrow" id="amanda-eyebrow"></p>
           <h2 class="noticia__title" id="amanda-title"></h2>
           <p class="noticia__lead" id="amanda-p1"></p>
           <p class="noticia__lead" id="amanda-p2"></p>
-          <p class="noticia__lead" id="amanda-p3"></p>
-          <p class="noticia__lead" id="amanda-p4"></p>
-          <p class="noticia__lead" id="amanda-p5"></p>
-          <p class="noticia__lead" id="amanda-p6"></p>
-          <figure class="noticia__video" id="amanda-video-box">
-            <video id="amanda-video" controls playsinline preload="none" width="720" height="1280"
-                   data-poster="noticias/amanda-video-poster.webp" src="noticias/amanda-video.mp4"></video>
-          </figure>
-          <p class="noticia__credito"><a id="amanda-video-link" href="https://www.instagram.com/cosascucass/" target="_blank" rel="noopener"></a></p>
         </div>
         <div class="nf" id="nf-amanda" role="region" aria-roledescription="carrusel">
           <div class="nf__stage" tabindex="0" role="group">
@@ -3359,6 +3366,19 @@
           </div>
           <div class="nf__thumbs"></div>
           <p class="nf__live" aria-live="polite"></p>
+        </div>
+        <div class="am-segunda">
+          <figure class="noticia__video" id="amanda-video-box">
+            <video id="amanda-video" controls playsinline preload="none" width="720" height="1280"
+                   data-poster="noticias/amanda-video-poster.webp" src="noticias/amanda-video.mp4"></video>
+          </figure>
+          <div class="am-segunda__texto">
+            <p class="noticia__lead" id="amanda-p3"></p>
+            <p class="noticia__lead" id="amanda-p4"></p>
+            <p class="noticia__lead" id="amanda-p5"></p>
+            <p class="noticia__lead" id="amanda-p6"></p>
+            <p class="noticia__credito"><a id="amanda-video-link" href="https://www.instagram.com/cosascucass/" target="_blank" rel="noopener"></a></p>
+          </div>
         </div>
       </div>
     </section>
