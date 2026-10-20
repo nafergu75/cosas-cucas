@@ -997,6 +997,19 @@
       border-radius: 4px; display: block;
       box-shadow: 0 4px 16px rgba(26,23,20,.1);
     }
+    /* La tienda nueva (Burriana, 21), a todo el ancho bajo el bloque */
+    .dh-nueva { margin: 0; }
+    .dh-nueva__fotos { display: grid; grid-template-columns: 1fr 1.8fr 1fr; gap: 8px; }
+    .dh-nueva__fotos img {
+      width: 100%; height: clamp(260px, 30vw, 420px); object-fit: cover;
+      border-radius: 4px; display: block;
+      box-shadow: 0 4px 16px rgba(26,23,20,.1);
+    }
+    @media (max-width: 640px) {
+      .dh-nueva__fotos { grid-template-columns: 1fr 1fr; }
+      .dh-nueva__fotos img { height: 240px; }
+      .dh-nueva__fotos img:nth-child(2) { grid-column: 1 / -1; order: -1; height: auto; aspect-ratio: 4 / 3; }
+    }
     /* Contenido texto */
     .dh-block { margin-bottom: 28px; }
     .dh-block:last-of-type { margin-bottom: 20px; }
@@ -3831,6 +3844,16 @@
       </div>
     </div>
 
+    <!-- LA TIENDA NUEVA: Burriana, 21 (textos alternativos de t().tienda.alts, pie en t().dossier.nuevaCaption) -->
+    <figure class="dh-nueva">
+      <div class="dh-nueva__fotos">
+        <img src="noticias/tienda-01.webp" width="675" height="1200" alt="" data-alt="0" loading="lazy" decoding="async">
+        <img src="noticias/tienda-10.webp" width="1600" height="1200" alt="" data-alt="9" loading="lazy" decoding="async">
+        <img src="noticias/tienda-03.webp" width="900" height="1200" alt="" data-alt="2" loading="lazy" decoding="async">
+      </div>
+      <figcaption class="dh-img-caption" id="dh-nueva-caption"></figcaption>
+    </figure>
+
   </div>
 </section>
 
@@ -4818,6 +4841,7 @@ const translations = {
       title: 'Nuestra Historia',
       lead: 'Desde su fundación en 1982 en los pintorescos poblados marítimos, <strong>Cosas Cucas</strong> ha sido un faro de tradición y elegancia en el mundo de la indumentaria valenciana. Inspirada por su profundo vínculo con el estudio y la pasión por la indumentaria, nuestra fundadora <strong>Paquita Martorell</strong> abrió las puertas de nuestra primera tienda en el entrañable barrio del Cabañal.',
       imgCaption: 'Nuestra tienda de la calle Grabador Esteve, 30 · 46004 Valencia',
+      nuevaCaption: 'Nuestra nueva casa: calle Burriana, 21 · 46005 Valencia',
       block1Title: 'La segunda generación',
       block1p1: 'Las hijas de Paquita Martorell, <strong>Noelia y María</strong>, son una parte fundamental del legado y la continuidad de Cosas Cucas. Han heredado la pasión por la indumentaria valenciana y han dedicado su vida al negocio familiar. Desde que se unieron al taller dirigido por su madre, han aportado experiencia y habilidades para mantener los altos estándares de calidad y artesanía.',
       block1p2: 'Han desempeñado un papel importante en la expansión y modernización de la empresa, participando en la elaboración de nuevos dibujos exclusivos y en la introducción de innovaciones en el proceso de confección.',
@@ -5453,6 +5477,7 @@ const translations = {
       title: 'La nostra Història',
       lead: 'Des de la seua fundació el 1982 als pintorescos poblats marítims, <strong>Cosas Cucas</strong> ha sigut un far de tradició i elegància en el món de la indumentària valenciana. Inspirada per la passió per la indumentària, la nostra fundadora <strong>Paquita Martorell</strong> va obrir les portes de la nostra primera tenda al barri del Cabanyal.',
       imgCaption: 'La nostra tenda del carrer Gravador Esteve, 30 · 46004 València',
+      nuevaCaption: 'La nostra nova casa: carrer Burriana, 21 · 46005 València',
       block1Title: 'La segona generació',
       block1p1: 'Les filles de Paquita Martorell, <strong>Noelia i María</strong>, són una part fonamental del llegat i la continuïtat de Cosas Cucas. Han heretat la passió per la indumentària valenciana i han dedicat la seua vida al negoci familiar. Des que es van unir al taller dirigit per sa mare, han aportat experiència i habilitats per a mantenir els alts estàndards de qualitat.',
       block1p2: "Han exercit un paper important en l'expansió i modernització de l'empresa, participant en l'elaboració de nous dibuixos exclusius i en la introducció d'innovacions en el procés de confecció.",
@@ -6119,6 +6144,9 @@ function buildDossierHistoria() {
   s('dh-title',     d.title);
   s('dh-lead',      d.lead);
   s('dh-img-caption', d.imgCaption);
+  s('dh-nueva-caption', d.nuevaCaption);
+  const altsTienda = t().tienda.alts;
+  document.querySelectorAll('.dh-nueva img[data-alt]').forEach(img => { img.alt = altsTienda[+img.dataset.alt]; });
   s('dh-b1-title',  d.block1Title);
   s('dh-b1-p1',     d.block1p1);
   s('dh-b1-p2',     d.block1p2);
