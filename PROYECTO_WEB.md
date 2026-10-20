@@ -332,6 +332,7 @@ Empieza ahora con la FASE 1. No modifiques ningún archivo todavía. Analiza el 
 Ordenado de lo más nuevo a lo más antiguo. Cada línea es un trabajo terminado y publicado.
 
 ### 20-10-2026
+- **Falleras Mayores:** segunda foto de Begoña Sancho Lozano (FM 2025, Plaça del Mercat de Turís), con el mismo espolín y jubón gris de manga larga (`IMG.fm23`, `falleras mayores/fm-2025-begona-sancho-lozano-2.webp`), al lado de la primera, en la portada (ES y VAL) y en `landing.html`.
 - **Cortes de Honor (Historia):** nueva tarjeta, Blanca Nebot Campos, «Corte de Honor de Vila-real · 2025» y «Fiestas patronales de Vila-real» (dama de la Reina de las Fiestas de Vila-real 2025; Ignacio dio el año y que es de Vila-real; lo demás, contrastado en la web del Ayuntamiento y en prensa). Va la primera (por año). Las tarjetas pasan a centrar la última fila (5: 4 + 1 en ordenador).
 - **Falleras Mayores:** la foto de la falla Blocs · Platja es de María Chuliá Zaragoza, Fallera Mayor **2025** (no 2026, como decía el pie). Nombre y año en el pie y pasa al grupo de 2025, en la portada (ES y VAL) y en `landing.html`.
 - **Falleras Mayores:** la de la falla Exposición lleva ya su nombre en el pie, Laura Llobell López (dato de Ignacio), en la portada (ES y VAL) y en `landing.html`.
