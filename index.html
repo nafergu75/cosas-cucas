@@ -3808,7 +3808,7 @@
     <div class="zap-track" id="zapas-track"></div>
   </div>
   <div class="zapas-cta">
-    <a class="btn btn--gold" id="zap-cta" href="mailto:info@cosascucas.es"></a>
+    <a class="btn btn--gold" id="zap-cta" href="mailto:info@cosascucas.es" data-correo="consulta"></a>
   </div>
 </section>
 
@@ -3927,7 +3927,7 @@
           <p class="dh-block-text" id="dh-b3-p2"></p>
         </div>
         <div class="dh-cta-row">
-          <a class="btn btn--gold" href="#contacto" id="dh-cta"></a>
+          <a class="btn btn--gold" href="#contacto" id="dh-cta" data-correo="cita"></a>
         </div>
       </div>
     </div>
@@ -3956,7 +3956,7 @@
         <h2 class="section-title" id="deco-title"></h2>
         <p class="section-subtitle" id="deco-sub"></p>
       </div>
-      <a class="btn" id="deco-cta" href="mailto:info@cosascucas.es"></a>
+      <a class="btn" id="deco-cta" href="mailto:info@cosascucas.es" data-correo="proyecto"></a>
     </div>
     <div class="deco-body" id="deco-body"></div>
     <div class="deco-mosaic" id="deco-mosaic"></div>
@@ -4257,6 +4257,7 @@
      CONTENIDO BILINGÜE — Edita aquí los textos en ES y VAL
 ═══════════════════════════════════════════════════════════════════════════ -->
 <script src="regional-datos.js?v=2"></script>
+<script src="formulario-correo.js?v=1" defer></script>
 <script>
 /* ═══════════════════════════════════════════════════════════════════════
    CONTENIDO BILINGÜE  ·  ES = Castellano  ·  CA = Valencià
@@ -5024,7 +5025,7 @@ const translations = {
       ],
       info: [
         { label: 'Escríbenos',             href: 'mailto:info@cosascucas.es' },
-        { label: 'Pedir cita',             href: '#contacto' },
+        { label: 'Pedir cita',             href: '#contacto', correo: 'cita' },
         { label: 'Política de privacidad', href: 'politica-privacidad.html', target: '_blank' },
         { label: 'Aviso legal',            href: 'aviso-legal.html',         target: '_blank' },
       ],
@@ -5677,7 +5678,7 @@ const translations = {
       ],
       info: [
         { label: "Escriu-nos",             href: 'mailto:info@cosascucas.es' },
-        { label: 'Demanar cita',           href: '#contacto' },
+        { label: 'Demanar cita',           href: '#contacto', correo: 'cita' },
         { label: 'Política de privacitat', href: 'politica-privacidad.html', target: '_blank' },
         { label: "Avís legal",             href: 'aviso-legal.html',         target: '_blank' },
       ],
@@ -6017,6 +6018,9 @@ function openCollectionModal(drop) {
   document.getElementById('col-modal-cta-note').textContent = notes[currentLang] || notes.es;
   document.getElementById('col-modal-cta').textContent = drop.ctaSecondary.label;
   document.getElementById('col-modal-cta').href        = drop.ctaSecondary.href;
+  /* formulario-correo.js: tipo de consulta y colección para el asunto del correo */
+  document.getElementById('col-modal-cta').dataset.correo      = /cita/i.test(drop.ctaSecondary.label) ? 'cita' : 'consulta';
+  document.getElementById('col-modal-cta').dataset.correoExtra = drop.title;
   const modal = document.getElementById('col-modal');
   const panel = modal.querySelector('.col-modal__panel');
   collectionModalScrollY = window.scrollY || document.documentElement.scrollTop || 0;
@@ -6421,7 +6425,7 @@ function buildFooter() {
   const col3 = document.getElementById('footer-col-3');
   if (col3) col3.innerHTML = `<h4>${ft.colsHeadings[2]}</h4>
     <ul>${ft.info.map(l =>
-      `<li><a href="${l.href}"${l.target ? ` target="${l.target}" rel="noopener"` : ''}>${l.label}</a></li>`
+      `<li><a href="${l.href}"${l.target ? ` target="${l.target}" rel="noopener"` : ''}${l.correo ? ` data-correo="${l.correo}"` : ''}>${l.label}</a></li>`
     ).join('')}</ul>`;
 
   document.getElementById('footer-copyright').textContent =
@@ -6715,7 +6719,7 @@ function buildResenas() {
 
   /* CTAs — primaryActionLabel + secondaryActionLabel */
   document.getElementById('res-actions').innerHTML = `
-    <a class="btn btn--cita"
+    <a class="btn btn--cita" data-correo="cita"
        href="https://wa.me/34667775501?text=Hola%2C%20me%20gustar%C3%ADa%20pedir%20cita."
        target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
