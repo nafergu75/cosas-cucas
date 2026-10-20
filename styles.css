@@ -376,11 +376,13 @@ p  { margin: 0 0 1rem; }
 .fm-grid {
   max-width: var(--maxw);
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* la última fila, si queda incompleta, centrada */
   gap: 20px;
 }
 .fm-grid figure {
+  flex: 0 0 calc((100% - 60px) / 4);
   margin: 0;
   position: relative;
   overflow: hidden;
@@ -404,8 +406,8 @@ p  { margin: 0 0 1rem; }
   color: var(--color-bg);
   background: linear-gradient(0deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,0) 100%);
 }
-@media (max-width: 900px) { .fm-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 480px) { .fm-grid { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .fm-grid figure { flex-basis: calc((100% - 20px) / 2); } }
+@media (max-width: 480px) { .fm-grid figure { flex-basis: 100%; } }
 
 /* ---------- colecciones / cards ---------- */
 .collections {
