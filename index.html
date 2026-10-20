@@ -4327,6 +4327,8 @@ const IMG = {
   h11: 'hombre/ChatGPT%20Image%2030%20abr%202026%2C%2019_16_14.png',
   h12: 'hombre/ChatGPT%20Image%2030%20abr%202026%2C%2019_20_51.png',
   h13: 'hombre/4ca11417-a67f-424f-8f06-213ba5c849de.png',
+  /* padre e hijo de llauradors (foto de Ignacio, 342 px: pedir una más grande) */
+  h14: 'hombre/padre-hijo-llauradors.webp',
   /* Aderezos */
   aderezo: 'aderezos2.jpg',
   /* Aderezos — catálogo carpeta aderezos/ */
@@ -4728,6 +4730,7 @@ const translations = {
         ctaSecondary: { label: 'Pedir cita', href: 'mailto:info@cosascucas.es' },
         products: [
           { id:'h1',  name:'Jubón Paisley Gris Plata — Padre e Hijo',         desc:'Jubón de paisley gris plata sobre negro con faja de seda lila, calzas negras y medias blancas con vuelta bordada. Botones dorados y morrió en azul y rojo. Conjunto confeccionado a medida para adulto y niño.',                              price:'A medida',  image:IMG.h1,  tag:'new', tagLabel:'Destacado' },
+          { id:'h14', name:'Padre e hijo de llauradors: chaleco, camisa y zaragüelles blancos, pañuelo en la cabeza y alpargatas', desc:'', price:'A medida', image:IMG.h14, tag:null },
           { id:'h3',  name:'Chaleco Brocado Crema-Dorado — Infantil',          desc:'Chaleco brocado crema-dorado con flores en naranja y verde, camisa de lino blanco y faja amarillo mostaza. Braga de terciopelo gris topo, medias caladas en amarillo mostaza y pañoleta a rombos marrón-oro.',                              price:'Consultar', image:IMG.h3,  tag:null },
           { id:'h4',  name:'Chaleco Floral Marrón con Manta Valenciana',       desc:'Chaleco bordado floral en marrón tabaco con flores multicolor, camisa blanca y faja naranja terracota. Braga de terciopelo marrón, medias blancas y manta valenciana de rayas en verde, rojo y crema.',                                     price:'A medida',  image:IMG.h4,  tag:null },
           { id:'h5',  name:'Jubón Jacquard Rosa Empolvado',                    desc:'Jubón de jacquard rosa empolvado con flores blancas y rosas en relieve, camisa de lino blanco y faja en tono taupé. Morrió en forma de mariposa con flores en rosas, malvas y ocres.',                                                     price:'Consultar', image:IMG.h5,  tag:null },
@@ -5388,6 +5391,7 @@ const translations = {
         ctaSecondary: { label: 'Demanar cita', href: 'mailto:info@cosascucas.es' },
         products: [
           { id:'h1',  name:'Jubó Paisley Gris Plata — Pare i Fill',            desc:"Jubó de paisley gris plata sobre negre amb faixa de seda lila, calces negres i mitges blanques amb volta brodada. Botons daurats i morrió en blau i roig. Conjunt confeccionat a mida per a adult i xiquet.",                              price:'A mida',    image:IMG.h1,  tag:'new', tagLabel:'Destacat' },
+          { id:'h14', name:'Pare i fill de llauradors: armilla, camisa i saragüells blancs, mocador al cap i espardenyes', desc:'', price:'A mida', image:IMG.h14, tag:null },
           { id:'h3',  name:'Armilla Brocat Crema-Daurat — Infantil',           desc:"Armilla brocat crema-daurat amb flors en taronja i verd, camisa de lli blanc i faixa groc mostassa. Braga de vellut gris topaz, mitges calades en groc mostassa i mocador a rombes marró-or.",                                          price:'Consultar', image:IMG.h3,  tag:null },
           { id:'h4',  name:'Armilla Floral Marró amb Manta Valenciana',        desc:"Armilla brodada floral en marró tabac amb flors multicolor, camisa blanca i faixa taronja terracota. Braga de vellut marró, mitges blanques i manta valenciana de ratlles en verd, roig i crema.",                                      price:'A mida',    image:IMG.h4,  tag:null },
           { id:'h5',  name:'Jubó Jacquard Rosa Empolsat',                      desc:"Jubó de jacquard rosa empolsat amb flors blanques i roses en relleu, camisa de lli blanc i faixa en to taupé. Morrió en forma de papallona amb flors en roses, malves i ocres.",                                                        price:'Consultar', image:IMG.h5,  tag:null },
@@ -6403,12 +6407,12 @@ const INDUMENTARIA_REGIONAL = [
     fotos: [
       { img: 'indumentaria-regional/vila-real-blanca-nebot-campos.webp', texto: { es: 'Blanca Nebot Campos · Corte de Honor de las Fiestas de Vila-real 2025', ca: "Blanca Nebot Campos · Cort d'Honor de les Festes de Vila-real 2025" } },
     ] },
-  /* Vinaròs: damas de la Fira i Festes de Sant Joan i Sant Pere 2023; solo el nombre de pila
-     (en 2023 hubo dos Carlas y dos Julias; los apellidos, cuando Ignacio los confirme) */
+  /* Vinaròs: damas de la Fira i Festes de Sant Joan i Sant Pere 2023 (Club de Tenis Vinaròs;
+     apellidos según El Diariet, 24-06-2023, confirmados por Ignacio) */
   { id: 'vinaros', nombre: { es: 'Vinaròs', ca: 'Vinaròs' }, portada: 'indumentaria-regional/vinaros-carla-2023.webp',
     fotos: [
-      { img: 'indumentaria-regional/vinaros-carla-2023.webp', texto: { es: 'Carla · Dama de las Fiestas de Sant Joan y Sant Pere de Vinaròs 2023', ca: 'Carla · Dama de la Fira i Festes de Sant Joan i Sant Pere de Vinaròs 2023' } },
-      { img: 'indumentaria-regional/vinaros-julia-2023.webp', texto: { es: 'Julia · Dama infantil de las Fiestas de Sant Joan y Sant Pere de Vinaròs 2023', ca: 'Julia · Dama infantil de la Fira i Festes de Sant Joan i Sant Pere de Vinaròs 2023' } },
+      { img: 'indumentaria-regional/vinaros-carla-2023.webp', texto: { es: 'Carla Aragüete Sales · Dama de las Fiestas de Sant Joan y Sant Pere de Vinaròs 2023', ca: 'Carla Aragüete Sales · Dama de la Fira i Festes de Sant Joan i Sant Pere de Vinaròs 2023' } },
+      { img: 'indumentaria-regional/vinaros-julia-2023.webp', texto: { es: 'Julia Royo Sales · Dama infantil de las Fiestas de Sant Joan y Sant Pere de Vinaròs 2023', ca: 'Julia Royo Sales · Dama infantil de la Fira i Festes de Sant Joan i Sant Pere de Vinaròs 2023' } },
     ] },
 ];
 function buildRegional() {
