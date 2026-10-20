@@ -2353,6 +2353,7 @@
     .hist-regional__ventanas .col-modal__family { flex: 0 1 calc((100% - 40px) / 3); }
     @media (max-width: 768px) { .hist-regional__ventanas .col-modal__family { flex-basis: calc((100% - 20px) / 2); } }
     .hist-regional__elige { text-align: center; }
+    .hist-regional__ventanas:empty { display: none; }
     .hist-corts-text {
       grid-column: span 2;
       display: flex; flex-direction: column;
@@ -3822,8 +3823,8 @@
       <h3 class="fm-grupo__title hist-burriana__title" id="hist-burriana-label"></h3>
       <div class="hist-burriana" id="hist-burriana"></div>
       <!-- Indumentaria regional: una ventana por localidad (datos en INDUMENTARIA_REGIONAL).
-           Oculto mientras no haya ninguna localidad con fotos -->
-      <div class="hist-regional" id="hist-regional" hidden>
+           Sin fotos todavía, solo el título y «muy pronto» -->
+      <div class="hist-regional" id="hist-regional">
         <h3 class="fm-grupo__title hist-regional__title" id="hist-regional-label"></h3>
         <div class="hist-regional__ventanas" id="hist-regional-ventanas"></div>
         <p class="col-modal__grid-label hist-regional__elige" id="hist-regional-elige" aria-live="polite"></p>
@@ -5006,7 +5007,8 @@ const translations = {
       cortsLabel: 'Cortes de Honor',
       regionalLabel: 'Indumentaria regional',
       regionalElige: 'Elige una localidad',
-      burrianaLabel: 'Reinas de Burriana y Corte de Honor',
+      regionalVacio: 'Muy pronto, la indumentaria de cada localidad',
+      burrianaLabel: 'Reinas de Burriana',
       corts: [
         { img: IMG.cortXiq, label: 'Fallera Xiqueta · Cosas Cucas' },
       ],
@@ -5646,7 +5648,8 @@ const translations = {
       cortsLabel: "Corts d'Honor",
       regionalLabel: 'Indumentària regional',
       regionalElige: 'Tria una localitat',
-      burrianaLabel: 'Reines de Borriana i Cort d\'Honor',
+      regionalVacio: 'Molt prompte, la indumentària de cada localitat',
+      burrianaLabel: 'Reines de Borriana',
       corts: [
         { img: IMG.cortXiq, label: 'Fallera Xiqueta · Cosas Cucas' },
       ],
@@ -6373,22 +6376,27 @@ const CORTE_PERSONAS = [
   { anyo: 2027, nombre: 'Laura Miquel Obarti',      falla: "Avinguda de l'Oest",            foto: 'falleras-valencia/corte-2027-laura-miquel-obarti.webp',     foco: 'center' },
 ];
 /* Indumentaria regional (Historia): una ventana por localidad, como las familias de
-   Indumentaria Femenina (Espolín / Indumentaria Valenciana). El bloque solo se ve cuando hay
-   alguna localidad con fotos. Para añadir una:
+   Indumentaria Femenina (Espolín / Indumentaria Valenciana). Mientras no haya ninguna
+   localidad con fotos, solo sale el título y una frase de «muy pronto». Para añadir una:
    { id: 'burriana', nombre: { es: 'Burriana', ca: 'Borriana' }, portada: 'carpeta/foto.webp',
      fotos: [ { img: 'carpeta/foto.webp', texto: { es: '…', ca: '…' } } ] } */
 const INDUMENTARIA_REGIONAL = [];
 function buildRegional() {
   const box = document.getElementById('hist-regional');
   const locs = INDUMENTARIA_REGIONAL.filter(l => l.fotos && l.fotos.length);
-  box.hidden = !locs.length;
-  if (!locs.length) return;
   const h = t().historia;
   const lg = currentLang === 'ca' ? 'ca' : 'es';
   const ventanas = document.getElementById('hist-regional-ventanas');
   const etiqueta = document.getElementById('hist-regional-elige');
   const grid = document.getElementById('hist-regional-grid');
+  box.hidden = false;
   document.getElementById('hist-regional-label').textContent = h.regionalLabel;
+  if (!locs.length) {
+    ventanas.innerHTML = '';
+    grid.innerHTML = '';
+    etiqueta.textContent = h.regionalVacio;
+    return;
+  }
   ventanas.innerHTML = locs.map(l => `<button type="button" class="col-modal__family" data-loc="${l.id}" aria-pressed="false">
       <img src="${l.portada}" alt="" loading="lazy" decoding="async" />
       <span class="col-modal__family-name">${l.nombre[lg]}</span>
