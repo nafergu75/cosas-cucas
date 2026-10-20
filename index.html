@@ -4277,7 +4277,7 @@ const IMG = {
   fm22: 'falleras%20mayores/fm-2023-teresa-alepuz.webp',
   fm23: 'falleras%20mayores/fm-2025-begona-sancho-lozano-2.webp',
   /* Reina de las Fiestas de Navajas 2025 (fiestas patronales; programa oficial del Ayuntamiento); va en Indumentaria regional */
-  fm24: 'falleras%20mayores/reina-navajas-elena-saez-martinez.webp',
+  fm24: 'indumentaria-regional/navajas-elena-saez-martinez.webp',
   /* Espolín — colección Indumentaria Femenina */
   esp1: 'espolin/esp-marta-capella-1.webp',
   esp2: 'espolin/esp-marta-capella-2.webp',
@@ -6377,13 +6377,18 @@ const CORTE_PERSONAS = [
    { id: 'burriana', nombre: { es: 'Burriana', ca: 'Borriana' }, portada: 'carpeta/foto.webp',
      fotos: [ { img: 'carpeta/foto.webp', texto: { es: '…', ca: '…' } } ] } */
 const INDUMENTARIA_REGIONAL = [
+  /* fotos para la web en indumentaria-regional/; los originales de Ignacio, en «indumentaria regional» (no se publica) */
+  { id: 'burriana', nombre: { es: 'Burriana', ca: 'Borriana' }, portada: 'indumentaria-regional/burriana-alejandra-morcillo-ballester.webp',
+    fotos: [
+      { img: 'indumentaria-regional/burriana-alejandra-morcillo-ballester.webp', texto: { es: 'Alejandra Morcillo Ballester · Falla Societat Centre Espanya · Corte de Honor 2025', ca: "Alejandra Morcillo Ballester · Falla Societat Centre Espanya · Cort d'Honor 2025" } },
+    ] },
   { id: 'navajas', nombre: { es: 'Navajas', ca: 'Navajas' }, portada: IMG.fm24,
     fotos: [
       { img: IMG.fm24, texto: { es: 'Elena Sáez Martínez · Reina de las Fiestas de Navajas 2025', ca: 'Elena Sáez Martínez · Reina de les Festes de Navajas 2025' } },
     ] },
-  { id: 'vila-real', nombre: { es: 'Vila-real', ca: 'Vila-real' }, portada: 'falleras-valencia/corte-2025-vila-real-blanca-nebot-campos.webp',
+  { id: 'vila-real', nombre: { es: 'Vila-real', ca: 'Vila-real' }, portada: 'indumentaria-regional/vila-real-blanca-nebot-campos.webp',
     fotos: [
-      { img: 'falleras-valencia/corte-2025-vila-real-blanca-nebot-campos.webp', texto: { es: 'Blanca Nebot Campos · Corte de Honor de las Fiestas de Vila-real 2025', ca: "Blanca Nebot Campos · Cort d'Honor de les Festes de Vila-real 2025" } },
+      { img: 'indumentaria-regional/vila-real-blanca-nebot-campos.webp', texto: { es: 'Blanca Nebot Campos · Corte de Honor de las Fiestas de Vila-real 2025', ca: "Blanca Nebot Campos · Cort d'Honor de les Festes de Vila-real 2025" } },
     ] },
 ];
 function buildRegional() {
