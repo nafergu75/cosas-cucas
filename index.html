@@ -2283,6 +2283,11 @@
     /* Falleras de la Corte de Honor, una a una (nombre, año y falla) */
     .corte-personas { margin-bottom: 28px; }
     .corte-personas .fm-card__img { aspect-ratio: 3 / 4; }
+    /* 4 por fila (3 en tableta, 2 en móvil); la última fila, si queda incompleta, centrada */
+    .fm-grid.corte-personas { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+    .corte-personas > .fm-card { flex: 0 0 calc((100% - 48px) / 4); min-width: 0; }
+    @media (max-width: 1024px) { .corte-personas > .fm-card { flex-basis: calc((100% - 32px) / 3); } }
+    @media (max-width: 768px)  { .corte-personas > .fm-card { flex-basis: calc((100% - 16px) / 2); } }
     .fm-card__falla { font-size: 0.72rem; line-height: 1.35; color: var(--color-text-muted); }
     .fm-card__credito { font-size: 0.6rem; color: var(--color-text-muted); opacity: .8; }
     .fm-card__year {
@@ -6309,6 +6314,8 @@ const FALLERAS_VALENCIA = [
    Alejandra y Laura: Corte 2027, las mismas de la noticia (fotos de la noticia recortadas en vertical).
    Fotos de cuerpo entero, con el traje completo: la tarjeta es vertical 3:4 y no cuadrada. */
 const CORTE_PERSONAS = [
+  /* Blanca Nebot Campos es de la Corte de Honor de Vila-real, no de la de València */
+  { anyo: 2025, nombre: 'Blanca Nebot Campos', cargo: { es: 'Corte de Honor de Vila-real', ca: 'Cort d\'Honor de Vila-real' }, lugar: { es: 'Fiestas patronales de Vila-real', ca: 'Festes patronals de Vila-real' }, foto: 'falleras-valencia/corte-2025-vila-real-blanca-nebot-campos.webp', foco: 'center 40%' },
   { anyo: 2026, nombre: 'Marta Capella Guanter',    falla: "Carretera d'Escrivà-Cooperativa de Sant Ferran", foto: 'falleras-valencia/corte-2026-marta-capella-guanter.webp', foco: 'center' },
   { anyo: 2026, nombre: 'Laura Llobell López',      falla: 'Exposició-Micer Mascó', foto: 'falleras-valencia/corte-2026-laura-llobell-lopez.webp', foco: 'center' },
   { anyo: 2027, nombre: 'Alejandra Blanco Beltrán', falla: 'Mestre Rodrigo-General Avilés', foto: 'falleras-valencia/corte-2027-alejandra-blanco-beltran.webp', foco: 'center', credito: '@alejandrablaancoo' },
@@ -6345,12 +6352,14 @@ function buildHistoria() {
     </div>`).join('');
   }
   document.getElementById('hist-corts-label').textContent = h.cortsLabel;
+  const cargoCorte = p => p.cargo ? p.cargo[currentLang === 'ca' ? 'ca' : 'es'] : h.corte;
   document.getElementById('corte-personas').innerHTML = CORTE_PERSONAS.map(p => `<div class="fm-card">
-      <div class="fm-card__img"><img src="${p.foto}" alt="${p.nombre}, ${h.corte} ${p.anyo}" loading="lazy" decoding="async" style="object-position:${p.foco}" /></div>
+      <div class="fm-card__img"><img src="${p.foto}" alt="${p.nombre}, ${cargoCorte(p)} ${p.anyo}" loading="lazy" decoding="async" style="object-position:${p.foco}" /></div>
       <div class="fm-card__info">
         <p class="fm-card__name">${p.nombre}</p>
-        <p class="fm-card__year">${h.corte} · ${p.anyo}</p>
-        <p class="fm-card__falla">Falla ${p.falla}</p>
+        <p class="fm-card__year">${cargoCorte(p)} · ${p.anyo}</p>
+        ${p.falla ? `<p class="fm-card__falla">Falla ${p.falla}</p>` : ''}
+        ${p.lugar ? `<p class="fm-card__falla">${p.lugar[currentLang === 'ca' ? 'ca' : 'es']}</p>` : ''}
         ${p.credito ? `<p class="fm-card__credito">Foto: ${p.credito}</p>` : ''}
       </div>
     </div>`).join('');
