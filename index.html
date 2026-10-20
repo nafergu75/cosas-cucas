@@ -1569,6 +1569,11 @@
       border-radius: 6px;
       filter: none;
     }
+    /* logo apaisado del Gremio: más bajo, con margen dentro de la placa blanca y sin pasar del ancho */
+    .footer-brand img.footer-sello--ancho {
+      height: 103px; max-width: 100%;
+      padding: 14px 16px; box-sizing: border-box; object-fit: contain;
+    }
     .footer-brand p {
       font-size: 0.85rem;
       line-height: 1.7;
@@ -4151,6 +4156,11 @@
                src="gremio-sastres-775-aniversario.webp"
                alt="775 aniversario del Gremio Artesano de Sastres y Modistas de Valencia"
                width="524" height="600"
+               loading="lazy" decoding="async" />
+          <img class="footer-sello footer-sello--ancho"
+               src="gremio-sastres-modistas-logo.webp"
+               alt="Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana, fundado en 1247"
+               width="300" height="93"
                loading="lazy" decoding="async" />
         </div>
       </div>

@@ -63,12 +63,13 @@
     .r-hero__title { font-family: var(--font-display); font-size: clamp(2.2rem, 6vw, 3.6rem); color: var(--color-white); font-weight: 400; line-height: 1.1; margin-bottom: 14px; }
     .r-hero__sub { color: rgba(253,250,243,0.55); font-size: 0.88rem; letter-spacing: 0.04em; }
 
-    /* ── FOTOS EN GRANDE, enteras (sin recortar) ── */
+    /* ── FOTOS EN GRANDE, todas del mismo tamaño (marco 2:3; la cara, arriba) ── */
     .r-main { max-width: 1180px; margin: 0 auto; padding: 48px 24px 72px; }
     .r-fotos { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px 32px; }
     .r-foto { margin: 0; flex: 0 1 520px; max-width: 100%; }
     .r-foto img {
-      display: block; width: 100%; height: auto; border-radius: 6px;
+      display: block; width: 100%; height: auto; aspect-ratio: 2 / 3;
+      object-fit: cover; object-position: center 25%; border-radius: 6px;
       box-shadow: 0 8px 40px rgba(26,23,20,.16); background: var(--color-bg-alt);
     }
     /* pie con la misma letra que el de las Reinas de Burriana en la portada */
