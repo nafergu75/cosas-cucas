@@ -334,6 +334,7 @@ Empieza ahora con la FASE 1. No modifiques ningún archivo todavía. Analiza el 
 Ordenado de lo más nuevo a lo más antiguo. Cada línea es un trabajo terminado y publicado.
 
 ### 20-10-2026
+- **Indumentaria Valenciana:** fallera con jubón coral, falda blanca de flores y lazos y faja verde oliva (`p23`, retocada con Gemini sobre fondo rosa; original de WhatsApp de las 16.06.40) y fallera con brocado negro de flores de colores y faja negra (`p24`, retocada con Gemini sobre fondo azul; original de las 16.07.20). Son 12 (4 filas de 3).
 - **Espolín:** nueva foto, fallera de perfil con espolín «Postiguet» de fondo gris (pieza `e10`, `espolin/esp-postiguet-gris.webp`, retocada con Gemini; modelo dado por Ignacio). Son 10.
 - **Indumentaria Valenciana:** fallera en la tienda con brocado gris azulado de flores y delantal de encaje blanco (`p22`). Son 10.
 - **Indumentaria regional › Segorbe:** Amelia Rico Furió, Corte de Honor Mayor de las Fiestas de Segorbe 2026 (Reina Zara Soler Bonillo; noticia del Ayuntamiento del 15-02-2026 y libro de fiestas 2026). En el libro su retrato es otro (falda azul y oro); la foto de Ignacio, con falda rosa, será de otra sesión: va con su nombre porque así la nombró Ignacio. `regional-datos.js?v=2`.
