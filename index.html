@@ -766,6 +766,9 @@
     /* la noticia de la tienda tiene mucho texto: el carrusel, arriba y no a media altura */
     @media (min-width: 1025px) { #noticia-tienda .noticia__inner { align-items: start; } }
     @media (min-width: 1025px) { #noticia-desfilada .noticia__inner { align-items: start; } }
+    @media (min-width: 1025px) { #noticia-amanda .noticia__inner { align-items: start; } }
+    #noticia-amanda .noticia__video { max-width: 300px; }
+    #noticia-amanda .noticia__video video { aspect-ratio: 9 / 16; }
     .lector .noticia:not(.is-open) { display: none; }
     .lector__pie { padding: 0 24px 64px; text-align: center; }
     .lector__volver {
@@ -3316,6 +3319,54 @@
          NOTICIA — Corte de Honor 2027. Datos y fotos en CORTE_2027 (JS); textos en t().corte.
          Sin fotos queda oculta (hidden) y no sale su tarjeta.
     ═══════════════════════════════════════════════════════════════════════════ -->
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         NOTICIA — Los trajes de Amanda Dàries Ricart, FMI 2027 de la falla Malvarrosa.
+         Textos en t().amanda; fotos en AMANDA_FOTOS; vídeo (el reel) en noticias/amanda-video.mp4.
+    ════════════════════════════════════════════════════════════════════════ -->
+    <section id="noticia-amanda" class="noticia noticia--crema">
+      <div class="container noticia__inner">
+        <div class="noticia__text">
+          <p class="noticia__eyebrow" id="amanda-eyebrow"></p>
+          <h2 class="noticia__title" id="amanda-title"></h2>
+          <p class="noticia__lead" id="amanda-p1"></p>
+          <p class="noticia__lead" id="amanda-p2"></p>
+          <p class="noticia__lead" id="amanda-p3"></p>
+          <p class="noticia__lead" id="amanda-p4"></p>
+          <p class="noticia__lead" id="amanda-p5"></p>
+          <p class="noticia__lead" id="amanda-p6"></p>
+          <figure class="noticia__video" id="amanda-video-box">
+            <video id="amanda-video" controls playsinline preload="none" width="720" height="1280"
+                   poster="noticias/amanda-video-poster.webp" src="noticias/amanda-video.mp4"></video>
+          </figure>
+          <p class="noticia__credito"><a id="amanda-video-link" href="https://www.instagram.com/cosascucass/" target="_blank" rel="noopener"></a></p>
+        </div>
+        <div class="nf" id="nf-amanda" role="region" aria-roledescription="carrusel">
+          <div class="nf__stage" tabindex="0" role="group">
+            <div class="nf__slides"></div>
+            <button type="button" class="nf__arrow nf__arrow--prev">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button type="button" class="nf__arrow nf__arrow--next">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <div class="nf__ctrls">
+              <button type="button" class="nf__ctrl nf__ctrl--pause">
+                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
+              </button>
+              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+              </button>
+            </div>
+            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
+            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
+          </div>
+          <div class="nf__thumbs"></div>
+          <p class="nf__live" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
     <section id="corte-2027" class="noticia noticia--crema" hidden>
       <div class="container noticia__inner">
         <div class="noticia__text">
@@ -3698,7 +3749,7 @@
     <div class="dh-grid">
 
       <div class="dh-img-main">
-        <img src="historia/cosascucas_1.jpg" alt="Interior tienda Cosas Cucas" loading="lazy" decoding="async">
+        <img src="historia/cosascucas_1.jpg" alt="La antigua tienda de Cosas Cucas en la calle Grabador Esteve" loading="lazy" decoding="async">
         <div class="dh-img-caption" id="dh-img-caption"></div>
         <div class="dh-img-sub-row">
           <div class="dh-img-sub"><img src="historia/cosascucas_5-1030x1030.jpg" alt="Detalle artesanal" loading="lazy" decoding="async"></div>
@@ -3715,6 +3766,11 @@
         <div class="dh-block">
           <h3 class="dh-block-title" id="dh-b2-title"></h3>
           <p class="dh-block-text" id="dh-b2-p1"></p>
+        </div>
+        <div class="dh-block">
+          <h3 class="dh-block-title" id="dh-b3-title"></h3>
+          <p class="dh-block-text" id="dh-b3-p1"></p>
+          <p class="dh-block-text" id="dh-b3-p2"></p>
         </div>
         <div class="dh-cta-row">
           <a class="btn btn--gold" href="#contacto" id="dh-cta"></a>
@@ -4414,6 +4470,41 @@ const translations = {
         'La tienda vista desde el escaparate',
       ],
     },
+    amanda: {
+      eyebrow: 'Noticia · Octubre 2026',
+      title:   'Los trajes de Amanda, Fallera Mayor Infantil 2027 de la falla Malvarrosa',
+      p1:      "Amanda Dàries Ricart es la Fallera Mayor Infantil 2027 de la falla Avinguda Malva-rosa-Antoni Ponz-Cavite y ya ha presentado en una exposición los trajes que llevará durante su reinado. Todos los hemos confeccionado en Cosas Cucas.",
+      p2:      'Su traje verde es de la Compañía Valenciana de la Seda, modelo «Carpio»: rosas y flores azules y amarillas sobre fondo verde. Amanda fue a ver la tela cuando todavía estaba en el telar de madera, con un carrete de hilo en la mano. En el taller la convertimos en su traje. Un día se lo probó, mientras le colocaban la manteleta de encaje, y en la exposición posó a su lado con una sonrisa enorme.',
+      p3:      'Junto a él estaban los demás trajes de su reinado, con sus manteletas y delantales, un jubón blanco y los zapatos a juego.',
+      p4:      'Para nosotras es muy especial. Ya tuvimos el honor de vestir a su hermana Julia, Fallera Mayor Infantil de la falla en 2023 y Corte de Honor de la Fallera Mayor Infantil de València en 2024. Es una familia que siempre ha confiado en Cosas Cucas para todos sus trajes.',
+      p5:      "La falla Malvarrosa plantó su primera falla oficial en 1944 y tiene el casal en la avenida de la Malvarrosa desde los años sesenta. En 2027 su falla infantil vuelve a la sección Especial, con Xavi Gurrea, y la grande compite en Primera B, con Ferni Llopis. Su calle es además una de las iluminadas de la categoría A del concurso, en la que quedó tercera en 2026.",
+      p6:      'Gracias a Amanda y a su familia por confiar en nosotras para vestir su año.',
+      video:   'Más en nuestro Instagram',
+      videoLabel: 'Vídeo de los trajes de Amanda, Fallera Mayor Infantil 2027 de la falla Malvarrosa',
+      region:  'Fotos de los trajes de Amanda, Fallera Mayor Infantil 2027 de la falla Malvarrosa',
+      alts: [
+        'Amanda sonríe junto a su traje verde en la exposición',
+        'La tela verde del traje, todavía en el telar de madera',
+        'Detalle de la tela en el telar: rosas y flores azules y amarillas sobre fondo verde',
+        'Amanda, junto al telar, mira su tela con un carrete de hilo en la mano',
+        'Amanda se prueba el traje verde mientras le colocan la manteleta de encaje',
+        'El traje verde terminado, en un maniquí',
+        'El traje verde en la exposición, con la manteleta y el delantal dorados',
+        'El cuerpo del traje verde, con la manteleta dorada y un collar de perlas',
+        'Detalle de la manga del traje verde, con flores y puntilla',
+        'Un cuerpo de traje con lazo azul en el cuello y manteleta dorada',
+        'Detalle de la manga con una gran flor rosa, el lazo azul y la puntilla',
+        'Un traje claro con flores rojas, manteleta bordada y faja roja',
+        'Detalle de la manga de flores rojas, la puntilla y la faja roja',
+        'Un traje en tonos mostaza con rayas, manteleta de encaje y faja azul',
+        'La falda del traje mostaza con delantal de encaje',
+        'Un jubón mostaza con una manteleta de encaje',
+        'Una manteleta de encaje junto a otro traje de la exposición',
+        'Un jubón blanco con dibujos dorados',
+        'Zapatos de tela azul con flores y lazo',
+        'Zapatos de tela verde con flores y lazo',
+      ],
+    },
     corte: {
       eyebrow: 'Noticia · Octubre 2026',
       title:   'Corte de Honor de la Fallera Mayor de València 2027',
@@ -4651,12 +4742,15 @@ const translations = {
       eyebrow: '✦ Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana',
       title: 'Nuestra Historia',
       lead: 'Desde su fundación en 1982 en los pintorescos poblados marítimos, <strong>Cosas Cucas</strong> ha sido un faro de tradición y elegancia en el mundo de la indumentaria valenciana. Inspirada por su profundo vínculo con el estudio y la pasión por la indumentaria, nuestra fundadora <strong>Paquita Martorell</strong> abrió las puertas de nuestra primera tienda en el entrañable barrio del Cabañal.',
-      imgCaption: 'Tienda de Cosas Cucas — C/ Burriana, 21 · 46005 Valencia · Desde 1982',
+      imgCaption: 'Nuestra tienda de la calle Grabador Esteve, 30 · 46004 Valencia',
       block1Title: 'La segunda generación',
       block1p1: 'Las hijas de Paquita Martorell, <strong>Noelia y María</strong>, son una parte fundamental del legado y la continuidad de Cosas Cucas. Han heredado la pasión por la indumentaria valenciana y han dedicado su vida al negocio familiar. Desde que se unieron al taller dirigido por su madre, han aportado experiencia y habilidades para mantener los altos estándares de calidad y artesanía.',
       block1p2: 'Han desempeñado un papel importante en la expansión y modernización de la empresa, participando en la elaboración de nuevos dibujos exclusivos y en la introducción de innovaciones en el proceso de confección.',
       block2Title: 'Nuestro compromiso',
       block2p1: 'Con más de cuatro décadas de dedicación, <strong>Cosas Cucas</strong> se ha distinguido por la calidad y el detalle de cada prenda. Nuestra participación en la vida fallera es un homenaje a nuestra historia y a la belleza de nuestra cultura.',
+      block3Title: 'Una casa nueva en Burriana',
+      block3p1: 'En la tienda de la calle Grabador Esteve hemos vestido a muchas falleras y hemos compartido con sus familias pruebas, nervios y alegrías. Desde el 1 de julio de 2026 os recibimos en nuestra nueva casa, en la calle Burriana, 21: una tienda luminosa, con las telas a la vista y el mismo cariño de siempre.',
+      block3p2: 'Hemos cambiado de calle, no de manera de trabajar. Y en el Cabañal, el barrio donde empezó todo, seguimos en Vicent Gallart, 49.',
       ctaLabel: 'Pedir cita en tienda',
     },
     newsletter: {
@@ -5042,6 +5136,41 @@ const translations = {
         "La tenda vista des de l'aparador",
       ],
     },
+    amanda: {
+      eyebrow: 'Notícia · Octubre 2026',
+      title:   "Els vestits d'Amanda, Fallera Major Infantil 2027 de la falla Malva-rosa",
+      p1:      "Amanda Dàries Ricart és la Fallera Major Infantil 2027 de la falla Avinguda Malva-rosa-Antoni Ponz-Cavite i ja ha presentat en una exposició els vestits que portarà durant el seu regnat. Tots els hem confeccionat a Cosas Cucas.",
+      p2:      "El seu vestit verd és de la Companyia Valenciana de la Seda, model «Carpio»: roses i flors blaves i grogues sobre fons verd. Amanda va anar a veure la tela quan encara estava al teler de fusta, amb un rodet de fil a la mà. Al taller la vam convertir en el seu vestit. Un dia se'l va provar, mentre li col·locaven la manteleta d'encaix, i a l'exposició va posar al seu costat amb un somriure enorme.",
+      p3:      "Al seu costat hi havia la resta de vestits del seu regnat, amb les manteletes i els davantals, un gipó blanc i les sabates a joc.",
+      p4:      "Per a nosaltres és molt especial. Ja vam tindre l'honor de vestir la seua germana Julia, Fallera Major Infantil de la falla el 2023 i Cort d'Honor de la Fallera Major Infantil de València el 2024. És una família que sempre ha confiat en Cosas Cucas per a tots els seus vestits.",
+      p5:      "La falla Malva-rosa va plantar la seua primera falla oficial el 1944 i té el casal a l'avinguda de la Malva-rosa des dels anys seixanta. El 2027 la seua falla infantil torna a la secció Especial, amb Xavi Gurrea, i la gran competix en Primera B, amb Ferni Llopis. El seu carrer és, a més, un dels il·luminats de la categoria A del concurs, en què va quedar tercer el 2026.",
+      p6:      "Gràcies a Amanda i a la seua família per confiar en nosaltres per a vestir el seu any.",
+      video:   'Més al nostre Instagram',
+      videoLabel: "Vídeo dels vestits d'Amanda, Fallera Major Infantil 2027 de la falla Malva-rosa",
+      region:  "Fotos dels vestits d'Amanda, Fallera Major Infantil 2027 de la falla Malva-rosa",
+      alts: [
+        "Amanda somriu al costat del seu vestit verd a l'exposició",
+        'La tela verda del vestit, encara al teler de fusta',
+        'Detall de la tela al teler: roses i flors blaves i grogues sobre fons verd',
+        'Amanda, al costat del teler, mira la seua tela amb un rodet de fil a la mà',
+        "Amanda es prova el vestit verd mentre li col·loquen la manteleta d'encaix",
+        'El vestit verd acabat, en un maniquí',
+        "El vestit verd a l'exposició, amb la manteleta i el davantal daurats",
+        'El cos del vestit verd, amb la manteleta daurada i un collar de perles',
+        'Detall de la mànega del vestit verd, amb flors i punta',
+        'Un cos de vestit amb llaç blau al coll i manteleta daurada',
+        'Detall de la mànega amb una gran flor rosa, el llaç blau i la punta',
+        'Un vestit clar amb flors roges, manteleta brodada i faixa roja',
+        'Detall de la mànega de flors roges, la punta i la faixa roja',
+        "Un vestit en tons mostassa amb ratlles, manteleta d'encaix i faixa blava",
+        "La falda del vestit mostassa amb davantal d'encaix",
+        "Un gipó mostassa amb una manteleta d'encaix",
+        "Una manteleta d'encaix al costat d'un altre vestit de l'exposició",
+        'Un gipó blanc amb dibuixos daurats',
+        'Sabates de tela blava amb flors i llaç',
+        'Sabates de tela verda amb flors i llaç',
+      ],
+    },
     corte: {
       eyebrow: 'Notícia · Octubre 2026',
       title:   "Cort d'Honor de la Fallera Major de València 2027",
@@ -5233,12 +5362,15 @@ const translations = {
       eyebrow: '✦ Gremi Artesà de Sastres i Modistes de la Comunitat Valenciana',
       title: 'La nostra Història',
       lead: 'Des de la seua fundació el 1982 als pintorescos poblats marítims, <strong>Cosas Cucas</strong> ha sigut un far de tradició i elegància en el món de la indumentària valenciana. Inspirada per la passió per la indumentària, la nostra fundadora <strong>Paquita Martorell</strong> va obrir les portes de la nostra primera tenda al barri del Cabanyal.',
-      imgCaption: 'Tenda de Cosas Cucas — C/ Burriana, 21 · 46005 València · Des de 1982',
+      imgCaption: 'La nostra tenda del carrer Gravador Esteve, 30 · 46004 València',
       block1Title: 'La segona generació',
       block1p1: 'Les filles de Paquita Martorell, <strong>Noelia i María</strong>, són una part fonamental del llegat i la continuïtat de Cosas Cucas. Han heretat la passió per la indumentària valenciana i han dedicat la seua vida al negoci familiar. Des que es van unir al taller dirigit per sa mare, han aportat experiència i habilitats per a mantenir els alts estàndards de qualitat.',
       block1p2: "Han exercit un paper important en l'expansió i modernització de l'empresa, participant en l'elaboració de nous dibuixos exclusius i en la introducció d'innovacions en el procés de confecció.",
       block2Title: 'El nostre compromís',
       block2p1: 'Amb més de quatre dècades de dedicació, <strong>Cosas Cucas</strong> s\'ha distingit per la qualitat i el detall de cada peça. La nostra participació en la vida fallera és un homenatge a la nostra història i a la bellesa de la nostra cultura.',
+      block3Title: 'Una casa nova a Burriana',
+      block3p1: "A la tenda del carrer Gravador Esteve hem vestit moltes falleres i hem compartit amb les seues famílies proves, nervis i alegries. Des de l'1 de juliol de 2026 vos rebem a la nostra nova casa, al carrer Burriana, 21: una tenda lluminosa, amb les teles a la vista i la mateixa estima de sempre.",
+      block3p2: 'Hem canviat de carrer, no de manera de treballar. I al Cabanyal, el barri on va començar tot, continuem a Vicent Gallart, 49.',
       ctaLabel: 'Demanar cita a la tenda',
     },
     newsletter: {
@@ -5896,6 +6028,9 @@ function buildDossierHistoria() {
   s('dh-b1-p2',     d.block1p2);
   s('dh-b2-title',  d.block2Title);
   s('dh-b2-p1',     d.block2p1);
+  s('dh-b3-title',  d.block3Title);
+  s('dh-b3-p1',     d.block3p1);
+  s('dh-b3-p2',     d.block3p2);
   const cta = document.getElementById('dh-cta');
   if (cta) cta.textContent = d.ctaLabel;
 }
@@ -6464,6 +6599,30 @@ const DESFILADA_FOTOS = Array.from({ length: 18 }, (_, i) => ({
   src: `noticias/desfilada-${String(i + 1).padStart(2, '0')}`, ...(i === 0 ? { fija: true } : {}),
 }));
 
+/* Los trajes de Amanda Dàries Ricart (FMI 2027 de la falla Malvarrosa): 20 fotos, primero la
+   historia del traje verde (telar, prueba) y luego la exposición. Vídeo (el reel) en el texto. */
+const AMANDA_FOTOS = [false, true, true, true, true, true, true, true, true, false, true, false, true, true, true, true, true, false, true, true]
+  .map((vertical, i) => ({ src: `noticias/amanda-${String(i + 1).padStart(2, '0')}`, vertical }));
+
+function buildAmanda() {
+  const n = t().amanda;
+  const set = (id, txt) => { document.getElementById(id).textContent = txt; };
+  set('amanda-eyebrow', n.eyebrow);
+  set('amanda-title', n.title);
+  ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'].forEach(k => set(`amanda-${k}`, n[k]));
+  set('amanda-video-link', n.video);
+  const video = document.getElementById('amanda-video');
+  video.setAttribute('aria-label', n.videoLabel);
+  if (!video.dataset.listo) {
+    video.dataset.listo = '1';
+    video.addEventListener('error', () => { document.getElementById('amanda-video-box').hidden = true; });
+  }
+  renderCarousel('amanda', document.getElementById('nf-amanda'), AMANDA_FOTOS.map((f, i) => ({
+    src: `${f.src}.webp`, mini: `${f.src}-mini.webp`, vertical: f.vertical,
+    foco: f.vertical ? undefined : 'center 35%', alt: n.alts[i],
+  })), { ...t().noticia, region: n.region });
+}
+
 function buildDesfilada() {
   const n = t().desfilada;
   const set = (id, txt) => { document.getElementById(id).textContent = txt; };
@@ -6487,6 +6646,10 @@ function buildDesfilada() {
    fotos: dos [mini, foco] para la tarjeta, una junto a otra; mejor verticales 3:4,
    que así se ven enteras (la portada es 3:2). */
 const NOTICIAS_MAS = [
+  { id: 'noticia-amanda', textos: () => t().amanda, fotos: [
+    ['noticias/amanda-05-mini.webp', 'center'],
+    ['noticias/amanda-07-mini.webp', 'center'],
+  ] },
   { id: 'corte-2027',   textos: () => t().corte, fotos: [
     ['noticias/corte-2027/alejandra-01-mini.webp', 'center'],
     ['noticias/corte-2027/laura-02-mini.webp',     'center'],
@@ -6834,6 +6997,7 @@ function renderAll() {
   buildJoia();
   buildTienda();
   buildDesfilada();
+  buildAmanda();
   buildNoticias();
   initHeroSlider();           /* ImagePlayer: fotos de pasarela en bucle */
   buildArchive(); buildFMDetail(); buildZapatillas(); buildHistoria();
