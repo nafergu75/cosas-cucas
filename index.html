@@ -2772,7 +2772,36 @@
     /* ═══════════════════════════════════════════════════════════════════════════
        DECORACIÓN E INTERIORISMO
     ═══════════════════════════════════════════════════════════════════════════ */
-    #decoracion { padding: 90px 0; background: var(--color-bg-alt); }
+    #decoracion { padding: 90px 0; background: var(--color-bg); position: relative; scroll-margin-top: var(--header-h); }
+    /* ── TELÓN de Decoración: al llegar a la sección, dos paños de cortina en crema con galón dorado
+       se recogen hacia los lados (1,2 s) y el contenido va apareciendo detrás. Solo una vez por visita.
+       Lo arma el <script> que va justo después de la sección (clases .telon → .is-open → .telon-fin);
+       sin JS, con «reducir movimiento» o si la sección ya se ve al cargar, no hay telón. ── */
+    #decoracion.telon::before, #decoracion.telon::after {
+      content: ''; position: absolute; top: 0; width: 50.5%;
+      height: 100%; height: min(100%, 100vh);
+      z-index: 5; pointer-events: none; will-change: transform;
+      background: repeating-linear-gradient(90deg, var(--color-bg-alt) 0, #F3ECDA 9px, #E0D3B3 24px, var(--color-bg-alt) 34px);
+      transition: transform 1.2s cubic-bezier(.7,0,.25,1), opacity .4s ease .9s;
+    }
+    #decoracion.telon::before { left: 0; transform-origin: left center; box-shadow: inset -3px 0 0 var(--color-gold), inset 0 -3px 0 var(--color-gold); }
+    #decoracion.telon::after { right: 0; transform-origin: right center; box-shadow: inset 3px 0 0 var(--color-gold), inset 0 -3px 0 var(--color-gold); }
+    #decoracion.telon.is-open::before, #decoracion.telon.is-open::after { transform: scaleX(.04); opacity: 0; }
+    #decoracion.telon-fin::before, #decoracion.telon-fin::after { content: none; }
+    #decoracion.telon .section-header, #decoracion.telon .deco-body, #decoracion.telon .deco-cell {
+      opacity: 0; transform: translateY(18px);
+      transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);
+    }
+    #decoracion.telon.is-open .section-header { opacity: 1; transform: none; transition-delay: .45s; }
+    #decoracion.telon.is-open .deco-body { opacity: 1; transform: none; transition-delay: .6s; }
+    #decoracion.telon.is-open .deco-cell { opacity: 1; transform: none; transition-delay: calc(.75s + var(--i, 0) * 90ms); }
+    @media (prefers-reduced-motion: reduce) {
+      #decoracion.telon::before, #decoracion.telon::after { content: none; }
+      #decoracion.telon .section-header, #decoracion.telon .deco-body, #decoracion.telon .deco-cell { opacity: 1; transform: none; transition: none; }
+    }
+    @media print {
+      #decoracion.telon .section-header, #decoracion.telon .deco-body, #decoracion.telon .deco-cell { opacity: 1 !important; transform: none !important; }
+    }
     .deco-body {
       font-size: 0.95rem; color: var(--color-text-muted); line-height: 1.85;
       max-width: 720px; margin-top: 20px; margin-bottom: 56px;
@@ -2784,7 +2813,7 @@
     }
     .deco-cell {
       overflow: hidden; position: relative;
-      background: var(--color-bg);
+      background: var(--color-bg-alt);
       aspect-ratio: 4/3;
       cursor: zoom-in;
     }
@@ -3919,6 +3948,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      DECORACIÓN
 ═══════════════════════════════════════════════════════════════════════════ -->
+<div class="puntilla" style="--arriba:var(--color-bg-alt);--abajo:var(--color-bg)" aria-hidden="true"></div>
 <section id="decoracion">
   <div class="container">
     <div class="section-header">
@@ -3932,6 +3962,31 @@
     <div class="deco-mosaic" id="deco-mosaic"></div>
   </div>
 </section>
+<script>
+/* Telón de Decoración (ver el CSS de #decoracion.telon). Va aparte del script principal para que,
+   si este falla, la sección no se quede escondida. */
+(function () {
+  var sec = document.getElementById('decoracion');
+  if (!sec || !('IntersectionObserver' in window)) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (sec.getBoundingClientRect().top < window.innerHeight * 0.7) return; // ya a la vista: sin telón
+  sec.classList.add('telon');
+  var abierto = false, io;
+  function abrir() {
+    if (abierto) return;
+    abierto = true;
+    sec.classList.add('is-open');
+    io.disconnect();
+    removeEventListener('scroll', mirar);
+    setTimeout(function () { sec.classList.add('telon-fin'); }, 1600);
+  }
+  /* Segunda vía por si el observador llega tarde: al hacer scroll, abrir en cuanto el borde de arriba pasa del 70 % de la pantalla */
+  function mirar() { if (sec.getBoundingClientRect().top < window.innerHeight * 0.7) abrir(); }
+  io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) abrir(); }, { rootMargin: '0px 0px -30% 0px' });
+  io.observe(sec);
+  addEventListener('scroll', mirar, { passive: true });
+})();
+</script>
 
 <!-- Lightbox Decoración -->
 <div id="deco-lightbox" role="dialog" aria-modal="true">
@@ -3976,7 +4031,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      VÍDEOS
 ═══════════════════════════════════════════════════════════════════════════ -->
-<div class="puntilla" style="--arriba:var(--color-bg-alt);--abajo:var(--color-bg-dark)" aria-hidden="true"></div>
+<div class="puntilla" style="--arriba:var(--color-bg);--abajo:var(--color-bg-dark)" aria-hidden="true"></div>
 <section id="videos">
   <div class="container">
     <div class="section-header">
@@ -6516,7 +6571,7 @@ function buildDecoracion() {
   document.getElementById('deco-cta').textContent   = d.ctaLabel;
   document.getElementById('deco-body').innerHTML    = d.body.map(p => `<p>${p}</p>`).join('');
   document.getElementById('deco-mosaic').innerHTML  = d.cells.map((c, i) =>
-    `<div class="deco-cell" data-index="${i}" data-img="${c.img}" data-caption="${c.caption}">
+    `<div class="deco-cell" style="--i:${i}" data-index="${i}" data-img="${c.img}" data-caption="${c.caption}">
       <img src="${c.img}" alt="${c.caption}" loading="lazy" decoding="async" />
       <div class="deco-cell__zoom">
         <div class="deco-zoom-icon">
