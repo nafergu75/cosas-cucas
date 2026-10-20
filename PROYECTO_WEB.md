@@ -166,6 +166,9 @@ Al abrir la colección salen dos tarjetas con foto: **Espolín** e **Indumentari
 
 Ordenado de lo más nuevo a lo más antiguo. Cada línea es un trabajo terminado y publicado.
 
+### 20-10-2026
+- **Carruseles de las noticias, siempre en marcha:** ya no se paran con el ratón encima (en el lector el ratón solía quedarse sobre el carrusel al abrir la noticia y parecía estático) ni cuando el sistema tiene las animaciones reducidas (entonces van sin el zoom lento, con la barra y el botón de pausa a la vista). Se siguen parando con el botón de pausa, al navegar con el teclado dentro del carrusel y cuando no se ven en pantalla.
+
 ### 19-10-2026
 - **Noticia «Cosas Cucas en la VI Desfilada d'Indumentària Valenciana»:** sexta tarjeta de «Más noticias», entre la de la tienda y la de «Joyas» (por fecha), con su noticia en el lector: texto en ES y VAL a partir del cartel, del texto de Cosas Cucas en Instagram y de la prensa; carrusel con las 18 fotos de la publicación del 22-06-2026 (WebP 900×1200 y mini 360×480) y, bajo el texto, el vídeo del desfile con su portada y el enlace a Instagram. Al cerrar el lector se para cualquier vídeo. Pendiente: crédito de las fotos 15-18 y revisión del texto.
 - **Indumentaria Valenciana (Todas las colecciones › Indumentaria Femenina):** nueva foto, la fallera con mantilla de encaje blanco y ramo de rosas, la primera de la familia.

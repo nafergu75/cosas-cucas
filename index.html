@@ -544,13 +544,11 @@
     }
     .nf__progress span.run { animation: nfBar var(--nf-dur) linear forwards; }
     @keyframes nfBar { from { width: 0; } to { width: 100%; } }
-    /* pausa: fuera de pantalla o navegando con teclado (y al pasar el ratón) */
+    /* pausa: fuera de pantalla, con el botón de pausa o navegando con teclado.
+       No se para con el ratón encima: Ignacio quiere que las fotos pasen solas siempre */
     .nf.is-off .nf__progress span, .nf.is-off .nf__slide img,
     .nf.is-paused .nf__progress span, .nf.is-paused .nf__slide img { animation-play-state: paused; }
     .nf:has(:focus-visible) .nf__progress span, .nf:has(:focus-visible) .nf__slide img { animation-play-state: paused; }
-    @media (hover: hover) {
-      .nf:not(:fullscreen):hover .nf__progress span, .nf:not(:fullscreen):hover .nf__slide img { animation-play-state: paused; }
-    }
     .nf__thumbs {
       position: relative; margin-top: 14px;
       display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px;
@@ -818,7 +816,7 @@
       .hero-news__dot { animation: none; }
       .nf__slide { transition-duration: .2s; }
       .nf__slide.is-active img, .nf__slide.is-leaving img { animation: none; }
-      .nf__progress, .nf__ctrl--pause { display: none; }
+      /* sin el zoom lento, pero las fotos siguen pasando solas (con barra y botón de pausa) */
       .hero-slide { transition: none; }
     }
 
