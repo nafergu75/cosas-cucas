@@ -4278,6 +4278,8 @@ const IMG = {
   fm23: 'falleras%20mayores/fm-2025-begona-sancho-lozano-2.webp',
   /* Reina de las Fiestas de Navajas 2025 (fiestas patronales; programa oficial del Ayuntamiento); va en Indumentaria regional */
   fm24: 'indumentaria-regional/navajas-elena-saez-martinez.webp',
+  /* Fallera Mayor Infantil 2024 de Alemania-El Bachiller (ficha de la JCF) */
+  fm25: 'falleras%20mayores/fmi-2024-lourdes-serrano-bono.webp',
   /* Espolín — colección Indumentaria Femenina */
   esp1: 'espolin/esp-marta-capella-1.webp',
   esp2: 'espolin/esp-marta-capella-2.webp',
@@ -5000,6 +5002,7 @@ const translations = {
         { img: IMG.fm23, name: 'Falla Plaça del Mercat de Turís · Begoña Sancho Lozano', year: 'Fallera Mayor 2025' },
         { img: IMG.fm20, name: 'Falla Plaza Jesús · Ana María Villalba Layunta', year: 'Fallera Mayor 2024' },
         { img: IMG.fm19, name: 'Falla Mossén Josep Cuenca-Pinedo · Carolina San Ramón Quilis', year: 'Fallera Mayor Infantil 2024' },
+        { img: IMG.fm25, name: 'Falla Alemania-El Bachiller · Lourdes Serrano Bono', year: 'Fallera Mayor Infantil 2024' },
         { img: IMG.fm21, name: 'Falla Doctor García Brustenga-Vicente Barrera Cambra · Laura Castillo Llorens', year: 'Fallera Mayor 2023' },
         { img: IMG.fm22, name: 'Falla Santa Bárbara de Benifaió · Teresa Alepuz', year: 'Fallera Mayor 2023' },
       ],
@@ -5640,6 +5643,7 @@ const translations = {
         { img: IMG.fm23, name: 'Falla Plaça del Mercat de Turís · Begoña Sancho Lozano', year: 'Fallera Major 2025' },
         { img: IMG.fm20, name: 'Falla Plaça Jesús · Ana María Villalba Layunta', year: 'Fallera Major 2024' },
         { img: IMG.fm19, name: 'Falla Mossén Josep Cuenca-Pinedo · Carolina San Ramón Quilis', year: 'Fallera Major Infantil 2024' },
+        { img: IMG.fm25, name: 'Falla Alemanya-El Batxiller · Lourdes Serrano Bono', year: 'Fallera Major Infantil 2024' },
         { img: IMG.fm21, name: 'Falla Doctor García Brustenga-Vicente Barrera Cambra · Laura Castillo Llorens', year: 'Fallera Major 2023' },
         { img: IMG.fm22, name: 'Falla Santa Bàrbara de Benifaió · Teresa Alepuz', year: 'Fallera Major 2023' },
       ],
@@ -6378,6 +6382,10 @@ const CORTE_PERSONAS = [
      fotos: [ { img: 'carpeta/foto.webp', texto: { es: '…', ca: '…' } } ] } */
 const INDUMENTARIA_REGIONAL = [
   /* fotos para la web en indumentaria-regional/; los originales de Ignacio, en «indumentaria regional» (no se publica) */
+  { id: 'almenara', nombre: { es: 'Almenara', ca: 'Almenara' }, portada: 'indumentaria-regional/almenara-sara-royo.webp',
+    fotos: [
+      { img: 'indumentaria-regional/almenara-sara-royo.webp', texto: { es: 'Sara Royo · Festera de Almenara 2024', ca: "Sara Royo · Festera d'Almenara 2024" } },
+    ] },
   { id: 'burriana', nombre: { es: 'Burriana', ca: 'Borriana' }, portada: 'indumentaria-regional/burriana-alejandra-morcillo-ballester.webp',
     fotos: [
       { img: 'indumentaria-regional/burriana-alejandra-morcillo-ballester.webp', texto: { es: 'Alejandra Morcillo Ballester · Falla Societat Centre Espanya · Corte de Honor 2025', ca: "Alejandra Morcillo Ballester · Falla Societat Centre Espanya · Cort d'Honor 2025" } },
@@ -6385,6 +6393,11 @@ const INDUMENTARIA_REGIONAL = [
   { id: 'navajas', nombre: { es: 'Navajas', ca: 'Navajas' }, portada: IMG.fm24,
     fotos: [
       { img: IMG.fm24, texto: { es: 'Elena Sáez Martínez · Reina de las Fiestas de Navajas 2025', ca: 'Elena Sáez Martínez · Reina de les Festes de Navajas 2025' } },
+      { img: 'indumentaria-regional/navajas-natalia-corbaton-cubells.webp', texto: { es: 'Natalia Corbatón Cubells · Corte de Honor de la Reina de las Fiestas de Navajas 2023', ca: 'Natalia Corbatón Cubells · Cort d\'Honor de la Reina de les Festes de Navajas 2023' } },
+    ] },
+  { id: 'segorbe', nombre: { es: 'Segorbe', ca: 'Segorbe' }, portada: 'indumentaria-regional/segorbe-ariadna-llop-joli.webp',
+    fotos: [
+      { img: 'indumentaria-regional/segorbe-ariadna-llop-joli.webp', texto: { es: 'Ariadna Llop Joli · Corte de Honor Infantil de las Fiestas de Segorbe 2023', ca: 'Ariadna Llop Joli · Cort d\'Honor Infantil de les Festes de Segorbe 2023' } },
     ] },
   { id: 'vila-real', nombre: { es: 'Vila-real', ca: 'Vila-real' }, portada: 'indumentaria-regional/vila-real-blanca-nebot-campos.webp',
     fotos: [
