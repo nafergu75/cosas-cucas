@@ -763,27 +763,32 @@
     .lector__close:focus-visible, .lector__volver:focus-visible { outline: 2px solid var(--color-text); outline-offset: 2px; }
     .lector .noticia { padding: 48px 0 56px; border-bottom: 0; }
     .lector .noticia::before { display: none; }
-    /* la noticia de la tienda tiene mucho texto: el carrusel, arriba y no a media altura */
-    @media (min-width: 1025px) { #noticia-tienda .noticia__inner { align-items: start; } }
-    @media (min-width: 1025px) { #noticia-desfilada .noticia__inner { align-items: start; } }
-    @media (min-width: 1025px) { #noticia-amanda .noticia__inner { align-items: start; } }
-    /* Amanda, maquetación tipo revista: arriba texto + carrusel; debajo, a todo el ancho,
-       el vídeo vertical con el resto del texto al lado (sin huecos bajo las fotos) */
-    #noticia-amanda .am-segunda {
+    /* Maquetación tipo revista para las noticias largas (.revista en .noticia__inner):
+       arriba, el comienzo del texto junto al carrusel; debajo, a todo el ancho y tras una
+       línea, un vídeo o una foto vertical con el resto del texto al lado. Así no quedan
+       huecos bajo las fotos. En móvil, todo en una columna. */
+    @media (min-width: 1025px) { .noticia__inner.revista { align-items: start; } }
+    .revista__segunda {
       grid-column: 1 / -1; display: grid; grid-template-columns: 240px minmax(0, 1fr);
       gap: clamp(28px, 4vw, 56px); align-items: center;
       padding-top: clamp(28px, 4vw, 44px); border-top: 1px solid var(--color-border);
     }
-    #noticia-amanda .noticia__video { margin: 0; max-width: 240px; }
+    .revista__segunda .noticia__video { margin: 0; max-width: 240px; }
+    .revista__figura { margin: 0; width: 100%; max-width: 240px; }
+    .revista__figura img {
+      display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover;
+      border-radius: 6px; box-shadow: 0 6px 24px rgba(26,23,20,.18);
+    }
+    .revista__figura--alta img { aspect-ratio: 9 / 16; }
+    .revista__texto .noticia__lead { max-width: 720px; }
     #noticia-amanda .noticia__video video { aspect-ratio: 9 / 16; }
-    #noticia-amanda .am-segunda__texto .noticia__lead { max-width: 720px; }
     @media (max-width: 1024px) {
-      #noticia-amanda .am-segunda { grid-column: auto; grid-template-columns: 200px minmax(0, 1fr); }
-      #noticia-amanda .noticia__video { max-width: 200px; }
+      .revista__segunda { grid-column: auto; grid-template-columns: 200px minmax(0, 1fr); }
+      .revista__segunda .noticia__video, .revista__figura { max-width: 200px; }
     }
     @media (max-width: 640px) {
-      #noticia-amanda .am-segunda { grid-template-columns: minmax(0, 1fr); }
-      #noticia-amanda .noticia__video { max-width: 280px; margin: 0 auto; }
+      .revista__segunda { grid-template-columns: minmax(0, 1fr); }
+      .revista__segunda .noticia__video, .revista__figura { max-width: 280px; margin: 0 auto; }
     }
     .lector .noticia:not(.is-open) { display: none; }
     .lector__pie { padding: 0 24px 64px; text-align: center; }
@@ -3336,7 +3341,7 @@
          Textos en t().amanda; fotos en AMANDA_FOTOS; vídeo (el reel) en noticias/amanda-video.mp4.
     ════════════════════════════════════════════════════════════════════════ -->
     <section id="noticia-amanda" class="noticia noticia--crema">
-      <div class="container noticia__inner am-revista">
+      <div class="container noticia__inner revista">
         <div class="noticia__text">
           <p class="noticia__eyebrow" id="amanda-eyebrow"></p>
           <h2 class="noticia__title" id="amanda-title"></h2>
@@ -3367,12 +3372,12 @@
           <div class="nf__thumbs"></div>
           <p class="nf__live" aria-live="polite"></p>
         </div>
-        <div class="am-segunda">
+        <div class="revista__segunda">
           <figure class="noticia__video" id="amanda-video-box">
             <video id="amanda-video" controls playsinline preload="none" width="720" height="1280"
                    data-poster="noticias/amanda-video-poster.webp" src="noticias/amanda-video.mp4"></video>
           </figure>
-          <div class="am-segunda__texto">
+          <div class="revista__texto">
             <p class="noticia__lead" id="amanda-p3"></p>
             <p class="noticia__lead" id="amanda-p4"></p>
             <p class="noticia__lead" id="amanda-p5"></p>
@@ -3511,13 +3516,12 @@
          Martorell (junio de 2018). Textos en t().joia; fotos en JOIA_FOTOS.
     ════════════════════════════════════════════════════════════════════════ -->
     <section id="noticia-joia" class="noticia noticia--crema">
-      <div class="container noticia__inner">
+      <div class="container noticia__inner revista">
         <div class="noticia__text">
           <p class="noticia__eyebrow" id="joia-eyebrow"></p>
           <h2 class="noticia__title" id="joia-title"></h2>
           <p class="noticia__lead" id="joia-p1"></p>
           <p class="noticia__lead" id="joia-p2"></p>
-          <p class="noticia__lead" id="joia-p3"></p>
         </div>
         <div class="nf" id="nf-joia" role="region" aria-roledescription="carrusel">
           <div class="nf__stage" tabindex="0" role="group">
@@ -3543,6 +3547,14 @@
           <div class="nf__thumbs"></div>
           <p class="nf__live" aria-live="polite"></p>
         </div>
+        <div class="revista__segunda">
+          <figure class="revista__figura">
+            <img src="noticias/joia-07-mini.webp" srcset="noticias/joia-07-mini.webp 360w, noticias/joia-07.webp 900w" sizes="(max-width: 640px) 280px, (max-width: 1024px) 200px, 240px" width="900" height="1200" alt="" loading="lazy" decoding="async" />
+          </figure>
+          <div class="revista__texto">
+            <p class="noticia__lead" id="joia-p3"></p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -3551,16 +3563,12 @@
          Textos en t().tienda; fotos en TIENDA_FOTOS.
     ════════════════════════════════════════════════════════════════════════ -->
     <section id="noticia-tienda" class="noticia noticia--crema">
-      <div class="container noticia__inner">
+      <div class="container noticia__inner revista">
         <div class="noticia__text">
           <p class="noticia__eyebrow" id="tienda-eyebrow"></p>
           <h2 class="noticia__title" id="tienda-title"></h2>
           <p class="noticia__lead" id="tienda-p1"></p>
           <p class="noticia__lead" id="tienda-p2"></p>
-          <p class="noticia__lead" id="tienda-p3"></p>
-          <p class="noticia__lead" id="tienda-p4"></p>
-          <p class="noticia__lead" id="tienda-p5"></p>
-          <p class="noticia__credito"><a id="tienda-video" href="https://www.instagram.com/cosascucass/reel/DdYruMCMT4v/" target="_blank" rel="noopener"></a></p>
         </div>
         <div class="nf" id="nf-tienda" role="region" aria-roledescription="carrusel">
           <div class="nf__stage" tabindex="0" role="group">
@@ -3586,6 +3594,17 @@
           <div class="nf__thumbs"></div>
           <p class="nf__live" aria-live="polite"></p>
         </div>
+        <div class="revista__segunda">
+          <figure class="revista__figura revista__figura--alta">
+            <img src="noticias/tienda-01-mini.webp" srcset="noticias/tienda-01-mini.webp 360w, noticias/tienda-01.webp 675w" sizes="(max-width: 640px) 280px, (max-width: 1024px) 200px, 240px" width="675" height="1200" alt="" loading="lazy" decoding="async" />
+          </figure>
+          <div class="revista__texto">
+            <p class="noticia__lead" id="tienda-p3"></p>
+            <p class="noticia__lead" id="tienda-p4"></p>
+            <p class="noticia__lead" id="tienda-p5"></p>
+            <p class="noticia__credito"><a id="tienda-video" href="https://www.instagram.com/cosascucass/reel/DdYruMCMT4v/" target="_blank" rel="noopener"></a></p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -3594,20 +3613,11 @@
          Textos en t().desfilada; fotos en DESFILADA_FOTOS; vídeo en noticias/desfilada-video.mp4.
     ════════════════════════════════════════════════════════════════════════ -->
     <section id="noticia-desfilada" class="noticia noticia--crema">
-      <div class="container noticia__inner">
+      <div class="container noticia__inner revista">
         <div class="noticia__text">
           <p class="noticia__eyebrow" id="desfilada-eyebrow"></p>
           <h2 class="noticia__title" id="desfilada-title"></h2>
           <p class="noticia__lead" id="desfilada-p1"></p>
-          <p class="noticia__lead" id="desfilada-p2"></p>
-          <p class="noticia__lead" id="desfilada-p3"></p>
-          <p class="noticia__lead" id="desfilada-p4"></p>
-          <p class="noticia__credito" id="desfilada-credito"></p>
-          <figure class="noticia__video" id="desfilada-video-box">
-            <video id="desfilada-video" controls playsinline preload="none" width="720" height="960"
-                   data-poster="noticias/desfilada-video-poster.webp" src="noticias/desfilada-video.mp4"></video>
-          </figure>
-          <p class="noticia__credito"><a id="desfilada-video-link" href="https://www.instagram.com/p/DZ7mLVHjOeW/" target="_blank" rel="noopener"></a></p>
         </div>
         <div class="nf" id="nf-desfilada" role="region" aria-roledescription="carrusel">
           <div class="nf__stage" tabindex="0" role="group">
@@ -3632,6 +3642,19 @@
           </div>
           <div class="nf__thumbs"></div>
           <p class="nf__live" aria-live="polite"></p>
+        </div>
+        <div class="revista__segunda">
+          <figure class="noticia__video" id="desfilada-video-box">
+            <video id="desfilada-video" controls playsinline preload="none" width="720" height="960"
+                   data-poster="noticias/desfilada-video-poster.webp" src="noticias/desfilada-video.mp4"></video>
+          </figure>
+          <div class="revista__texto">
+            <p class="noticia__lead" id="desfilada-p2"></p>
+            <p class="noticia__lead" id="desfilada-p3"></p>
+            <p class="noticia__lead" id="desfilada-p4"></p>
+            <p class="noticia__credito" id="desfilada-credito"></p>
+            <p class="noticia__credito"><a id="desfilada-video-link" href="https://www.instagram.com/p/DZ7mLVHjOeW/" target="_blank" rel="noopener"></a></p>
+          </div>
         </div>
       </div>
     </section>
