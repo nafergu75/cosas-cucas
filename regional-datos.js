@@ -9,6 +9,18 @@
    · AL CAMBIAR ESTE ARCHIVO, SUBIR EL NÚMERO «?v=» DE regional-datos.js EN index.html Y EN
      indumentaria-regional.html: los .js se guardan un día en la caché del navegador. */
 window.INDUMENTARIA_REGIONAL = [
+  { id: "almazora", nombre: { es: "Almazora", ca: "Almassora" },
+    portada: "indumentaria-regional/almazora-elena-portales-montanana.webp",
+    fotos: [
+      { img: "indumentaria-regional/almazora-elena-portales-montanana.webp",
+        nombre: "Elena Portalés Montañana", cargo: { es: "Reina de las Fiestas de Almazora 2023", ca: "Reina de les Festes d'Almassora 2023" } },
+      { img: "indumentaria-regional/almazora-elena-portales-montanana-2.webp",
+        nombre: "Elena Portalés Montañana", cargo: { es: "Reina de las Fiestas de Almazora 2023", ca: "Reina de les Festes d'Almassora 2023" } },
+      { img: "indumentaria-regional/almazora-elena-portales-montanana-3.webp",
+        nombre: "Elena Portalés Montañana", cargo: { es: "Reina de las Fiestas de Almazora 2023", ca: "Reina de les Festes d'Almassora 2023" } },
+      { img: "indumentaria-regional/almazora-elena-portales-montanana-4.webp",
+        nombre: "Elena Portalés Montañana", cargo: { es: "Reina de las Fiestas de Almazora 2023", ca: "Reina de les Festes d'Almassora 2023" } },
+    ] },
   { id: "almenara", nombre: { es: "Almenara", ca: "Almenara" },
     portada: "indumentaria-regional/almenara-sara-royo.webp",
     fotos: [
