@@ -32,6 +32,8 @@
 
 # Datos que se editan desde el panel (/admin): Falleras Mayores, galería…
 !/datos*
+# Panel de administración (Sveltia CMS). Solo se publica en Vercel: pages.yml lo quita de GitHub Pages.
+!/admin*
 !/favicon.png
 !/og-image.jpg
 !/robots.txt

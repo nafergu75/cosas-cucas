@@ -387,7 +387,7 @@ fetch('datos/falleras-mayores.json', { cache: 'no-cache' })
     const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
     document.getElementById('fm-grid').innerHTML = (d.falleras || []).map(f => `
       <figure>
-        <img src="${encodeURI(f.foto)}" alt="${esc(`${f.nombre}, ${f.cargo.es} — Falla ${f.falla.es}`)}" loading="lazy" />
+        <img src="${encodeURI(String(f.foto).replace(/^\/+/, ''))}" alt="${esc(`${f.nombre}, ${f.cargo.es} — Falla ${f.falla.es}`)}" loading="lazy" />
         <figcaption>${esc(`${f.nombre} · ${f.falla.es} · ${f.cargo.es.replace('Fallera Mayor ', '')}`)}</figcaption>
       </figure>`).join('');
   })

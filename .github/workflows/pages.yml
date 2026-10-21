@@ -43,6 +43,9 @@ jobs:
           mkdir _site
           tar --null --verbatim-files-from --files-from="$tmp/site.lst" -cf - | tar -xf - -C _site
           rm -f _site/vercel.json
+          # El panel (/admin) solo va en Vercel: en nafergu75.github.io compartiría origen (y la clave
+          # guardada en el navegador) con las demás webs de la cuenta publicadas en Pages.
+          rm -rf _site/admin
           test -f _site/index.html
           bad="$(find _site -type f \( -name 'server.js' -o -name 'worker.js' -o -name '*.ps1' -o -name '*.bat' -o -name '*.exe' \
             -o -name '*.pdf' -o -name '*.doc' -o -name '*.docx' -o -name '*.xls' -o -name '*.xlsx' -o -path '*/.*' \) -print)"

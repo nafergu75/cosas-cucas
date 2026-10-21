@@ -1,0 +1,187 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms@0.250.0/schema/sveltia-cms.json
+#
+# Panel de Cosas Cucas (Sveltia CMS 0.250.0), en https://cosas-cucas.vercel.app/admin
+# Cada «Guardar» hace un commit en master y la web se vuelve a publicar sola.
+# Este archivo es público: nunca poner claves aquí.
+
+backend:
+  name: github
+  repo: nafergu75/cosas-cucas
+  branch: master
+  auth_methods: [token]          # solo entrada con clave de GitHub; sin botón OAuth ni servidor
+  commit_messages:
+    create: 'Panel: crear {{collection}} «{{slug}}»'
+    update: 'Panel: actualizar {{collection}} «{{slug}}»'
+    delete: 'Panel: borrar {{collection}} «{{slug}}»'
+    uploadMedia: 'Panel: subir foto «{{path}}»'
+    deleteMedia: 'Panel: borrar foto «{{path}}»'
+
+publish_mode: simple             # commit directo a master, sin revisión
+site_url: https://cosas-cucas.vercel.app
+app_title: Cosas Cucas · Panel
+logo:
+  src: https://cosas-cucas.vercel.app/favicon.png
+
+media_folder: /galeria
+public_folder: /galeria
+
+# Fotos: se convierten en el navegador a WebP de 1600 px como máximo (sin datos Exif)
+# y se renombran con la fecha y el nombre limpio: «20261021-nombre-de-la-foto.webp».
+media_libraries:
+  all:
+    slugify_filename: true
+    filename_template: '{{year}}{{month}}{{day}}-{{filename}}'
+    transformations:
+      raster_image:
+        format: webp
+        quality: 80
+        width: 1600
+        height: 1600
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: '-'
+  trim: true
+  lowercase: true
+  timezone: local
+
+output:
+  json:
+    indent_style: space
+    indent_size: 2
+
+# Fotos antiguas que la web ya usa fuera de las carpetas de abajo (solo lectura).
+asset_collections:
+  - name: hombre
+    label: Fotos antiguas · hombre
+    icon: folder
+    media_folder: /hombre
+    readonly: true
+  - name: espolin
+    label: Fotos antiguas · espolín
+    icon: folder
+    media_folder: /espolin
+    readonly: true
+
+collections:
+  # ── Falleras Mayores ── datos/falleras-mayores.json → { "falleras": [ … ] }
+  - name: falleras_mayores
+    label: Falleras Mayores
+    icon: workspace_premium
+    description: Indumentaria de Honor (portada y landing). El orden de la lista es el de la web.
+    files:
+      - name: falleras_mayores
+        label: Falleras Mayores
+        file: datos/falleras-mayores.json
+        format: json
+        preview_path: /
+        media_folder: /falleras mayores
+        public_folder: /falleras mayores
+        fields:
+          - name: falleras
+            label: Falleras Mayores
+            label_singular: Fallera Mayor
+            widget: list
+            add_to_top: true
+            collapsed: true
+            summary: '{{nombre}}'
+            thumbnail: foto
+            hint: 'Se ven de 3 en 3: si el total no es múltiplo de 3, la última fila queda incompleta (centrada).'
+            fields:
+              - name: foto
+                label: Foto
+                widget: image
+                choose_url: false
+                hint: Vertical, de cuerpo entero. Se convierte sola a WebP.
+              - name: nombre
+                label: Nombre y apellidos
+                widget: string
+              - name: falla
+                label: Falla (sin la palabra «Falla»)
+                widget: object
+                fields:
+                  - { name: es, label: Castellano, widget: string, hint: 'Ejemplo: Plaza Jesús' }
+                  - { name: ca, label: Valencià, widget: string, hint: 'Exemple: Plaça Jesús' }
+              - name: cargo
+                label: Cargo
+                widget: object
+                fields:
+                  - name: es
+                    label: Castellano
+                    widget: string
+                    hint: 'Ejemplo: Fallera Mayor 2027 o Fallera Mayor Infantil 2027'
+                    pattern: ['\d{4}', 'Pon el año con cuatro cifras, por ejemplo: Fallera Mayor 2027']
+                  - name: ca
+                    label: Valencià
+                    widget: string
+                    hint: 'Exemple: Fallera Major 2027 o Fallera Major Infantil 2027'
+                    pattern: ['\d{4}', "Posa l'any amb quatre xifres, per exemple: Fallera Major 2027"]
+              - name: fuente
+                label: Fuente (no se publica)
+                widget: string
+                required: false
+                hint: De dónde salen el nombre, la falla y el año (prensa, web de la falla…), para poder comprobarlo.
+
+  # ── Galería ── datos/galeria.json → { "pasarela": [ … ], "clientas": [ … ] }
+  - name: galeria
+    label: Galería
+    icon: photo_library
+    description: Página Galería. Cada foto va al apartado de indumentaria femenina o masculina.
+    files:
+      - name: galeria
+        label: Galería de fotos
+        file: datos/galeria.json
+        format: json
+        preview_path: /galeria
+        fields:
+          - name: clientas
+            label: Nuestras falleras y falleros
+            label_singular: Foto
+            widget: list
+            add_to_top: true
+            collapsed: true
+            summary: '{{pie}}'
+            thumbnail: foto
+            hint: Fotos de clientas y clientes con trajes de la casa. Las nuevas salen las primeras.
+            fields:
+              - name: foto
+                label: Foto
+                widget: image
+                choose_url: false
+                media_folder: /galeria
+                public_folder: /galeria
+              - name: pie
+                label: Pie de foto
+                widget: string
+                hint: Una frase corta que describa lo que se ve, sin inventar datos.
+              - name: apartado
+                label: Apartado
+                widget: select
+                default: femenina
+                options:
+                  - { label: Indumentaria femenina, value: femenina }
+                  - { label: Indumentaria masculina, value: masculina }
+          - name: pasarela
+            label: Pasarela (I Desfile del Gremio, 2018)
+            label_singular: Foto de pasarela
+            widget: list
+            collapsed: true
+            summary: '{{pie}}'
+            thumbnail: foto
+            fields:
+              - name: foto
+                label: Foto
+                widget: image
+                choose_url: false
+                media_folder: /pasarela
+                public_folder: /pasarela
+              - name: pie
+                label: Pie de foto
+                widget: string
+              - name: apartado
+                label: Apartado
+                widget: select
+                options:
+                  - { label: Indumentaria femenina, value: femenina }
+                  - { label: Indumentaria masculina, value: masculina }

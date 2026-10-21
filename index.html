@@ -6708,6 +6708,11 @@ function buildArchive() {
 /* ── Datos que se editan desde el panel (/admin): archivos JSON de la carpeta datos/ ──
    Se piden sin caché (para ver enseguida lo que se publica) y, al llegar, se repinta su bloque. */
 const DATOS = {};
+/* El panel guarda las rutas con «/» delante («/galeria/x.webp»); se quita para que valgan también
+   en GitHub Pages, que sirve la web dentro de /cosas-cucas/ */
+const rutaDato = p => encodeURI(String(p || '').replace(/^\/+/, ''));
+/* Texto escrito en el panel: se escapa antes de meterlo en el HTML */
+const escHtml = t => String(t ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 function cargarDatos(nombre) {
   return fetch(`datos/${nombre}.json`, { cache: 'no-cache' })
     .then(r => (r.ok ? r.json() : Promise.reject(new Error(`datos/${nombre}.json: ${r.status}`))));
@@ -6740,9 +6745,9 @@ function buildFMDetail() {
   if (!lista) return;
   const lg = currentLang === 'ca' ? 'ca' : 'es';
   const fmDetailData = lista.map(f => ({
-    img: encodeURI(f.foto),
-    name: `Falla ${f.falla[lg] || f.falla.es} · ${f.nombre}`,
-    year: f.cargo[lg] || f.cargo.es,
+    img: rutaDato(f.foto),
+    name: escHtml(`Falla ${f.falla[lg] || f.falla.es} · ${f.nombre}`),
+    year: escHtml(f.cargo[lg] || f.cargo.es),
   }));
   grid.innerHTML = fmDetailData.map(f => `
     <div class="fm-detail-card">
