@@ -55,3 +55,9 @@ _site/
 probador.html
 # Pagina de proxima inauguracion retirada (la tienda ya esta abierta; se conserva en local)
 inauguracion.html
+
+# Proyectos de video (HyperFrames): no forman parte de la web
+videos/
+
+# Informes privados (seguridad, notas internas): nunca al repositorio
+/_privado/
