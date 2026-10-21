@@ -42,7 +42,7 @@
         proyecto: 'Cuéntanos qué te gustaría (cortinas, tapizado, colcha…) y las medidas si las tienes.',
         consulta: 'Escribe aquí tu consulta.'
       },
-      privacidad: 'He leído y acepto la <a href="politica-privacidad.html" target="_blank" rel="noopener">política de privacidad</a>.',
+      privacidad: 'He leído y acepto la <a href="politica-privacidad" target="_blank" rel="noopener">política de privacidad</a>.',
       enviar: 'Enviar', enviando: 'Enviando…', cerrar: 'Cerrar',
       faltan: 'Escribe tu nombre, tu correo y el mensaje.',
       malCorreo: 'Revisa el correo electrónico.',
@@ -58,7 +58,7 @@
         proyecto: "Conta'ns què t'agradaria (cortines, entapissat, colxa…) i les mesures si les tens.",
         consulta: 'Escriu ací la teua consulta.'
       },
-      privacidad: 'He llegit i accepte la <a href="politica-privacidad.html" target="_blank" rel="noopener">política de privacitat</a>.',
+      privacidad: 'He llegit i accepte la <a href="politica-privacidad" target="_blank" rel="noopener">política de privacitat</a>.',
       enviar: 'Enviar', enviando: "S'està enviant…", cerrar: 'Tancar',
       faltan: 'Escriu el teu nom, el teu correu i el missatge.',
       malCorreo: 'Revisa el correu electrònic.',

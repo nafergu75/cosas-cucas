@@ -3,18 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Cosas Cucas — Indumentaria valenciana artesanal desde 1982. Falleras Mayores, Cortes de Honor, telas, bordados y aderezos exclusivos. C/ Burriana 21, Valencia." />
+  <meta name="description" content="Tienda y taller de indumentaria valenciana en C/ Burriana 21, Valencia. Trajes de fallera y de valenciano a medida, espolines, telas y aderezos desde 1982." />
   <meta name="robots" content="index, follow" />
-  <title>Cosas Cucas | Indumentaria Valenciana Artesanal desde 1982 · Valencia</title>
+  <title>Indumentaria valenciana y trajes de fallera en Valencia | Cosas Cucas</title>
   <link rel="canonical" href="https://cosascucas.es/" />
+  <!-- Los textos fijos van escritos en castellano en la página (marcados con data-pre, ver herramientas/prerender.mjs).
+       Si el visitante eligió valenciano, se ocultan un instante hasta que el JavaScript los cambia. -->
+  <script>try{if(localStorage.getItem('cc-lang')==='ca')document.documentElement.classList.add('pre-ca')}catch(e){}</script>
+  <style>.pre-ca [data-pre]{visibility:hidden}</style>
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="apple-touch-icon" href="favicon.png" />
 
   <!-- Open Graph / Social Sharing -->
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://cosascucas.es/" />
-  <meta property="og:title"       content="Cosas Cucas | Indumentaria Valenciana Artesanal desde 1982" />
-  <meta property="og:description" content="Confección artesanal de indumentaria valenciana desde 1982. Falleras Mayores, Cortes de Honor, telas exclusivas y aderezos. Valencia." />
+  <meta property="og:title"       content="Cosas Cucas · Trajes de fallera e indumentaria valenciana en Valencia" />
+  <meta property="og:description" content="Tienda y taller de indumentaria valenciana en C/ Burriana 21, Valencia. Trajes de fallera y de valenciano a medida, espolines, telas y aderezos desde 1982." />
   <meta property="og:image"       content="https://cosas-cucas.vercel.app/og-image.jpg" />
   <meta property="og:image:width"  content="1200" />
   <meta property="og:image:height" content="630" />
@@ -22,41 +26,165 @@
   <meta property="og:locale"      content="es_ES" />
   <meta property="og:site_name"   content="Cosas Cucas" />
   <meta name="twitter:card"       content="summary_large_image" />
-  <meta name="twitter:title"      content="Cosas Cucas | Indumentaria Valenciana Artesanal" />
-  <meta name="twitter:description" content="Confección artesanal de indumentaria valenciana desde 1982. Valencia." />
+  <meta name="twitter:title"      content="Cosas Cucas · Trajes de fallera e indumentaria valenciana en Valencia" />
+  <meta name="twitter:description" content="Tienda y taller de indumentaria valenciana en C/ Burriana 21, Valencia. Trajes de fallera y de valenciano a medida, espolines, telas y aderezos desde 1982." />
   <meta name="twitter:image"      content="https://cosas-cucas.vercel.app/og-image.jpg" />
 
-  <!-- Schema.org Local Business -->
+  <!-- Datos para Google (schema.org): la empresa, la web y sus dos tiendas. El horario tiene que
+       coincidir con el de Visítanos, el pie, el chat y la ficha de Google. -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ClothingStore",
-    "name": "Cosas Cucas",
-    "description": "Tienda de indumentaria valenciana artesanal. Confección de trajes de fallera, Falleras Mayores, Cortes de Honor, telas, bordados y aderezos desde 1982.",
-    "url": "https://cosascucas.es/",
-    "telephone": "+34963511556",
-    "email": "info@cosascucas.es",
-    "foundingDate": "1982",
-    "image": "https://cosas-cucas.vercel.app/og-image.jpg",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Calle Burriana 21",
-      "addressLocality": "Valencia",
-      "postalCode": "46005",
-      "addressCountry": "ES"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://cosascucas.es/#organizacion",
+      "name": "Cosas Cucas",
+      "legalName": "Confecciones Hermanas Sáez SL",
+      "url": "https://cosascucas.es/",
+      "logo": "https://cosascucas.es/favicon.png",
+      "foundingDate": "1982",
+      "email": "info@cosascucas.es",
+      "telephone": "+34963511556",
+      "sameAs": [
+        "https://www.instagram.com/cosascucass/",
+        "https://www.tiktok.com/@cosas.cucas1982",
+        "https://www.facebook.com/cosas.cucas.3/"
+      ]
     },
-    "openingHoursSpecification": [
-      {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"10:00","closes":"13:30"},
-      {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"17:00","closes":"20:00"},
-      {"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"10:30","closes":"13:30"}
-    ],
-    "sameAs": [
-      "https://www.instagram.com/cosascucass/",
-      "https://www.tiktok.com/@cosas.cucas1982",
-      "https://www.facebook.com/cosas.cucas.3/"
-    ]
-  }
+    {
+      "@type": "WebSite",
+      "@id": "https://cosascucas.es/#web",
+      "name": "Cosas Cucas",
+      "url": "https://cosascucas.es/",
+      "inLanguage": [
+        "es",
+        "ca"
+      ],
+      "publisher": {
+        "@id": "https://cosascucas.es/#organizacion"
+      }
+    },
+    {
+      "@type": "ClothingStore",
+      "@id": "https://cosascucas.es/#tienda-burriana",
+      "name": "Cosas Cucas",
+      "description": "Tienda de indumentaria valenciana artesanal. Confección de trajes de fallera, Falleras Mayores, Cortes de Honor, telas, bordados y aderezos desde 1982.",
+      "url": "https://cosascucas.es/",
+      "telephone": "+34963511556",
+      "email": "info@cosascucas.es",
+      "image": "https://cosascucas.es/og-image.jpg",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle de Burriana, 21",
+        "addressLocality": "Valencia",
+        "addressRegion": "Valencia",
+        "postalCode": "46005",
+        "addressCountry": "ES"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 39.46516,
+        "longitude": -0.36686
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "10:00",
+          "closes": "13:30"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "17:00",
+          "closes": "20:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "10:30",
+          "closes": "13:30"
+        }
+      ],
+      "parentOrganization": {
+        "@id": "https://cosascucas.es/#organizacion"
+      }
+    },
+    {
+      "@type": "ClothingStore",
+      "@id": "https://cosascucas.es/#tienda-cabanyal",
+      "name": "Cosas Cucas Cabañal",
+      "url": "https://cosascucas.es/",
+      "telephone": "+34963714997",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle de Vicent Gallart, 49",
+        "addressLocality": "Valencia",
+        "addressRegion": "Valencia",
+        "postalCode": "46011",
+        "addressCountry": "ES"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 39.46554,
+        "longitude": -0.32891
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "10:00",
+          "closes": "13:30"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "17:00",
+          "closes": "20:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "10:30",
+          "closes": "13:30"
+        }
+      ],
+      "parentOrganization": {
+        "@id": "https://cosascucas.es/#organizacion"
+      }
+    }
+  ]
+}
   </script>
+
+  <!-- Primera foto del pase de la portada: se pide la primera, antes que el resto de la página.
+       Si cambia la noticia de portada en el panel, conviene poner aquí y en #hero-slide-a su primera foto. -->
+  <link rel="preload" as="image" href="noticias/julia-vizcayno-01.webp" fetchpriority="high" />
 
   <!-- ─── TIPOGRAFÍA ────────────────────────────────────────────────────────── -->
   <!-- CAMBIAR TIPOGRAFÍA: reemplaza la familia en la variable --font-body y --font-display abajo -->
@@ -1564,6 +1692,7 @@
     }
     .footer-brand img {
       height: 40px;
+      width: auto;
       margin-bottom: 16px;
       filter: brightness(0.9) sepia(0.3);
     }
@@ -3278,7 +3407,7 @@
       <!-- LOGO -->
       <a href="#" class="logo">
         <img
-          src="logo%20cosascucas.png"
+          src="logo-cosas-cucas.webp" width="654" height="160"
           alt="Cosas Cucas"
           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
         />
@@ -3319,7 +3448,7 @@
 </header>
 
 <!-- MOBILE MENU -->
-<nav class="mobile-menu" id="mobile-menu"></nav>
+<nav class="mobile-menu" id="mobile-menu" data-pre><a href="#noticias">Noticias</a><a href="#drops-archive">Colecciones</a><a href="#falleras-mayores">Falleras Mayores</a><a href="#zapatillas">Deportivas Fallera</a><a href="#historia">Historia</a><a href="#decoracion">Decoración</a><a href="#videos">Vídeos</a><a href="galeria" target="_blank" rel="noopener">Galería</a><a href="#contacto">Contacto</a></nav>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
      ANNOUNCEMENT STRIPE
@@ -3335,7 +3464,7 @@
   <!-- La imagen y el contenido se generan desde JS (objeto latestDrop) -->
   <div class="hero-image-wrap" id="hero-image-wrap">
     <!-- ImagePlayer: dos slides se solapan con crossfade -->
-    <img src="" alt="Pasarela Cosas Cucas" id="hero-slide-a" class="hero-slide" />
+    <img src="noticias/julia-vizcayno-01.webp" alt="Retrato de Julia Vizcayno con el traje de fallera y la peineta" id="hero-slide-a" class="hero-slide active" fetchpriority="high" decoding="async" style="object-position:42% 25%" />
     <img src="" alt="Pasarela Cosas Cucas" id="hero-slide-b" class="hero-slide" />
     <span class="hero-badge" id="hero-badge"></span>
     <div class="hero-dots" id="hero-dots"></div>
@@ -3346,9 +3475,9 @@
       <span class="hero-news__tag" id="hero-news-tag"></span>
       <span class="hero-news__text" id="hero-news-text"></span>
     </a>
-    <p class="hero-eyebrow" id="hero-eyebrow"></p>
-    <h1 class="hero-title" id="hero-title"></h1>
-    <p class="hero-desc" id="hero-desc"></p>
+    <h1 class="hero-eyebrow" id="hero-eyebrow" data-pre>Trajes de fallera e indumentaria valenciana en Valencia</h1>
+    <p class="hero-title" id="hero-title" data-pre>El arte de vestir Valencia.</p>
+    <p class="hero-desc" id="hero-desc" data-pre>En Cosas Cucas apostamos por la artesanía cuidada, los detalles únicos y las piezas que transmiten dulzura, tradición y originalidad.</p>
     <div class="hero-actions">
       <a class="btn btn--cita" id="hero-cta-cita"
          href="https://wa.me/34667775501?text=Hola%2C%20me%20gustar%C3%ADa%20pedir%20cita%20en%20vuestra%20tienda."
@@ -3366,9 +3495,9 @@
 ═══════════════════════════════════════════════════════════════════════════ -->
 <section id="noticias" class="noticias-cab" aria-labelledby="noticias-title">
   <div class="container">
-    <p class="noticias-cab__eyebrow" id="noticias-eyebrow"></p>
-    <h2 class="noticias-cab__title" id="noticias-title"></h2>
-    <p class="noticias-cab__text" id="noticias-text"></p>
+    <p class="noticias-cab__eyebrow" id="noticias-eyebrow" data-pre>Temporada fallera 2027</p>
+    <h2 class="noticias-cab__title" id="noticias-title" data-pre>Noticias Cosas Cucas</h2>
+    <p class="noticias-cab__text" id="noticias-text" data-pre>Las falleras que vestimos este año y lo que queda por lucir…</p>
   </div>
 </section>
 
@@ -3383,7 +3512,7 @@
 <div class="puntilla" style="--arriba:var(--color-bg-dark);--abajo:var(--color-bg)" aria-hidden="true"></div>
 <section id="mas-noticias" class="mas-noticias" aria-labelledby="mas-noticias-title">
   <div class="container">
-    <h2 class="mas-noticias__title" id="mas-noticias-title"></h2>
+    <h2 class="mas-noticias__title" id="mas-noticias-title" data-pre>Más noticias</h2>
     <ul class="notas" id="notas"></ul>
   </div>
 </section>
@@ -3423,7 +3552,66 @@
     </div>
 
     <!-- Thumbnails de todas las colecciones -->
-    <div class="drops-archive-grid" id="drops-archive-grid"></div>
+    <div class="drops-archive-grid" id="drops-archive-grid" data-pre><article class="archive-card active" data-drop-index="0">
+      <h3 class="archive-card__label">Indumentaria Femenina</h3>
+      <div class="archive-card__img-wrap">
+        <img src="coleccion%202027/Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2018.00.54_60f4a827.jpg" alt="Indumentaria Femenina" loading="lazy" decoding="async">
+        <div class="archive-card__overlay">
+          <p class="archive-card__title">Fallas 2027 · La Luz de la Tradición</p>
+          <span class="archive-card__link">Ver colección</span>
+        </div>
+      </div>
+    </article>
+    <article class="archive-card" data-drop-index="1">
+      <h3 class="archive-card__label">Indumentaria Masculina</h3>
+      <div class="archive-card__img-wrap">
+        <img src="hombre/WhatsApp%20Image%202026-04-30%20at%2019.00.45.jpeg" alt="Indumentaria Masculina" loading="lazy" decoding="async">
+        <div class="archive-card__overlay">
+          <p class="archive-card__title">Indumentaria Masculina Valenciana</p>
+          <span class="archive-card__link">Ver colección</span>
+        </div>
+      </div>
+    </article>
+    <article class="archive-card" data-drop-index="2">
+      <h3 class="archive-card__label">Aderezos y Peinetas</h3>
+      <div class="archive-card__img-wrap">
+        <img src="aderezos2.jpg" alt="Aderezos y Peinetas" loading="lazy" decoding="async">
+        <div class="archive-card__overlay">
+          <p class="archive-card__title">El Complemento Perfecto</p>
+          <span class="archive-card__link">Ver colección</span>
+        </div>
+      </div>
+    </article>
+    <article class="archive-card" data-drop-index="3">
+      <h3 class="archive-card__label">Telas Valencianas</h3>
+      <div class="archive-card__img-wrap">
+        <img src="telas/263301bf103659434f9942ceb2d54566.jpg" alt="Telas Valencianas" loading="lazy" decoding="async">
+        <div class="archive-card__overlay">
+          <p class="archive-card__title">El Corazón de la Indumentaria</p>
+          <span class="archive-card__link">Ver colección</span>
+        </div>
+      </div>
+    </article>
+    <article class="archive-card" data-drop-index="4">
+      <h3 class="archive-card__label">Mantillas</h3>
+      <div class="archive-card__img-wrap">
+        <img src="mantillas/mantilla-blanca-flores-fucsia.webp" alt="Mantillas" loading="lazy" decoding="async">
+        <div class="archive-card__overlay">
+          <p class="archive-card__title">El Arte del Encaje Valenciano</p>
+          <span class="archive-card__link">Ver colección</span>
+        </div>
+      </div>
+    </article>
+    <article class="archive-card" data-drop-index="5">
+      <h3 class="archive-card__label">Semana Santa</h3>
+      <div class="archive-card__img-wrap">
+        <img src="semana%20santa/010893cf6c19d0bae03e9be537dc1330.jpg" alt="Semana Santa" loading="lazy" decoding="async">
+        <div class="archive-card__overlay">
+          <p class="archive-card__title">Devoción y Elegancia</p>
+          <span class="archive-card__link">Ver colección</span>
+        </div>
+      </div>
+    </article></div>
 
     <!-- ✦ FALLERAS MAYORES — sección dedicada -->
     <div id="falleras-mayores">
@@ -3442,15 +3630,15 @@
 <div class="puntilla" style="--arriba:var(--color-bg-alt);--abajo:var(--color-bg-dark)" aria-hidden="true"></div>
 <section id="zapatillas">
   <div class="zap-header">
-    <span class="zap-eyebrow" id="zap-eyebrow"></span>
-    <h2 class="zap-title" id="zap-title"></h2>
-    <p class="zap-sub" id="zap-sub"></p>
+    <span class="zap-eyebrow" id="zap-eyebrow" data-pre>Exclusivo Cosas Cucas</span>
+    <h2 class="zap-title" id="zap-title" data-pre>Deportivas Fallera</h2>
+    <p class="zap-sub" id="zap-sub" data-pre>Tela valenciana sobre deportiva blanca. Diseño exclusivo CC con el logo dorado bordado a mano. Edición limitada.</p>
   </div>
   <div class="zap-slider">
     <div class="zap-track" id="zapas-track"></div>
   </div>
   <div class="zapas-cta">
-    <a class="btn btn--gold" id="zap-cta" href="mailto:info@cosascucas.es" data-correo="consulta"></a>
+    <a class="btn btn--gold" id="zap-cta" href="mailto:info@cosascucas.es" data-correo="consulta" data-pre>Pedir mi par<span class="ab-track" aria-hidden="true"><span class="ab-orb"></span></span></a>
   </div>
 </section>
 
@@ -3463,28 +3651,82 @@
   <!-- Bloque narrativo -->
   <div class="hist-narrative">
     <div class="container">
-      <span class="historia-eyebrow" id="hist-eyebrow"></span>
-      <h2 class="historia-title" id="hist-title"></h2>
-      <div class="hist-body" id="hist-body"></div>
+      <span class="historia-eyebrow" id="hist-eyebrow" data-pre>Más de cuarenta años de historia</span>
+      <h2 class="historia-title" id="hist-title" data-pre>Falleras Mayores de Valencia y Corte de Honor</h2>
+      <div class="hist-body" id="hist-body" data-pre><p>Paquita Martorell fundó Cosas Cucas en el Cabañal de Valencia en 1982 con una misión clara: tratar la indumentaria valenciana con el respeto y la dedicación que merece. Cuatro décadas después, sus hijas Noelia y María continúan ese legado en el taller de la calle Burriana.</p><p>Hemos vestido a Falleras Mayores y Cortes de Honor con el rigor artesanal que exige la tradición. Cada pieza sale del taller con el mismo amor con que Paquita cosió la primera. La indumentaria valenciana es nuestra forma de vida.</p></div>
     </div>
   </div>
 
   <!-- Timeline oscuro -->
   <div class="hist-timeline-wrap">
-    <div class="historia-timeline" id="hist-timeline"></div>
+    <div class="historia-timeline" id="hist-timeline" data-pre><div class="hito"><div class="hito__year">1982</div><div class="hito__label">Fundación<br>en el Cabañal</div></div><div class="hito"><div class="hito__year">1990s</div><div class="hito__label">Primeras Cortes<br>d'Honor</div></div><div class="hito"><div class="hito__year">2000s</div><div class="hito__label">Falleras Mayores<br>de Valencia</div></div><div class="hito"><div class="hito__year">2010s</div><div class="hito__label">Referente<br>nacional</div></div><div class="hito"><div class="hito__year">Hoy</div><div class="hito__label">Nueva generación<br>en el taller</div></div></div>
   </div>
 
   <!-- FM Retratos — galería en Historia -->
   <div class="hist-fm-section" id="fm-en-historia">
     <div class="container">
-      <p class="hist-gallery-label" id="hist-fm-label"></p>
+      <p class="hist-gallery-label" id="hist-fm-label" data-pre>✦ Falleras Mayores y Corte de Honor de Valencia vestidas por Cosas Cucas</p>
       <div class="fm-grupo">
-        <h3 class="fm-grupo__title" id="fm-t-mayor"></h3>
-        <div class="fm-grid" id="fm-grid-mayor"></div>
+        <h3 class="fm-grupo__title" id="fm-t-mayor" data-pre>Falleras Mayores de València</h3>
+        <div class="fm-grid" id="fm-grid-mayor" data-pre><div class="fm-card">
+      <div class="fm-card__img"><img src="falleras-valencia/fm-1992-monica-palmer-cuenca.webp" alt="Mónica Palmer Cuenca, Fallera Mayor de València 1992" loading="lazy" decoding="async"></div>
+      <div class="fm-card__info">
+        <p class="fm-card__name">Mónica Palmer Cuenca</p>
+        <p class="fm-card__year">1992</p>
+      </div>
+    </div><div class="fm-card">
+      <div class="fm-card__img"><img src="falleras-valencia/fm-2001-adriana-polo-escrich.webp" alt="Adriana Polo Escrich, Fallera Mayor de València 2001" loading="lazy" decoding="async"></div>
+      <div class="fm-card__info">
+        <p class="fm-card__name">Adriana Polo Escrich</p>
+        <p class="fm-card__year">2001</p>
+      </div>
+    </div><div class="fm-card">
+      <div class="fm-card__img"><img src="falleras-valencia/fm-2013-begona-jimenez-tarazona.webp" alt="Begoña Jiménez Tarazona, Fallera Mayor de València 2013" loading="lazy" decoding="async" style="object-position:center 40%"></div>
+      <div class="fm-card__info">
+        <p class="fm-card__name">Begoña Jiménez Tarazona</p>
+        <p class="fm-card__year">2013</p>
+      </div>
+    </div></div>
       </div>
       <div class="fm-grupo">
-        <h3 class="fm-grupo__title" id="fm-t-infantil"></h3>
-        <div class="fm-grid" id="fm-grid-infantil"></div>
+        <h3 class="fm-grupo__title" id="fm-t-infantil" data-pre>Falleras Mayores Infantiles de València</h3>
+        <div class="fm-grid" id="fm-grid-infantil" data-pre><div class="fm-card">
+      <div class="fm-card__img"><img src="falleras-valencia/fmi-1988-sandra-leiva-herrero.webp" alt="Sandra Leiva Herrero, Fallera Mayor Infantil de València 1988" loading="lazy" decoding="async"></div>
+      <div class="fm-card__info">
+        <p class="fm-card__name">Sandra Leiva Herrero</p>
+        <p class="fm-card__year">1988</p>
+      </div>
+    </div><div class="fm-card">
+      <div class="fm-card__img"><img src="falleras-valencia/fmi-1992-carmen-serrano-bononat.webp" alt="Carmen Serrano Bononat, Fallera Mayor Infantil de València 1992" loading="lazy" decoding="async"></div>
+      <div class="fm-card__info">
+        <p class="fm-card__name">Carmen Serrano Bononat</p>
+        <p class="fm-card__year">1992</p>
+      </div>
+    </div><div class="fm-card">
+      <div class="fm-card__img"><img src="falleras-valencia/fmi-1993-maria-asensi-lopez.webp" alt="María Asensi López, Fallera Mayor Infantil de València 1993" loading="lazy" decoding="async"></div>
+      <div class="fm-card__info">
+        <p class="fm-card__name">María Asensi López</p>
+        <p class="fm-card__year">1993</p>
+      </div>
+    </div><div class="fm-card">
+      <div class="fm-card__img"><img src="falleras-valencia/fmi-1995-ana-belen-ferrer-chardi.webp" alt="Ana Belén Ferrer Chardí, Fallera Mayor Infantil de València 1995" loading="lazy" decoding="async"></div>
+      <div class="fm-card__info">
+        <p class="fm-card__name">Ana Belén Ferrer Chardí</p>
+        <p class="fm-card__year">1995</p>
+      </div>
+    </div><div class="fm-card">
+      <div class="fm-card__img"><img src="falleras-valencia/fmi-1998-ruth-galan-garcia.webp" alt="Ruth Galán García, Fallera Mayor Infantil de València 1998" loading="lazy" decoding="async"></div>
+      <div class="fm-card__info">
+        <p class="fm-card__name">Ruth Galán García</p>
+        <p class="fm-card__year">1998</p>
+      </div>
+    </div><div class="fm-card">
+      <div class="fm-card__img"><img src="falleras-valencia/fmi-2027-julia-vizcayno-orero.webp" alt="Julia Vizcayno Orero, Fallera Mayor Infantil de València 2027" loading="lazy" decoding="async"></div>
+      <div class="fm-card__info">
+        <p class="fm-card__name">Julia Vizcayno Orero</p>
+        <p class="fm-card__year">2027</p>
+      </div>
+    </div></div>
       </div>
     </div>
   </div>
@@ -3492,19 +3734,91 @@
   <!-- Cortes d'Honor -->
   <div class="hist-corts-section">
     <div class="container">
-      <h3 class="fm-grupo__title" id="hist-corts-label"></h3>
-      <div class="fm-grid corte-personas" id="corte-personas"></div>
-      <div class="cortes-grid" id="cortes-grid"></div>
-      <div class="corts-grid" id="corts-grid"></div>
+      <h3 class="fm-grupo__title" id="hist-corts-label" data-pre>Cortes de Honor</h3>
+      <div class="fm-grid corte-personas" id="corte-personas" data-pre><div class="fm-card">
+      <div class="fm-card__img"><img src="falleras-valencia/corte-2026-marta-capella-guanter.webp" alt="Marta Capella Guanter, Corte de Honor 2026" loading="lazy" decoding="async" style="object-position:center"></div>
+      <div class="fm-card__info">
+        <p class="fm-card__name">Marta Capella Guanter</p>
+        <p class="fm-card__year">Corte de Honor · 2026</p>
+        <p class="fm-card__falla">Falla Carretera d'Escrivà-Cooperativa de Sant Ferran</p>
+        
+        
+      </div>
+    </div><div class="fm-card">
+      <div class="fm-card__img"><img src="falleras-valencia/corte-2026-laura-llobell-lopez.webp" alt="Laura Llobell López, Corte de Honor 2026" loading="lazy" decoding="async" style="object-position:center"></div>
+      <div class="fm-card__info">
+        <p class="fm-card__name">Laura Llobell López</p>
+        <p class="fm-card__year">Corte de Honor · 2026</p>
+        <p class="fm-card__falla">Falla Exposició-Micer Mascó</p>
+        
+        
+      </div>
+    </div><div class="fm-card">
+      <div class="fm-card__img"><img src="falleras-valencia/corte-2027-alejandra-blanco-beltran.webp" alt="Alejandra Blanco Beltrán, Corte de Honor 2027" loading="lazy" decoding="async" style="object-position:center"></div>
+      <div class="fm-card__info">
+        <p class="fm-card__name">Alejandra Blanco Beltrán</p>
+        <p class="fm-card__year">Corte de Honor · 2027</p>
+        <p class="fm-card__falla">Falla Mestre Rodrigo-General Avilés</p>
+        
+        <p class="fm-card__credito">Foto: @alejandrablaancoo</p>
+      </div>
+    </div><div class="fm-card">
+      <div class="fm-card__img"><img src="falleras-valencia/corte-2027-laura-miquel-obarti.webp" alt="Laura Miquel Obarti, Corte de Honor 2027" loading="lazy" decoding="async" style="object-position:center"></div>
+      <div class="fm-card__info">
+        <p class="fm-card__name">Laura Miquel Obarti</p>
+        <p class="fm-card__year">Corte de Honor · 2027</p>
+        <p class="fm-card__falla">Falla Avinguda de l'Oest</p>
+        
+        
+      </div>
+    </div></div>
+      <div class="cortes-grid" id="cortes-grid" data-pre><div class="cort-card cort-card--corte">
+      <img src="falleras-valencia/corte-1995.webp" alt="Corte de Honor · 1995" loading="lazy" decoding="async">
+      <div class="cort-card__label">Corte de Honor · 1995</div>
+    </div><div class="cort-card cort-card--corte">
+      <img src="falleras-valencia/corte-1997.webp" alt="Corte de Honor · 1997" loading="lazy" decoding="async">
+      <div class="cort-card__label">Corte de Honor · 1997</div>
+    </div><div class="cort-card cort-card--corte">
+      <img src="falleras-valencia/corte-2012.webp" alt="Corte de Honor · 2012" loading="lazy" decoding="async">
+      <div class="cort-card__label">Corte de Honor · 2012</div>
+    </div></div>
+      <div class="corts-grid" id="corts-grid" data-pre><div class="cort-card">
+      <img src="Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_3665fa3e.jpg" alt="Fallera Xiqueta · Cosas Cucas" loading="lazy" decoding="async">
+      <div class="cort-card__label">Fallera Xiqueta · Cosas Cucas</div>
+    </div><div class="hist-corts-text">Cada Cort d'Honor es una historia escrita con hilos de seda, lágrimas contenidas y el orgullo de generaciones. En Cosas Cucas tenemos el privilegio de vestir ese momento —el más luminoso de la fiesta— con la misma devoción con que Valencia honra su tradición desde hace siglos. Falleras que brillan no solo por los bordados, sino por todo lo que llevan dentro.</div></div>
       <!-- Reinas de las Fallas de Burriana y su Corte de Honor (datos en REINAS_BURRIANA) -->
-      <h3 class="fm-grupo__title hist-burriana__title" id="hist-burriana-label"></h3>
-      <div class="hist-burriana" id="hist-burriana"></div>
+      <h3 class="fm-grupo__title hist-burriana__title" id="hist-burriana-label" data-pre>Reinas de Burriana</h3>
+      <div class="hist-burriana" id="hist-burriana" data-pre><figure class="hist-burriana__foto">
+      <img src="falleras-valencia/reinas-burriana-2025.webp" alt="Claudia Sabater Llopis, Reina Fallera de Burriana 2025, con traje rojo y banda, junto a Valeria Cuadros Marco, Reina Fallera Infantil, con traje verde; detrás, su corte" width="1080" height="1080" loading="lazy" decoding="async">
+      <figcaption><span class="hist-burriana__persona"><strong>Claudia Sabater Llopis</strong>Reina Fallera de Burriana 2025</span><span class="hist-burriana__persona"><strong>Valeria Cuadros Marco</strong>Reina Fallera Infantil de Burriana 2025</span></figcaption>
+    </figure></div>
       <!-- Indumentaria regional: una ventana por localidad (datos en INDUMENTARIA_REGIONAL).
            Sin fotos todavía, solo el título y «muy pronto» -->
       <div class="hist-regional" id="hist-regional">
-        <h3 class="fm-grupo__title hist-regional__title" id="hist-regional-label"></h3>
-        <div class="hist-regional__ventanas" id="hist-regional-ventanas"></div>
-        <p class="col-modal__grid-label hist-regional__elige" id="hist-regional-elige"></p>
+        <h3 class="fm-grupo__title hist-regional__title" id="hist-regional-label" data-pre>Indumentaria regional</h3>
+        <div class="hist-regional__ventanas" id="hist-regional-ventanas" data-pre><a class="col-modal__family" href="indumentaria-regional#almazora">
+      <img src="indumentaria-regional/almazora-elena-portales-montanana.webp" alt="" loading="lazy" decoding="async">
+      <span class="col-modal__family-name">Almazora</span>
+    </a><a class="col-modal__family" href="indumentaria-regional#almenara">
+      <img src="indumentaria-regional/almenara-sara-royo.webp" alt="" loading="lazy" decoding="async">
+      <span class="col-modal__family-name">Almenara</span>
+    </a><a class="col-modal__family" href="indumentaria-regional#burriana">
+      <img src="indumentaria-regional/burriana-alejandra-morcillo-ballester.webp" alt="" loading="lazy" decoding="async">
+      <span class="col-modal__family-name">Burriana</span>
+    </a><a class="col-modal__family" href="indumentaria-regional#navajas">
+      <img src="indumentaria-regional/navajas-elena-saez-martinez.webp" alt="" loading="lazy" decoding="async">
+      <span class="col-modal__family-name">Navajas</span>
+    </a><a class="col-modal__family" href="indumentaria-regional#segorbe">
+      <img src="indumentaria-regional/segorbe-ariadna-llop-joli.webp" alt="" loading="lazy" decoding="async">
+      <span class="col-modal__family-name">Segorbe</span>
+    </a><a class="col-modal__family" href="indumentaria-regional#vila-real">
+      <img src="indumentaria-regional/vila-real-blanca-nebot-campos.webp" alt="" loading="lazy" decoding="async">
+      <span class="col-modal__family-name">Vila-real</span>
+    </a><a class="col-modal__family" href="indumentaria-regional#vinaros">
+      <img src="indumentaria-regional/vinaros-carla-2023.webp" alt="" loading="lazy" decoding="async">
+      <span class="col-modal__family-name">Vinaròs</span>
+    </a></div>
+        <p class="col-modal__grid-label hist-regional__elige" id="hist-regional-elige" data-pre>Elige una localidad</p>
       </div>
     </div>
   </div>
@@ -3517,14 +3831,14 @@
 ═══════════════════════════════════════════════════════════════════════════ -->
 <section id="editorial">
   <div class="editorial-text" style="padding: 0 24px 0 max(24px, calc((100vw - 1280px)/2 + 24px));">
-    <p class="editorial-eyebrow" id="editorial-eyebrow"></p>
-    <h2 class="editorial-title" id="editorial-title"></h2>
-    <p class="editorial-body" id="editorial-body"></p>
+    <p class="editorial-eyebrow" id="editorial-eyebrow" data-pre>Desde 1982, en el corazón de Valencia</p>
+    <h2 class="editorial-title" id="editorial-title" data-pre>Cuarenta años confeccionando<br>la tradición valenciana.</h2>
+    <p class="editorial-body" id="editorial-body" data-pre>Paquita Martorell abrió Cosas Cucas en el Cabañal de Valencia en 1982, con una misión clara: tratar la indumentaria valenciana con el respeto y la dedicación que merece. Hoy, sus hijas Noelia y María continúan ese legado en el taller de la calle Burriana, vistiendo Falleras Mayores, Cortes de Honor y a todas las que sienten que llevar la indumentaria es mucho más que un vestido — es identidad.</p>
     <a class="btn" id="editorial-cta" href="#">Conoce la marca</a>
   </div>
   <div class="editorial-image">
     <img src="" alt="Editorial Cosas Cucas" id="editorial-img" class="img-placeholder" loading="lazy" decoding="async" />
-    <span class="editorial-image-caption" id="editorial-caption"></span>
+    <span class="editorial-image-caption" id="editorial-caption" data-pre>"Vestimos la tradición<br>con el amor que<br>merece Valencia."</span>
   </div>
 </section>
 
@@ -3536,9 +3850,9 @@
 
     <!-- CABECERA (dinámica vía buildDossierHistoria) -->
     <div class="dh-header">
-      <span class="dh-eyebrow" id="dh-eyebrow"></span>
-      <h2 class="dh-title" id="dh-title"></h2>
-      <p class="dh-lead" id="dh-lead"></p>
+      <span class="dh-eyebrow" id="dh-eyebrow" data-pre>✦ Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana</span>
+      <h2 class="dh-title" id="dh-title" data-pre>Nuestra Historia</h2>
+      <p class="dh-lead" id="dh-lead" data-pre>Desde su fundación en 1982 en los pintorescos poblados marítimos, <strong>Cosas Cucas</strong> ha sido un faro de tradición y elegancia en el mundo de la indumentaria valenciana. Inspirada por su profundo vínculo con el estudio y la pasión por la indumentaria, nuestra fundadora <strong>Paquita Martorell</strong> abrió las puertas de nuestra primera tienda en el entrañable barrio del Cabañal.</p>
     </div>
 
     <!-- GRID PRINCIPAL -->
@@ -3546,7 +3860,7 @@
 
       <div class="dh-img-main">
         <img src="historia/cosascucas_1.jpg" alt="La antigua tienda de Cosas Cucas en la calle Grabador Esteve" loading="lazy" decoding="async">
-        <div class="dh-img-caption" id="dh-img-caption"></div>
+        <div class="dh-img-caption" id="dh-img-caption" data-pre>Nuestra tienda de la calle Grabador Esteve, 30 · 46004 Valencia</div>
         <div class="dh-img-sub-row">
           <div class="dh-img-sub"><img src="historia/cosascucas_5-1030x1030.jpg" alt="Detalle artesanal" loading="lazy" decoding="async"></div>
           <div class="dh-img-sub"><img src="historia/CocasCucas-02.jpg" alt="Vistiendo a una fallera" loading="lazy" decoding="async"></div>
@@ -3555,21 +3869,21 @@
 
       <div class="dh-content">
         <div class="dh-block">
-          <h3 class="dh-block-title" id="dh-b1-title"></h3>
-          <p class="dh-block-text" id="dh-b1-p1"></p>
-          <p class="dh-block-text" id="dh-b1-p2"></p>
+          <h3 class="dh-block-title" id="dh-b1-title" data-pre>La segunda generación</h3>
+          <p class="dh-block-text" id="dh-b1-p1" data-pre>Las hijas de Paquita Martorell, <strong>Noelia y María</strong>, son una parte fundamental del legado y la continuidad de Cosas Cucas. Han heredado la pasión por la indumentaria valenciana y han dedicado su vida al negocio familiar. Desde que se unieron al taller dirigido por su madre, han aportado experiencia y habilidades para mantener los altos estándares de calidad y artesanía.</p>
+          <p class="dh-block-text" id="dh-b1-p2" data-pre>Han desempeñado un papel importante en la expansión y modernización de la empresa, participando en la elaboración de nuevos dibujos exclusivos y en la introducción de innovaciones en el proceso de confección.</p>
         </div>
         <div class="dh-block">
-          <h3 class="dh-block-title" id="dh-b2-title"></h3>
-          <p class="dh-block-text" id="dh-b2-p1"></p>
+          <h3 class="dh-block-title" id="dh-b2-title" data-pre>Nuestro compromiso</h3>
+          <p class="dh-block-text" id="dh-b2-p1" data-pre>Con más de cuatro décadas de dedicación, <strong>Cosas Cucas</strong> se ha distinguido por la calidad y el detalle de cada prenda. Nuestra participación en la vida fallera es un homenaje a nuestra historia y a la belleza de nuestra cultura.</p>
         </div>
         <div class="dh-block">
-          <h3 class="dh-block-title" id="dh-b3-title"></h3>
-          <p class="dh-block-text" id="dh-b3-p1"></p>
-          <p class="dh-block-text" id="dh-b3-p2"></p>
+          <h3 class="dh-block-title" id="dh-b3-title" data-pre>Una casa nueva en Burriana</h3>
+          <p class="dh-block-text" id="dh-b3-p1" data-pre>En la tienda de la calle Grabador Esteve hemos vestido a muchas falleras y hemos compartido con sus familias pruebas, nervios y alegrías. Desde el 1 de julio de 2026 os recibimos en nuestra nueva casa, en la calle Burriana, 21: una tienda luminosa, con las telas a la vista y el mismo cariño de siempre.</p>
+          <p class="dh-block-text" id="dh-b3-p2" data-pre>Hemos cambiado de calle, no de manera de trabajar. Y en el Cabañal, el barrio donde empezó todo, seguimos en Vicent Gallart, 49.</p>
         </div>
         <div class="dh-cta-row">
-          <a class="btn btn--gold" href="#contacto" id="dh-cta" data-correo="cita"></a>
+          <a class="btn btn--gold" href="#contacto" id="dh-cta" data-correo="cita" data-pre>Pedir cita en tienda<span class="ab-track" aria-hidden="true"><span class="ab-orb"></span></span></a>
         </div>
       </div>
     </div>
@@ -3581,7 +3895,7 @@
         <img src="noticias/tienda-10.webp" width="1600" height="1200" alt="" data-alt="9" loading="lazy" decoding="async">
         <img src="noticias/tienda-03.webp" width="900" height="1200" alt="" data-alt="2" loading="lazy" decoding="async">
       </div>
-      <figcaption class="dh-img-caption" id="dh-nueva-caption"></figcaption>
+      <figcaption class="dh-img-caption" id="dh-nueva-caption" data-pre>Nuestra nueva casa: calle Burriana, 21 · 46005 Valencia</figcaption>
     </figure>
 
   </div>
@@ -3595,13 +3909,91 @@
   <div class="container">
     <div class="section-header">
       <div>
-        <h2 class="section-title" id="deco-title"></h2>
-        <p class="section-subtitle" id="deco-sub"></p>
+        <h2 class="section-title" id="deco-title" data-pre>Decoración e Interiorismo</h2>
+        <p class="section-subtitle" id="deco-sub" data-pre>Espacios vestidos con el alma de Valencia.</p>
       </div>
-      <a class="btn" id="deco-cta" href="mailto:info@cosascucas.es" data-correo="proyecto"></a>
+      <a class="btn" id="deco-cta" href="mailto:info@cosascucas.es" data-correo="proyecto" data-pre>Consultar proyecto<span class="ab-track" aria-hidden="true"><span class="ab-orb"></span></span></a>
     </div>
-    <div class="deco-body" id="deco-body"></div>
-    <div class="deco-mosaic" id="deco-mosaic"></div>
+    <div class="deco-body" id="deco-body" data-pre><p>Más allá de la indumentaria, en Cosas Cucas llevamos décadas ayudando a familias valencianas a vestir también sus hogares. Cortinas, tapizados, colchas y complementos textiles confeccionados con los mismos tejidos exclusivos de nuestro taller: sedas, brocados, terciopelos y telas artesanales que transforman cualquier estancia.</p><p>Desde la elección de la tela hasta la confección final, nuestro equipo te asesora para crear ambientes únicos que reflejan la riqueza de la tradición textil valenciana. Una decoración con carácter propio, hecha a medida, con el mismo amor con que confeccionamos cada pieza de indumentaria.</p></div>
+    <div class="deco-mosaic" id="deco-mosaic" data-pre><div class="deco-cell" style="--i:0" data-index="0" data-img="decoracion/cortinas.jpg" data-caption="Cortinas — Confección a Medida">
+      <img src="decoracion/cortinas.jpg" alt="Cortinas — Confección a Medida" loading="lazy" decoding="async">
+      <div class="deco-cell__zoom">
+        <div class="deco-zoom-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="16.5" y1="16.5" x2="22" y2="22"></line>
+            <line x1="11" y1="8" x2="11" y2="14"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </div>
+      </div>
+      <div class="deco-cell__caption">Cortinas — Confección a Medida</div>
+    </div><div class="deco-cell" style="--i:1" data-index="1" data-img="decoracion/cortinas%202.jpg" data-caption="Cortinas — Ambiente Salón">
+      <img src="decoracion/cortinas%202.jpg" alt="Cortinas — Ambiente Salón" loading="lazy" decoding="async">
+      <div class="deco-cell__zoom">
+        <div class="deco-zoom-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="16.5" y1="16.5" x2="22" y2="22"></line>
+            <line x1="11" y1="8" x2="11" y2="14"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </div>
+      </div>
+      <div class="deco-cell__caption">Cortinas — Ambiente Salón</div>
+    </div><div class="deco-cell" style="--i:2" data-index="2" data-img="decoracion/cortinas3.jpg" data-caption="Cortinas — Detalle Tejido">
+      <img src="decoracion/cortinas3.jpg" alt="Cortinas — Detalle Tejido" loading="lazy" decoding="async">
+      <div class="deco-cell__zoom">
+        <div class="deco-zoom-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="16.5" y1="16.5" x2="22" y2="22"></line>
+            <line x1="11" y1="8" x2="11" y2="14"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </div>
+      </div>
+      <div class="deco-cell__caption">Cortinas — Detalle Tejido</div>
+    </div><div class="deco-cell" style="--i:3" data-index="3" data-img="decoracion/cortinas4.jpg" data-caption="Cortinas — Acabado Artesanal">
+      <img src="decoracion/cortinas4.jpg" alt="Cortinas — Acabado Artesanal" loading="lazy" decoding="async">
+      <div class="deco-cell__zoom">
+        <div class="deco-zoom-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="16.5" y1="16.5" x2="22" y2="22"></line>
+            <line x1="11" y1="8" x2="11" y2="14"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </div>
+      </div>
+      <div class="deco-cell__caption">Cortinas — Acabado Artesanal</div>
+    </div><div class="deco-cell" style="--i:4" data-index="4" data-img="decoracion/sillon.jpg" data-caption="Sillón — Tapizado Exclusivo">
+      <img src="decoracion/sillon.jpg" alt="Sillón — Tapizado Exclusivo" loading="lazy" decoding="async">
+      <div class="deco-cell__zoom">
+        <div class="deco-zoom-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="16.5" y1="16.5" x2="22" y2="22"></line>
+            <line x1="11" y1="8" x2="11" y2="14"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </div>
+      </div>
+      <div class="deco-cell__caption">Sillón — Tapizado Exclusivo</div>
+    </div><div class="deco-cell" style="--i:5" data-index="5" data-img="decoracion/cama.jpg" data-caption="Colcha — Dormitorio a Medida">
+      <img src="decoracion/cama.jpg" alt="Colcha — Dormitorio a Medida" loading="lazy" decoding="async">
+      <div class="deco-cell__zoom">
+        <div class="deco-zoom-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="16.5" y1="16.5" x2="22" y2="22"></line>
+            <line x1="11" y1="8" x2="11" y2="14"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </div>
+      </div>
+      <div class="deco-cell__caption">Colcha — Dormitorio a Medida</div>
+    </div></div>
   </div>
 </section>
 <script>
@@ -3678,12 +4070,56 @@
   <div class="container">
     <div class="section-header">
       <div>
-        <p class="section-eyebrow" id="videos-eyebrow"></p>
-        <h2 class="section-title" id="videos-title"></h2>
-        <p class="section-subtitle" id="videos-subtitle"></p>
+        <p class="section-eyebrow" id="videos-eyebrow" data-pre>Cosas Cucas en Vídeo</p>
+        <h2 class="section-title" id="videos-title" data-pre>Vídeos</h2>
+        <p class="section-subtitle" id="videos-subtitle" data-pre>Cuatro décadas de amor, seda e identidad. Aquí, en imágenes.</p>
       </div>
     </div>
-    <div class="videos-grid" id="videos-grid"></div>
+    <div class="videos-grid" id="videos-grid" data-pre><a class="video-card" href="https://www.youtube.com/watch?v=a4B9lPyNLbI" target="_blank" rel="noopener" aria-label="Indumentaria Cosas Cucas">
+      <div class="video-card__thumb">
+        <img src="https://img.youtube.com/vi/a4B9lPyNLbI/hqdefault.jpg" alt="Indumentaria Cosas Cucas" loading="lazy" decoding="async">
+        <div class="video-card__play">
+          <div class="video-card__play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"></polygon></svg>
+          </div>
+        </div>
+      </div>
+      <div class="video-card__info">
+        <p class="video-card__title">Indumentaria Cosas Cucas</p>
+        <p class="video-card__desc">Cada puntada lleva dentro el alma de Valencia. Este es el taller donde la tradición cobra vida de la mano de quienes la han guardado durante más de cuarenta años.</p>
+        <span class="video-card__yt">▶ Ver en YouTube</span>
+      </div>
+    </a>
+    <a class="video-card" href="https://www.youtube.com/watch?v=32RfUkDvuwg" target="_blank" rel="noopener" aria-label="VLF · Cosas Cucas">
+      <div class="video-card__thumb">
+        <img src="https://img.youtube.com/vi/32RfUkDvuwg/hqdefault.jpg" alt="VLF · Cosas Cucas" loading="lazy" decoding="async">
+        <div class="video-card__play">
+          <div class="video-card__play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"></polygon></svg>
+          </div>
+        </div>
+      </div>
+      <div class="video-card__info">
+        <p class="video-card__title">VLF · Cosas Cucas</p>
+        <p class="video-card__desc">El momento en que la indumentaria deja de ser tela para convertirse en emoción pura. Cosas Cucas, presente en una de las citas más esperadas de la temporada fallera.</p>
+        <span class="video-card__yt">▶ Ver en YouTube</span>
+      </div>
+    </a>
+    <a class="video-card" href="https://www.youtube.com/watch?v=ISsCTQGo2uE" target="_blank" rel="noopener" aria-label="Tradicions · Desfile Cosas Cucas">
+      <div class="video-card__thumb">
+        <img src="https://img.youtube.com/vi/ISsCTQGo2uE/hqdefault.jpg" alt="Tradicions · Desfile Cosas Cucas" loading="lazy" decoding="async">
+        <div class="video-card__play">
+          <div class="video-card__play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"></polygon></svg>
+          </div>
+        </div>
+      </div>
+      <div class="video-card__info">
+        <p class="video-card__title">Tradicions · Desfile Cosas Cucas</p>
+        <p class="video-card__desc">Falleras que caminan con el peso de una historia bordada en hilo de oro. Cosas Cucas lleva la tradición valenciana a la pasarela con la elegancia de siempre.</p>
+        <span class="video-card__yt">▶ Ver en YouTube</span>
+      </div>
+    </a></div>
   </div>
 </section>
 
@@ -3703,12 +4139,20 @@
           <span id="res-tag-label"></span>
         </div>
         <!-- Título y descripción -->
-        <h2 class="res-heading" id="res-title"></h2>
-        <p class="res-desc"   id="res-sub"></p>
+        <h2 class="res-heading" id="res-title" data-pre>Lo que dicen de nosotras</h2>
+        <p class="res-desc"   id="res-sub" data-pre>Cuatro décadas vistiendo familias valencianas. La confianza de nuestras clientas es el mayor reconocimiento.</p>
         <!-- Stats: solo 3 tarjetas (sin revenue) -->
         <div class="res-stats" id="res-stats"></div>
         <!-- CTAs -->
-        <div class="res-actions" id="res-actions"></div>
+        <div class="res-actions" id="res-actions" data-pre><a class="btn btn--cita" data-correo="cita" href="https://wa.me/34667775501?text=Hola%2C%20me%20gustar%C3%ADa%20pedir%20cita." target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;vertical-align:middle">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3.09 4.18 2 2 0 0 1 5.07 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L9.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"></path>
+      </svg>
+      Pedir cita
+    <span class="ab-track" aria-hidden="true"><span class="ab-orb"></span></span></a>
+    <a class="btn" href="galeria" target="_blank" rel="noopener">
+      Ver galería
+    <span class="ab-track" aria-hidden="true"><span class="ab-orb"></span></span></a></div>
       </div>
 
       <!-- Columna derecha — stacking sticky cards -->
@@ -3743,34 +4187,61 @@
   <div class="container">
     <div class="section-header">
       <div>
-        <p class="section-eyebrow" id="contacto-eyebrow"></p>
-        <h2 class="section-title" id="contacto-title"></h2>
+        <p class="section-eyebrow" id="contacto-eyebrow" data-pre>Escríbenos</p>
+        <h2 class="section-title" id="contacto-title" data-pre>Contacto</h2>
       </div>
     </div>
     <div class="contacto-grid">
-      <div class="contacto-info" id="contacto-info"></div>
+      <div class="contacto-info" id="contacto-info" data-pre><div class="contacto-info-item">
+      <div class="contacto-icon"><svg viewBox="0 0 24 24" width="17" height="17"><polyline points="3 11 12 2 21 11"></polyline><line x1="9" y1="22" x2="9" y2="12"></line><line x1="15" y1="22" x2="15" y2="12"></line><path d="M3 22h18"></path></svg></div>
+      <div>
+        <p class="contacto-info-label">Tienda Principal</p>
+        <p class="contacto-info-val">C/ Burriana, 21 · 46005 Valencia
+Tel: 963 511 556</p>
+      </div>
+    </div><div class="contacto-info-item">
+      <div class="contacto-icon"><svg viewBox="0 0 24 24" width="17" height="17"><polyline points="3 11 12 2 21 11"></polyline><line x1="9" y1="22" x2="9" y2="12"></line><line x1="15" y1="22" x2="15" y2="12"></line><path d="M3 22h18"></path></svg></div>
+      <div>
+        <p class="contacto-info-label">Tienda Cabañal</p>
+        <p class="contacto-info-val">C/ Vicent Gallart, 49 · 46011 Valencia
+Tel: 963 714 997</p>
+      </div>
+    </div><div class="contacto-info-item">
+      <div class="contacto-icon"><svg viewBox="0 0 24 24" width="17" height="17"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></div>
+      <div>
+        <p class="contacto-info-label">Email</p>
+        <p class="contacto-info-val">info@cosascucas.es</p>
+      </div>
+    </div><div class="contacto-info-item">
+      <div class="contacto-icon"><svg viewBox="0 0 24 24" width="17" height="17"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
+      <div>
+        <p class="contacto-info-label">Horario</p>
+        <p class="contacto-info-val">Lun–Vie: 10:00–13:30 · 17:00–20:00
+Sábados: 10:30–13:30</p>
+      </div>
+    </div></div>
       <div>
         <div class="form-row">
           <div class="form-field">
-            <label id="f-name-label"></label>
+            <label id="f-name-label" data-pre>Nombre</label>
             <input type="text" id="f-name" autocomplete="given-name" />
           </div>
           <div class="form-field">
-            <label id="f-email-label"></label>
+            <label id="f-email-label" data-pre>Email</label>
             <input type="email" id="f-email" autocomplete="email" />
           </div>
         </div>
         <div class="form-field">
-          <label id="f-subject-label"></label>
+          <label id="f-subject-label" data-pre>Asunto</label>
           <input type="text" id="f-subject" />
         </div>
         <div class="form-field">
-          <label id="f-msg-label"></label>
+          <label id="f-msg-label" data-pre>Mensaje</label>
           <textarea id="f-msg" rows="6"></textarea>
         </div>
         <div class="form-submit-row">
-          <button class="btn btn--filled" id="f-submit" type="button"></button>
-          <p class="form-note" id="f-note"></p>
+          <button class="btn btn--filled" id="f-submit" type="button" data-pre>Enviar por WhatsApp<span class="ab-track" aria-hidden="true"><span class="ab-orb"></span></span></button>
+          <p class="form-note" id="f-note" data-pre>Tu mensaje nos llega por WhatsApp. Si es urgente, llámanos al 963 511 556.</p>
         </div>
       </div>
     </div>
@@ -3783,9 +4254,9 @@
 <section id="visita">
   <div class="container">
     <div class="visita-header">
-      <p class="section-eyebrow" id="visita-eyebrow"></p>
-      <h2 id="visita-title"></h2>
-      <p id="visita-subtitle"></p>
+      <p class="section-eyebrow" id="visita-eyebrow" data-pre>Dónde encontrarnos</p>
+      <h2 id="visita-title" data-pre>Visítanos en Valencia</h2>
+      <p id="visita-subtitle" data-pre>Dos tiendas en el corazón de la ciudad. Ven a conocernos y te asesoraremos sin compromiso.</p>
     </div>
     <div class="stores-grid">
 
@@ -3793,11 +4264,11 @@
       <div class="store-card">
         <iframe class="store-card__map" id="store1-map" src="https://www.openstreetmap.org/export/embed.html?bbox=-0.36986,39.46396,-0.36386,39.46636&amp;layer=mapnik&amp;marker=39.46516,-0.36686" title="Mapa: C/ Burriana, 21 · Valencia" loading="lazy"></iframe>
         <div class="store-card__info">
-          <p class="store-card__name" id="store1-name"></p>
+          <p class="store-card__name" id="store1-name" data-pre>Tienda Principal</p>
           <p class="store-card__address">C/ Burriana, 21<br>46005 Valencia</p>
-          <p class="store-card__phone" id="store1-phone"></p>
-          <p class="store-card__hours" id="store1-hours"></p>
-          <a class="store-card__link" id="store1-link" href="https://maps.google.com/?q=Calle+Burriana+21+46005+Valencia" target="_blank" rel="noopener"></a>
+          <p class="store-card__phone" id="store1-phone" data-pre><a href="tel:963511556">963 511 556</a></p>
+          <p class="store-card__hours" id="store1-hours" data-pre>Lun–Vie: 10:00–13:30 · 17:00–20:00<br>Sábado: 10:30–13:30<br>Domingo: Cerrado</p>
+          <a class="store-card__link" id="store1-link" href="https://maps.google.com/?q=Calle+Burriana+21+46005+Valencia" target="_blank" rel="noopener" data-pre>Cómo llegar</a>
         </div>
       </div>
 
@@ -3805,11 +4276,11 @@
       <div class="store-card">
         <iframe class="store-card__map" id="store2-map" src="https://www.openstreetmap.org/export/embed.html?bbox=-0.33191,39.46434,-0.32591,39.46674&amp;layer=mapnik&amp;marker=39.46554,-0.32891" title="Mapa: C/ Vicent Gallart, 49 · Valencia" loading="lazy"></iframe>
         <div class="store-card__info">
-          <p class="store-card__name" id="store2-name"></p>
+          <p class="store-card__name" id="store2-name" data-pre>Tienda Cabañal</p>
           <p class="store-card__address">C/ Vicent Gallart, 49<br>46011 Valencia</p>
-          <p class="store-card__phone" id="store2-phone"></p>
-          <p class="store-card__hours" id="store2-hours"></p>
-          <a class="store-card__link" id="store2-link" href="https://maps.google.com/?q=Carrer+Vicent+Gallart+49+Valencia" target="_blank" rel="noopener"></a>
+          <p class="store-card__phone" id="store2-phone" data-pre><a href="tel:963714997">963 714 997</a></p>
+          <p class="store-card__hours" id="store2-hours" data-pre>Lun–Vie: 10:00–13:30 · 17:00–20:00<br>Sábado: 10:30–13:30<br>Domingo: Cerrado</p>
+          <a class="store-card__link" id="store2-link" href="https://maps.google.com/?q=Carrer+Vicent+Gallart+49+Valencia" target="_blank" rel="noopener" data-pre>Cómo llegar</a>
         </div>
       </div>
 
@@ -3827,14 +4298,14 @@
       <!-- BRAND -->
       <div class="footer-brand" id="footer-brand">
         <img
-          src="logo%20cosascucas.png"
+          src="logo-cosas-cucas.webp" width="654" height="160"
           alt="Cosas Cucas"
           loading="lazy" decoding="async"
           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
         />
         <span class="logo-text-footer" style="display:none;">Cosas Cucas</span>
-        <p id="footer-about-text"></p>
-        <div class="footer-social" id="footer-social"></div>
+        <p id="footer-about-text" data-pre>Más de cuarenta años cosiendo con las manos lo que ninguna máquina puede igualar. Cada pieza que sale de nuestro taller es única: confeccionada a medida, bordada con paciencia y tejida con el alma que Paquita Martorell puso en esta casa en 1982. Hoy, sus hijas siguen ese mismo camino —hilo a hilo, puntada a puntada— para que la indumentaria valenciana siga viva y tan hermosa como siempre.</p>
+        <div class="footer-social" id="footer-social" data-pre><a href="https://www.instagram.com/cosascucass/" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg></a><a href="https://www.tiktok.com/@cosas.cucas1982" aria-label="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"></path></svg></a><a href="https://www.facebook.com/cosas.cucas.3/" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg></a></div>
         <div class="footer-sellos">
           <img class="footer-sello"
                src="ARTESANIA-COMUNIDAD-VALENCIANA-NUEVA.webp"
@@ -3854,13 +4325,56 @@
         </div>
       </div>
       <!-- COLS generadas por JS -->
-      <div id="footer-col-1"></div>
-      <div id="footer-col-2"></div>
-      <div id="footer-col-3"></div>
+      <div id="footer-col-1" data-pre><h4>Colecciones</h4>
+    <ul><li><a href="#drops-archive" data-drop="falles-2027-mujer">
+        <span class="fc-title">Indumentaria Femenina</span>
+        <span class="fc-sub">Fallas 2027 · La Luz de la Tradición</span>
+      </a></li><li><a href="#drops-archive" data-drop="hombre-2027">
+        <span class="fc-title">Indumentaria Masculina</span>
+        <span class="fc-sub">Indumentaria Masculina Valenciana</span>
+      </a></li><li><a href="#drops-archive" data-drop="aderezos-peinetas">
+        <span class="fc-title">Aderezos y Peinetas</span>
+        <span class="fc-sub">El Complemento Perfecto</span>
+      </a></li><li><a href="#drops-archive" data-drop="telas-bordados">
+        <span class="fc-title">Telas Valencianas</span>
+        <span class="fc-sub">El Corazón de la Indumentaria</span>
+      </a></li><li><a href="#drops-archive" data-drop="mantillas">
+        <span class="fc-title">Mantillas</span>
+        <span class="fc-sub">El Arte del Encaje Valenciano</span>
+      </a></li><li><a href="#drops-archive" data-drop="semana-santa">
+        <span class="fc-title">Semana Santa</span>
+        <span class="fc-sub">Devoción y Elegancia</span>
+      </a></li></ul></div>
+      <div id="footer-col-2" data-pre><h4>Nuestras tiendas</h4>
+    
+      <div class="fs-block">
+        <p class="fs-name">Tienda Principal</p>
+        <p class="fs-addr">C/ Burriana, 21<br>46005 Valencia</p>
+        <div class="fs-contacts">
+          <a href="tel:963511556"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.09 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>963 511 556</a>
+          <a href="https://wa.me/34667775501" target="_blank" rel="noopener"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"></path><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.526 5.845L0 24l6.335-1.502A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.017-1.376l-.36-.215-3.736.885.901-3.646-.236-.376A9.818 9.818 0 1 1 12 21.818z"></path></svg>667 775 501</a>
+          <a href="mailto:info@cosascucas.es"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>info@cosascucas.es</a>
+        </div>
+        <p class="fs-hours">L–V: 10:00–13:30 · 17:00–20:00<br>Sáb: 10:30–13:30</p>
+        <a class="fs-map" href="https://maps.google.com/?q=Calle+Burriana+21+46005+Valencia" target="_blank" rel="noopener">Ver en mapa →</a>
+      </div>
+      <div class="fs-block">
+        <p class="fs-name">Cabañal</p>
+        <p class="fs-addr">C/ Vicent Gallart 49<br>46011 Valencia</p>
+        <div class="fs-contacts">
+          <a href="tel:963714997"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.09 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>963 714 997</a>
+          
+          
+        </div>
+        <p class="fs-hours">L–V: 10:00–13:30 · 17:00–20:00<br>Sáb: 10:30–13:30</p>
+        <a class="fs-map" href="https://maps.google.com/?q=Carrer+Vicent+Gallart+49+Valencia" target="_blank" rel="noopener">Ver en mapa →</a>
+      </div></div>
+      <div id="footer-col-3" data-pre><h4>Información</h4>
+    <ul><li><a href="mailto:info@cosascucas.es">Escríbenos</a></li><li><a href="#contacto" data-correo="cita">Pedir cita</a></li><li><a href="politica-privacidad" target="_blank" rel="noopener">Política de privacidad</a></li><li><a href="aviso-legal" target="_blank" rel="noopener">Aviso legal</a></li></ul></div>
     </div>
     <div class="footer-bottom">
-      <p id="footer-copyright"></p>
-      <div class="footer-bottom-links" id="footer-bottom-links"></div>
+      <p id="footer-copyright" data-pre>© 2026 Cosas Cucas. Todos los derechos reservados.</p>
+      <div class="footer-bottom-links" id="footer-bottom-links" data-pre><a href="politica-privacidad" target="_blank" rel="noopener">Privacidad</a><a href="aviso-legal" target="_blank" rel="noopener">Aviso legal</a></div>
     </div>
   </div>
 </footer>
@@ -3891,7 +4405,7 @@
      CONTENIDO BILINGÜE — Edita aquí los textos en ES y VAL
 ═══════════════════════════════════════════════════════════════════════════ -->
 <script src="regional-datos.js?v=4"></script>
-<script src="formulario-correo.js?v=1" defer></script>
+<script src="formulario-correo.js?v=2" defer></script>
 <script>
 /* ═══════════════════════════════════════════════════════════════════════
    CONTENIDO BILINGÜE  ·  ES = Castellano  ·  CA = Valencià
@@ -4177,7 +4691,7 @@ const translations = {
       { label: 'Historia',         href: '#historia'        },
       { label: 'Decoración',   href: '#decoracion'    },
       { label: 'Vídeos',       href: '#videos'        },
-      { label: 'Galería',      href: 'galeria.html', target: '_blank' },
+      { label: 'Galería',      href: 'galeria', target: '_blank' },
       { label: 'Contacto', href: '#contacto' },
     ],
     stripe: [
@@ -4210,6 +4724,8 @@ const translations = {
       cerrar:  'Cerrar la noticia',
       volver:  'Volver a las noticias',
     },
+    /* título principal de la página (h1): lo que la gente busca en Google */
+    heroH1: 'Trajes de fallera e indumentaria valenciana en Valencia',
     drops: [
       {
         id: 'falles-2027-mujer', title: 'Indumentaria Femenina', subtitle: 'Fallas 2027 · La Luz de la Tradición',
@@ -4514,15 +5030,15 @@ const translations = {
       info: [
         { label: 'Escríbenos',             href: 'mailto:info@cosascucas.es' },
         { label: 'Pedir cita',             href: '#contacto', correo: 'cita' },
-        { label: 'Política de privacidad', href: 'politica-privacidad.html', target: '_blank' },
-        { label: 'Aviso legal',            href: 'aviso-legal.html',         target: '_blank' },
+        { label: 'Política de privacidad', href: 'politica-privacidad', target: '_blank' },
+        { label: 'Aviso legal',            href: 'aviso-legal',         target: '_blank' },
       ],
       bottomLinks: [
-        { label: 'Privacidad', href: 'politica-privacidad.html', target: '_blank' },
-        { label: 'Aviso legal', href: 'aviso-legal.html',        target: '_blank' },
+        { label: 'Privacidad', href: 'politica-privacidad', target: '_blank' },
+        { label: 'Aviso legal', href: 'aviso-legal',        target: '_blank' },
       ],
       archiveTitle:    'Todas las Colecciones',
-      archiveSubtitle: 'Conoce nuestro trabajo y pasión por nuestra indumentaria, tradición, detalle y artesanía en cada creación. Nuestro trabajo, nuestra ilusión.',
+      archiveSubtitle: 'Trajes de fallera y de valenciano a medida, espolines y telas a metro, aderezos y peinetas, mantillas e indumentaria de Semana Santa. Nuestro trabajo, nuestra ilusión.',
       viewCollection:  'Ver colección',
       viewProduct:     '+ Ver pieza',
       viewAll:         'Ver todo',
@@ -4677,7 +5193,7 @@ const translations = {
       { label: "Història",           href: '#historia'         },
       { label: 'Decoració',     href: '#decoracion'    },
       { label: 'Vídeos',        href: '#videos'        },
-      { label: 'Galeria',       href: 'galeria.html', target: '_blank' },
+      { label: 'Galeria',       href: 'galeria', target: '_blank' },
       { label: 'Contacte', href: '#contacto' },
     ],
     stripe: [
@@ -4710,6 +5226,8 @@ const translations = {
       cerrar:  'Tancar la notícia',
       volver:  'Tornar a les notícies',
     },
+    /* título principal de la página (h1): lo que la gente busca en Google */
+    heroH1: 'Vestits de fallera i indumentària valenciana a València',
     drops: [
       {
         id: 'falles-2027-dona', title: 'Indumentària Femenina', subtitle: 'Falles 2027 · La Llum de la Tradició',
@@ -4994,15 +5512,15 @@ const translations = {
       info: [
         { label: "Escriu-nos",             href: 'mailto:info@cosascucas.es' },
         { label: 'Demanar cita',           href: '#contacto', correo: 'cita' },
-        { label: 'Política de privacitat', href: 'politica-privacidad.html', target: '_blank' },
-        { label: "Avís legal",             href: 'aviso-legal.html',         target: '_blank' },
+        { label: 'Política de privacitat', href: 'politica-privacidad', target: '_blank' },
+        { label: "Avís legal",             href: 'aviso-legal',         target: '_blank' },
       ],
       bottomLinks: [
-        { label: 'Privacitat', href: 'politica-privacidad.html', target: '_blank' },
-        { label: "Avís legal", href: 'aviso-legal.html',         target: '_blank' },
+        { label: 'Privacitat', href: 'politica-privacidad', target: '_blank' },
+        { label: "Avís legal", href: 'aviso-legal',         target: '_blank' },
       ],
       archiveTitle:    "Totes les Col·leccions",
-      archiveSubtitle: "Coneix el nostre treball i passió per la nostra indumentària, tradició, detall i artesania en cada creació. El nostre treball, la nostra il·lusió.",
+      archiveSubtitle: "Vestits de fallera i de valencià a mida, espolins i teles a metre, adreços i peinetes, mantellines i indumentària de Setmana Santa. El nostre treball, la nostra il·lusió.",
       viewCollection:  "Veure col·lecció",
       viewProduct:     '+ Veure peça',
       viewAll:         'Veure tot',
@@ -5370,7 +5888,7 @@ document.addEventListener('keydown', e => {
 function renderHero(drop) {
   /* Texto del hero — las imágenes las gestiona initHeroSlider() */
   document.getElementById('hero-badge').textContent   = '';
-  document.getElementById('hero-eyebrow').textContent = drop.title + ' · ' + drop.subtitle;
+  document.getElementById('hero-eyebrow').textContent = t().heroH1;
   document.getElementById('hero-title').textContent   = drop.heroTitle || drop.title;
   document.getElementById('hero-desc').textContent    = drop.description;
 }
@@ -5425,11 +5943,15 @@ function initHeroSlider() {
   /* Con "reducir movimiento" la portada se queda en la primera foto */
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  /* ── Precargar segunda imagen en el slot inactivo ── */
-  load(elB, SLIDES[1 % SLIDES.length]);
+  /* ── Precargar la segunda foto cuando ya ha llegado la primera (si no, compiten en el móvil) ── */
+  const precargar = () => load(elB, SLIDES[1 % SLIDES.length]);
+  if (elA.complete) precargar();
+  else ['load', 'error'].forEach(ev => elA.addEventListener(ev, precargar, { once: true }));
 
   /* ── Bucle de crossfade ── */
   setInterval(() => {
+    /* si la siguiente foto aún no ha llegado (conexión lenta), se espera a la próxima vuelta */
+    if (!inactiveEl.getAttribute('src') || !inactiveEl.complete) return;
     cur = (cur + 1) % SLIDES.length;
 
     /* inactiveEl ya tiene la siguiente imagen precargada */
@@ -5552,11 +6074,11 @@ function buildArchive() {
 
   document.getElementById('drops-archive-grid').innerHTML = t().drops.map((d, i) => `
     <article class="archive-card${i === activeDropIndex ? ' active' : ''}" data-drop-index="${i}">
-      <span class="archive-card__label">${d.title}</span>
+      <h3 class="archive-card__label">${d.title}</h3>
       <div class="archive-card__img-wrap">
         <img src="${d.archiveImage}" alt="${d.title}" loading="lazy" decoding="async" />
         <div class="archive-card__overlay">
-          <h3 class="archive-card__title">${d.subtitle}</h3>
+          <p class="archive-card__title">${d.subtitle}</p>
           <span class="archive-card__link">${ft.viewCollection}</span>
         </div>
       </div>
@@ -5791,7 +6313,7 @@ function buildRegional() {
   box.hidden = false;
   document.getElementById('hist-regional-label').textContent = h.regionalLabel;
   document.getElementById('hist-regional-elige').textContent = locs.length ? h.regionalElige : h.regionalVacio;
-  document.getElementById('hist-regional-ventanas').innerHTML = locs.map(l => `<a class="col-modal__family" href="indumentaria-regional.html#${l.id}">
+  document.getElementById('hist-regional-ventanas').innerHTML = locs.map(l => `<a class="col-modal__family" href="indumentaria-regional#${l.id}">
       <img src="${l.portada}" alt="" loading="lazy" decoding="async" />
       <span class="col-modal__family-name">${l.nombre[lg]}</span>
     </a>`).join('');
@@ -6028,7 +6550,7 @@ function buildResenas() {
       </svg>
       ${r.cta.primary}
     </a>
-    <a class="btn" href="galeria.html" target="_blank" rel="noopener">
+    <a class="btn" href="galeria" target="_blank" rel="noopener">
       ${r.cta.secondary}
     </a>`;
 
@@ -6526,7 +7048,7 @@ function renderCarousel(key, root, slides, labels) {
   $('.nf__slides').innerHTML = slides.map((sl, i) =>
     `<figure class="nf__slide${sl.vertical ? ' nf__slide--v' : ''}${sl.peq ? ' nf__slide--peq' : ''}${sl.fija ? ' nf__slide--fija' : ''}" style="--ko:center ${i % 2 ? '70%' : '30%'}">
       ${sl.vertical ? `<span class="nf__bg" style="background-image:url('${sl.mini}')" aria-hidden="true"></span>` : ''}
-      <img src="${sl.src}" alt="${sl.alt}" width="${sl.vertical ? 1067 : 1600}" height="${sl.vertical ? 1600 : 1067}" loading="lazy" decoding="async"${sl.foco && !sl.vertical ? ` style="object-position:${sl.foco}"` : ''} />
+      <img data-src="${sl.src}" alt="${sl.alt}" width="${sl.vertical ? 1067 : 1600}" height="${sl.vertical ? 1600 : 1067}" loading="lazy" decoding="async"${sl.foco && !sl.vertical ? ` style="object-position:${sl.foco}"` : ''} />
     </figure>`).join('');
   $('.nf__thumbs').innerHTML = slides.map((sl, i) =>
     `<button type="button" class="nf__thumb${sl.vertical ? ' nf__thumb--v' : ''}" data-i="${i}" aria-label="${labels.thumb} ${i + 1}">
@@ -6550,6 +7072,13 @@ function carGo(c, i, announce) {
   if (!N) return;
   const prev = c.index;
   c.index = (i + N) % N;
+
+  /* las fotos grandes se piden cuando les toca: la que se ve, la siguiente y la anterior
+     (antes bajaban todas al cargar la página, unos 2 MB solo en la noticia de portada) */
+  [c.index, (c.index + 1) % N, (c.index - 1 + N) % N].forEach(k => {
+    const im = slides[k].querySelector('img[data-src]');
+    if (im) { im.src = im.dataset.src; im.removeAttribute('data-src'); }
+  });
 
   slides.forEach((sl, k) => {
     const on = k === c.index;
@@ -6650,6 +7179,7 @@ function renderAll() {
   buildNewsletter(); buildContacto(); buildVisita(); buildFooter();
   updateCitaBtn();
   initAnimatedBorders();   /* button-border.tsx → orbe dorado en todos los botones */
+  document.documentElement.classList.remove('pre-ca');   /* textos ya en su idioma */
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

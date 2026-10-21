@@ -35,6 +35,7 @@
 # Panel de administración (Sveltia CMS). Solo se publica en Vercel: pages.yml lo quita de GitHub Pages.
 !/admin*
 !/favicon.png
+!/favicon.ico
 !/og-image.jpg
 !/robots.txt
 !/sitemap.xml
@@ -46,6 +47,7 @@
 !/cosascucas_1.jpg
 !/cosascucas_5-1030x1030.jpg
 !/logo cosascucas.png
+!/logo-cosas-cucas.webp
 !/manteletas.jpg
 !/portada.jpg
 !/tienda nueva.jpeg
