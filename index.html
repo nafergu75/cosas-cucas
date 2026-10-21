@@ -1736,27 +1736,7 @@
       display: block;
       filter: sepia(0.15) contrast(1.05);
     }
-    /* Mapa bajo demanda: Google Maps solo se carga si la clienta pulsa "Ver mapa" */
-    .map-consent {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      padding: 24px;
-      text-align: center;
-      filter: none;
-      background:
-        repeating-linear-gradient(45deg, rgba(181,144,58,.07) 0 2px, transparent 2px 14px),
-        var(--color-bg);
-    }
-    .map-consent__pin { width: 34px; height: 34px; fill: var(--color-gold); }
-    .map-consent__note {
-      max-width: 300px;
-      font-size: .72rem;
-      line-height: 1.5;
-      color: rgba(26,23,20,.6);
-    }
+    /* Mapas de OpenStreetMap: salen ya cargados y no instalan cookies (el de Google sí, y necesitaría permiso) */
     .store-card__info {
       padding: 28px 28px 24px;
       background: var(--color-white);
@@ -2022,17 +2002,10 @@
       .section-title  { font-size: clamp(1.6rem, 5vw, 2.2rem); }
 
       /* ZAPATILLAS */
-      #zapatillas { padding: 60px 0; }
       .zap-img-item { width: 200px !important; height: 200px !important; }
 
       /* HISTORIA */
-      .hist-narrative { padding: 50px 0 32px; }
-      .hist-body      { column-count: 1; }
-      .hist-fm-section  { padding: 40px 0 28px; }
-      .hist-corts-section { padding-bottom: 4px; }
       .fm-grid    { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .fm-card__name { font-size: 0.78rem; }
-      .fm-card__info { padding: 11px 9px 13px; min-height: 64px; }
       .corts-grid { grid-template-columns: 1fr 1fr; }
       .hist-wide-section { grid-template-columns: 1fr; }
 
@@ -2042,20 +2015,13 @@
       .editorial-image-caption { right: 0; bottom: 0; font-size: 0.88rem; max-width: 160px; padding: 14px 16px; }
 
       /* DECORACIÓN */
-      #decoracion { padding: 56px 0; }
       .deco-mosaic { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-      .deco-body   { font-size: 0.88rem; margin-bottom: 32px; }
 
       /* GALERÍA */
       #galeria { padding: 56px 0; }
       .galeria-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; margin-top: 32px; }
 
-      /* VÍDEOS */
-      #videos { padding: 60px 0; }
-      .videos-grid { grid-template-columns: 1fr; gap: 16px; }
-
       /* RESEÑAS */
-      #resenas { padding: 60px 0; }
       .resenas-grid { grid-template-columns: 1fr; }
       .resena-card  { padding: 28px 22px 22px; }
 
@@ -2063,7 +2029,6 @@
       #newsletter { padding: 60px 0; }
 
       /* CONTACTO */
-      #contacto { padding: 56px 0; }
       .contacto-grid { grid-template-columns: 1fr; gap: 40px; margin-top: 32px; }
       .form-row { grid-template-columns: 1fr; }
 
@@ -2104,11 +2069,6 @@
 
       /* HISTORIA */
       .fm-grid { grid-template-columns: repeat(2, 1fr); }
-      .hito    { min-width: 110px; padding: 22px 12px; }
-      .hito__year { font-size: 1.6rem; }
-
-      /* DECORACIÓN */
-      .deco-mosaic { grid-template-columns: 1fr; }
 
       /* NEWSLETTER */
       .newsletter-form { flex-direction: column; }
@@ -2629,7 +2589,7 @@
       gap: 20px;
     }
 
-    /* Tag pill — "Más de 2000 clientas satisfechas" con punto verde */
+    /* Tag pill — "Más de 5000 clientas satisfechas" con punto verde */
     .res-tag {
       display: inline-flex;
       align-items: center;
@@ -3088,6 +3048,32 @@
       .wa-float { bottom: 20px; left: 18px; }
       .wa-float__btn { width: 52px; height: 52px; }
       .wa-float__tooltip { display: none; }
+    }
+
+    /* ── MÓVIL, SEGUNDA CAPA ──
+       Estas reglas estaban en «TABLET / MÓVIL» y «MÓVIL PEQUEÑO», pero allí no se
+       aplicaban: la regla base de cada sección, con la misma especificidad, va
+       después y ganaba (el texto de Historia salía en dos columnas en el móvil).
+       Tienen que ir detrás de las reglas base y antes de los ajustes finales. */
+    @media (max-width: 768px) {
+      #zapatillas { padding: 60px 0; }
+      .hist-narrative { padding: 50px 0 32px; }
+      .hist-body      { column-count: 1; }
+      .hist-fm-section  { padding: 40px 0 28px; }
+      .hist-corts-section { padding-bottom: 4px; }
+      .fm-card__name { font-size: 0.78rem; }
+      .fm-card__info { padding: 11px 9px 13px; min-height: 64px; }
+      #decoracion { padding: 56px 0; }
+      .deco-body   { font-size: 0.88rem; margin-bottom: 32px; }
+      #videos { padding: 60px 0; }
+      .videos-grid { grid-template-columns: 1fr; gap: 16px; }
+      #resenas { padding: 60px 0; }
+      #contacto { padding: 56px 0; }
+    }
+    @media (max-width: 480px) {
+      .hito    { min-width: 110px; padding: 22px 12px; }
+      .hito__year { font-size: 1.6rem; }
+      .deco-mosaic { grid-template-columns: 1fr; }
     }
 
     /* Ajustes finales iPhone / móvil: esta capa va al final para que no la
@@ -4367,11 +4353,7 @@
 
       <!-- TIENDA 1 -->
       <div class="store-card">
-        <div class="store-card__map map-consent" data-map-src="https://maps.google.com/maps?q=Calle+Burriana+21+46005+Valencia+Spain&output=embed&hl=es&z=16" data-map-title="Mapa: C/ Burriana, 21 · Valencia">
-          <svg class="map-consent__pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-          <button type="button" class="btn btn--gold map-consent__btn"></button>
-          <p class="map-consent__note"></p>
-        </div>
+        <iframe class="store-card__map" id="store1-map" src="https://www.openstreetmap.org/export/embed.html?bbox=-0.36986,39.46396,-0.36386,39.46636&amp;layer=mapnik&amp;marker=39.46516,-0.36686" title="Mapa: C/ Burriana, 21 · Valencia" loading="lazy"></iframe>
         <div class="store-card__info">
           <p class="store-card__name" id="store1-name"></p>
           <p class="store-card__address">C/ Burriana, 21<br>46005 Valencia</p>
@@ -4383,11 +4365,7 @@
 
       <!-- TIENDA 2 -->
       <div class="store-card">
-        <div class="store-card__map map-consent" data-map-src="https://maps.google.com/maps?q=Calle+Vicent+Gallart+49+46011+Valencia+Spain&output=embed&hl=es&z=17&t=m" data-map-title="Mapa: C/ Vicent Gallart, 49 · Valencia">
-          <svg class="map-consent__pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-          <button type="button" class="btn btn--gold map-consent__btn"></button>
-          <p class="map-consent__note"></p>
-        </div>
+        <iframe class="store-card__map" id="store2-map" src="https://www.openstreetmap.org/export/embed.html?bbox=-0.33191,39.46434,-0.32591,39.46674&amp;layer=mapnik&amp;marker=39.46554,-0.32891" title="Mapa: C/ Vicent Gallart, 49 · Valencia" loading="lazy"></iframe>
         <div class="store-card__info">
           <p class="store-card__name" id="store2-name"></p>
           <p class="store-card__address">C/ Vicent Gallart, 49<br>46011 Valencia</p>
@@ -4590,6 +4568,7 @@ const IMG = {
   esp9: 'espolin/esp-lidon-coral-2.webp',
   esp10: 'espolin/esp-postiguet-gris.webp',
   esp11: 'espolin/esp-rica-verde-agua.webp',
+  esp12: 'espolin/esp-toscana.webp',
   /* Cortes d'Honor grupales */
   cort1: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_c4ffba71.jpg',
   cort2: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_38136dc0.jpg',
@@ -5145,6 +5124,7 @@ const translations = {
           { id:'e8', family:'espolin', material:'espolin', modelo:'Tetuán', name:'Traje de espolín «Tetuán» expuesto en un maniquí', desc:'', price:'Consultar', image:IMG.esp8, tag:null },
           { id:'e10', family:'espolin', material:'espolin', modelo:'Postiguet', color:'fondo gris', name:'Fallera de perfil con traje de espolín «Postiguet» de fondo gris, jubón gris y manteleta dorada', desc:'', price:'Consultar', image:IMG.esp10, tag:null },
           { id:'e11', family:'espolin', material:'espolin', modelo:'Rica', color:'fondo verde agua', name:'Fallera de espaldas en la pasarela con traje de espolín «Rica» de fondo verde agua y lazo de cinta verde agua', desc:'', price:'Consultar', image:IMG.esp11, tag:null },
+          { id:'e12', family:'espolin', material:'espolin', modelo:'Toscana', name:'Fallera con traje de espolín «Toscana», manteleta y delantal blancos bordados en oro y cinta rosa en la cintura', desc:'', price:'Consultar', image:IMG.esp12, tag:null },
         ],
       },
       {
@@ -5348,12 +5328,10 @@ const translations = {
     },
     visita: {
       eyebrow: 'Dónde encontrarnos',
-      mapBtn:  'Ver mapa',
-      mapNote: 'Al pulsar se cargará Google Maps, que puede usar sus propias cookies.',
       title: 'Visítanos en Valencia',
       subtitle: 'Dos tiendas en el corazón de la ciudad. Ven a conocernos y te asesoraremos sin compromiso.',
-      store1: { name: 'Tienda Principal',  phone: '963 511 556', hours: 'Lun–Vie: 10:00–13:30 · 17:00–20:00\nSábado: 10:30–13:30\nDomingo: Cerrado',   linkLabel: 'Cómo llegar' },
-      store2: { name: 'Tienda Cabañal',    phone: '963 714 997', hours: 'Lun–Vie: 10:00–13:30 · 17:00–20:00\nSábado: 10:30–13:30\nDomingo: Cerrado',   linkLabel: 'Cómo llegar' },
+      store1: { name: 'Tienda Principal',  phone: '963 511 556', hours: 'Lun–Vie: 10:00–13:30 · 17:00–20:00\nSábado: 10:30–13:30\nDomingo: Cerrado',   linkLabel: 'Cómo llegar', mapTitle: 'Mapa: C/ Burriana, 21 · Valencia' },
+      store2: { name: 'Tienda Cabañal',    phone: '963 714 997', hours: 'Lun–Vie: 10:00–13:30 · 17:00–20:00\nSábado: 10:30–13:30\nDomingo: Cerrado',   linkLabel: 'Cómo llegar', mapTitle: 'Mapa: C/ Vicent Gallart, 49 · Valencia' },
     },
     footer: {
       colsHeadings: ['Colecciones', 'Nuestras tiendas', 'Información'],
@@ -5457,11 +5435,11 @@ const translations = {
       ],
     },
     resenas: {
-      tag:      'Más de 2000 clientas satisfechas',
+      tag:      'Más de 5000 clientas satisfechas',
       title:    'Lo que dicen de nosotras',
       subtitle: 'Cuatro décadas vistiendo familias valencianas. La confianza de nuestras clientas es el mayor reconocimiento.',
       stats: [
-        { value: '+2000', label: 'Clientas satisfechas' },
+        { value: '+5000', label: 'Clientas satisfechas' },
         { value: '+40',   label: 'Años de experiencia' },
         { value: '4.9 ★', label: 'Valoración media' },
       ],
@@ -5922,6 +5900,7 @@ const translations = {
           { id:'e8', family:'espolin', material:'espolin', modelo:'Tetuán', name:'Vestit d\'espolí «Tetuán» exposat en un maniquí', desc:'', price:'Consultar', image:IMG.esp8, tag:null },
           { id:'e10', family:'espolin', material:'espolin', modelo:'Postiguet', color:'fons gris', name:'Fallera de perfil amb vestit d\'espolí «Postiguet» de fons gris, gipó gris i manteleta daurada', desc:'', price:'Consultar', image:IMG.esp10, tag:null },
           { id:'e11', family:'espolin', material:'espolin', modelo:'Rica', color:'fons verd aigua', name:'Fallera d\'esquena a la passarel·la amb vestit d\'espolí «Rica» de fons verd aigua i llaç de cinta verd aigua', desc:'', price:'Consultar', image:IMG.esp11, tag:null },
+          { id:'e12', family:'espolin', material:'espolin', modelo:'Toscana', name:'Fallera amb vestit d\'espolí «Toscana», manteleta i davantal blancs brodats en or i cinta rosa a la cintura', desc:'', price:'Consultar', image:IMG.esp12, tag:null },
         ],
       },
       {
@@ -6105,12 +6084,10 @@ const translations = {
     },
     visita: {
       eyebrow: "On trobar-nos",
-      mapBtn:  'Veure el mapa',
-      mapNote: 'En prémer es carregarà Google Maps, que pot fer servir les seues pròpies galetes.',
       title: "Visita'ns a València",
       subtitle: "Dues botigues al cor de la ciutat. Vine a conèixer-nos i t'assessorarem sense compromís.",
-      store1: { name: 'Botiga Principal',  phone: '963 511 556', hours: "Dl–Dv: 10:00–13:30 · 17:00–20:00\nDissabte: 10:30–13:30\nDiumenge: Tancat", linkLabel: 'Com arribar' },
-      store2: { name: 'Botiga Cabañal',    phone: '963 714 997', hours: "Dl–Dv: 10:00–13:30 · 17:00–20:00\nDissabte: 10:30–13:30\nDiumenge: Tancat", linkLabel: 'Com arribar' },
+      store1: { name: 'Botiga Principal',  phone: '963 511 556', hours: "Dl–Dv: 10:00–13:30 · 17:00–20:00\nDissabte: 10:30–13:30\nDiumenge: Tancat", linkLabel: 'Com arribar', mapTitle: 'Mapa: C/ Burriana, 21 · València' },
+      store2: { name: 'Botiga Cabañal',    phone: '963 714 997', hours: "Dl–Dv: 10:00–13:30 · 17:00–20:00\nDissabte: 10:30–13:30\nDiumenge: Tancat", linkLabel: 'Com arribar', mapTitle: 'Mapa: C/ Vicent Gallart, 49 · València' },
     },
     footer: {
       colsHeadings: ["Col·leccions", 'Les nostres botigues', 'Informació'],
@@ -6214,11 +6191,11 @@ const translations = {
       ],
     },
     resenas: {
-      tag:      'Més de 2000 clientes satisfetes',
+      tag:      'Més de 5000 clientes satisfetes',
       title:    'El que diuen de nosaltres',
       subtitle: "Quatre dècades vestint famílies valencianes. La confiança de les nostres clientes és el major reconeixement.",
       stats: [
-        { value: '+2000', label: 'Clientes satisfetes' },
+        { value: '+5000', label: 'Clientes satisfetes' },
         { value: '+40',   label: "Anys d'experiència" },
         { value: '4.9 ★', label: 'Valoració mitjana' },
       ],
@@ -6812,29 +6789,13 @@ function buildVisita() {
   document.getElementById('store1-phone').innerHTML      = `<a href="tel:${v.store1.phone.replace(/\s/g,'')}">${v.store1.phone}</a>`;
   document.getElementById('store1-hours').innerHTML      = v.store1.hours.replace(/\n/g, '<br>');
   document.getElementById('store1-link').textContent     = v.store1.linkLabel;
+  document.getElementById('store1-map').title           = v.store1.mapTitle;
   document.getElementById('store2-name').textContent     = v.store2.name;
   document.getElementById('store2-phone').innerHTML      = `<a href="tel:${v.store2.phone.replace(/\s/g,'')}">${v.store2.phone}</a>`;
   document.getElementById('store2-hours').innerHTML      = v.store2.hours.replace(/\n/g, '<br>');
   document.getElementById('store2-link').textContent     = v.store2.linkLabel;
-  document.querySelectorAll('.map-consent').forEach(box => {
-    box.querySelector('.map-consent__btn').textContent  = v.mapBtn;
-    box.querySelector('.map-consent__note').textContent = v.mapNote;
-  });
+  document.getElementById('store2-map').title           = v.store2.mapTitle;
 }
-
-/* Mapas bajo demanda: el iframe de Google Maps solo se crea al pulsar "Ver mapa" */
-document.addEventListener('click', e => {
-  const btn = e.target.closest('.map-consent__btn');
-  if (!btn) return;
-  const box = btn.closest('.map-consent');
-  const map = document.createElement('iframe');
-  map.className = 'store-card__map';
-  map.title = box.dataset.mapTitle;
-  map.allowFullscreen = true;
-  map.referrerPolicy = 'no-referrer-when-downgrade';
-  map.src = box.dataset.mapSrc;
-  box.replaceWith(map);
-});
 
 function buildFooter() {
   const ft    = t().footer;
