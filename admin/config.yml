@@ -549,11 +549,6 @@ collections:
                     widget: string
                     hint: 'Exemple: Fallera Major 2027 o Fallera Major Infantil 2027'
                     pattern: ['\d{4}', "Posa l'any amb quatre xifres, per exemple: Fallera Major 2027"]
-              - name: fuente
-                label: Fuente (no se publica)
-                widget: string
-                required: false
-                hint: De dónde salen el nombre, la falla y el año (prensa, web de la falla…), para poder comprobarlo.
 
   # ── Galería ── datos/galeria.json → { "pasarela": [ … ], "clientas": [ … ] }
   - name: galeria
