@@ -348,6 +348,36 @@
       "apartado": "femenina"
     },
     {
+      "foto": "galeria/fallera-azul-lavanda-manteleta-encaje.webp",
+      "pie": "Fallera con traje azul lavanda, manteleta de encaje dorado y cinta granate",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/fallera-azul-lavanda-perfil-peinetas.webp",
+      "pie": "Fallera de perfil con traje azul lavanda, manteleta de encaje y peinado con peinetas",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/fallera-espaldas-manteleta-lazos-granate.webp",
+      "pie": "Fallera de espaldas: moño con peinetas, manteleta bordada y lazos de cinta granate",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/nina-jubon-verde-falda-azul-jardin.webp",
+      "pie": "Niña con jubón verde, falda azul de flores y delantal de encaje, en un jardín",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/nina-jubon-verde-cancela.webp",
+      "pie": "Niña con jubón verde, falda azul de flores y delantal de encaje, junto a una cancela de hierro",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/nina-jubon-verde-patio.webp",
+      "pie": "Niña con jubón verde, falda azul de flores y delantal de encaje, en un patio",
+      "apartado": "femenina"
+    },
+    {
       "foto": "hombre/WhatsApp Image 2026-04-30 at 19.00.45.jpeg",
       "pie": "Jubón paisley gris plata · padre e hijo",
       "apartado": "masculina"
@@ -405,6 +435,11 @@
     {
       "foto": "hombre/Imagen de WhatsApp 2025-03-04 a las 18.04.38_f841fae2.jpg",
       "pie": "Faller infantil · chaqueta marrón y zaragüelles blancos",
+      "apartado": "masculina"
+    },
+    {
+      "foto": "galeria/nino-llaurador-chaleco-bordado-tienda.webp",
+      "pie": "Niño de llaurador con chaleco bordado y faja verde, en la tienda",
       "apartado": "masculina"
     }
   ]
