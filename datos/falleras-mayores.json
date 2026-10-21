@@ -1,0 +1,251 @@
+{
+  "falleras": [
+    {
+      "foto": "falleras mayores/fallera mayor 2026 falla exposicion.jpg",
+      "nombre": "Laura Llobell López",
+      "falla": {
+        "es": "Exposición",
+        "ca": "Exposició"
+      },
+      "cargo": {
+        "es": "Fallera Mayor 2026",
+        "ca": "Fallera Major 2026"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "falleras mayores/fallera mayor2026 Matías perellolluis Santángel.jpeg",
+      "nombre": "Cristina Huerta Pérez",
+      "falla": {
+        "es": "Matías Perelló-Luis Santángel",
+        "ca": "Matías Perelló-Lluís Santàngel"
+      },
+      "cargo": {
+        "es": "Fallera Mayor 2026",
+        "ca": "Fallera Major 2026"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "falleras mayores/fallera mayor 2026 falla rosario plaza calabuig lourdes oreo.jpeg",
+      "nombre": "Lourdes Oreo",
+      "falla": {
+        "es": "Rosario · Plaza Calabuig",
+        "ca": "Rosario · Plaza Calabuig"
+      },
+      "cargo": {
+        "es": "Fallera Mayor 2026",
+        "ca": "Fallera Major 2026"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "falleras mayores/fallera mayor 2026 falla conserva berenguermallol kira vila.jpeg",
+      "nombre": "Kira Vila",
+      "falla": {
+        "es": "Conserva · Berenguer Mallol",
+        "ca": "Conserva · Berenguer Mallol"
+      },
+      "cargo": {
+        "es": "Fallera Mayor 2026",
+        "ca": "Fallera Major 2026"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "falleras mayores/fallera mayor 2026 falla maestro rodrigo general aviles alejandra blasco beltrán.jpeg",
+      "nombre": "Alejandra Blanco Beltrán",
+      "falla": {
+        "es": "Maestro Rodrigo",
+        "ca": "Mestre Rodrigo"
+      },
+      "cargo": {
+        "es": "Fallera Mayor 2026",
+        "ca": "Fallera Major 2026"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "falleras mayores/fallera infantil 2026 falla la manta al coll de algunet.jpeg",
+      "nombre": "Miranda Muñoz Gómez",
+      "falla": {
+        "es": "La Manta al Coll de Alginet",
+        "ca": "La Manta al Coll d'Alginet"
+      },
+      "cargo": {
+        "es": "Fallera Mayor Infantil 2026",
+        "ca": "Fallera Major Infantil 2026"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "falleras mayores/fmi-2026-la-manta-al-coll-miranda-munoz-gomez-estudio.webp",
+      "nombre": "Miranda Muñoz Gómez",
+      "falla": {
+        "es": "La Manta al Coll de Alginet",
+        "ca": "La Manta al Coll d'Alginet"
+      },
+      "cargo": {
+        "es": "Fallera Mayor Infantil 2026",
+        "ca": "Fallera Major Infantil 2026"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "falleras mayores/fallera mayor 2026 falla blocs platja.jpeg",
+      "nombre": "María Chuliá Zaragoza",
+      "falla": {
+        "es": "Blocs · Platja",
+        "ca": "Blocs · Platja"
+      },
+      "cargo": {
+        "es": "Fallera Mayor 2025",
+        "ca": "Fallera Major 2025"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "falleras mayores/fallera mayor 2025 falla jose maria haro poeta mas y ros alba carrero macian.jpg",
+      "nombre": "Alba Carrero Macián",
+      "falla": {
+        "es": "José María Haro-Poeta Mas y Ros",
+        "ca": "José María Haro-Poeta Mas y Ros"
+      },
+      "cargo": {
+        "es": "Fallera Mayor 2025",
+        "ca": "Fallera Major 2025"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "espolin/esp-marta-capella-1.webp",
+      "nombre": "Marta Capella Guanter",
+      "falla": {
+        "es": "Carretera Escrivá-Cooperativa San Fernando",
+        "ca": "Carretera d'Escrivà-Cooperativa de Sant Ferran"
+      },
+      "cargo": {
+        "es": "Fallera Mayor 2025",
+        "ca": "Fallera Major 2025"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "falleras mayores/fm-2025-begona-sancho-lozano.webp",
+      "nombre": "Begoña Sancho Lozano",
+      "falla": {
+        "es": "Plaça del Mercat de Turís",
+        "ca": "Plaça del Mercat de Turís"
+      },
+      "cargo": {
+        "es": "Fallera Mayor 2025",
+        "ca": "Fallera Major 2025"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "falleras mayores/fm-2025-begona-sancho-lozano-2.webp",
+      "nombre": "Begoña Sancho Lozano",
+      "falla": {
+        "es": "Plaça del Mercat de Turís",
+        "ca": "Plaça del Mercat de Turís"
+      },
+      "cargo": {
+        "es": "Fallera Mayor 2025",
+        "ca": "Fallera Major 2025"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "falleras mayores/fm-2024-ana-villalba.webp",
+      "nombre": "Ana María Villalba Layunta",
+      "falla": {
+        "es": "Plaza Jesús",
+        "ca": "Plaça Jesús"
+      },
+      "cargo": {
+        "es": "Fallera Mayor 2024",
+        "ca": "Fallera Major 2024"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "falleras mayores/fm-2024-carolina-san-ramon-quilis.webp",
+      "nombre": "Carolina San Ramón Quilis",
+      "falla": {
+        "es": "Mossén Josep Cuenca-Pinedo",
+        "ca": "Mossén Josep Cuenca-Pinedo"
+      },
+      "cargo": {
+        "es": "Fallera Mayor Infantil 2024",
+        "ca": "Fallera Major Infantil 2024"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "falleras mayores/fmi-2024-lourdes-serrano-bono.webp",
+      "nombre": "Lourdes Serrano Bono",
+      "falla": {
+        "es": "Alemania-El Bachiller",
+        "ca": "Alemanya-El Batxiller"
+      },
+      "cargo": {
+        "es": "Fallera Mayor Infantil 2024",
+        "ca": "Fallera Major Infantil 2024"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "falleras mayores/fmi-2024-isabel-fuset-clerigues.webp",
+      "nombre": "Isabel Fuset Clérigues",
+      "falla": {
+        "es": "Conde Salvatierra-Cirilo Amorós-Mercado de Colón",
+        "ca": "Comte de Salvatierra-Ciril Amorós-Mercat de Colón"
+      },
+      "cargo": {
+        "es": "Fallera Mayor Infantil 2024",
+        "ca": "Fallera Major Infantil 2024"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "falleras mayores/fm-2023-laura-castillo-llorens.webp",
+      "nombre": "Laura Castillo Llorens",
+      "falla": {
+        "es": "Doctor García Brustenga-Vicente Barrera Cambra",
+        "ca": "Doctor García Brustenga-Vicente Barrera Cambra"
+      },
+      "cargo": {
+        "es": "Fallera Mayor 2023",
+        "ca": "Fallera Major 2023"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "falleras mayores/fm-2023-teresa-alepuz.webp",
+      "nombre": "Teresa Alepuz",
+      "falla": {
+        "es": "Santa Bárbara de Benifaió",
+        "ca": "Santa Bàrbara de Benifaió"
+      },
+      "cargo": {
+        "es": "Fallera Mayor 2023",
+        "ca": "Fallera Major 2023"
+      },
+      "fuente": ""
+    },
+    {
+      "foto": "falleras mayores/fm-2020-mireia-bernabeu-gimeno.webp",
+      "nombre": "Mireia Bernabéu Gimeno",
+      "falla": {
+        "es": "Hellín-Pedro de Luna",
+        "ca": "Hellín-Pere de Lluna"
+      },
+      "cargo": {
+        "es": "Fallera Mayor 2020",
+        "ca": "Fallera Major 2020"
+      },
+      "fuente": ""
+    }
+  ]
+}

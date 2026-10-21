@@ -29,6 +29,9 @@
 !/styles.css
 !/regional-datos.js
 !/formulario-correo.js
+
+# Datos que se editan desde el panel (/admin): Falleras Mayores, galería…
+!/datos*
 !/favicon.png
 !/og-image.jpg
 !/robots.txt

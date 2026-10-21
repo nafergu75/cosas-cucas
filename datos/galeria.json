@@ -1,0 +1,356 @@
+{
+  "pasarela": [
+    {
+      "foto": "pasarela/_ADL4063.jpg",
+      "pie": "Niña con traje rosa de flores · I Desfile del Gremio, 2018",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "pasarela/_ADL4065.jpg",
+      "pie": "Niña con traje rosa de flores y manteleta de encaje",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "pasarela/_ADL4068.jpg",
+      "pie": "La pasarela del Ateneo Mercantil, 2018",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "pasarela/_ADL4069.jpg",
+      "pie": "Niña de rosa, de espaldas, con la lazada de la cinta",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "pasarela/_ADL4071.jpg",
+      "pie": "Niño con sombrero, chaleco gris y faja celeste",
+      "apartado": "masculina"
+    },
+    {
+      "foto": "pasarela/_ADL4076.jpg",
+      "pie": "Niña con traje celeste de flores",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "pasarela/_ADL4077.jpg",
+      "pie": "Traje celeste de flores con manteleta de encaje",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "pasarela/_ADL4080.jpg",
+      "pie": "Niña de celeste, de espaldas, con la lazada",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "pasarela/_ADL4081.jpg",
+      "pie": "Joven con chaleco rojo, faja gris y medias de rayas",
+      "apartado": "masculina"
+    },
+    {
+      "foto": "pasarela/_ADL4083.jpg",
+      "pie": "Joven con chaleco rojo y sombrero negro",
+      "apartado": "masculina"
+    },
+    {
+      "foto": "pasarela/_ADL4087.jpg",
+      "pie": "Niña con mantilla blanca y delantal bordado en oro",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "pasarela/_ADL4091.jpg",
+      "pie": "Fallera con delantal blanco bordado en oro y falda azul",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "pasarela/_ADL4093.jpg",
+      "pie": "Corpiño de flores y delantal bordado en oro",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "pasarela/_ADL4095.jpg",
+      "pie": "Fallera con traje gris plata y manteleta de encaje",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "pasarela/_ADL4097.jpg",
+      "pie": "El traje gris plata, de cerca",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "pasarela/_ADL4101.jpg",
+      "pie": "Traje gris plata con un gran lazo rojo a la espalda",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "pasarela/_ADL4111.jpg",
+      "pie": "Saludo final de Cosas Cucas en el Ateneo Mercantil",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "pasarela/_ADL4169.jpg",
+      "pie": "El equipo de Cosas Cucas en el I Desfile de Indumentaria Valenciana, 2018",
+      "apartado": "femenina"
+    }
+  ],
+  "clientas": [
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.02.59_db5bbd11.jpg",
+      "pie": "Fallera Mayor · indumentaria de gala",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.02.59_39f86f7f.jpg",
+      "pie": "Fallera infantil · traje floral verd",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_6b8a4b5f.jpg",
+      "pie": "Falleres en l'Ofrena de Flors",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_b3a2c16e.jpg",
+      "pie": "Fallera jove · delantal bordado",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_0eac70d9.jpg",
+      "pie": "Ofrena nocturna · indumentaria completa",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_e930437b.jpg",
+      "pie": "Manteleta de encaix · perfil",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.00_fc060f99.jpg",
+      "pie": "Fallera infantil en l'Ofrena",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.01_57d65e9d.jpg",
+      "pie": "Pareja llauradora · indumentaria valenciana",
+      "apartado": "masculina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_91962d31.jpg",
+      "pie": "Fallera Major · tafetà verd blaví",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_26d8c283.jpg",
+      "pie": "Col·lecció teal · cos entero",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_43ecfe2c.jpg",
+      "pie": "Fallera de gala · vestit verd",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_6c752940.jpg",
+      "pie": "Llauradora jove · casa tradicional",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.02_1956fae1.jpg",
+      "pie": "Indumentaria llauradora · xiqueta",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_eb1c275e.jpg",
+      "pie": "Últims ajustos en tenda · xiqueta",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_da119054.jpg",
+      "pie": "Fallera infantil blava · Cosas Cucas",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_81f8afaa.jpg",
+      "pie": "Fallera infantil · trau daurat i blau",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_1e8705c9.jpg",
+      "pie": "Xiqueta fallera · posado exterior",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.03.03_07930a16.jpg",
+      "pie": "Indumentaria infantil · detall esquena",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 18.04.38_0d991970.jpg",
+      "pie": "Fallera Major · preparatius amb flors",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 20.34.19_9aca2793.jpg",
+      "pie": "Fallera Major de Valencia · foto Tamayo",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 20.34.35_c730d5ed.jpg",
+      "pie": "Confecció en tenda · Cosas Cucas",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 20.35.23_654c46b7.jpg",
+      "pie": "Entrega de banda · celebració",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.20_5fc7902b.jpg",
+      "pie": "Mare i filla · indumentaria valenciana",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.43_39b3a58f.jpg",
+      "pie": "Vestint a la xiqueta · moments de tenda",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 20.36.54_d6860bf6.jpg",
+      "pie": "Xiqueta i mare · pati tradicional",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 20.37.20_6f6d149b.jpg",
+      "pie": "Llauradora · cotilla negra i delantal brodat",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/Imagen de WhatsApp 2025-03-04 a las 23.20.06_0ff828d8.jpg",
+      "pie": "Fallera infantil · vestit rosa i encaix",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/WhatsApp Image 2026-05-07 at 19.43.07.jpeg",
+      "pie": "Fallera Mayor · Ofrena nocturna azul marí",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/WhatsApp Image 2026-05-07 at 19.43.08.jpeg",
+      "pie": "Fallera jove · Ofrena nocturna amb banda",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/WhatsApp Image 2026-05-07 at 19.43.09.jpeg",
+      "pie": "Fallera · manteleta i adreços en gala",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/WhatsApp Image 2026-05-07 at 19.39.010.jpeg",
+      "pie": "Fallera infantil · Ofrena amb banda",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/WhatsApp Image 2026-05-11 at 23.37.26.jpeg",
+      "pie": "Fallera · vestit verd salvia, perfil",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/WhatsApp Image 2026-05-11 at 23.37.27.jpeg",
+      "pie": "Fallera · verd salvia amb delantal brodat",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/WhatsApp Image 2026-05-11 at 23.37.28.jpeg",
+      "pie": "Fallera · Ciutat de les Arts, verd salvia",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/WhatsApp Image 2026-05-11 at 23.37.281.jpeg",
+      "pie": "Fallera amb banda · Hemisfèric de fons",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/WhatsApp Image 2026-05-11 at 23.37.262.jpeg",
+      "pie": "Fallera Major · jardí exterior, verd salvia",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/espolin-espigas-belmonte-perfil.webp",
+      "pie": "Espolín «Espigas Belmonte» en azul antiguo · de perfil",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/fallera-espolin-azul-mantilla.webp",
+      "pie": "Fallera con espolín azul noche, mantilla y ramo de flores",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/ninos-trajes-a-juego-azul-flores.webp",
+      "pie": "Niña y niño con trajes a juego, azul cielo con flores",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "galeria/fallera-banda-bebe-malva.webp",
+      "pie": "Fallera con banda y bebé vestidos a juego, en tonos malva",
+      "apartado": "femenina"
+    },
+    {
+      "foto": "hombre/WhatsApp Image 2026-04-30 at 19.00.45.jpeg",
+      "pie": "Jubón paisley gris plata · padre e hijo",
+      "apartado": "masculina"
+    },
+    {
+      "foto": "hombre/WhatsApp Image 2026-04-30 at 19.36.15.jpeg",
+      "pie": "Jubón brocado marrón chocolate",
+      "apartado": "masculina"
+    },
+    {
+      "foto": "hombre/WhatsApp Image 2026-04-30 at 19.28.05.jpeg",
+      "pie": "Jubón azul cobalto con chaleco de flores doradas",
+      "apartado": "masculina"
+    },
+    {
+      "foto": "hombre/WhatsApp Image 2026-04-30 at 19.42.08.jpeg",
+      "pie": "Jubón gris plateado · pasarela Cosas Cucas",
+      "apartado": "masculina"
+    },
+    {
+      "foto": "hombre/WhatsApp Image 2026-04-30 at 19.15.38.jpeg",
+      "pie": "Jubón negro jacquard · conjunto de gala",
+      "apartado": "masculina"
+    },
+    {
+      "foto": "hombre/WhatsApp Image 2026-04-30 at 19.10.46.jpeg",
+      "pie": "Chaleco floral marrón con manta valenciana",
+      "apartado": "masculina"
+    },
+    {
+      "foto": "hombre/WhatsApp Image 2026-04-30 at 19.09.15.jpeg",
+      "pie": "Chaleco brocado crema y dorado · infantil",
+      "apartado": "masculina"
+    },
+    {
+      "foto": "hombre/WhatsApp Image 2026-04-30 at 19.14.02.jpeg",
+      "pie": "Jubón jacquard rosa empolvado",
+      "apartado": "masculina"
+    },
+    {
+      "foto": "hombre/WhatsApp Image 2026-04-30 at 19.07.57.jpeg",
+      "pie": "Faller infantil · jubón negro y sombrero",
+      "apartado": "masculina"
+    },
+    {
+      "foto": "hombre/4ca11417-a67f-424f-8f06-213ba5c849de.png",
+      "pie": "Jubón negro bordado · faller infantil",
+      "apartado": "masculina"
+    },
+    {
+      "foto": "hombre/Imagen de WhatsApp 2025-03-04 a las 18.03.01_eccd94e6.jpg",
+      "pie": "Faller infantil · chaleco gris y zaragüelles azules",
+      "apartado": "masculina"
+    },
+    {
+      "foto": "hombre/Imagen de WhatsApp 2025-03-04 a las 18.04.38_f841fae2.jpg",
+      "pie": "Faller infantil · chaqueta marrón y zaragüelles blancos",
+      "apartado": "masculina"
+    }
+  ]
+}
