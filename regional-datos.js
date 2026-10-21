@@ -2,8 +2,7 @@
    regional») y su propia página, indumentaria-regional.html#<id>, con las fotos en grande.
    Lo usan las dos páginas.
 
-   · Fotos para la web en indumentaria-regional/ (WebP); los originales de Ignacio, en la
-     carpeta «indumentaria regional» (con espacio), que NO se publica.
+   · Fotos para la web en indumentaria-regional/ (WebP).
    · Cada foto: img, nombre (de la persona) y cargo en castellano (es) y valenciano (ca).
    · Orden: localidades por orden alfabético; dentro, de la más reciente a la más antigua.
    · AL CAMBIAR ESTE ARCHIVO, SUBIR EL NÚMERO «?v=» DE regional-datos.js EN index.html Y EN

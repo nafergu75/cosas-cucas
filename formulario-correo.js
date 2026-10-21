@@ -19,8 +19,7 @@
    PARA ACTIVARLO, cuando info@cosascucas.es vuelva a recibir correo:
    1. ACTIVO = true.
    2. Subir el ?v= de este archivo en index.html y landing.html (caché).
-   3. Añadir FormSubmit a politica-privacidad.html (texto preparado en
-      PROYECTO_WEB.md).
+   3. Añadir FormSubmit a politica-privacidad.html.
    4. Publicar y mandar un mensaje de prueba desde la web. FormSubmit envía
       a info@ un correo «Activate Form»: hasta que se pulsa ese enlace no
       entrega nada.

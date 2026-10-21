@@ -1,6 +1,8 @@
 # Cosas Cucas: configuración del servidor (Apache) en el hosting de Arsys.
-# Hace lo mismo que vercel.json en Vercel: direcciones sin .html, páginas retiradas,
-# página 404 propia, cabeceras de seguridad y caché.
+# Hace lo mismo que vercel.json en Vercel (direcciones sin .html, páginas retiradas, página 404 propia,
+# cabeceras de seguridad y caché) y además comprime las páginas.
+# Necesita que el hosting permita en .htaccess las opciones FileInfo e Indexes (AllowOverride).
+# Si al subirlo la web da «Error 500», es que alguna no está permitida.
 
 ErrorDocument 404 /404.html
 
@@ -11,6 +13,8 @@ DirectorySlash Off
 AddType image/webp .webp
 AddType image/avif .avif
 AddType image/jpeg .jfif
+AddType image/svg+xml .svg
+AddType image/x-icon .ico
 AddType application/json .json
 AddType text/yaml .yml
 AddCharset utf-8 .html .css .js .json .yml .xml .txt
@@ -21,10 +25,15 @@ AddCharset utf-8 .html .css .js .json .yml .xml .txt
   # Archivos de configuración (.htaccess…): nunca se sirven
   RewriteRule ^\.ht - [R=404,L]
 
-  # Cuando el certificado SSL esté activo en Arsys, quitar el # de estas dos líneas
-  # para que todo vaya por https:
-  # RewriteCond %{HTTPS} !=on
-  # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # ── Una sola dirección: https://cosascucas.es ───────────────────────────────────────
+  # Cuando el certificado SSL esté activo para cosascucas.es y www.cosascucas.es, quitar el #
+  # de las cuatro líneas siguientes: todo (http, www) va a https://cosascucas.es con un solo salto.
+  # Si después la web entra en un bucle de redirecciones, Arsys sirve el https a través de un
+  # proxy: añadir entonces debajo de la primera línea «RewriteCond %{HTTP:X-Forwarded-Proto} !https».
+  # RewriteCond %{HTTPS} !=on [OR]
+  # RewriteCond %{HTTP_HOST} !^cosascucas\.es$ [NC]
+  # RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:\d+)?$
+  # RewriteRule ^ https://cosascucas.es%{REQUEST_URI} [L,R=301]
 
   # Páginas retiradas: a la portada
   RewriteRule ^(probador|inauguracion)(\.html)?/?$ / [L,R=301]
@@ -61,6 +70,15 @@ AddCharset utf-8 .html .css .js .json .yml .xml .txt
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+  # Qué puede cargar la web: solo lo suyo, las fuentes de Google, los mapas de OpenStreetMap,
+  # las miniaturas de YouTube y el envío del formulario por FormSubmit. Si algún día se añade
+  # otro servicio (un vídeo insertado, estadísticas…), hay que añadir aquí su dirección.
+  # OJO: el panel (/admin) carga su programa de unpkg.com y habla con api.github.com; si algún día
+  # se sube a este servidor, necesita una política propia o no funcionará.
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://img.youtube.com https://i.ytimg.com; media-src 'self'; frame-src https://www.openstreetmap.org; connect-src 'self' https://formsubmit.co; form-action 'self' https://formsubmit.co https://wa.me; base-uri 'self'; object-src 'none'; frame-ancestors 'self'"
+  # Con el https activo y comprobado, quitar el # (el navegador recordará un año que solo debe entrar por https):
+  # Header always set Strict-Transport-Security "max-age=31536000" "expr=%{HTTPS} == 'on'"
 
   # Páginas y datos: siempre la última versión
   <FilesMatch "\.(html|json|yml|xml|txt)$">
@@ -70,4 +88,14 @@ AddCharset utf-8 .html .css .js .json .yml .xml .txt
   <FilesMatch "\.(jpe?g|png|webp|gif|svg|ico|avif|jfif|mp4|webm|mov|css|js)$">
     Header set Cache-Control "public, max-age=86400, stale-while-revalidate=604800"
   </FilesMatch>
+</IfModule>
+
+# Compresión: la portada pasa de unos 490 KB a unos 127 KB. Las fotos y vídeos ya van comprimidos.
+<IfModule mod_filter.c>
+  <IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/plain text/xml application/xml application/javascript text/javascript application/json image/svg+xml text/yaml
+  </IfModule>
+  <IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/xml application/javascript text/javascript application/json image/svg+xml text/yaml
+  </IfModule>
 </IfModule>

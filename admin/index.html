@@ -9,8 +9,13 @@
     <!-- Panel de administración de la web: Sveltia CMS 0.250.0 (versión fija, probada).
          Sin type="module" ni hoja de estilos: no hacen falta. Busca config.yml en esta misma carpeta.
          Se entra con una clave (token) de GitHub limitada al repositorio cosas-cucas. -->
-    <script src="https://unpkg.com/@sveltia/cms@0.250.0/dist/sveltia-cms.js"></script>
+    <!-- integrity: el navegador comprueba que el archivo es exactamente el de la versión 0.250.0 y, si lo han
+         cambiado, no lo ejecuta. Al subir de versión hay que recalcularlo (sha384 del archivo, en base64). -->
+    <script src="https://unpkg.com/@sveltia/cms@0.250.0/dist/sveltia-cms.js"
+            integrity="sha384-ZsKrJb+2fz2LQAmNGNALsLSBhiMyQEzAbodz2oj3+UYyp+OKIEwEJB259KvvZZo+"
+            crossorigin="anonymous"></script>
     <!-- vista previa de las noticias: tarjeta y carrusel con el encuadre, y avisos de formato -->
-    <script src="preview.js?v=20261021"></script>
+    <!-- ruta absoluta: Vercel sirve el panel en /admin (sin barra final) y una relativa apuntaría a /preview.js -->
+    <script src="/admin/preview.js?v=20261021"></script>
   </body>
 </html>

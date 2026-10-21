@@ -295,7 +295,7 @@ http.createServer(async (req, res) => {
     res.end(data);
   });
 
-}).listen(PORT, () => {
+}).listen(PORT, '127.0.0.1', () => {
   console.log(`\n✦ Cosas Cucas · servidor listo`);
   console.log(`   http://localhost:${PORT}`);
   console.log(`   ANTHROPIC_KEY: ${ANTHROPIC_KEY ? '✓ configurada' : '✗ no configurada  →  ANTHROPIC_KEY=sk-ant-… node server.js'}`);

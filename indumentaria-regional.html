@@ -163,7 +163,8 @@
 
   function pintar() {
     const T = TXT[lang];
-    const id = decodeURIComponent(location.hash.slice(1));
+    let id = '';
+    try { id = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
     const loc = LOCS.find(l => l.id === id);
     document.documentElement.lang = lang === 'ca' ? 'ca' : 'es';
     document.querySelectorAll('.r-lang button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === lang));

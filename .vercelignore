@@ -98,6 +98,18 @@ Thumbs.db
 desktop.ini
 node_modules
 
+# Dentro de las carpetas solo se publican fotos, vídeos y datos: un .svg, .html o .js
+# subido por error (por ejemplo desde el panel) podría ejecutar código en la web.
+/*/**/*.svg
+/*/**/*.htm
+/*/**/*.html
+/*/**/*.xml
+/*/**/*.js
+/*/**/*.mjs
+/*/**/*.php
+!/admin/index.html
+!/admin/preview.js
+
 # Ya quedan fuera por "/*"; se dejan escritos para que quede claro
 /server.js
 /worker.js

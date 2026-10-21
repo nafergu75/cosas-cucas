@@ -545,7 +545,7 @@
     .nf__progress span.run { animation: nfBar var(--nf-dur) linear forwards; }
     @keyframes nfBar { from { width: 0; } to { width: 100%; } }
     /* pausa: fuera de pantalla, con el botón de pausa o navegando con teclado.
-       No se para con el ratón encima: Ignacio quiere que las fotos pasen solas siempre */
+       No se para con el ratón encima: las fotos pasan solas siempre */
     .nf.is-off .nf__progress span, .nf.is-off .nf__slide img,
     .nf.is-paused .nf__progress span, .nf.is-paused .nf__slide img { animation-play-state: paused; }
     .nf:has(:focus-visible) .nf__progress span, .nf:has(:focus-visible) .nf__slide img { animation-play-state: paused; }
@@ -3980,7 +3980,7 @@ const IMG = {
   fm14: 'falleras%20mayores/fallera%20infantil%202026%20falla%20la%20manta%20al%20coll%20de%20algunet.jpeg',
   /* Fallera Mayor 2025 — fotograma del reel de @cosascucass (29-11-2024) */
   fm17: 'falleras%20mayores/fallera%20mayor%202025%20falla%20jose%20maria%20haro%20poeta%20mas%20y%20ros%20alba%20carrero%20macian.jpg',
-  /* Falleras Mayores de falla de 2023 a 2025 (fotos de Ignacio, 20-10-2026; la de Marta Capella es IMG.esp1) */
+  /* Falleras Mayores de falla de 2023 a 2025 (la de Marta Capella es IMG.esp1) */
   fm18: 'falleras%20mayores/fm-2025-begona-sancho-lozano.webp',
   fm19: 'falleras%20mayores/fmi-2024-pinedo-carolina.webp',
   fm20: 'falleras%20mayores/fm-2024-ana-villalba.webp',
@@ -3991,7 +3991,7 @@ const IMG = {
   fm24: 'indumentaria-regional/navajas-elena-saez-martinez.webp',
   /* Fallera Mayor Infantil 2024 de Alemania-El Bachiller (ficha de la JCF) */
   fm25: 'falleras%20mayores/fmi-2024-alemania-el-bachiller-lourdes.webp',
-  /* Fallera Mayor 2020 de Hellín-Pedro de Luna (dato de Ignacio; Fallas 2020 suspendidas por la COVID) */
+  /* Fallera Mayor 2020 de Hellín-Pedro de Luna (Fallas 2020 suspendidas por la COVID) */
   fm26: 'falleras%20mayores/fm-2020-mireia-bernabeu-gimeno.webp',
   fm27: 'falleras%20mayores/fmi-2024-mercado-de-colon-isabel.webp',
   /* Espolín — colección Indumentaria Femenina */
@@ -4044,7 +4044,7 @@ const IMG = {
   h11: 'hombre/ChatGPT%20Image%2030%20abr%202026%2C%2019_16_14.png',
   h12: 'hombre/ChatGPT%20Image%2030%20abr%202026%2C%2019_20_51.png',
   h13: 'hombre/4ca11417-a67f-424f-8f06-213ba5c849de.png',
-  /* padre e hijo de llauradors (foto de Ignacio, 342 px: pedir una más grande) */
+  /* padre e hijo de llauradors */
   h14: 'hombre/padre-hijo-llauradors.webp',
   h15: 'hombre/nino-llaurador-chaleco-gris.webp',
   h16: 'hombre/nino-chaqueta-negra-ramo.webp',
@@ -5151,7 +5151,12 @@ const translations = {
    MOTOR — Idioma y renderizado
 ═══════════════════════════════════════════════════════════════════════ */
 
-let currentLang = localStorage.getItem('cc-lang') || 'es';
+/* el idioma guardado; si el navegador no deja usar el almacenamiento (modo privado de algunos
+   móviles), castellano y la web sigue funcionando */
+let currentLang = 'es';
+try { if (localStorage.getItem('cc-lang') === 'ca') currentLang = 'ca'; } catch (e) {}
+/* datos del probador retirado (nombre, teléfono y correo) que quedaron en el navegador de quien lo usó */
+try { localStorage.removeItem('cc-prob-user'); } catch (e) {}
 let activeDropIndex = 0;
 let tabsClickHandler = null;
 
@@ -5159,7 +5164,7 @@ function t() { return translations[currentLang]; }
 
 function setLang(lang) {
   currentLang = lang;
-  localStorage.setItem('cc-lang', lang);
+  try { localStorage.setItem('cc-lang', lang); } catch (e) {}
   activeDropIndex = 0;
   document.querySelectorAll('.lang-btn').forEach(b =>
     b.classList.toggle('active', b.dataset.lang === lang));
@@ -6077,7 +6082,7 @@ function buildResenas() {
    · Portada (#noticia, fondo oscuro): la más reciente publicada con «portada: true».
      Las demás publicadas salen como tarjeta en «Más noticias» y se leen en el lector.
      Así, al marcar de portada una noticia más nueva, la anterior pasa sola a «Más
-     noticias» con su enlace directo (#noticia-julia), sin perder nada (regla de Ignacio).
+     noticias» con su enlace directo (#noticia-julia), sin perder nada.
    · «publicada: false»: no sale en ningún sitio.
    · Pase de fotos de la portada (hero): las fotos con «pase: true», primero las de la
      portada y luego las de las demás, en el orden de la web. La píldora es su «aviso».
@@ -6486,7 +6491,7 @@ window.addEventListener('popstate', () => {
 });
 /* enlaces normales a una noticia del lector (por ejemplo desde otra parte de la web) */
 window.addEventListener('hashchange', () => {
-  const id = decodeURIComponent(location.hash.slice(1));
+  const id = idDelEnlace();
   if (esNoticiaLector(id)) {
     if (lectorId !== id && abrirLector(id)) history.replaceState({ lector: id }, '', location.hash);
     return;
@@ -6710,10 +6715,14 @@ renderAll();
 /* Noticias: llegan de datos/noticias.json (panel /admin). Al llegar se pintan y, si la dirección
    trae el enlace de una noticia (…/#noticia-meri), se abre en el lector. */
 let enlaceInicialHecho = false;
+/* el #id de la dirección; un enlace mal copiado (con un «%» suelto) no debe romper la página */
+function idDelEnlace() {
+  try { return decodeURIComponent(location.hash.slice(1)); } catch (e) { return ''; }
+}
 function abrirNoticiaDelEnlace() {
   if (enlaceInicialHecho) return;
   enlaceInicialHecho = true;
-  const id = decodeURIComponent(location.hash.slice(1));
+  const id = idDelEnlace();
   if (!id) return;
   if (!esNoticiaLector(id)) {
     /* cualquier otra ancla (#noticia, #contacto…): las noticias acaban de aparecer y han movido la
@@ -7058,7 +7067,7 @@ function updateCitaBtn() {
   function L(v) { return (v && typeof v === 'object') ? (v[lg()] || v.es) : v; }
 
   /* Base de conocimiento revisada y ampliada el 20-10-2026: cada dato está contrastado con
-     fuentes (listadas en ASISTENTE_FUENTES.md, que no se publica). El orden importa: si dos
+     fuentes. El orden importa: si dos
      entradas empatan gana la primera, así que las concretas van antes que las generales
      (mangas, corpiño, falda, telas, metros, épocas, historia, partes) y al final precio,
      tienda, hola y gracias. Las claves evitan contener palabras vacías («que», «mas»…). */

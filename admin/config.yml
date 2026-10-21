@@ -180,10 +180,12 @@ collections:
           - name: foto
             label: Foto
             widget: image
+            accept: 'image/jpeg,image/png,image/webp'
             choose_url: false
           - name: mini
             label: Versión pequeña (opcional)
             widget: image
+            accept: 'image/jpeg,image/png,image/webp'
             required: false
             choose_url: false
             hint: >-
@@ -231,10 +233,12 @@ collections:
           - name: foto
             label: Foto
             widget: image
+            accept: 'image/jpeg,image/png,image/webp'
             choose_url: false
           - name: mini
             label: Versión pequeña (opcional)
             widget: image
+            accept: 'image/jpeg,image/png,image/webp'
             required: false
             choose_url: false
             hint: Opcional. Se usa en las miniaturas de debajo del carrusel y de fondo en las fotos enteras. Sube la misma foto y el panel la reduce sola.
@@ -446,11 +450,13 @@ collections:
               - name: foto
                 label: Foto
                 widget: image
+                accept: 'image/jpeg,image/png,image/webp'
                 choose_url: false
                 hint: Vertical 3:4 (900×1200). Si marcas «Muy alta», 9:16 (675×1200).
               - name: mini
                 label: Versión pequeña (opcional)
                 widget: image
+                accept: 'image/jpeg,image/png,image/webp'
                 required: false
                 choose_url: false
                 media_libraries: *mini
@@ -480,6 +486,7 @@ collections:
               - name: poster
                 label: Foto de portada del vídeo
                 widget: image
+                accept: 'image/jpeg,image/png,image/webp'
                 choose_url: false
                 hint: Un fotograma del vídeo, del mismo tamaño (720×1280 si es 9:16; 720×960 si es 3:4).
               - name: formato
@@ -524,6 +531,7 @@ collections:
               - name: foto
                 label: Foto
                 widget: image
+                accept: 'image/jpeg,image/png,image/webp'
                 choose_url: false
                 hint: Vertical, de cuerpo entero. Se convierte sola a WebP.
               - name: nombre
@@ -575,6 +583,7 @@ collections:
               - name: foto
                 label: Foto
                 widget: image
+                accept: 'image/jpeg,image/png,image/webp'
                 choose_url: false
                 media_folder: /galeria
                 public_folder: /galeria
@@ -600,6 +609,7 @@ collections:
               - name: foto
                 label: Foto
                 widget: image
+                accept: 'image/jpeg,image/png,image/webp'
                 choose_url: false
                 media_folder: /pasarela
                 public_folder: /pasarela

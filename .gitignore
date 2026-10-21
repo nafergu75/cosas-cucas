@@ -61,3 +61,33 @@ videos/
 
 # Informes privados (seguridad, notas internas): nunca al repositorio
 /_privado/
+
+# Originales y material personal que se queda en el ordenador (fotos de clientas, vídeos,
+# pruebas). Así un «git add» de más no los sube nunca al repositorio.
+/indumentaria regional/
+/fotos tienda/
+/fotos burriana/
+/.claude/*
+!/.claude/settings.json
+!/.claude/launch.json
+/WhatsApp Image *
+/Video de WhatsApp *
+/Imagen de WhatsApp 2024*
+/_ADL*
+/*.mp4
+/Gemini_Generated_Image_*
+/fallera*.jpeg
+/tela 2.jpeg
+/logo.svg
+/logo-cosascucas.jpg
+/cosascucas logo.png
+/Logo-con-Letras-*
+/*-495x400.*
+/portada-espolin-valencia-1080x675.webp
+# Claves y certificados
+.env*
+*.pem
+*.key
+# Túnel para enseñar la web desde el ordenador: abría toda la carpeta a internet (retirado)
+/compartir.ps1
+/COMPARTIR*.bat
