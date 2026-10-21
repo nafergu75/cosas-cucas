@@ -609,6 +609,15 @@
     @media (max-width: 1024px) { .noticia__prensa { max-width: 640px; } }
     .noticia__credito a { color: inherit; opacity: .7; text-decoration: underline; text-underline-offset: 3px; }
     .noticia__credito a:hover { opacity: 1; }
+    /* si la noticia de portada pasa al lector (fondo crema), sus piezas de fondo oscuro se adaptan */
+    .noticia--crema .noticia__dedica { color: #7A5C1E; }
+    .noticia--crema .noticia__link,
+    .noticia--crema .noticia__prensa-enlace { color: #7A5C1E; border-color: rgba(122,92,30,.4); }
+    .noticia--crema .noticia__link:hover,
+    .noticia--crema .noticia__prensa-enlace:hover { color: var(--color-text); border-color: #7A5C1E; }
+    .noticia--crema .noticia__prensa { background: rgba(181,144,58,.08); }
+    .noticia--crema .noticia__prensa-tag { color: #7A5C1E; }
+    .noticia--crema .noticia__prensa-texto { color: var(--color-text-muted); }
     /* enlace de una noticia a otra dentro del lector (el lector la abre con hashchange) */
     .noticia__enlace a { color: inherit; font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-gold); text-decoration-thickness: 2px; text-underline-offset: 4px; }
     .noticia__enlace a:hover { color: var(--color-gold); }
@@ -784,7 +793,8 @@
     }
     .revista__figura--alta img { aspect-ratio: 9 / 16; }
     .revista__texto .noticia__lead { max-width: 720px; }
-    #noticia-amanda .noticia__video video { aspect-ratio: 9 / 16; }
+    /* vídeo alto, de móvil (9:16); el de 3:4 es el normal */
+    .noticia__video--alto video { aspect-ratio: 9 / 16; }
     @media (max-width: 1024px) {
       .revista__segunda { grid-column: auto; grid-template-columns: 200px minmax(0, 1fr); }
       .revista__segunda .noticia__video, .revista__figura { max-width: 200px; }
@@ -3351,7 +3361,8 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
-     NOTICIA DESTACADA — Fallera Mayor Infantil de València 2027 (textos en t().noticia)
+     NOTICIAS — cabecera y noticia de portada. La noticia sale de datos/noticias.json
+     (panel /admin, colección «Noticias») y la pinta buildNoticias().
 ═══════════════════════════════════════════════════════════════════════════ -->
 <section id="noticias" class="noticias-cab" aria-labelledby="noticias-title">
   <div class="container">
@@ -3361,51 +3372,13 @@
   </div>
 </section>
 
-<section id="noticia" class="noticia">
-  <div class="container noticia__inner">
-    <div class="noticia__text">
-      <p class="noticia__eyebrow" id="noticia-eyebrow"></p>
-      <h2 class="noticia__title" id="noticia-title"></h2>
-      <p class="noticia__lead" id="noticia-p1"></p>
-      <p class="noticia__lead" id="noticia-p2"></p>
-      <p class="noticia__dedica" id="noticia-p3"></p>
-      <div class="noticia__prensa">
-        <span class="noticia__prensa-tag" id="noticia-prensa-tag"></span>
-        <p class="noticia__prensa-texto" id="noticia-prensa"></p>
-        <a class="noticia__prensa-enlace" id="noticia-prensa-link" href="https://officialpress.es/traje-julia-vizcayno-orero-una-festa-per-a-tots/" target="_blank" rel="noopener"></a>
-      </div>
-      <a class="noticia__link" id="noticia-link" href="#falleras-mayores"></a>
-    </div>
-    <div class="nf" id="nf" role="region" aria-roledescription="carrusel">
-      <div class="nf__stage" tabindex="0" role="group">
-        <div class="nf__slides"></div>
-        <button type="button" class="nf__arrow nf__arrow--prev">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <button type="button" class="nf__arrow nf__arrow--next">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-        <div class="nf__ctrls">
-          <button type="button" class="nf__ctrl nf__ctrl--pause">
-            <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-            <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
-          </button>
-          <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-          </button>
-        </div>
-        <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
-        <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
-      </div>
-      <div class="nf__thumbs"></div>
-      <p class="nf__live" aria-live="polite"></p>
-    </div>
-  </div>
+<section id="noticia" class="noticia" hidden>
+  <!-- la noticia de portada: la más reciente marcada «Noticia de portada» en el panel -->
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
      MÁS NOTICIAS — tarjetas (foto y titular) que abren cada noticia en el lector.
-     Las tarjetas las genera buildNoticias() a partir de NOTICIAS_MAS.
+     Las tarjetas las genera buildNoticias() a partir de datos/noticias.json.
 ═══════════════════════════════════════════════════════════════════════════ -->
 <div class="puntilla" style="--arriba:var(--color-bg-dark);--abajo:var(--color-bg)" aria-hidden="true"></div>
 <section id="mas-noticias" class="mas-noticias" aria-labelledby="mas-noticias-title">
@@ -3426,543 +3399,8 @@
       <button type="button" class="lector__close" id="lector-close">&times;</button>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════════════════
-         NOTICIA — Así se hizo el traje de proclamación de Meri (espolín «Tetuán», de la
-         Compañía Valenciana de la Seda), del telar a la prueba. Textos en t().meriTetuan;
-         fotos en MERI_TETUAN_FOTOS (de la publicación de @merizalve del 20-10-2026).
-    ════════════════════════════════════════════════════════════════════════ -->
-    <section id="noticia-meri-tetuan" class="noticia noticia--crema">
-      <div class="container noticia__inner revista">
-        <div class="noticia__text">
-          <p class="noticia__eyebrow" id="tetuan-eyebrow"></p>
-          <h2 class="noticia__title" id="tetuan-title"></h2>
-          <p class="noticia__lead" id="tetuan-p1"></p>
-          <p class="noticia__lead" id="tetuan-p2"></p>
-        </div>
-        <div class="nf" id="nf-meri-tetuan" role="region" aria-roledescription="carrusel">
-          <div class="nf__stage" tabindex="0" role="group">
-            <div class="nf__slides"></div>
-            <button type="button" class="nf__arrow nf__arrow--prev">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-            <button type="button" class="nf__arrow nf__arrow--next">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-            <div class="nf__ctrls">
-              <button type="button" class="nf__ctrl nf__ctrl--pause">
-                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
-              </button>
-              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-              </button>
-            </div>
-            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
-            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
-          </div>
-          <div class="nf__thumbs"></div>
-          <p class="nf__live" aria-live="polite"></p>
-        </div>
-        <div class="revista__segunda">
-          <figure class="revista__figura">
-            <img id="tetuan-figura" src="noticias/meri-tetuan-17.webp" width="900" height="1200" alt="" loading="lazy" decoding="async">
-          </figure>
-          <div class="revista__texto">
-            <p class="noticia__lead" id="tetuan-p3"></p>
-            <p class="noticia__lead" id="tetuan-p4"></p>
-            <p class="noticia__lead" id="tetuan-p5"></p>
-            <p class="noticia__lead" id="tetuan-p6"></p>
-            <p class="noticia__lead noticia__enlace"><a id="tetuan-otra" href="#noticia-meri"></a></p>
-            <p class="noticia__lead" id="tetuan-p7"></p>
-            <p class="noticia__lead" id="tetuan-p8"></p>
-            <p class="noticia__credito"><a id="tetuan-credito" href="https://www.instagram.com/merizalve/p/Det_V4ViC9q/" target="_blank" rel="noopener"></a></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════════════════
-         NOTICIA — Los trajes de Amanda Dàries Ricart, FMI 2027 de la falla Malvarrosa.
-         Textos en t().amanda; fotos en AMANDA_FOTOS; vídeo (el reel) en noticias/amanda-video.mp4.
-    ════════════════════════════════════════════════════════════════════════ -->
-    <section id="noticia-amanda" class="noticia noticia--crema">
-      <div class="container noticia__inner revista">
-        <div class="noticia__text">
-          <p class="noticia__eyebrow" id="amanda-eyebrow"></p>
-          <h2 class="noticia__title" id="amanda-title"></h2>
-          <p class="noticia__lead" id="amanda-p1"></p>
-          <p class="noticia__lead" id="amanda-p2"></p>
-        </div>
-        <div class="nf" id="nf-amanda" role="region" aria-roledescription="carrusel">
-          <div class="nf__stage" tabindex="0" role="group">
-            <div class="nf__slides"></div>
-            <button type="button" class="nf__arrow nf__arrow--prev">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-            <button type="button" class="nf__arrow nf__arrow--next">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-            <div class="nf__ctrls">
-              <button type="button" class="nf__ctrl nf__ctrl--pause">
-                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
-              </button>
-              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-              </button>
-            </div>
-            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
-            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
-          </div>
-          <div class="nf__thumbs"></div>
-          <p class="nf__live" aria-live="polite"></p>
-        </div>
-        <div class="revista__segunda">
-          <figure class="noticia__video" id="amanda-video-box">
-            <video id="amanda-video" controls playsinline preload="none" width="720" height="1280"
-                   data-poster="noticias/amanda-video-poster.webp" src="noticias/amanda-video.mp4"></video>
-          </figure>
-          <div class="revista__texto">
-            <p class="noticia__lead" id="amanda-p3"></p>
-            <p class="noticia__lead" id="amanda-p4"></p>
-            <p class="noticia__lead" id="amanda-p5"></p>
-            <p class="noticia__lead" id="amanda-p6"></p>
-            <p class="noticia__credito"><a id="amanda-video-link" href="https://www.instagram.com/cosascucass/" target="_blank" rel="noopener"></a></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════════════════════
-         NOTICIA — Corte de Honor 2027. Datos y fotos en CORTE_2027 (JS); textos en t().corte.
-         Sin fotos queda oculta (hidden) y no sale su tarjeta.
-    ═══════════════════════════════════════════════════════════════════════════ -->
-    <section id="corte-2027" class="noticia noticia--crema" hidden>
-      <div class="container noticia__inner">
-        <div class="noticia__text">
-          <p class="noticia__eyebrow" id="corte27-eyebrow"></p>
-          <h2 class="noticia__title" id="corte27-title"></h2>
-          <p class="noticia__lead" id="corte27-p1"></p>
-          <p class="noticia__lead" id="corte27-p2"></p>
-          <p class="noticia__credito" id="corte27-credito"></p>
-        </div>
-        <div class="nf" id="nf-corte" role="region" aria-roledescription="carrusel">
-          <div class="nf__stage" tabindex="0" role="group">
-            <div class="nf__slides"></div>
-            <button type="button" class="nf__arrow nf__arrow--prev">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-            <button type="button" class="nf__arrow nf__arrow--next">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-            <div class="nf__ctrls">
-              <button type="button" class="nf__ctrl nf__ctrl--pause">
-                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
-              </button>
-              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-              </button>
-            </div>
-            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
-            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
-          </div>
-          <p class="nf__caption"><span class="nf__cap-name"></span><span class="nf__cap-falla"></span></p>
-          <div class="nf__thumbs"></div>
-          <p class="nf__live" aria-live="polite"></p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════════════════════
-         NOTICIA — Los trajes de Meri (Mª José Zalve), Fallera Mayor 2027 de Pinedo.
-         Textos en t().meri; fotos en MERI_FOTOS (de @jose_espolin_estudio, con crédito).
-    ═══════════════════════════════════════════════════════════════════════════ -->
-    <section id="noticia-meri" class="noticia noticia--crema">
-      <div class="container noticia__inner">
-        <div class="noticia__text">
-          <p class="noticia__eyebrow" id="meri-eyebrow"></p>
-          <h2 class="noticia__title" id="meri-title"></h2>
-          <p class="noticia__lead" id="meri-p1"></p>
-          <p class="noticia__lead" id="meri-p2"></p>
-          <p class="noticia__lead" id="meri-p3"></p>
-          <p class="noticia__credito"><a id="meri-credito" href="https://www.instagram.com/p/DepUnKSjZhr/" target="_blank" rel="noopener"></a></p>
-        </div>
-        <div class="nf" id="nf-meri" role="region" aria-roledescription="carrusel">
-          <div class="nf__stage" tabindex="0" role="group">
-            <div class="nf__slides"></div>
-            <button type="button" class="nf__arrow nf__arrow--prev">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-            <button type="button" class="nf__arrow nf__arrow--next">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-            <div class="nf__ctrls">
-              <button type="button" class="nf__ctrl nf__ctrl--pause">
-                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
-              </button>
-              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-              </button>
-            </div>
-            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
-            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
-          </div>
-          <div class="nf__thumbs"></div>
-          <p class="nf__live" aria-live="polite"></p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════════════════
-         NOTICIA — II Exposición «Joyas de la Indumentaria» (junio 2026, Salón de
-         Cristal del Ayuntamiento). Textos en t().joyas; fotos en JOYAS_FOTOS.
-    ════════════════════════════════════════════════════════════════════════ -->
-    <section id="noticia-joyas" class="noticia noticia--crema">
-      <div class="container noticia__inner">
-        <div class="noticia__text">
-          <p class="noticia__eyebrow" id="joyas-eyebrow"></p>
-          <h2 class="noticia__title" id="joyas-title"></h2>
-          <p class="noticia__lead" id="joyas-p1"></p>
-          <p class="noticia__lead" id="joyas-p2"></p>
-          <p class="noticia__lead" id="joyas-p3"></p>
-          <p class="noticia__credito" id="joyas-credito"></p>
-        </div>
-        <div class="nf" id="nf-joyas" role="region" aria-roledescription="carrusel">
-          <div class="nf__stage" tabindex="0" role="group">
-            <div class="nf__slides"></div>
-            <button type="button" class="nf__arrow nf__arrow--prev">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-            <button type="button" class="nf__arrow nf__arrow--next">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-            <div class="nf__ctrls">
-              <button type="button" class="nf__ctrl nf__ctrl--pause">
-                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
-              </button>
-              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-              </button>
-            </div>
-            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
-            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
-          </div>
-          <div class="nf__thumbs"></div>
-          <p class="nf__live" aria-live="polite"></p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════════════════
-         NOTICIA — Cosas Cucas en la I Exposición «Joies de la Indumentària» (26-30 de septiembre de 2022,
-         Saló de Cristall, 775 aniversario del Gremio). Textos en t().joies22; fotos en JOIES22_FOTOS (de Ignacio).
-    ════════════════════════════════════════════════════════════════════════ -->
-    <section id="noticia-joies-2022" class="noticia noticia--crema">
-      <div class="container noticia__inner revista">
-        <div class="noticia__text">
-          <p class="noticia__eyebrow" id="joies22-eyebrow"></p>
-          <h2 class="noticia__title" id="joies22-title"></h2>
-          <p class="noticia__lead" id="joies22-p1"></p>
-          <p class="noticia__lead" id="joies22-p2"></p>
-        </div>
-        <div class="nf" id="nf-joies22" role="region" aria-roledescription="carrusel">
-          <div class="nf__stage" tabindex="0" role="group">
-            <div class="nf__slides"></div>
-            <button type="button" class="nf__arrow nf__arrow--prev">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-            <button type="button" class="nf__arrow nf__arrow--next">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-            <div class="nf__ctrls">
-              <button type="button" class="nf__ctrl nf__ctrl--pause">
-                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
-              </button>
-              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-              </button>
-            </div>
-            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
-            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
-          </div>
-          <div class="nf__thumbs"></div>
-          <p class="nf__live" aria-live="polite"></p>
-        </div>
-        <div class="revista__segunda">
-          <figure class="revista__figura">
-            <img id="joies22-figura" src="noticias/joies22-02.webp" width="900" height="1200" alt="" loading="lazy" decoding="async">
-          </figure>
-          <div class="revista__texto">
-            <p class="noticia__lead" id="joies22-p3"></p>
-            <p class="noticia__lead" id="joies22-p4"></p>
-            <p class="noticia__lead" id="joies22-p5"></p>
-            <p class="noticia__lead noticia__enlace"><a id="joies22-otra" href="#noticia-joyas"></a></p>
-            <p class="noticia__lead" id="joies22-p6"></p>
-            <p class="noticia__credito" id="joies22-credito"></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════════════════
-         NOTICIA — Cosas Cucas en el desfile Tradicions (III edición, sábado 13-11-2021, Museu de les
-         Ciències). Textos en t().tradicions; fotos en TRADICIONS_FOTOS: 9 de Ignacio (antes del desfile)
-         y 10 de la pasarela, del álbum «Cosas Cucas en el Desfile Tradicions» (Facebook de Tradicions, 13-12-2021).
-    ════════════════════════════════════════════════════════════════════════ -->
-    <section id="noticia-tradicions" class="noticia noticia--crema">
-      <div class="container noticia__inner revista">
-        <div class="noticia__text">
-          <p class="noticia__eyebrow" id="tradicions-eyebrow"></p>
-          <h2 class="noticia__title" id="tradicions-title"></h2>
-          <p class="noticia__lead" id="tradicions-p1"></p>
-          <p class="noticia__lead" id="tradicions-p2"></p>
-        </div>
-        <div class="nf" id="nf-tradicions" role="region" aria-roledescription="carrusel">
-          <div class="nf__stage" tabindex="0" role="group">
-            <div class="nf__slides"></div>
-            <button type="button" class="nf__arrow nf__arrow--prev">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-            <button type="button" class="nf__arrow nf__arrow--next">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-            <div class="nf__ctrls">
-              <button type="button" class="nf__ctrl nf__ctrl--pause">
-                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
-              </button>
-              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-              </button>
-            </div>
-            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
-            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
-          </div>
-          <div class="nf__thumbs"></div>
-          <p class="nf__live" aria-live="polite"></p>
-        </div>
-        <div class="revista__segunda">
-          <figure class="revista__figura">
-            <img id="tradicions-figura" src="noticias/tradicions-20.webp" width="963" height="1200" alt="" loading="lazy" decoding="async">
-          </figure>
-          <div class="revista__texto">
-            <p class="noticia__lead" id="tradicions-p3"></p>
-            <p class="noticia__lead" id="tradicions-p4"></p>
-            <p class="noticia__lead" id="tradicions-p5"></p>
-            <p class="noticia__lead" id="tradicions-p6"></p>
-            <p class="noticia__credito"><a id="tradicions-credito" href="https://www.facebook.com/tradicions/posts/cosas-cucas-en-el-desfile-tradicions/4992508494133823/" target="_blank" rel="noopener"></a></p>
-            <p class="noticia__credito"><a id="tradicions-video" href="https://www.youtube.com/watch?v=ISsCTQGo2uE" target="_blank" rel="noopener"></a></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════════════════
-         NOTICIA — Cosas Cucas cerró el I Desfile de Indumentaria Valenciana del Gremio (jueves 20-09-2018,
-         Salón Stolz del Ateneo Mercantil, a beneficio de Aspanion). Textos en t().desfile18; fotos de
-         Fran Adlert en DESFILE18_FOTOS (originales en _originales/pasarela/).
-    ════════════════════════════════════════════════════════════════════════ -->
-    <section id="noticia-desfile-2018" class="noticia noticia--crema">
-      <div class="container noticia__inner revista">
-        <div class="noticia__text">
-          <p class="noticia__eyebrow" id="desfile18-eyebrow"></p>
-          <h2 class="noticia__title" id="desfile18-title"></h2>
-          <p class="noticia__lead" id="desfile18-p1"></p>
-          <p class="noticia__lead" id="desfile18-p2"></p>
-        </div>
-        <div class="nf" id="nf-desfile18" role="region" aria-roledescription="carrusel">
-          <div class="nf__stage" tabindex="0" role="group">
-            <div class="nf__slides"></div>
-            <button type="button" class="nf__arrow nf__arrow--prev">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-            <button type="button" class="nf__arrow nf__arrow--next">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-            <div class="nf__ctrls">
-              <button type="button" class="nf__ctrl nf__ctrl--pause">
-                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
-              </button>
-              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-              </button>
-            </div>
-            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
-            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
-          </div>
-          <div class="nf__thumbs"></div>
-          <p class="nf__live" aria-live="polite"></p>
-        </div>
-        <div class="revista__segunda">
-          <figure class="revista__figura">
-            <img id="desfile18-figura" src="noticias/desfile18-figura.webp" width="900" height="1200" alt="" loading="lazy" decoding="async">
-          </figure>
-          <div class="revista__texto">
-            <p class="noticia__lead" id="desfile18-p3"></p>
-            <p class="noticia__lead" id="desfile18-p4"></p>
-            <p class="noticia__lead noticia__enlace"><a id="desfile18-joia" href="#noticia-joia"></a></p>
-            <p class="noticia__lead" id="desfile18-p5"></p>
-            <p class="noticia__lead noticia__enlace"><a id="desfile18-vi" href="#noticia-desfilada"></a></p>
-            <p class="noticia__lead" id="desfile18-p6"></p>
-            <p class="noticia__credito" id="desfile18-credito"></p>
-            <p class="noticia__credito"><a id="desfile18-video" href="https://www.youtube.com/watch?v=lnUkOFIDhxY&t=3050s" target="_blank" rel="noopener"></a></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════════════════
-         NOTICIA — Premio Joia 2018 del Gremio de Sastres y Modistas a Paquita
-         Martorell (junio de 2018). Textos en t().joia; fotos en JOIA_FOTOS.
-    ════════════════════════════════════════════════════════════════════════ -->
-    <section id="noticia-joia" class="noticia noticia--crema">
-      <div class="container noticia__inner revista">
-        <div class="noticia__text">
-          <p class="noticia__eyebrow" id="joia-eyebrow"></p>
-          <h2 class="noticia__title" id="joia-title"></h2>
-          <p class="noticia__lead" id="joia-p1"></p>
-          <p class="noticia__lead" id="joia-p2"></p>
-        </div>
-        <div class="nf" id="nf-joia" role="region" aria-roledescription="carrusel">
-          <div class="nf__stage" tabindex="0" role="group">
-            <div class="nf__slides"></div>
-            <button type="button" class="nf__arrow nf__arrow--prev">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-            <button type="button" class="nf__arrow nf__arrow--next">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-            <div class="nf__ctrls">
-              <button type="button" class="nf__ctrl nf__ctrl--pause">
-                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
-              </button>
-              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-              </button>
-            </div>
-            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
-            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
-          </div>
-          <div class="nf__thumbs"></div>
-          <p class="nf__live" aria-live="polite"></p>
-        </div>
-        <div class="revista__segunda">
-          <figure class="revista__figura">
-            <img src="noticias/joia-07-mini.webp" srcset="noticias/joia-07-mini.webp 360w, noticias/joia-07.webp 900w" sizes="(max-width: 640px) 280px, (max-width: 1024px) 200px, 240px" width="900" height="1200" alt="" loading="lazy" decoding="async" />
-          </figure>
-          <div class="revista__texto">
-            <p class="noticia__lead" id="joia-p3"></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════════════════
-         NOTICIA — Cosas Cucas abre en la calle Burriana, 21 (julio de 2026).
-         Textos en t().tienda; fotos en TIENDA_FOTOS.
-    ════════════════════════════════════════════════════════════════════════ -->
-    <section id="noticia-tienda" class="noticia noticia--crema">
-      <div class="container noticia__inner revista">
-        <div class="noticia__text">
-          <p class="noticia__eyebrow" id="tienda-eyebrow"></p>
-          <h2 class="noticia__title" id="tienda-title"></h2>
-          <p class="noticia__lead" id="tienda-p1"></p>
-          <p class="noticia__lead" id="tienda-p2"></p>
-        </div>
-        <div class="nf" id="nf-tienda" role="region" aria-roledescription="carrusel">
-          <div class="nf__stage" tabindex="0" role="group">
-            <div class="nf__slides"></div>
-            <button type="button" class="nf__arrow nf__arrow--prev">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-            <button type="button" class="nf__arrow nf__arrow--next">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-            <div class="nf__ctrls">
-              <button type="button" class="nf__ctrl nf__ctrl--pause">
-                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
-              </button>
-              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-              </button>
-            </div>
-            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
-            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
-          </div>
-          <div class="nf__thumbs"></div>
-          <p class="nf__live" aria-live="polite"></p>
-        </div>
-        <div class="revista__segunda">
-          <figure class="revista__figura revista__figura--alta">
-            <img src="noticias/tienda-01-mini.webp" srcset="noticias/tienda-01-mini.webp 360w, noticias/tienda-01.webp 675w" sizes="(max-width: 640px) 280px, (max-width: 1024px) 200px, 240px" width="675" height="1200" alt="" loading="lazy" decoding="async" />
-          </figure>
-          <div class="revista__texto">
-            <p class="noticia__lead" id="tienda-p3"></p>
-            <p class="noticia__lead" id="tienda-p4"></p>
-            <p class="noticia__lead" id="tienda-p5"></p>
-            <p class="noticia__credito"><a id="tienda-video" href="https://www.instagram.com/cosascucass/reel/DdYruMCMT4v/" target="_blank" rel="noopener"></a></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════════════════
-         NOTICIA — Cosas Cucas en la VI Desfilada d'Indumentària Valenciana (19-06-2026).
-         Textos en t().desfilada; fotos en DESFILADA_FOTOS; vídeo en noticias/desfilada-video.mp4.
-    ════════════════════════════════════════════════════════════════════════ -->
-    <section id="noticia-desfilada" class="noticia noticia--crema">
-      <div class="container noticia__inner revista">
-        <div class="noticia__text">
-          <p class="noticia__eyebrow" id="desfilada-eyebrow"></p>
-          <h2 class="noticia__title" id="desfilada-title"></h2>
-          <p class="noticia__lead" id="desfilada-p1"></p>
-        </div>
-        <div class="nf" id="nf-desfilada" role="region" aria-roledescription="carrusel">
-          <div class="nf__stage" tabindex="0" role="group">
-            <div class="nf__slides"></div>
-            <button type="button" class="nf__arrow nf__arrow--prev">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-            <button type="button" class="nf__arrow nf__arrow--next">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-            <div class="nf__ctrls">
-              <button type="button" class="nf__ctrl nf__ctrl--pause">
-                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
-              </button>
-              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-              </button>
-            </div>
-            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
-            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
-          </div>
-          <div class="nf__thumbs"></div>
-          <p class="nf__live" aria-live="polite"></p>
-        </div>
-        <div class="revista__segunda">
-          <figure class="noticia__video" id="desfilada-video-box">
-            <video id="desfilada-video" controls playsinline preload="none" width="720" height="960"
-                   data-poster="noticias/desfilada-video-poster.webp" src="noticias/desfilada-video.mp4"></video>
-          </figure>
-          <div class="revista__texto">
-            <p class="noticia__lead" id="desfilada-p2"></p>
-            <p class="noticia__lead" id="desfilada-p3"></p>
-            <p class="noticia__lead" id="desfilada-p4"></p>
-            <p class="noticia__credito" id="desfilada-credito"></p>
-            <p class="noticia__credito"><a id="desfilada-video-link" href="https://www.instagram.com/p/DZ7mLVHjOeW/" target="_blank" rel="noopener"></a></p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- Las noticias del lector (una section.noticia.noticia--crema por noticia, con su id)
+         las crea buildNoticias() a partir de datos/noticias.json -->
 
     <div class="lector__pie">
       <button type="button" class="lector__volver" id="lector-volver"></button>
@@ -4136,7 +3574,7 @@
       </div>
     </div>
 
-    <!-- LA TIENDA NUEVA: Burriana, 21 (textos alternativos de t().tienda.alts, pie en t().dossier.nuevaCaption) -->
+    <!-- LA TIENDA NUEVA: Burriana, 21 (textos alternativos de t().dossier.tiendaAlts, pie en t().dossier.nuevaCaption) -->
     <figure class="dh-nueva">
       <div class="dh-nueva__fotos">
         <img src="noticias/tienda-01.webp" width="675" height="1200" alt="" data-alt="0" loading="lazy" decoding="async">
@@ -4746,44 +4184,18 @@ const translations = {
       'Miembro del Gremio de Sastres y Modistas de Valencia',
       'Nueva colección comunión y fiesta 2026 disponible',
     ],
-    noticia: {
-      pillTag: 'Noticia',
-      pill:    'Vestimos a la Fallera Mayor Infantil de València 2027',
-      eyebrow: 'Noticia · Octubre 2026',
-      title:   'Fallera Mayor Infantil de València 2027',
-      p1:      'Julia Vizcayno Orero, de la falla Rosari-Plaça Calabuig, es la nueva Fallera Mayor Infantil de València. En Cosas Cucas hemos tenido el regalo de verla crecer desde muy pequeña, cuando venía por tradición familiar y hacía de nuestro taller su rincón favorito entre telas y modistas.',
-      p2:      'Vestirla en toda su trayectoria ha sido un verdadero honor, pero el 14 de octubre, al verla subir las escaleras del Ayuntamiento vestida por nuestra casa, el corazón se nos llenó de lágrimas y orgullo.',
-      p3:      'Julia, gracias por dejarnos tejer la historia de tu vida.',
-      link:    'Falleras mayores vestidas por Cosas Cucas',
-      prensaTag:  'En la prensa',
-      prensa:     'En «Una Festa per a Tots», en Nuevo Centro, Julia estrenó su primer traje como Fallera Mayor Infantil: un brocatel de seda y oro de fondo verde, de estilo del siglo XIX, confeccionado en Cosas Cucas. La manteleta, de tul y oro, es de Hijas de Carmen Esteve.',
-      prensaLink: 'Leer la noticia en Official Press',
-      region:  'Fotos de Julia Vizcayno en el Ayuntamiento de València',
-      prev:    'Foto anterior',
-      next:    'Foto siguiente',
-      full:    'Ver a pantalla completa',
+    /* etiquetas de los carruseles de las noticias (las noticias salen de datos/noticias.json) */
+    carrusel: {
+      region:   'Fotos de la noticia',
+      prev:     'Foto anterior',
+      next:     'Foto siguiente',
+      full:     'Ver a pantalla completa',
       exitFull: 'Salir de pantalla completa',
-      pause:   'Pausar el pase de fotos',
-      play:    'Reanudar el pase de fotos',
-      stage:   'Foto actual. Usa las flechas izquierda y derecha para cambiar de foto',
-      thumb:   'Ver foto',
-      photo:   'Foto',
-      alts: [
-        'Retrato de Julia Vizcayno con el traje de fallera y la peineta',
-        'Julia Vizcayno sube las escaleras del Ayuntamiento entre aplausos',
-        'Julia Vizcayno en las escaleras, vista desde arriba',
-        'Julia Vizcayno llega por la alfombra roja entre aplausos',
-        'Julia Vizcayno da la mano a la alcaldesa de València',
-        'Julia Vizcayno de espaldas: se ven el lazo y la falda del traje',
-        'Julia Vizcayno saluda a la Fallera Mayor de València',
-        'Julia Vizcayno camina por el salón con el traje completo',
-        'Julia Vizcayno saluda al público',
-        'Julia Vizcayno en la mesa presidencial del hemiciclo del Ayuntamiento',
-        'Julia Vizcayno sonríe sentada en la mesa presidencial',
-        'Julia Vizcayno sonríe con su ramo de flores sobre la alfombra roja',
-        'Julia Vizcayno posa con su ramo junto a un jarrón de cerámica',
-        'Julia Vizcayno con su ramo en un salón del Ayuntamiento',
-      ],
+      pause:    'Pausar el pase de fotos',
+      play:     'Reanudar el pase de fotos',
+      stage:    'Foto actual. Usa las flechas izquierda y derecha para cambiar de foto',
+      thumb:    'Ver foto',
+      photo:    'Foto',
     },
     noticias: {
       eyebrow: 'Temporada fallera 2027',
@@ -4793,298 +4205,6 @@ const translations = {
       leer:    'Leer la noticia',
       cerrar:  'Cerrar la noticia',
       volver:  'Volver a las noticias',
-    },
-    meri: {
-      eyebrow: 'Noticia · Octubre 2026',
-      title:   'Los trajes de Meri, Fallera Mayor 2027 de Pinedo',
-      p1:      'Mª José Zalve Quilis, Meri, es la Fallera Mayor 2027 de la falla Mossén Josep Cuenca-Pinedo. El 18 de octubre enseñó en una exposición los trajes que llevará durante su reinado, y todos los hemos confeccionado en Cosas Cucas.',
-      p2:      'Hay un «Almudena» azul marino, un «Brunet» rosa antiguo, un «Lazos» gris y otro «Lazos» verde, este exclusivo de la casa. Presidiéndolo todo estaba el espolín «Tetuán» en color champán, que la Compañía Valenciana de la Seda ha vuelto a tejer. Ese traje ya estaba en marcha el día de la dana, y salió adelante.',
-      p3:      'Los aderezos son de Art Antic Joieria y la mantilla que lucirá en la ofrenda, de Santos Textil.',
-      credito: 'Fotos: @jose_espolin_estudio en Instagram',
-      region:  'Fotos de los trajes de Meri, Fallera Mayor 2027 de Pinedo',
-      alts: [
-        'Una joven posa junto al traje de espolín «Tetuán» en la exposición',
-        'El espolín «Tetuán» en color champán, visto de lado, con el «Almudena» al fondo',
-        'Detalle del corpiño y la manteleta del «Tetuán»',
-        'El «Tetuán» con el delantal de encaje dorado',
-        'La espalda del «Tetuán», con el lazo de la cinturilla',
-        'Falda del espolín «Tetuán» con sus flores de colores',
-        'Detalle de las flores tejidas del espolín «Tetuán»',
-        'Traje «Almudena» en azul marino',
-        'Traje «Brunet» en rosa antiguo, detalle del corpiño',
-        'Traje «Lazos» en gris, detalle del corpiño y la joya',
-        'Traje «Lazos» en verde, exclusivo de Cosas Cucas',
-        'Dos trajes de la exposición, en gris y en rosa',
-        'La mantilla de la ofrenda y la banda de fallera mayor',
-        'Los zapatos y las medias caladas, bordadas con la inicial M',
-      ],
-    },
-    joyas: {
-      eyebrow: 'Noticia · Junio 2026',
-      title:   'Nuestros trajes en «Joyas de la Indumentaria»',
-      p1:      'Del 2 al 5 de junio, el Salón de Cristal del Ayuntamiento de València acogió la II Exposición «Joyas de la Indumentaria», que organiza el Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana. Al final se amplió hasta el 12 de junio.',
-      p2:      'Entre trajes de los siglos XVIII y XIX, manteletas bordadas en oro y plata, mantillas, aderezos y peinetas, en Cosas Cucas llevamos dos trajes de nuestro taller: uno de seda rosa y otro de seda oscura con grandes flores, los dos con el pañuelo y el delantal dorados.',
-      p3:      'Ver nuestro trabajo en el Salón de Cristal, junto al de otros talleres del gremio, nos hizo mucha ilusión. Gracias a todos los que pasasteis a verlo.',
-      credito: 'Cartel de la exposición: Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana',
-      region:  'Fotos de los trajes de Cosas Cucas en la exposición «Joyas de la Indumentaria»',
-      alts: [
-        'Los dos trajes de Cosas Cucas en el Salón de Cristal, con el cartel de la casa',
-        'El traje de seda oscura con grandes flores, con el pañuelo y el delantal dorados',
-        'El traje de seda oscura, de perfil',
-        'Detalle de las flores de la falda del traje oscuro',
-        'Detalle de la falda de seda rosa',
-        'Una seda verde con flores, todavía en el telar',
-        'Dos mujeres posan junto a los trajes de Cosas Cucas',
-        'Una mujer posa entre los dos trajes de Cosas Cucas',
-        'Los trajes de la exposición a lo largo del Salón de Cristal',
-        'Otra vista del Salón de Cristal con los trajes expuestos',
-        'Foto de grupo durante la exposición',
-        'Dos asistentes miran los trajes durante la exposición',
-        'Cartel de la II Exposición «Joyas de la Indumentaria», del 2 al 5 de junio en el Salón de Cristal',
-      ],
-    },
-    desfilada: {
-      eyebrow: 'Noticia · Junio 2026',
-      title:   "Cosas Cucas en la VI Desfilada d'Indumentària Valenciana",
-      p1:      "El viernes 19 de junio, el Palau de l'Exposició de València acogió la VI Desfilada d'Indumentària Valenciana, la pasarela del Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana. Bajo las grandes lámparas del salón desfilaron los trajes de ocho casas: Amparo Fabra, Eugenia Puertes, Vicente Santo Tomás, Amparo Gálvez, Cosas Cucas, El Vestidor Faller, Princesas con Abanico y Empar del Remei.",
-      p2:      'En Cosas Cucas sacamos a la pasarela trajes de nuestro taller para grandes y pequeños: falleras, niñas, falleros y un niño, y también una fallera con mantilla de encaje.',
-      p3:      'Fue una tarde muy especial, en la que compartimos tradición, artesanía y elegancia. Gracias a quienes desfilaron con nuestros trajes, a los colaboradores, al Gremio de Sastres y Modistas y a todas las personas que nos acompañasteis.',
-      p4:      'Ya estuvimos en la primera edición, en 2018 en el Ateneo Mercantil, y seguimos trabajando para mantener viva la esencia de nuestra indumentaria y de nuestras costumbres.',
-      credito: 'Cartel de la Desfilada: Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana',
-      video:   'Vídeo del desfile en nuestro Instagram',
-      videoLabel: "Vídeo del desfile de Cosas Cucas en la VI Desfilada d'Indumentària Valenciana",
-      region:  "Fotos de Cosas Cucas en la VI Desfilada d'Indumentària Valenciana",
-      alts: [
-        "Cartel de la VI Desfilada d'Indumentària Valenciana: viernes 19 de junio, a las 19.30, en el Palau de l'Exposició, con las casas participantes",
-        'Un niño, de espaldas, con chaleco verde de flores y pañuelo en la cabeza, antes del desfile',
-        'Una niña y una fallera, sonrientes, con sus trajes antes de salir a la pasarela',
-        'Un fallero desfila con chaqueta oscura, chaleco de flores, faja roja y el sombrero en la mano',
-        'Una fallera desfila sonriente con mantilla de encaje y falda de flores',
-        'Una fallera con traje rojo se vuelve sonriendo hacia el público',
-        'La fallera del traje rojo, de espaldas, con el lazo de la falda',
-        'Un joven desfila con chaqueta marrón, pañuelo en la cabeza y el sombrero en la mano',
-        'Una niña desfila sonriente con traje verde agua de flores',
-        'Un niño con chaleco verde de flores y pañuelo en la cabeza sonríe en la pasarela',
-        'El mismo niño avanza por la pasarela con los brazos abiertos',
-        'Una fallera desfila sonriente con falda azul de flores y delantal de encaje',
-        'Una fallera desfila sonriente con traje rojo y delantal dorado',
-        'Una fallera con traje verde claro y dorado mira al público',
-        'Detalle de un fallero en la pasarela: chaqueta oscura, chaleco de flores, faja roja y medias azules',
-        'Foto de grupo con falleras, una niña y un niño ante el photocall de la Desfilada',
-        "Foto de grupo ante el photocall de la Desfilada d'Indumentària Valenciana",
-        'Una fallera con traje rosa y dorado posa junto a una mujer ante el photocall de la Desfilada',
-      ],
-    },
-    joies22: {
-      eyebrow:  "Noticia · Septiembre 2022",
-      title:    "Cosas Cucas en la primera exposición «Joies de la Indumentària»",
-      p1:       "Del 26 al 30 de septiembre de 2022, el Salón de Cristal del Ayuntamiento de València acogió la primera exposición «Joies de la Indumentària», con la que el Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana celebraba sus 775 años. En Cosas Cucas fuimos una de las dieciséis firmas que expusieron.",
-      p2:       "Llevamos tres trajes de nuestro taller: uno de fondo rojo con grandes ramos de flores, manga corta con encaje y manteleta y delantal de tul bordado en oro; otro con jubón gris de manga larga y falda gris de flores azules, amarillas y rosas, también con oro en la manteleta y el delantal; y un traje de niño, con chaqueta negra de vivos verdes, chaleco turquesa de flores y calzón negro.",
-      p3:       "A su lado había trajes de los siglos XVIII y XIX en seda, seda ancha, seda estrecha y espolín, aderezos de orfebres, manteletas y mantillas, todo hecho por talleres del gremio, entre ellos Art Antic, Hijas de Carmen Esteve y Santos Textil.",
-      p4:       "A la inauguración asistieron Borja Sanjuán, concejal de Hacienda y teniente de alcalde, y Fran Tochena, maestro mayor del Gremio, con la vicepresidenta, Amparo Fabra. La exposición abría de 8.00 a 14.00 y la entrada era libre.",
-      p5:       "Aquella primera edición tuvo continuación: en junio de 2026 volvimos al Salón de Cristal con la segunda.",
-      otra:     "La segunda edición, en otra noticia →",
-      p6:       "Gracias al Gremio por contar con nosotras y a todos los que os acercasteis al Salón de Cristal.",
-      credito:  "Cartel de la exposición: Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana",
-      region:   "Fotos de Cosas Cucas en la exposición «Joies de la Indumentària» de 2022",
-      alts: [
-        "Los tres trajes de Cosas Cucas en el Salón de Cristal, con nuestra tarjeta",
-        "El cartel de la exposición «Joies de la Indumentària», del 26 al 30 de septiembre de 2022",
-        "Los tres trajes de cerca: el rojo de flores, el de niño y el del jubón gris",
-        "Traje de fondo rojo con grandes flores, manga corta con encaje y delantal de tul bordado en oro",
-        "Traje con jubón gris de manga larga y falda gris de flores",
-        "Traje de niño con chaqueta negra de vivos verdes y chaleco turquesa de flores",
-        "Con los tres trajes en el Salón de Cristal",
-        "Junto a los trajes de Cosas Cucas en la exposición",
-        "Junto al traje del jubón gris",
-      ],
-    },
-    tradicions: {
-      eyebrow:  "Noticia · Noviembre 2021",
-      title:    "Cosas Cucas en el desfile Tradicions",
-      p1:       "El sábado 13 de noviembre de 2021, el Museu de les Ciències Príncipe Felipe acogió la tercera edición de Tradicions, el desfile de indumentaria valenciana que organizan 99.9 Plaza Radio y Loren Donat. En Cosas Cucas fuimos una de las veinte firmas que pasaron por una pasarela de 110 metros.",
-      p2:       "Desfilamos con nuestros modelos falleros, para grandes y pequeños: una niña con un traje amarillo de grandes flores lilas, una joven de granate con manteleta y delantal dorados, otra de negro con el delantal blanco bordado en oro y dos niños vestidos de labrador, uno con chaleco rojo y saragüells y otro con chaqueta de terciopelo marrón.",
-      p3:       "Antes de salir nos hicimos fotos con ellos dentro del museo, al atardecer junto al puente de l'Assut de l'Or y en el photocall de Tradicions.",
-      p4:       "Era el reencuentro del sector después de la pandemia, todavía con mascarilla. Según la crónica de Valencia Plaza, el público pasó de las 2.000 personas y el desfile quería reivindicar el trabajo de indumentaristas y artesanos, cuyos ingresos habían caído un 95 %. Asistieron las Falleras Mayores de València 2022, Carmen Martín Carbonell y Nerea López Maestre, con sus Cortes de Honor, y lo presentó Eduard Forés.",
-      p5:       "A la entrada, una exposición reunía a orfebres, sederos y artesanos, entre ellos Art Antic y la Compañía Valenciana de la Seda. Para nosotras no era la primera vez: ya habíamos estado en Tradicions en 2013.",
-      p6:       "Gracias a las niñas, niños y jóvenes que lucieron nuestros trajes, a sus familias y a la organización.",
-      credito:  "Fotos de la pasarela: Tradicions",
-      video:    "Nuestro vídeo de presentación en el canal de Tradicions",
-      region:   "Fotos de Cosas Cucas en el desfile Tradicions 2021",
-      alts: [
-        "Los cinco modelos de Cosas Cucas, con dos acompañantes, dentro del Museu de les Ciències",
-        "El grupo en la Ciudad de las Artes y las Ciencias, con el puente de l'Assut de l'Or al fondo",
-        "La joven de negro y la niña de amarillo al atardecer, con l'Àgora al fondo",
-        "Las tres falleras: la de granate, la de negro y la de amarillo",
-        "La niña del traje amarillo de flores lilas",
-        "La joven del traje negro, en blanco y negro",
-        "La joven de negro en el photocall de Tradicions",
-        "La joven de negro en el photocall, de cerca",
-        "La falda negra de flores, de espaldas en el photocall",
-        "La niña de amarillo en la pasarela del Museu de les Ciències",
-        "La niña de amarillo, con manteleta blanca y delantal de tul bordado",
-        "Niño con chaqueta de terciopelo marrón y sombrero negro",
-        "La joven de granate, con manteleta y delantal dorados",
-        "La joven de granate, de cerca",
-        "Niño con saragüells y chaleco rojo; detrás, la joven de granate de espaldas",
-        "El niño del chaleco rojo con medalla y sombrero negro",
-        "La joven de negro, con el delantal blanco bordado en oro",
-        "La joven de negro, de cerca",
-        "Saludo final de Cosas Cucas en el escenario",
-        "La joven de negro de noche, junto al agua de la Ciudad de las Artes y las Ciencias",
-      ],
-    },
-    desfile18: {
-      eyebrow:  "Noticia · Septiembre 2018",
-      title:    "Cosas Cucas cerró el I Desfile de Indumentaria Valenciana del Gremio",
-      p1:       "El jueves 20 de septiembre de 2018, el Salón Stolz del Ateneo Mercantil de València acogió el I Desfile de Indumentaria Valenciana del Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana. Era un desfile solidario: todo lo recaudado fue para Aspanion, la asociación de niños con cáncer, y las entradas, a 5 euros, se agotaron en pocos días.",
-      p2:       "Pasaron diez firmas del Gremio y a nosotras nos tocó cerrar el desfile. Sacamos siete trajes de nuestro taller: tres de niña, uno rosa, otro celeste y otro con mantilla blanca; dos de chico, un niño pequeño y un joven con chaleco rojo; y dos de mujer, uno con el delantal blanco bordado en oro sobre falda azul y otro gris plata con un gran lazo rojo a la espalda.",
-      p3:       "La idea partió de la Hermandad del Ramo de la Aguja, con su Reina de 2018, María Hidalgo, y su Corte, y contó con la colaboración del Ateneo Mercantil. Recibieron a los asistentes el maestro mayor del Gremio, Fran Tochena, y la vicepresidenta, Amparo Fabra. Entre el público estaban las Falleras Mayores de València 2018, Rocío Gil y Daniela Gómez, y Mª Carmen Conejos, en representación de Aspanion. El salón se llenó.",
-      p4:       "Fue un año especial para la casa: tres meses antes, en junio, el Gremio había concedido el Premio Joia 2018 a Paquita Martorell, que fundó Cosas Cucas.",
-      joia:     "El Premio Joia 2018, en otra noticia →",
-      p5:       "Desde entonces el desfile es una cita fija del Gremio. Volvimos en la segunda edición, en 2019, y en la sexta, en junio de 2026.",
-      vi:       "La VI Desfilada, de 2026, en otra noticia →",
-      p6:       "Gracias a quienes lucieron nuestros trajes aquella noche y a sus familias.",
-      credito:  "Fotos: Fran Adlert",
-      video:    "Vídeo del desfile completo (nuestro pase, desde el minuto 50:50)",
-      region:   "Fotos de Cosas Cucas en el I Desfile de Indumentaria Valenciana del Gremio, 2018",
-      figura:   "Fallera con delantal blanco bordado en oro y falda azul en la pasarela del Ateneo Mercantil",
-      alts: [
-        "El equipo de Cosas Cucas ante el photocall del I Desfile de Indumentaria Valenciana",
-        "Niña con traje rosa de flores en la pasarela del Salón Stolz",
-        "La niña de rosa, de espaldas, con la lazada de la cinta",
-        "Niño con sombrero, chaleco gris y faja celeste",
-        "Niña con traje celeste de flores",
-        "La niña de celeste, de espaldas, con la lazada",
-        "Joven con chaleco rojo, faja gris y medias de rayas",
-        "Niña con mantilla blanca y delantal bordado en oro",
-        "Fallera con delantal blanco bordado en oro y falda azul",
-        "Fallera con traje gris plata y manteleta de encaje",
-        "El traje gris plata, de espaldas, con un gran lazo rojo",
-        "Saludo final de Cosas Cucas, que cerró el desfile",
-      ],
-    },
-    joia: {
-      eyebrow: 'Noticia · Junio 2018',
-      title:   'Premio Joia 2018 para Paquita Martorell',
-      p1:      'El 15 de junio de 2018, el Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana entregó su Premio Joia a Paquita Martorell, la fundadora de Cosas Cucas, por más de treinta años de trabajo sin interrupción en la indumentaria valenciana.',
-      p2:      'Se lo dio el maestro mayor del Gremio, Fran Tochena, en el acto que se celebró en el Hotel Ayre Astoria Palace de València. El premio es una aguja de oro blanco de estilo barroco hecha por Art Antic. Las menciones de honor de ese año fueron para la empresa textil Tejedores Bartual y para el periodista Guillermo Ortigueira.',
-      p3:      'En el salón expusimos algunos de nuestros trajes, y el 20 de septiembre de ese año cerramos el I Desfile de Indumentaria Valenciana del Gremio, en el Ateneo Mercantil. Para la casa fue el reconocimiento a toda una vida entre telas: la que Paquita empezó en el Cabañal y que hoy siguen sus hijas Noelia y María en el taller.',
-      region:  'Fotos del Premio Joia 2018 a Paquita Martorell',
-      alts: [
-        'Una mujer y un hombre posan ante el photocall del Premio Joia, con el escudo del Gremio',
-        'Cinco personas ante el photocall del Gremio y de Art Antic',
-        'Dos mujeres posan ante el photocall del Premio Joia',
-        'Tres mujeres posan ante el photocall del Premio Joia',
-        'Cinco mujeres posan ante el photocall del acto',
-        'Foto de grupo ante el photocall; a la derecha, trajes expuestos',
-        'Trajes de Cosas Cucas expuestos en el salón, con el cartel de la casa y un ramo de rosas',
-        'Trajes de mujer y de hombre expuestos durante el acto',
-        'El salón con los trajes expuestos',
-      ],
-    },
-    tienda: {
-      eyebrow: 'Noticia · Julio 2026',
-      title:   'Cosas Cucas abre en la calle Burriana, 21',
-      p1:      'Desde el 1 de julio, nuestra tienda principal está en la calle Burriana, 21, en la esquina con Joaquín Costa. Nos hemos movido poco: desde Grabador Esteve son unos diez minutos andando, cruzando la Gran Vía. Seguimos en el Ensanche, ahora en el barrio de la Gran Vía, a un paso de Ruzafa.',
-      p2:      'Es un barrio de fincas levantadas entre los años veinte y los cincuenta, a dos manzanas de la Gran Vía Marqués del Turia y a cinco minutos del jardín del Turia. El metro de Russafa (línea 10) está al final de la calle, y los mercados de Colón y de Ruzafa, a unos ocho minutos a pie.',
-      p3:      'Y es una zona muy fallera. En la misma esquina se planta la falla Joaquín Costa-Burriana, que organiza en el cruce la Trobada de dolçainers «Joan Blasco». A tres minutos están Almirante Cadarso-Conde Altea y Reino de Valencia-Duque de Calabria, dos fallas de Sección Especial. Al final de la calle está la fuente del Maestro Serrano, el autor de «El fallero», donde el 18 de marzo se le rinde homenaje dentro del programa oficial de las Fallas. Y las luces de Ruzafa quedan a un cuarto de hora.',
-      p4:      'La tienda nueva es luminosa y se abre a la calle con un escaparate grande. Las telas están a la vista, en rollos colgados de la pared, para que podáis verlas y tocarlas, y los trajes de fallera y de hombre, en sus maniquíes.',
-      p5:      'Os esperamos en Burriana, 21 (963 511 556). La tienda del Cabañal sigue abierta en Vicent Gallart, 49.',
-      video:   'Vídeo de la tienda en nuestro Instagram',
-      region:  'Fotos de la tienda de Cosas Cucas en la calle Burriana, 21',
-      alts: [
-        'Fachada de la tienda en la calle Burriana, 21, con los toldos negros y el nombre de Cosas Cucas',
-        'Trajes de fallera y de hombre en sus maniquíes, con las telas en la pared',
-        'Rollos de brocados de colores en la pared, junto a dos maniquíes',
-        'Un rincón con un traje de fallera, un traje de hombre y una vitrina',
-        'Al fondo de la tienda, una mesa con sillas bajo una lámpara de araña, junto a las cortinas',
-        'La pared de telas, con un espejo y una estantería de zapatos',
-        'Telas colgadas junto a una tela enmarcada y una mesa de cristal',
-        'Trajes de ceremonia infantiles junto a una cómoda y un espejo',
-        'Interior de la tienda: telas en la pared y trajes de fallera y de hombre en maniquíes',
-        'La tienda vista desde el escaparate',
-      ],
-    },
-    meriTetuan: {
-      eyebrow:  "Noticia · Octubre 2026",
-      title:    "Del telar a Cosas Cucas: así se hizo el traje de proclamación de Meri",
-      p1:       "El traje de proclamación de Meri, Mª José Zalve Quilis, Fallera Mayor 2027 de la falla Mossén Josep Cuenca-Pinedo, empezó en un telar en junio de 2024 y se terminó en Cosas Cucas, donde lo hemos confeccionado. Ella misma ha contado el camino en su Instagram, paso a paso, y lo ha titulado «Com s'ha teixit el meu somni».",
-      p2:       "Es un espolín «Tetuán» en color champán, tejido a mano por la Compañía Valenciana de la Seda en Beniparrell. Meri eligió el dibujo el 17 de junio de 2024. Un mes después pasó una tarde entera probando colores, madeja a madeja, hasta dar con la combinación que quería. En diciembre de 2025 vio la muestra y aún pidió cambiar algunas florecillas.",
-      p3:       "La Compañía es una casa con tradición familiar desde 1770 y uno de los pocos talleres valencianos que siguen tejiendo espolín a mano, en telares de madera. Para cada color hay una lanzadera pequeña que pasa solo por donde va el dibujo, y cada hilo se remata al acabar su pasada: por eso el revés enseña el mismo dibujo lleno de remates. El «Tetuán» de Meri ya estaba en marcha el día de la dana, que afectó a sus instalaciones, y salió adelante.",
-      p4:       "El 20 de abril de 2026, tras meses de espera, Meri vio su tela terminada, y el 11 de mayo ya la tenía en casa. El 2 de julio la trajo a Cosas Cucas y empezó nuestra parte: la confección.",
-      p5:       "Con el espolín cortamos y cosimos en nuestro taller la falda, de mucho vuelo y fruncida en la cintura, y el corpiño con mangas cortas de farol, rematadas con un volante de encaje. Todas las pruebas se hicieron en nuestra tienda de la calle Burriana: la primera, el 5 de agosto. En septiembre el traje estaba casi listo y solo faltaban las cintas; la de la cintura, de raso champán, se ata a la espalda con un lazo de caídas largas.",
-      p6:       "Ese mes Meri se hizo unas fotos con él en la Muntanyeta dels Sants. El 18 de octubre la falla enseñó en Les Casotes, los antiguos silos de arroz de Pinedo, la indumentaria de sus representantes de 2027, y allí estaba el «Tetuán», con su manteleta y su delantal a juego, bordados en dorado.",
-      otra:     "Los demás trajes de Meri, en la noticia de su exposición →",
-      p7:       "La Mossén Josep Cuenca-Pinedo es la falla número 230 del censo y una de las dos que tiene Pinedo. En 2026 su falla grande, «Si fa sol, música es vol», de Vicente Llácer y Alejandro Santaeulalia, se llevó el primer premio de su sección, y la infantil, «Lletres de falla», de Manuel José Blanco, el primero de Ingenio y Gracia. Meri toma el relevo de Marta Cantarero Alapont, Fallera Mayor 2026.",
-      p8:       "Gracias, Meri, por confiar en Cosas Cucas para confeccionar el traje de tu proclamación y por enseñar paso a paso cómo se hace un espolín.",
-      credito:  "Fotos: @merizalve en Instagram",
-      region:   "Fotos del traje de proclamación de Meri, del telar a la prueba",
-      alts: [
-        "Meri junto al traje de espolín «Tetuán» en la exposición, con la mantilla, el cojín bordado y los zapatos",
-        "Muestras de espolín sobre la mesa, entre ellas la del «Tetuán»",
-        "Muestra del «Tetuán» con las madejas de seda para elegir los colores",
-        "La muestra del «Tetuán» en el telar, con madejas de colores delante",
-        "Probando madejas junto a las flores del dibujo",
-        "Comparando colores en el telar de madera",
-        "Una madeja morada junto a la muestra para decidir el color",
-        "La tela terminada cuelga del telar de madera",
-        "Meri en la nave de los telares, frente a su tela",
-        "El espolín por el revés, con los hilos rematados",
-        "Meri ante un telar con la tela",
-        "La pieza de espolín «Tetuán» extendida sobre la mesa",
-        "El rollo de tela ante la Compañía Valenciana de la Seda",
-        "Meri abraza el rollo de espolín",
-        "Una prueba del traje en Cosas Cucas, vista de espaldas",
-        "La falda con el delantal dorado, extendida sobre una tela",
-        "Meri con su traje de espolín «Tetuán»",
-      ],
-    },
-    amanda: {
-      eyebrow: 'Noticia · Octubre 2026',
-      title:   'Los trajes de Amanda, Fallera Mayor Infantil 2027 de la falla Malvarrosa',
-      p1:      "Amanda Dàries Ricart es la Fallera Mayor Infantil 2027 de la falla Avinguda Malva-rosa-Antoni Ponz-Cavite y ya ha presentado en una exposición los trajes que llevará durante su reinado. Todos los hemos confeccionado en Cosas Cucas.",
-      p2:      'La tela de su traje verde es de la Compañía Valenciana de la Seda, modelo «Carpio»: rosas y flores azules y amarillas sobre fondo verde. Amanda fue a ver la tela cuando todavía estaba en el telar de madera, con un carrete de hilo en la mano. En el taller la convertimos en su traje. Un día se lo probó, mientras le colocaban la manteleta de encaje, y en la exposición posó a su lado con una sonrisa enorme.',
-      p3:      'Junto a él estaban los demás trajes de su reinado, con sus manteletas y delantales, un jubón blanco y los zapatos a juego, de Trinidad Meléndez, una firma que colabora con nosotras.',
-      p4:      'Para nosotras es muy especial. Ya tuvimos el honor de vestir a su hermana Julia, Fallera Mayor Infantil de la falla en 2023 y Corte de Honor de la Fallera Mayor Infantil de València en 2024. Es una familia que siempre ha confiado en Cosas Cucas para todos sus trajes.',
-      p5:      "La falla Malvarrosa plantó su primera falla oficial en 1944 y tiene el casal en la avenida de la Malvarrosa desde los años sesenta. En 2027 su falla infantil planta en la sección Especial, con Xavi Gurrea, y la grande compite en Primera B, con Ferni Llopis. Su calle es además una de las iluminadas de la categoría A del concurso, en la que quedó tercera en 2026.",
-      p6:      'Gracias a Amanda y a su familia por confiar en nosotras para vestir su año.',
-      video:   'Más en nuestro Instagram',
-      videoLabel: 'Vídeo de los trajes de Amanda, Fallera Mayor Infantil 2027 de la falla Malvarrosa',
-      region:  'Fotos de los trajes de Amanda, Fallera Mayor Infantil 2027 de la falla Malvarrosa',
-      alts: [
-        'Amanda sonríe junto a su traje verde en la exposición',
-        'La tela verde del traje, todavía en el telar de madera',
-        'Detalle de la tela en el telar: rosas y flores azules y amarillas sobre fondo verde',
-        'Amanda, junto al telar, mira su tela con un carrete de hilo en la mano',
-        'Amanda se prueba el traje verde mientras le colocan la manteleta de encaje',
-        'El traje verde terminado, en un maniquí',
-        'El traje verde en la exposición, con la manteleta y el delantal dorados',
-        'El cuerpo del traje verde, con la manteleta dorada y un collar de perlas',
-        'Un jubón blanco con dibujos dorados',
-        'El cuerpo de un traje azul de flores, con cinta azul al cuello, manteleta dorada y joyas de perlas',
-        'Detalle de la manga con una gran flor rosa, el lazo azul y la puntilla',
-        'Zapatos de tela verde con flores y lazo',
-        'Detalle de la manga del traje verde, con flores y puntilla',
-        'Un traje en tonos mostaza con rayas, manteleta de encaje y faja azul',
-        'La falda del traje mostaza con delantal de encaje',
-        'Un jubón mostaza con una manteleta de encaje',
-        'El jubón mostaza en su pie de madera, con encajes largos que caen hasta el suelo',
-        'Un traje claro con flores rojas, manteleta bordada y faja roja',
-        'Zapatos de tela azul con flores y lazo',
-        'Detalle de la manga de flores rojas, la puntilla y la faja roja',
-      ],
-    },
-    corte: {
-      eyebrow: 'Noticia · Octubre 2026',
-      title:   'Corte de Honor de la Fallera Mayor de València 2027',
-      p1:      "Dos de las falleras de la Corte de Honor de la Fallera Mayor de València 2027 visten de Cosas Cucas: Alejandra Blanco Beltrán, de la falla Mestre Rodrigo-General Avilés, y Laura Miquel Obarti, de la falla Avinguda de l'Oest.",
-      p2:      'A Alejandra ya la vestimos en 2026, cuando fue Fallera Mayor de su falla. Que las dos lleven nuestros trajes en la corte de València es una alegría más en un año muy especial para la casa.',
-      region:  'Fotos de las falleras de la Corte de Honor 2027 vestidas por Cosas Cucas',
-      fotos:   'Fotos de Alejandra en Instagram:',
-      y:       'y',
-      falla:   'Falla',
-      role:    'de la Corte de Honor de la Fallera Mayor de València 2027',
     },
     drops: [
       {
@@ -5329,6 +4449,19 @@ const translations = {
       imageCaption: '"Vestimos la tradición\ncon el amor que\nmerece Valencia."',
     },
     dossier: {
+      /* textos alternativos de las fotos de la tienda nueva (data-alt) */
+      tiendaAlts: [
+        'Fachada de la tienda en la calle Burriana, 21, con los toldos negros y el nombre de Cosas Cucas',
+        'Trajes de fallera y de hombre en sus maniquíes, con las telas en la pared',
+        'Rollos de brocados de colores en la pared, junto a dos maniquíes',
+        'Un rincón con un traje de fallera, un traje de hombre y una vitrina',
+        'Al fondo de la tienda, una mesa con sillas bajo una lámpara de araña, junto a las cortinas',
+        'La pared de telas, con un espejo y una estantería de zapatos',
+        'Telas colgadas junto a una tela enmarcada y una mesa de cristal',
+        'Trajes de ceremonia infantiles junto a una cómoda y un espejo',
+        'Interior de la tienda: telas en la pared y trajes de fallera y de hombre en maniquíes',
+        'La tienda vista desde el escaparate',
+      ],
       eyebrow: '✦ Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana',
       title: 'Nuestra Historia',
       lead: 'Desde su fundación en 1982 en los pintorescos poblados marítimos, <strong>Cosas Cucas</strong> ha sido un faro de tradición y elegancia en el mundo de la indumentaria valenciana. Inspirada por su profundo vínculo con el estudio y la pasión por la indumentaria, nuestra fundadora <strong>Paquita Martorell</strong> abrió las puertas de nuestra primera tienda en el entrañable barrio del Cabañal.',
@@ -5547,44 +4680,18 @@ const translations = {
       'Membre del Gremi de Sastres i Modistes de València',
       "Nova col·lecció comunió i festa 2026 disponible",
     ],
-    noticia: {
-      pillTag: 'Notícia',
-      pill:    'Vestim la Fallera Major Infantil de València 2027',
-      eyebrow: 'Notícia · Octubre 2026',
-      title:   'Fallera Major Infantil de València 2027',
-      p1:      "Julia Vizcayno Orero, de la falla Rosari-Plaça Calabuig, és la nova Fallera Major Infantil de València. A Cosas Cucas hem tingut el regal de veure-la créixer des de molt menuda, quan venia per tradició familiar i feia del nostre taller el seu racó preferit entre teles i modistes.",
-      p2:      "Vestir-la en tota la seua trajectòria ha sigut un veritable honor, però el 14 d'octubre, en veure-la pujar les escales de l'Ajuntament vestida per la nostra casa, el cor se'ns va omplir de llàgrimes i d'orgull.",
-      p3:      "Julia, gràcies per deixar-nos teixir la història de la teua vida.",
-      link:    'Falleres majors vestides per Cosas Cucas',
-      prensaTag:  'A la premsa',
-      prensa:     "A «Una Festa per a Tots», a Nuevo Centro, Julia va estrenar el seu primer vestit com a Fallera Major Infantil: un brocatel de seda i or de fons verd, d'estil del segle XIX, confeccionat a Cosas Cucas. La manteleta, de tul i or, és d'Hijas de Carmen Esteve.",
-      prensaLink: 'Llegir la notícia a Official Press',
-      region:  "Fotos de Julia Vizcayno a l'Ajuntament de València",
-      prev:    'Foto anterior',
-      next:    'Foto següent',
-      full:    'Veure a pantalla completa',
+    /* etiquetas de los carruseles de las noticias (las noticias salen de datos/noticias.json) */
+    carrusel: {
+      region:   'Fotos de la notícia',
+      prev:     'Foto anterior',
+      next:     'Foto següent',
+      full:     'Veure a pantalla completa',
       exitFull: 'Eixir de pantalla completa',
-      pause:   'Pausar el passe de fotos',
-      play:    'Reprendre el passe de fotos',
-      stage:   'Foto actual. Usa les fletxes esquerra i dreta per a canviar de foto',
-      thumb:   'Veure la foto',
-      photo:   'Foto',
-      alts: [
-        'Retrat de Julia Vizcayno amb el vestit de fallera i la pinta',
-        "Julia Vizcayno puja les escales de l'Ajuntament entre aplaudiments",
-        'Julia Vizcayno a les escales, vista des de dalt',
-        'Julia Vizcayno arriba per la catifa roja entre aplaudiments',
-        "Julia Vizcayno dona la mà a l'alcaldessa de València",
-        "Julia Vizcayno d'esquena: es veuen el llaç i la falda del vestit",
-        'Julia Vizcayno saluda la Fallera Major de València',
-        'Julia Vizcayno camina pel saló amb el vestit complet',
-        'Julia Vizcayno saluda el públic',
-        "Julia Vizcayno a la mesa presidencial de l'hemicicle de l'Ajuntament",
-        'Julia Vizcayno somriu asseguda a la mesa presidencial',
-        'Julia Vizcayno somriu amb el seu ram de flors sobre la catifa roja',
-        "Julia Vizcayno posa amb el seu ram al costat d'un gerro de ceràmica",
-        "Julia Vizcayno amb el seu ram en un saló de l'Ajuntament",
-      ],
+      pause:    'Pausar el passe de fotos',
+      play:     'Reprendre el passe de fotos',
+      stage:    'Foto actual. Usa les fletxes esquerra i dreta per a canviar de foto',
+      thumb:    'Veure la foto',
+      photo:    'Foto',
     },
     noticias: {
       eyebrow: 'Temporada fallera 2027',
@@ -5594,298 +4701,6 @@ const translations = {
       leer:    'Llegir la notícia',
       cerrar:  'Tancar la notícia',
       volver:  'Tornar a les notícies',
-    },
-    meri: {
-      eyebrow: 'Notícia · Octubre 2026',
-      title:   'Els vestits de Meri, Fallera Major 2027 de Pinedo',
-      p1:      "Mª José Zalve Quilis, Meri, és la Fallera Major 2027 de la falla Mossén Josep Cuenca-Pinedo. El 18 d'octubre va mostrar en una exposició els vestits que portarà durant el seu regnat, i tots els hem confeccionat a Cosas Cucas.",
-      p2:      "Hi ha un «Almudena» blau marí, un «Brunet» rosa antic, un «Lazos» gris i un altre «Lazos» verd, este exclusiu de la casa. Presidint-ho tot hi havia l'espolí «Tetuán» en color xampany, que la Compañía Valenciana de la Seda ha tornat a teixir. Eixe vestit ja estava en marxa el dia de la dana, i va eixir avant.",
-      p3:      "Els adreços són d'Art Antic Joieria i la mantellina que lluirà en l'ofrena, de Santos Textil.",
-      credito: 'Fotos: @jose_espolin_estudio a Instagram',
-      region:  'Fotos dels vestits de Meri, Fallera Major 2027 de Pinedo',
-      alts: [
-        "Una jove posa al costat del vestit d'espolí «Tetuán» en l'exposició",
-        "L'espolí «Tetuán» en color xampany, vist de costat, amb l'«Almudena» al fons",
-        'Detall del cosset i la manteleta del «Tetuán»',
-        'El «Tetuán» amb el davantal de punta daurada',
-        "L'esquena del «Tetuán», amb el llaç de la cintura",
-        "Falda de l'espolí «Tetuán» amb les seues flors de colors",
-        "Detall de les flors teixides de l'espolí «Tetuán»",
-        'Vestit «Almudena» en blau marí',
-        'Vestit «Brunet» en rosa antic, detall del cosset',
-        'Vestit «Lazos» en gris, detall del cosset i la joia',
-        'Vestit «Lazos» en verd, exclusiu de Cosas Cucas',
-        "Dos vestits de l'exposició, en gris i en rosa",
-        "La mantellina de l'ofrena i la banda de fallera major",
-        'Les sabates i les calces calades, brodades amb la inicial M',
-      ],
-    },
-    joyas: {
-      eyebrow: 'Notícia · Juny 2026',
-      title:   'Els nostres vestits a «Joyas de la Indumentaria»',
-      p1:      "Del 2 al 5 de juny, el Saló de Cristall de l'Ajuntament de València va acollir la II Exposició «Joyas de la Indumentaria», que organitza el Gremi Artesà de Sastres i Modistes de la Comunitat Valenciana. Al final es va allargar fins al 12 de juny.",
-      p2:      'Entre vestits dels segles XVIII i XIX, manteletes brodades en or i plata, mantellines, adreços i pintes, a Cosas Cucas vam portar dos vestits del nostre taller: un de seda rosa i un altre de seda fosca amb flors grans, tots dos amb el mocador i el davantal daurats.',
-      p3:      "Veure el nostre treball al Saló de Cristall, al costat del d'altres tallers del gremi, ens va fer molta il·lusió. Gràcies a tots els que vau passar a veure'l.",
-      credito: "Cartell de l'exposició: Gremi Artesà de Sastres i Modistes de la Comunitat Valenciana",
-      region:  "Fotos dels vestits de Cosas Cucas a l'exposició «Joyas de la Indumentaria»",
-      alts: [
-        'Els dos vestits de Cosas Cucas al Saló de Cristall, amb el cartell de la casa',
-        'El vestit de seda fosca amb flors grans, amb el mocador i el davantal daurats',
-        'El vestit de seda fosca, de perfil',
-        'Detall de les flors de la falda del vestit fosc',
-        'Detall de la falda de seda rosa',
-        'Una seda verda amb flors, encara al teler',
-        'Dues dones posen al costat dels vestits de Cosas Cucas',
-        'Una dona posa entre els dos vestits de Cosas Cucas',
-        "Els vestits de l'exposició al llarg del Saló de Cristall",
-        'Una altra vista del Saló de Cristall amb els vestits exposats',
-        "Foto de grup durant l'exposició",
-        "Dos assistents miren els vestits durant l'exposició",
-        'Cartell de la II Exposició «Joyas de la Indumentaria», del 2 al 5 de juny al Saló de Cristall',
-      ],
-    },
-    desfilada: {
-      eyebrow: 'Notícia · Juny 2026',
-      title:   "Cosas Cucas en la VI Desfilada d'Indumentària Valenciana",
-      p1:      "El divendres 19 de juny, el Palau de l'Exposició de València va acollir la VI Desfilada d'Indumentària Valenciana, la passarel·la del Gremi Artesà de Sastres i Modistes de la Comunitat Valenciana. Davall les grans aranyes del saló van desfilar els vestits de huit cases: Amparo Fabra, Eugenia Puertes, Vicente Santo Tomás, Amparo Gálvez, Cosas Cucas, El Vestidor Faller, Princesas con Abanico i Empar del Remei.",
-      p2:      "A Cosas Cucas vam traure a la passarel·la vestits del nostre taller per a grans i menuts: falleres, xiquetes, fallers i un xiquet, i també una fallera amb mantellina d'encaix.",
-      p3:      'Va ser una vesprada molt especial, en què vam compartir tradició, artesania i elegància. Gràcies als qui van desfilar amb els nostres vestits, als col·laboradors, al Gremi de Sastres i Modistes i a totes les persones que ens vau acompanyar.',
-      p4:      "Ja vam estar en la primera edició, el 2018 a l'Ateneu Mercantil, i continuem treballant per a mantindre viva l'essència de la nostra indumentària i dels nostres costums.",
-      credito: 'Cartell de la Desfilada: Gremi Artesà de Sastres i Modistes de la Comunitat Valenciana',
-      video:   'Vídeo de la desfilada al nostre Instagram',
-      videoLabel: "Vídeo de la desfilada de Cosas Cucas en la VI Desfilada d'Indumentària Valenciana",
-      region:  "Fotos de Cosas Cucas en la VI Desfilada d'Indumentària Valenciana",
-      alts: [
-        "Cartell de la VI Desfilada d'Indumentària Valenciana: divendres 19 de juny, a les 19.30, al Palau de l'Exposició, amb les cases participants",
-        "Un xiquet, d'esquena, amb armilla verda de flors i mocador al cap, abans de la desfilada",
-        "Una xiqueta i una fallera, somrients, amb els seus vestits abans d'eixir a la passarel·la",
-        "Un faller desfila amb jaqueta fosca, armilla de flors, faixa roja i el barret a la mà",
-        "Una fallera desfila somrient amb mantellina d'encaix i falda de flors",
-        'Una fallera amb vestit roig es gira somrient cap al públic',
-        "La fallera del vestit roig, d'esquena, amb el llaç de la falda",
-        'Un jove desfila amb jaqueta marró, mocador al cap i el barret a la mà',
-        "Una xiqueta desfila somrient amb vestit verd aigua de flors",
-        'Un xiquet amb armilla verda de flors i mocador al cap somriu a la passarel·la',
-        'El mateix xiquet avança per la passarel·la amb els braços oberts',
-        "Una fallera desfila somrient amb falda blava de flors i davantal d'encaix",
-        'Una fallera desfila somrient amb vestit roig i davantal daurat',
-        'Una fallera amb vestit verd clar i daurat mira el públic',
-        "Detall d'un faller a la passarel·la: jaqueta fosca, armilla de flors, faixa roja i calces blaves",
-        'Foto de grup amb falleres, una xiqueta i un xiquet davant del photocall de la Desfilada',
-        "Foto de grup davant del photocall de la Desfilada d'Indumentària Valenciana",
-        "Una fallera amb vestit rosa i daurat posa al costat d'una dona davant del photocall de la Desfilada",
-      ],
-    },
-    joies22: {
-      eyebrow:  "Notícia · Setembre 2022",
-      title:    "Cosas Cucas a la primera exposició «Joies de la Indumentària»",
-      p1:       "Del 26 al 30 de setembre de 2022, el Saló de Cristall de l'Ajuntament de València va acollir la primera exposició «Joies de la Indumentària», amb la qual el Gremi Artesà de Sastres i Modistes de la Comunitat Valenciana celebrava els seus 775 anys. A Cosas Cucas vam ser una de les setze firmes que hi van exposar.",
-      p2:       "Vam portar tres vestits del nostre taller: un de fons roig amb grans rams de flors, mànega curta amb punta i manteleta i davantal de tul brodat en or; un altre amb gipó gris de mànega llarga i falda grisa de flors blaves, grogues i roses, també amb or a la manteleta i al davantal; i un vestit de xiquet, amb jaqueta negra de vius verds, armilla turquesa de flors i calçó negre.",
-      p3:       "Al seu costat hi havia vestits dels segles XVIII i XIX en seda, seda ampla, seda estreta i espolí, adreços d'orfebres, manteletes i mantellines, tot fet per tallers del gremi, entre ells Art Antic, Hijas de Carmen Esteve i Santos Textil.",
-      p4:       "A la inauguració van assistir Borja Sanjuán, regidor d'Hisenda i tinent d'alcalde, i Fran Tochena, mestre major del Gremi, amb la vicepresidenta, Amparo Fabra. L'exposició obria de 8.00 a 14.00 i l'entrada era lliure.",
-      p5:       "Aquella primera edició va tindre continuació: el juny de 2026 vam tornar al Saló de Cristall amb la segona.",
-      otra:     "La segona edició, en una altra notícia →",
-      p6:       "Gràcies al Gremi per comptar amb nosaltres i a tots els que vos vau acostar al Saló de Cristall.",
-      credito:  "Cartell de l'exposició: Gremi Artesà de Sastres i Modistes de la Comunitat Valenciana",
-      region:   "Fotos de Cosas Cucas a l'exposició «Joies de la Indumentària» de 2022",
-      alts: [
-        "Els tres vestits de Cosas Cucas al Saló de Cristall, amb la nostra targeta",
-        "El cartell de l'exposició «Joies de la Indumentària», del 26 al 30 de setembre de 2022",
-        "Els tres vestits de prop: el roig de flors, el de xiquet i el del gipó gris",
-        "Vestit de fons roig amb grans flors, mànega curta amb punta i davantal de tul brodat en or",
-        "Vestit amb gipó gris de mànega llarga i falda grisa de flors",
-        "Vestit de xiquet amb jaqueta negra de vius verds i armilla turquesa de flors",
-        "Amb els tres vestits al Saló de Cristall",
-        "Al costat dels vestits de Cosas Cucas a l'exposició",
-        "Al costat del vestit del gipó gris",
-      ],
-    },
-    tradicions: {
-      eyebrow:  "Notícia · Novembre 2021",
-      title:    "Cosas Cucas a la desfilada Tradicions",
-      p1:       "El dissabte 13 de novembre de 2021, el Museu de les Ciències Príncep Felip va acollir la tercera edició de Tradicions, la desfilada d'indumentària valenciana que organitzen 99.9 Plaza Radio i Loren Donat. A Cosas Cucas vam ser una de les vint firmes que van passar per una passarel·la de 110 metres.",
-      p2:       "Vam desfilar amb els nostres models fallers, per a grans i menuts: una xiqueta amb un vestit groc de grans flors liles, una jove de granat amb manteleta i davantal daurats, una altra de negre amb el davantal blanc brodat en or i dos xiquets vestits de llaurador, un amb armilla roja i saragüells i l'altre amb jaqueta de vellut marró.",
-      p3:       "Abans d'eixir ens vam fer fotos amb ells dins del museu, al capvespre al costat del pont de l'Assut de l'Or i al photocall de Tradicions.",
-      p4:       "Era el retrobament del sector després de la pandèmia, encara amb mascareta. Segons la crònica de Valencia Plaza, el públic va passar de les 2.000 persones i la desfilada volia reivindicar el treball d'indumentaristes i artesans, els ingressos dels quals havien caigut un 95 %. Hi van assistir les Falleres Majors de València 2022, Carmen Martín Carbonell i Nerea López Maestre, amb les seues Corts d'Honor, i la va presentar Eduard Forés.",
-      p5:       "A l'entrada, una exposició reunia orfebres, seders i artesans, entre ells Art Antic i la Compañía Valenciana de la Seda. Per a nosaltres no era la primera vegada: ja havíem estat a Tradicions el 2013.",
-      p6:       "Gràcies a les xiquetes, xiquets i joves que van lluir els nostres vestits, a les seues famílies i a l'organització.",
-      credito:  "Fotos de la passarel·la: Tradicions",
-      video:    "El nostre vídeo de presentació al canal de Tradicions",
-      region:   "Fotos de Cosas Cucas a la desfilada Tradicions 2021",
-      alts: [
-        "Els cinc models de Cosas Cucas, amb dues acompanyants, dins del Museu de les Ciències",
-        "El grup a la Ciutat de les Arts i les Ciències, amb el pont de l'Assut de l'Or al fons",
-        "La jove de negre i la xiqueta de groc al capvespre, amb l'Àgora al fons",
-        "Les tres falleres: la de granat, la de negre i la de groc",
-        "La xiqueta del vestit groc de flors liles",
-        "La jove del vestit negre, en blanc i negre",
-        "La jove de negre al photocall de Tradicions",
-        "La jove de negre al photocall, de prop",
-        "La falda negra de flors, d'esquena al photocall",
-        "La xiqueta de groc a la passarel·la del Museu de les Ciències",
-        "La xiqueta de groc, amb manteleta blanca i davantal de tul brodat",
-        "Xiquet amb jaqueta de vellut marró i barret negre",
-        "La jove de granat, amb manteleta i davantal daurats",
-        "La jove de granat, de prop",
-        "Xiquet amb saragüells i armilla roja; darrere, la jove de granat d'esquena",
-        "El xiquet de l'armilla roja amb medalla i barret negre",
-        "La jove de negre, amb el davantal blanc brodat en or",
-        "La jove de negre, de prop",
-        "Salutació final de Cosas Cucas a l'escenari",
-        "La jove de negre de nit, al costat de l'aigua de la Ciutat de les Arts i les Ciències",
-      ],
-    },
-    desfile18: {
-      eyebrow:  "Notícia · Setembre 2018",
-      title:    "Cosas Cucas va tancar la I Desfilada d'Indumentària Valenciana del Gremi",
-      p1:       "El dijous 20 de setembre de 2018, el Saló Stolz de l'Ateneu Mercantil de València va acollir la I Desfilada d'Indumentària Valenciana del Gremi Artesà de Sastres i Modistes de la Comunitat Valenciana. Era una desfilada solidària: tot el que es va recaptar va ser per a Aspanion, l'associació de xiquets amb càncer, i les entrades, a 5 euros, es van esgotar en pocs dies.",
-      p2:       "Hi van passar deu firmes del Gremi i a nosaltres ens va tocar tancar la desfilada. Vam traure set vestits del nostre taller: tres de xiqueta, un rosa, un altre celeste i un altre amb mantellina blanca; dos de xic, un xiquet menut i un jove amb armilla roja; i dos de dona, un amb el davantal blanc brodat en or sobre falda blava i un altre gris plata amb un gran llaç roig a l'esquena.",
-      p3:       "La idea va partir de la Germandat del Ram de l'Agulla, amb la seua Reina de 2018, María Hidalgo, i la seua Cort, i va comptar amb la col·laboració de l'Ateneu Mercantil. Van rebre els assistents el mestre major del Gremi, Fran Tochena, i la vicepresidenta, Amparo Fabra. Entre el públic hi havia les Falleres Majors de València 2018, Rocío Gil i Daniela Gómez, i Mª Carmen Conejos, en representació d'Aspanion. El saló es va omplir.",
-      p4:       "Va ser un any especial per a la casa: tres mesos abans, al juny, el Gremi havia concedit el Premi Joia 2018 a Paquita Martorell, que va fundar Cosas Cucas.",
-      joia:     "El Premi Joia 2018, en una altra notícia →",
-      p5:       "Des d'aleshores la desfilada és una cita fixa del Gremi. Hi vam tornar en la segona edició, el 2019, i en la sexta, el juny de 2026.",
-      vi:       "La VI Desfilada, de 2026, en una altra notícia →",
-      p6:       "Gràcies a les persones que van lluir els nostres vestits aquella nit i a les seues famílies.",
-      credito:  "Fotos: Fran Adlert",
-      video:    "Vídeo de la desfilada completa (el nostre pas, des del minut 50:50)",
-      region:   "Fotos de Cosas Cucas a la I Desfilada d'Indumentària Valenciana del Gremi, 2018",
-      figura:   "Fallera amb davantal blanc brodat en or i falda blava a la passarel·la de l'Ateneu Mercantil",
-      alts: [
-        "L'equip de Cosas Cucas davant del photocall de la I Desfilada d'Indumentària Valenciana",
-        "Xiqueta amb vestit rosa de flors a la passarel·la del Saló Stolz",
-        "La xiqueta de rosa, d'esquena, amb el llaç de la cinta",
-        "Xiquet amb barret, armilla grisa i faixa celeste",
-        "Xiqueta amb vestit celeste de flors",
-        "La xiqueta de celeste, d'esquena, amb el llaç",
-        "Jove amb armilla roja, faixa grisa i calces de ratlles",
-        "Xiqueta amb mantellina blanca i davantal brodat en or",
-        "Fallera amb davantal blanc brodat en or i falda blava",
-        "Fallera amb vestit gris plata i manteleta de punta",
-        "El vestit gris plata, d'esquena, amb un gran llaç roig",
-        "Salutació final de Cosas Cucas, que va tancar la desfilada",
-      ],
-    },
-    joia: {
-      eyebrow: 'Notícia · Juny 2018',
-      title:   'Premi Joia 2018 per a Paquita Martorell',
-      p1:      'El 15 de juny de 2018, el Gremi Artesà de Sastres i Modistes de la Comunitat Valenciana va lliurar el seu Premi Joia a Paquita Martorell, la fundadora de Cosas Cucas, per més de trenta anys de treball sense interrupció en la indumentària valenciana.',
-      p2:      "Li'l va donar el mestre major del Gremi, Fran Tochena, en l'acte que es va celebrar a l'Hotel Ayre Astoria Palace de València. El premi és una agulla d'or blanc d'estil barroc feta per Art Antic. Les mencions d'honor d'eixe any van ser per a l'empresa tèxtil Tejedores Bartual i per al periodista Guillermo Ortigueira.",
-      p3:      "Al saló vam exposar alguns dels nostres vestits, i el 20 de setembre d'eixe any vam tancar la I Desfilada d'Indumentària Valenciana del Gremi, a l'Ateneu Mercantil. Per a la casa va ser el reconeixement a tota una vida entre teles: la que Paquita va començar al Cabanyal i que hui continuen les seues filles Noelia i María al taller.",
-      region:  'Fotos del Premi Joia 2018 a Paquita Martorell',
-      alts: [
-        "Una dona i un home posen davant del photocall del Premi Joia, amb l'escut del Gremi",
-        "Cinc persones davant del photocall del Gremi i d'Art Antic",
-        'Dues dones posen davant del photocall del Premi Joia',
-        'Tres dones posen davant del photocall del Premi Joia',
-        "Cinc dones posen davant del photocall de l'acte",
-        'Foto de grup davant del photocall; a la dreta, vestits exposats',
-        'Vestits de Cosas Cucas exposats al saló, amb el cartell de la casa i un ram de roses',
-        "Vestits de dona i d'home exposats durant l'acte",
-        'El saló amb els vestits exposats',
-      ],
-    },
-    tienda: {
-      eyebrow: 'Notícia · Juliol 2026',
-      title:   'Cosas Cucas obri al carrer Burriana, 21',
-      p1:      "Des de l'1 de juliol, la nostra tenda principal és al carrer Burriana, 21, a la cantonada amb Joaquim Costa. Ens hem mogut poc: des de Gravador Esteve són uns deu minuts a peu, creuant la Gran Via. Continuem a l'Eixample, ara al barri de la Gran Via, a un pas de Russafa.",
-      p2:      "És un barri de finques alçades entre els anys vint i els cinquanta, a dues illes de la Gran Via del Marqués del Túria i a cinc minuts del jardí del Túria. El metro de Russafa (línia 10) és al final del carrer, i els mercats de Colom i de Russafa, a uns huit minuts a peu.",
-      p3:      "I és una zona molt fallera. A la mateixa cantonada es planta la falla Joaquim Costa-Borriana, que organitza a l'encreuament la Trobada de dolçainers «Joan Blasco». A tres minuts hi ha Almirall Cadarso-Comte d'Altea i Regne de València-Duc de Calàbria, dues falles de Secció Especial. Al final del carrer hi ha la font del Mestre Serrano, l'autor d'«El faller», on el 18 de març se li ret homenatge dins del programa oficial de les Falles. I les llums de Russafa queden a un quart d'hora.",
-      p4:      "La tenda nova és lluminosa i s'obri al carrer amb un aparador gran. Les teles estan a la vista, en rotllos penjats a la paret, perquè les pugueu veure i tocar, i els vestits de fallera i d'home, en els seus maniquins.",
-      p5:      'Vos esperem a Burriana, 21 (963 511 556). La tenda del Cabanyal continua oberta a Vicent Gallart, 49.',
-      video:   'Vídeo de la tenda al nostre Instagram',
-      region:  'Fotos de la tenda de Cosas Cucas al carrer Burriana, 21',
-      alts: [
-        "Façana de la tenda al carrer Burriana, 21, amb els tendals negres i el nom de Cosas Cucas",
-        "Vestits de fallera i d'home en els seus maniquins, amb les teles a la paret",
-        'Rotllos de brocats de colors a la paret, al costat de dos maniquins',
-        "Un racó amb un vestit de fallera, un vestit d'home i una vitrina",
-        "Al fons de la tenda, una taula amb cadires davall d'un llum d'aranya, al costat de les cortines",
-        'La paret de teles, amb un espill i una prestatgeria de sabates',
-        "Teles penjades al costat d'una tela emmarcada i una taula de vidre",
-        "Vestits de cerimònia infantils al costat d'una calaixera i un espill",
-        "Interior de la tenda: teles a la paret i vestits de fallera i d'home en maniquins",
-        "La tenda vista des de l'aparador",
-      ],
-    },
-    meriTetuan: {
-      eyebrow:  "Notícia · Octubre 2026",
-      title:    "Del teler a Cosas Cucas: així s'ha fet el vestit de proclamació de Meri",
-      p1:       "El vestit de proclamació de Meri, Mª José Zalve Quilis, Fallera Major 2027 de la falla Mossén Josep Cuenca-Pinedo, va començar en un teler el juny de 2024 i es va acabar a Cosas Cucas, on l'hem confeccionat. Ella mateixa ha contat el camí al seu Instagram, pas a pas, i l'ha titulat «Com s'ha teixit el meu somni».",
-      p2:       "És un espolí «Tetuán» de color xampany, teixit a mà per la Compañía Valenciana de la Seda a Beniparrell. Meri va triar el dibuix el 17 de juny de 2024. Un mes després va passar una vesprada sencera provant colors, madeixa a madeixa, fins a trobar la combinació que volia. El desembre de 2025 va veure la mostra i encara va demanar que canviaren algunes floretes.",
-      p3:       "La Compañía és una casa amb tradició familiar des de 1770 i un dels pocs tallers valencians que encara teixixen espolí a mà, en telers de fusta. Per a cada color hi ha una llançadora menuda que passa només per on va el dibuix, i cada fil es remata en acabar la seua passada: per això el revés mostra el mateix dibuix ple de remats. El «Tetuán» de Meri ja estava en marxa el dia de la dana, que va afectar les seues instal·lacions, i va eixir avant.",
-      p4:       "El 20 d'abril de 2026, després de mesos d'espera, Meri va veure la seua tela acabada, i l'11 de maig ja la tenia a casa. El 2 de juliol la va portar a Cosas Cucas i va començar la nostra part: la confecció.",
-      p5:       "Amb l'espolí vam tallar i cosir al nostre taller la falda, de molt de vol i frunzida a la cintura, i el cosset amb mànegues curtes de farol, rematades amb un volant de punta. Totes les proves es van fer a la nostra botiga del carrer Burriana: la primera, el 5 d'agost. Al setembre el vestit estava quasi llest i només faltaven les cintes; la de la cintura, de setí xampany, es lliga a l'esquena amb un llaç de caigudes llargues.",
-      p6:       "Eixe mes Meri es va fer unes fotos amb ell a la Muntanyeta dels Sants. El 18 d'octubre la falla va mostrar a Les Casotes, els antics silos d'arròs de Pinedo, la indumentària dels seus representants de 2027, i allí estava el «Tetuán», amb la seua manteleta i el seu davantal a joc, brodats en daurat.",
-      otra:     "La resta de vestits de Meri, en la notícia de la seua exposició →",
-      p7:       "La Mossén Josep Cuenca-Pinedo és la falla número 230 del cens i una de les dues que té Pinedo. En 2026 la seua falla gran, «Si fa sol, música es vol», de Vicente Llácer i Alejandro Santaeulalia, es va endur el primer premi de la seua secció, i la infantil, «Lletres de falla», de Manuel José Blanco, el primer d'Enginy i Gràcia. Meri pren el relleu de Marta Cantarero Alapont, Fallera Major 2026.",
-      p8:       "Gràcies, Meri, per confiar en Cosas Cucas per a confeccionar el vestit de la teua proclamació i per ensenyar pas a pas com es fa un espolí.",
-      credito:  "Fotos: @merizalve a Instagram",
-      region:   "Fotos del vestit de proclamació de Meri, del teler a la prova",
-      alts: [
-        "Meri al costat del vestit d'espolí «Tetuán» en l'exposició, amb la mantellina, el coixí brodat i les sabates",
-        "Mostres d'espolí sobre la taula, entre elles la del «Tetuán»",
-        "Mostra del «Tetuán» amb les madeixes de seda per a triar els colors",
-        "La mostra del «Tetuán» al teler, amb madeixes de colors davant",
-        "Provant madeixes al costat de les flors del dibuix",
-        "Comparant colors al teler de fusta",
-        "Una madeixa morada al costat de la mostra per a decidir el color",
-        "La tela acabada penja del teler de fusta",
-        "Meri a la nau dels telers, davant de la seua tela",
-        "L'espolí pel revés, amb els fils rematats",
-        "Meri davant d'un teler amb la tela",
-        "La peça d'espolí «Tetuán» estesa sobre la taula",
-        "El rotlle de tela davant de la Compañía Valenciana de la Seda",
-        "Meri abraça el rotlle d'espolí",
-        "Una prova del vestit a Cosas Cucas, vista d'esquena",
-        "La falda amb el davantal daurat, estesa sobre una tela",
-        "Meri amb el seu vestit d'espolí «Tetuán»",
-      ],
-    },
-    amanda: {
-      eyebrow: 'Notícia · Octubre 2026',
-      title:   "Els vestits d'Amanda, Fallera Major Infantil 2027 de la falla Malva-rosa",
-      p1:      "Amanda Dàries Ricart és la Fallera Major Infantil 2027 de la falla Avinguda Malva-rosa-Antoni Ponz-Cavite i ja ha presentat en una exposició els vestits que portarà durant el seu regnat. Tots els hem confeccionat a Cosas Cucas.",
-      p2:      "La tela del seu vestit verd és de la Compañía Valenciana de la Seda, model «Carpio»: roses i flors blaves i grogues sobre fons verd. Amanda va anar a veure la tela quan encara estava al teler de fusta, amb un rodet de fil a la mà. Al taller la vam convertir en el seu vestit. Un dia se'l va provar, mentre li col·locaven la manteleta d'encaix, i a l'exposició va posar al seu costat amb un somriure enorme.",
-      p3:      "Al seu costat hi havia la resta de vestits del seu regnat, amb les manteletes i els davantals, un gipó blanc i les sabates a joc, de Trinidad Meléndez, una firma que col·labora amb nosaltres.",
-      p4:      "Per a nosaltres és molt especial. Ja vam tindre l'honor de vestir la seua germana Julia, Fallera Major Infantil de la falla el 2023 i Cort d'Honor de la Fallera Major Infantil de València el 2024. És una família que sempre ha confiat en Cosas Cucas per a tots els seus vestits.",
-      p5:      "La falla Malva-rosa va plantar la seua primera falla oficial el 1944 i té el casal a l'avinguda de la Malva-rosa des dels anys seixanta. El 2027 la seua falla infantil planta en la secció Especial, amb Xavi Gurrea, i la gran competix en Primera B, amb Ferni Llopis. El seu carrer és, a més, un dels il·luminats de la categoria A del concurs, en què va quedar tercer el 2026.",
-      p6:      "Gràcies a Amanda i a la seua família per confiar en nosaltres per a vestir el seu any.",
-      video:   'Més al nostre Instagram',
-      videoLabel: "Vídeo dels vestits d'Amanda, Fallera Major Infantil 2027 de la falla Malva-rosa",
-      region:  "Fotos dels vestits d'Amanda, Fallera Major Infantil 2027 de la falla Malva-rosa",
-      alts: [
-        "Amanda somriu al costat del seu vestit verd a l'exposició",
-        'La tela verda del vestit, encara al teler de fusta',
-        'Detall de la tela al teler: roses i flors blaves i grogues sobre fons verd',
-        'Amanda, al costat del teler, mira la seua tela amb un rodet de fil a la mà',
-        "Amanda es prova el vestit verd mentre li col·loquen la manteleta d'encaix",
-        'El vestit verd acabat, en un maniquí',
-        "El vestit verd a l'exposició, amb la manteleta i el davantal daurats",
-        'El cos del vestit verd, amb la manteleta daurada i un collar de perles',
-        'Un gipó blanc amb dibuixos daurats',
-        "El cos d'un vestit blau de flors, amb cinta blava al coll, manteleta daurada i joies de perles",
-        'Detall de la mànega amb una gran flor rosa, el llaç blau i la punta',
-        'Sabates de tela verda amb flors i llaç',
-        'Detall de la mànega del vestit verd, amb flors i punta',
-        "Un vestit en tons mostassa amb ratlles, manteleta d'encaix i faixa blava",
-        "La falda del vestit mostassa amb davantal d'encaix",
-        "Un gipó mostassa amb una manteleta d'encaix",
-        "El gipó mostassa en el seu peu de fusta, amb encaixos llargs que cauen fins a terra",
-        'Un vestit clar amb flors roges, manteleta brodada i faixa roja',
-        'Sabates de tela blava amb flors i llaç',
-        'Detall de la mànega de flors roges, la punta i la faixa roja',
-      ],
-    },
-    corte: {
-      eyebrow: 'Notícia · Octubre 2026',
-      title:   "Cort d'Honor de la Fallera Major de València 2027",
-      p1:      "Dues de les falleres de la Cort d'Honor de la Fallera Major de València 2027 vestixen de Cosas Cucas: Alejandra Blanco Beltrán, de la falla Mestre Rodrigo-General Avilés, i Laura Miquel Obarti, de la falla Avinguda de l'Oest.",
-      p2:      "A Alejandra ja la vam vestir en 2026, quan va ser Fallera Major de la seua falla. Que totes dues porten els nostres vestits en la cort de València és una alegria més en un any molt especial per a la casa.",
-      region:  "Fotos de les falleres de la Cort d'Honor 2027 vestides per Cosas Cucas",
-      fotos:   "Fotos d'Alejandra a Instagram:",
-      y:       'i',
-      falla:   'Falla',
-      role:    "de la Cort d'Honor de la Fallera Major de València 2027",
     },
     drops: [
       {
@@ -6110,6 +4925,19 @@ const translations = {
       imageCaption: '"Vestim la tradició\namb l\'amor que\nmereix València."',
     },
     dossier: {
+      /* textos alternativos de las fotos de la tienda nueva (data-alt) */
+      tiendaAlts: [
+        "Façana de la tenda al carrer Burriana, 21, amb els tendals negres i el nom de Cosas Cucas",
+        "Vestits de fallera i d'home en els seus maniquins, amb les teles a la paret",
+        'Rotllos de brocats de colors a la paret, al costat de dos maniquins',
+        "Un racó amb un vestit de fallera, un vestit d'home i una vitrina",
+        "Al fons de la tenda, una taula amb cadires davall d'un llum d'aranya, al costat de les cortines",
+        'La paret de teles, amb un espill i una prestatgeria de sabates',
+        "Teles penjades al costat d'una tela emmarcada i una taula de vidre",
+        "Vestits de cerimònia infantils al costat d'una calaixera i un espill",
+        "Interior de la tenda: teles a la paret i vestits de fallera i d'home en maniquins",
+        "La tenda vista des de l'aparador",
+      ],
       eyebrow: '✦ Gremi Artesà de Sastres i Modistes de la Comunitat Valenciana',
       title: 'La nostra Història',
       lead: 'Des de la seua fundació el 1982 als pintorescos poblats marítims, <strong>Cosas Cucas</strong> ha sigut un far de tradició i elegància en el món de la indumentària valenciana. Inspirada per la passió per la indumentària, la nostra fundadora <strong>Paquita Martorell</strong> va obrir les portes de la nostra primera tenda al barri del Cabanyal.',
@@ -6532,24 +5360,16 @@ function renderHero(drop) {
 
 /* ═══════════════════════════════════════════════════════════════════════
    IMAGE PLAYER — pase de fotos de la portada (crossfade, 7 s por foto)
-   Muestra a Julia Vizcayno (FMI 2027) y, cuando tengan fotos, a la Corte 2027
+   Fotos: las marcadas «Sale en el pase de la portada» en las noticias (panel /admin)
 ═══════════════════════════════════════════════════════════════════════ */
 function initHeroSlider() {
   /* Solo una vez: renderAll() se vuelve a llamar al cambiar de idioma y
      cada llamada creaba otro setInterval (más cambios y más descargas) */
   if (initHeroSlider.started) { initHeroSlider.relabel(); return; }
+  /* hasta que llegue datos/noticias.json no hay fotos: se arranca cuando lleguen */
+  const SLIDES = DATOS.noticias ? fotosDelPase() : [];
+  if (!SLIDES.length) return;
   initHeroSlider.started = true;
-
-  const SLIDES = [
-    ...NOTICIA_FOTOS.map((src, i) => ({
-      src: `${src}.webp`, foco: NOTICIA_FOCO[i], alt: () => t().noticia.alts[i],
-    })),
-    /* de la corte, solo las horizontales grandes: en móvil el hueco es apaisado y una
-       vertical se quedaría en una franja; las marcadas portada:false son pequeñas */
-    ...CORTE_2027.flatMap(p => p.fotos.filter(f => !f.vertical && f.portada !== false).map(f => ({
-      src: f.src, foco: f.foco || 'center 25%', alt: () => `${p.nombre}, ${t().corte.role}`,
-    }))),
-  ];
   const load = (el, slide) => {
     el.src = slide.src;
     el.alt = slide.alt();
@@ -6795,7 +5615,7 @@ function buildDossierHistoria() {
   s('dh-lead',      d.lead);
   s('dh-img-caption', d.imgCaption);
   s('dh-nueva-caption', d.nuevaCaption);
-  const altsTienda = t().tienda.alts;
+  const altsTienda = d.tiendaAlts;
   document.querySelectorAll('.dh-nueva img[data-alt]').forEach(img => { img.alt = altsTienda[+img.dataset.alt]; });
   s('dh-b1-title',  d.block1Title);
   s('dh-b1-p1',     d.block1p1);
@@ -7237,334 +6057,233 @@ function buildResenas() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   NOTICIA DESTACADA — carrusel de Julia Vizcayno (Fallera Mayor Infantil 2027)
-   Avanza solo cuando termina la barra dorada (evento animationend), así la
-   pausa por CSS (ratón encima, fuera de pantalla, teclado) también para el pase.
+   NOTICIAS — salen de datos/noticias.json, que se edita desde el panel (/admin,
+   colección «Noticias»). Una entrada por noticia: textos { es, ca }, fotos de la
+   tarjeta y del carrusel (con su encuadre x/y en %) y el texto en bloques («cuerpo»).
+   · Orden: por «fecha» (AAAA-MM-DD), de la más nueva a la más antigua; con la misma
+     fecha, el orden del archivo.
+   · Portada (#noticia, fondo oscuro): la más reciente publicada con «portada: true».
+     Las demás publicadas salen como tarjeta en «Más noticias» y se leen en el lector.
+     Así, al marcar de portada una noticia más nueva, la anterior pasa sola a «Más
+     noticias» con su enlace directo (#noticia-julia), sin perder nada (regla de Ignacio).
+   · «publicada: false»: no sale en ningún sitio.
+   · Pase de fotos de la portada (hero): las fotos con «pase: true», primero las de la
+     portada y luego las de las demás, en el orden de la web. La píldora es su «aviso».
+   Todo lo que viene del JSON se escapa antes de meterlo en el HTML.
 ═══════════════════════════════════════════════════════════════════════════ */
-/* Orden del carrusel y del pase de la portada: [número de archivo noticias/julia-vizcayno-NN,
-   encuadre en la portada (object-position), vertical]. Las verticales se ven enteras en el
-   carrusel sobre un fondo difuminado. Los textos alternativos van en este mismo orden. */
-const NOTICIA_ORDEN = [
-  ['01', '42% 25%'], ['02', '50% 25%'], ['03', '52% 25%'],
-  ['14', '48% 30%'], ['15', '42% 25%'], ['17', '50% 30%'], ['18', '38% 25%'],
-  ['04', '48% 25%'], ['05', '47% 25%'],
-  ['07', '75% 25%'], ['08', '55% 25%'],
-  ['10', '47% 25%'],
-  ['11', 'center 40%', true], ['12', 'center 40%', true],
-];
-const NOTICIA_FOTOS    = NOTICIA_ORDEN.map(([n]) => `noticias/julia-vizcayno-${n}`);
-const NOTICIA_FOCO     = NOTICIA_ORDEN.map(([, foco]) => foco);
-const NOTICIA_VERTICAL = NOTICIA_ORDEN.map(([, , v]) => !!v);
+/* texto en el idioma de la web; si falta en valenciano, el castellano ("", null y campo ausente valen igual) */
+const txN = o => {
+  if (o == null) return '';
+  if (typeof o !== 'object') return String(o);
+  const v = o[currentLang === 'ca' ? 'ca' : 'es'];
+  return v != null && v !== '' ? String(v) : (o.es != null ? String(o.es) : '');
+};
+/* encuadre en % (0-100); si no es un número, el centro */
+const pctN = (v, def = 50) => {
+  const n = Number(v);
+  return v !== '' && v != null && Number.isFinite(n) ? Math.min(100, Math.max(0, n)) : def;
+};
+const encuadre = f => `${pctN(f && f.x)}% ${pctN(f && f.y)}%`;
+/* ruta para url('…') del CSS: sin comillas ni paréntesis sueltos */
+const urlCss = p => rutaDato(p).replace(/['()]/g, c => `%${c.charCodeAt(0).toString(16).toUpperCase()}`);
+/* la flecha → de los enlaces la pone el CSS: si el texto ya la trae, se quita para que no salgan dos */
+const sinFlecha = s => s.replace(/\s*→\s*$/, '');
 
-/* Falleras de la Corte de Honor 2027 vestidas por Cosas Cucas. La noticia #corte-2027
-   y sus fotos en la portada aparecen solos al añadir fotos, por ejemplo:
-   fotos: [{ src: 'noticias/corte-2027/alejandra-01.webp', mini: 'noticias/corte-2027/alejandra-01-mini.webp',
-             vertical: true, foco: 'center 25%' }]
-   vertical: true si la foto es más alta que ancha o cuadrada (se ve entera sobre fondo difuminado);
-   foco: encuadre (object-position) en la portada y en las miniaturas;
-   portada: false para que no salga en el pase de la portada (fotos pequeñas). */
-/* Procedencia de las fotos de la corte, para el crédito bajo el texto */
-const CORTE_CREDITOS = [
-  { autor: '@edgfotografia',     url: 'https://www.instagram.com/p/DP6x_SkCL7u/' },
-  { autor: '@alejandrablaancoo', url: 'https://www.instagram.com/p/DX63EryCNKg/' },
-];
-/* [número, foco, vertical, portada] -> fotos de noticias/corte-2027/<nombre>-NN.webp */
-const fotosCorte = (nombre, lista) => lista.map(([n, foco, vertical, portada = true]) => {
-  const f = `noticias/corte-2027/${nombre}-${String(n).padStart(2, '0')}`;
-  return { src: `${f}.webp`, mini: `${f}-mini.webp`, foco, vertical: !!vertical, portada };
-});
-const CORTE_2027 = [
-  { nombre: 'Alejandra Blanco Beltrán', falla: 'Mestre Rodrigo-General Avilés', fotos: fotosCorte('alejandra', [
-    [1, 'center 25%', true], [2, 'center 25%', true],
-    [3, '50% 30%'], [4, '62% 30%'], [5, '50% 30%'], [6, '20% 30%'],
-    [7, '45% 30%'], [8, '50% 30%'], [9, '62% 30%'], [10, '35% 30%'],
-  ]) },
-  /* la 4 mide 960 px y no va a la portada */
-  { nombre: 'Laura Miquel Obarti',      falla: "Avinguda de l'Oest",            fotos: fotosCorte('laura', [
-    [1, 'center 25%', true], [2, 'center 30%', true], [3, 'center 25%', true],
-    [4, '50% 30%', false, false], [5, '38% 0%'],
-    [6, 'center 25%', true], [7, 'center 25%', true], [8, '56% 6%'],
-    [9, 'center 20%', true], [10, 'center 30%', true],
-  ]) },
-];
+/* Enlaces que se publican: webs (https/http), otra parte de esta web (#…), correo y teléfono */
+const URL_SEGURA = /^(https?:\/\/|#|mailto:|tel:)/i;
+const esFuera = u => /^https?:\/\//i.test(u);
+const attrsEnlace = u => `href="${escHtml(u)}"${esFuera(u) ? ' target="_blank" rel="noopener"' : ''}`;
 
-function buildCorte() {
-  const c     = t().corte;
-  const sec   = document.getElementById('corte-2027');
-  const items = CORTE_2027.flatMap(p => p.fotos.map(f => ({ ...f, nombre: p.nombre, falla: p.falla })));
-  sec.hidden = items.length === 0;
-  if (!items.length) return;
-  document.getElementById('corte27-eyebrow').textContent = c.eyebrow;
-  document.getElementById('corte27-title').textContent   = c.title;
-  document.getElementById('corte27-p1').textContent      = c.p1;
-  document.getElementById('corte27-p2').textContent      = c.p2;
-  document.getElementById('corte27-credito').innerHTML = `${c.fotos} ` + CORTE_CREDITOS.map(cr =>
-    `<a href="${cr.url}" target="_blank" rel="noopener">${cr.autor}</a>`).join(` ${c.y} `);
-  renderCarousel('corte', document.getElementById('nf-corte'), items.map(it => ({
-    src: it.src, mini: it.mini || it.src, vertical: !!it.vertical, foco: it.foco || 'center 25%',
-    alt: `${it.nombre}, ${c.role}`,
-    caption: { name: it.nombre, falla: `${c.falla} ${it.falla}` },
-  })), { ...t().noticia, region: c.region });
+/* Markdown limitado de los párrafos y créditos del panel: **negrita**, *cursiva* o _cursiva_ y
+   [enlaces](url). Primero se escapa el HTML; luego se apartan los escapes que guarda el editor
+   («\*», «\_»…, salen tal cual) y los enlaces (antes que la negrita y la cursiva, para que un «_» de una
+   dirección no se toque). Devuelve un párrafo por bloque separado con línea en blanco; un salto suelto es <br>. */
+function mdParrafos(texto) {
+  const guarda = [];
+  const apartar = h => `\u0000${guarda.push(h) - 1}\u0000`;
+  const devolver = s => s.replace(/\u0000(\d+)\u0000/g, (m, i) => guarda[+i]);
+  const enLinea = s => s
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/(^|[^*])\*([^*]+)\*/g, '$1<em>$2</em>')
+    .replace(/(^|[^\w])_([^_]+)_(?!\w)/g, '$1<em>$2</em>');
+  const desEsc = s => s.replace(/&(amp|lt|gt|quot|#39);/g, (m, e) => ({ amp: '&', lt: '<', gt: '>', quot: '"', '#39': "'" }[e]));
+  let s = escHtml(String(texto || '').replace(/\u0000/g, '').replace(/\r\n?/g, '\n'));
+  s = s.replace(/\\(&(?:amp|lt|gt|quot|#39);|[\\`*_{}\[\]()#+\-.!~|])/g, (m, c) => apartar(c));
+  s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (m, txt, url) => {
+    const u = desEsc(devolver(url));
+    if (!URL_SEGURA.test(u)) return txt;
+    return apartar(`<a ${attrsEnlace(u)}>${enLinea(txt)}</a>`);
+  });
+  s = enLinea(s);
+  for (let k = 0; k < 3 && /\u0000\d+\u0000/.test(s); k++) s = devolver(s);
+  return s.split(/\n[ \t]*\n/).map(p => p.trim()).filter(Boolean).map(p => p.replace(/\\?\n/g, '<br>'));
 }
 
-/* Fotos de la noticia de Meri (de la publicación de @jose_espolin_estudio, con crédito).
-   Todas se muestran enteras sobre fondo difuminado: casi todas son verticales. */
-const MERI_FOTOS = Array.from({ length: 14 }, (_, i) => `noticias/meri-zalve-${String(i + 1).padStart(2, '0')}`);
-
-function buildMeri() {
-  const m = t().meri;
-  const set = (id, txt) => { document.getElementById(id).textContent = txt; };
-  set('meri-eyebrow', m.eyebrow);
-  set('meri-title', m.title);
-  set('meri-p1', m.p1);
-  set('meri-p2', m.p2);
-  set('meri-p3', m.p3);
-  set('meri-credito', m.credito);
-  renderCarousel('meri', document.getElementById('nf-meri'), MERI_FOTOS.map((src, i) => ({
-    src: `${src}.webp`, mini: `${src}-mini.webp`, vertical: true, alt: m.alts[i],
-  })), { ...t().noticia, region: m.region });
+/* Noticias publicadas, ordenadas, y cuál es la portada */
+function noticiasWeb() {
+  const vistos = new Set();
+  const lista = (DATOS.noticias || []).filter(n => {
+    if (!n || typeof n !== 'object' || n.publicada === false) return false;
+    const id = String(n.id || '');
+    if (!/^[a-z0-9-]+$/.test(id) || id === 'noticia' || vistos.has(id)) return false;
+    vistos.add(id);
+    return true;
+  });
+  const fecha = n => String(n.fecha || '').slice(0, 10);
+  const orden = lista.map((n, i) => ({ n, i }))
+    .sort((a, b) => (fecha(a.n) === fecha(b.n) ? a.i - b.i : (fecha(a.n) < fecha(b.n) ? 1 : -1)))
+    .map(x => x.n);
+  const portada = orden.find(n => n.portada === true) || null;
+  return { portada, mas: orden.filter(n => n !== portada) };
 }
+const esNoticiaLector = id => !!DATOS.noticias && noticiasWeb().mas.some(n => n.id === id);
+const idPortada = () => { const p = DATOS.noticias && noticiasWeb().portada; return p ? p.id : null; };
 
-/* Fotos de «Joyas de la Indumentaria» (Ignacio, carpeta «joyas exposicion»), en el orden del
-   carrusel. Todas se ven enteras sobre fondo difuminado; peq: foto pequeña (627 px), que no se
-   amplía; fija: sin el zoom lento, para no cortar el texto del cartel */
-const JOYAS_FOTOS = [
-  {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
-  { peq: true }, { peq: true },
-  { fija: true },
-].map((o, i) => ({ src: `noticias/joyas-${String(i + 1).padStart(2, '0')}`, ...o }));
-
-function buildJoyas() {
-  const j = t().joyas;
-  const set = (id, txt) => { document.getElementById(id).textContent = txt; };
-  set('joyas-eyebrow', j.eyebrow);
-  set('joyas-title', j.title);
-  set('joyas-p1', j.p1);
-  set('joyas-p2', j.p2);
-  set('joyas-p3', j.p3);
-  set('joyas-credito', j.credito);
-  renderCarousel('joyas', document.getElementById('nf-joyas'), JOYAS_FOTOS.map((f, i) => ({
-    src: `${f.src}.webp`, mini: `${f.src}-mini.webp`, vertical: true, peq: f.peq, fija: f.fija, alt: j.alts[i],
-  })), { ...t().noticia, region: j.region });
-}
-
-/* Fotos del Premio Joia 2018 (Ignacio, carpeta «premi joia»), en el orden del carrusel;
-   la 7 es vertical (se ve entera sobre fondo difuminado) */
-const JOIA_FOTOS = [false, false, false, false, false, false, true, false, false]
-  .map((vertical, i) => ({ src: `noticias/joia-${String(i + 1).padStart(2, '0')}`, vertical }));
-
-function buildJoia() {
-  const j = t().joia;
-  const set = (id, txt) => { document.getElementById(id).textContent = txt; };
-  set('joia-eyebrow', j.eyebrow);
-  set('joia-title', j.title);
-  set('joia-p1', j.p1);
-  set('joia-p2', j.p2);
-  set('joia-p3', j.p3);
-  renderCarousel('joia', document.getElementById('nf-joia'), JOIA_FOTOS.map((f, i) => ({
-    src: `${f.src}.webp`, mini: `${f.src}-mini.webp`, vertical: f.vertical,
-    foco: f.vertical ? undefined : 'center 30%', alt: j.alts[i],
-  })), { ...t().noticia, region: j.region });
-}
-
-/* Fotos de la tienda de Burriana, 21: la fachada (fotograma del reel de @cosascucass
-   «¡Os esperamos en Burriana 21!»), siete del día de la apertura (carpeta del proyecto
-   «fotos burriana», 1-7-2026) y dos de Ignacio (carpeta «fotos tienda»).
-   true = vertical (se ve entera sobre fondo difuminado) */
-const TIENDA_FOTOS = [true, true, true, true, true, true, true, true, true, false]
-  .map((vertical, i) => ({ src: `noticias/tienda-${String(i + 1).padStart(2, '0')}`, vertical }));
-
-function buildTienda() {
-  const n = t().tienda;
-  const set = (id, txt) => { document.getElementById(id).textContent = txt; };
-  set('tienda-eyebrow', n.eyebrow);
-  set('tienda-title', n.title);
-  ['p1', 'p2', 'p3', 'p4', 'p5', 'video'].forEach(k => set(`tienda-${k}`, n[k]));
-  renderCarousel('tienda', document.getElementById('nf-tienda'), TIENDA_FOTOS.map((f, i) => ({
-    src: `${f.src}.webp`, mini: `${f.src}-mini.webp`, vertical: f.vertical,
-    foco: f.vertical ? undefined : 'center 40%', alt: n.alts[i],
-  })), { ...t().noticia, region: n.region });
-}
-
-/* VI Desfilada d'Indumentària Valenciana (19-06-2026): 18 fotos 3:4 del carrusel de @cosascucass
-   (22-06-2026), en su orden. La 1 es el cartel (fija: sin zoom lento). Vídeo aparte, en el texto. */
-const DESFILADA_FOTOS = Array.from({ length: 18 }, (_, i) => ({
-  src: `noticias/desfilada-${String(i + 1).padStart(2, '0')}`, ...(i === 0 ? { fija: true } : {}),
-}));
-
-/* El traje de proclamación de Meri (espolín «Tetuán»): 17 fotos, todas verticales, en el orden de la
-   publicación de @merizalve del 20-10-2026: exposición, elección de colores, telar, tela terminada,
-   prueba y Meri vestida. La 17 sale también junto al texto. */
-const MERI_TETUAN_FOTOS = Array.from({ length: 17 }, (_, i) => `noticias/meri-tetuan-${String(i + 1).padStart(2, '0')}`);
-
-function buildMeriTetuan() {
-  const n = t().meriTetuan;
-  const set = (id, txt) => { document.getElementById(id).textContent = txt; };
-  set('tetuan-eyebrow', n.eyebrow);
-  set('tetuan-title', n.title);
-  ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8'].forEach(k => set(`tetuan-${k}`, n[k]));
-  set('tetuan-otra', n.otra);
-  set('tetuan-credito', n.credito);
-  document.getElementById('tetuan-figura').alt = n.alts[16];
-  renderCarousel('meritetuan', document.getElementById('nf-meri-tetuan'), MERI_TETUAN_FOTOS.map((src, i) => ({
-    src: `${src}.webp`, mini: `${src}-mini.webp`, vertical: true, alt: n.alts[i],
-  })), { ...t().noticia, region: n.region });
-}
-
-/* Los trajes de Amanda Dàries Ricart (FMI 2027 de la falla Malvarrosa): 20 fotos. La 1, Amanda en la
-   exposición; de la 2 a la 6, el telar, la prueba y el traje verde terminado; luego el resto de la
-   exposición. Vídeo (el reel) en el texto. */
-const AMANDA_FOTOS = [false, true, true, true, true, true, true, true, true, false, true, false, true, true, true, true, true, false, true, true]
-  .map((vertical, i) => ({ src: `noticias/amanda-${String(i + 1).padStart(2, '0')}`, vertical }));
-
-function buildAmanda() {
-  const n = t().amanda;
-  const set = (id, txt) => { document.getElementById(id).textContent = txt; };
-  set('amanda-eyebrow', n.eyebrow);
-  set('amanda-title', n.title);
-  ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'].forEach(k => set(`amanda-${k}`, n[k]));
-  set('amanda-video-link', n.video);
-  const video = document.getElementById('amanda-video');
-  video.setAttribute('aria-label', n.videoLabel);
-  if (!video.dataset.listo) {
-    video.dataset.listo = '1';
-    video.addEventListener('error', () => { document.getElementById('amanda-video-box').hidden = true; });
+/* Un bloque del texto de la noticia, con las mismas clases que tenían las noticias escritas a mano */
+function htmlBloque(b, portada) {
+  if (!b || typeof b !== 'object') return '';
+  switch (b.tipo) {
+    case 'parrafo':
+      return mdParrafos(txN(b.texto)).map(p => `<p class="noticia__lead">${p}</p>`).join('');
+    case 'dedicatoria': {
+      const t = txN(b.texto);
+      return t ? `<p class="noticia__dedica">${escHtml(t).replace(/\r?\n/g, '<br>')}</p>` : '';
+    }
+    case 'prensa': {
+      const u = String(b.url || '').trim();
+      const etiqueta = txN(b.etiqueta), texto = txN(b.texto), enlace = sinFlecha(txN(b.enlace_texto));
+      return `<div class="noticia__prensa">${
+        etiqueta ? `<span class="noticia__prensa-tag">${escHtml(etiqueta)}</span>` : ''}${
+        texto ? `<p class="noticia__prensa-texto">${escHtml(texto)}</p>` : ''}${
+        enlace && esFuera(u) ? `<a class="noticia__prensa-enlace" ${attrsEnlace(u)}>${escHtml(enlace)}</a>` : ''}</div>`;
+    }
+    case 'enlace_noticia': {
+      /* solo si la otra noticia está publicada (si es la de portada, el lector se cierra y lleva a #noticia) */
+      const id = String(b.noticia || '');
+      const t = sinFlecha(txN(b.texto));
+      if (!t || !(esNoticiaLector(id) || id === idPortada())) return '';
+      /* la flecha va dentro del enlace, subrayada con el texto (en el panel se escribe sin ella) */
+      return `<p class="noticia__lead noticia__enlace"><a href="#${escHtml(id)}">${escHtml(t)} →</a></p>`;
+    }
+    case 'enlace': {
+      const u = String(b.url || '').trim();
+      const t = sinFlecha(txN(b.texto));
+      return t && URL_SEGURA.test(u) ? `<a class="noticia__link" ${attrsEnlace(u)}>${escHtml(t)}</a>` : '';
+    }
+    case 'credito':
+      return mdParrafos(txN(b.texto)).map(p => `<p class="noticia__credito">${p}</p>`).join('');
+    case 'figura': {
+      if (!b.foto) return '';
+      const alta = b.alta === true;
+      const w = alta ? 675 : 900;
+      /* con versión pequeña, el navegador elige: la pequeña en el hueco de 240 px y la grande en pantallas densas */
+      const src = b.mini
+        ? `src="${escHtml(rutaDato(b.mini))}" srcset="${escHtml(rutaDato(b.mini))} 360w, ${escHtml(rutaDato(b.foto))} ${w}w" sizes="(max-width: 640px) 280px, (max-width: 1024px) 200px, 240px"`
+        : `src="${escHtml(rutaDato(b.foto))}"`;
+      return `<figure class="revista__figura${alta ? ' revista__figura--alta' : ''}">
+            <img ${src} width="${w}" height="1200" alt="${escHtml(txN(b.alt))}" loading="lazy" decoding="async">
+          </figure>`;
+    }
+    case 'video': {
+      if (!b.video) return '';
+      const alto = b.formato !== '3:4';   /* 9:16 (de móvil) o 3:4 */
+      /* la portada del vídeo se pide al abrir la noticia en el lector (data-poster); en la portada, ya */
+      const poster = b.poster ? `${portada ? 'poster' : 'data-poster'}="${escHtml(rutaDato(b.poster))}" ` : '';
+      return `<figure class="noticia__video${alto ? ' noticia__video--alto' : ''}">
+            <video controls playsinline preload="none" width="720" height="${alto ? 1280 : 960}"
+                   ${poster}src="${escHtml(rutaDato(b.video))}" aria-label="${escHtml(txN(b.titulo))}"></video>
+          </figure>`;
+    }
+    default:
+      return '';
   }
-  renderCarousel('amanda', document.getElementById('nf-amanda'), AMANDA_FOTOS.map((f, i) => ({
-    src: `${f.src}.webp`, mini: `${f.src}-mini.webp`, vertical: f.vertical,
-    foco: f.vertical ? undefined : 'center 35%', alt: n.alts[i],
-  })), { ...t().noticia, region: n.region });
 }
 
-/* Cosas Cucas en la I Exposición «Joies de la Indumentària» (26-30/09/2022, Saló de Cristall): 9 fotos de
-   Ignacio, elegidas entre 19 (fuera las repetidas, las de poca resolución y una torcida). La 2, el cartel,
-   sale también junto al texto. */
-const JOIES22_FOTOS = [false, true, false, true, true, true, false, false, true]
-  .map((vertical, i) => ({ src: `noticias/joies22-${String(i + 1).padStart(2, '0')}`, vertical }));
-
-function buildJoies22() {
-  const n = t().joies22;
-  const set = (id, txt) => { document.getElementById(id).textContent = txt; };
-  set('joies22-eyebrow', n.eyebrow);
-  set('joies22-title', n.title);
-  ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'].forEach(k => set(`joies22-${k}`, n[k]));
-  set('joies22-otra', n.otra);
-  set('joies22-credito', n.credito);
-  document.getElementById('joies22-figura').alt = n.alts[1];
-  renderCarousel('joies22', document.getElementById('nf-joies22'), JOIES22_FOTOS.map((f, i) => ({
-    src: `${f.src}.webp`, mini: `${f.src}-mini.webp`, vertical: f.vertical,
-    foco: f.vertical ? undefined : 'center 45%', alt: n.alts[i],
-  })), { ...t().noticia, region: n.region });
+/* Esqueleto del carrusel .nf (lo rellena renderCarousel); con pie si alguna foto lo lleva */
+function htmlCarrusel(idNf, conPie) {
+  return `<div class="nf" id="${idNf}" role="region" aria-roledescription="carrusel">
+          <div class="nf__stage" tabindex="0" role="group">
+            <div class="nf__slides"></div>
+            <button type="button" class="nf__arrow nf__arrow--prev">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button type="button" class="nf__arrow nf__arrow--next">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <div class="nf__ctrls">
+              <button type="button" class="nf__ctrl nf__ctrl--pause">
+                <svg class="nf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                <svg class="nf__ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="8 5 19 12 8 19"/></svg>
+              </button>
+              <button type="button" class="nf__ctrl nf__ctrl--full" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+              </button>
+            </div>
+            <p class="nf__counter" aria-hidden="true"><span class="nf__cur">01</span><span class="nf__sep">/</span><span class="nf__total">00</span></p>
+            <div class="nf__progress" aria-hidden="true"><span class="nf__bar"></span></div>
+          </div>
+          ${conPie ? '<p class="nf__caption"><span class="nf__cap-name"></span><span class="nf__cap-falla"></span></p>' : ''}
+          <div class="nf__thumbs"></div>
+          <p class="nf__live" aria-live="polite"></p>
+        </div>`;
 }
 
-/* Cosas Cucas cerró el I Desfile de Indumentaria Valenciana del Gremio (20-09-2018): 12 de las 18 fotos de
-   Fran Adlert (fuera las casi repetidas), todas apaisadas: el photocall, el pase en orden de salida y el
-   saludo final. Junto al texto, un recorte vertical de la fallera del delantal blanco (desfile18-figura). */
-const DESFILE18_FOTOS = Array.from({ length: 12 }, (_, i) => `noticias/desfile18-${String(i + 1).padStart(2, '0')}`);
+const fotosN = n => (Array.isArray(n.fotos) ? n.fotos : []).filter(f => f && f.foto);
+const cuerpoN = n => (Array.isArray(n.cuerpo) ? n.cuerpo : []).filter(b => b && typeof b === 'object');
+/* los bloques desde la primera foto suelta o vídeo van debajo, en la segunda fila (maquetación «revista») */
+const corteRevista = n => cuerpoN(n).findIndex(b => b.tipo === 'figura' || b.tipo === 'video');
 
-function buildDesfile18() {
-  const n = t().desfile18;
-  const set = (id, txt) => { document.getElementById(id).textContent = txt; };
-  set('desfile18-eyebrow', n.eyebrow);
-  set('desfile18-title', n.title);
-  ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'joia', 'vi', 'credito', 'video'].forEach(k => set(`desfile18-${k}`, n[k]));
-  document.getElementById('desfile18-figura').alt = n.figura;
-  renderCarousel('desfile18', document.getElementById('nf-desfile18'), DESFILE18_FOTOS.map((src, i) => ({
-    src: `${src}.webp`, mini: `${src}-mini.webp`, vertical: false, foco: 'center 40%', alt: n.alts[i],
-  })), { ...t().noticia, region: n.region });
+/* Monta una vez la estructura de una noticia (texto, carrusel y segunda fila) dentro de sec */
+function montarNoticia(sec, n, idNf) {
+  const revista = corteRevista(n) >= 0;
+  const fotos = fotosN(n);
+  sec.innerHTML = `
+      <div class="container noticia__inner${revista ? ' revista' : ''}">
+        <div class="noticia__text"></div>
+        ${fotos.length ? htmlCarrusel(idNf, fotos.some(f => txN(f.pie))) : ''}
+        ${revista ? '<div class="revista__segunda"></div>' : ''}
+      </div>`;
 }
 
-/* Cosas Cucas en el desfile Tradicions (13-11-2021): 20 fotos. De la 1 a la 9, de Ignacio, antes del
-   desfile (dentro del museo, fuera al atardecer, photocall); de la 10 a la 19, la pasarela (álbum de
-   Tradicions en Facebook, 13-12-2021); la 20, de noche junto al agua. La 20 sale también junto al texto. */
-const TRADICIONS_FOTOS = [false, false, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, true]
-  .map((vertical, i) => ({ src: `noticias/tradicions-${String(i + 1).padStart(2, '0')}`, vertical }));
-
-function buildTradicions() {
-  const n = t().tradicions;
-  const set = (id, txt) => { document.getElementById(id).textContent = txt; };
-  set('tradicions-eyebrow', n.eyebrow);
-  set('tradicions-title', n.title);
-  ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'].forEach(k => set(`tradicions-${k}`, n[k]));
-  set('tradicions-credito', n.credito);
-  set('tradicions-video', n.video);
-  document.getElementById('tradicions-figura').alt = n.alts[19];
-  renderCarousel('tradicions', document.getElementById('nf-tradicions'), TRADICIONS_FOTOS.map((f, i) => ({
-    src: `${f.src}.webp`, mini: `${f.src}-mini.webp`, vertical: f.vertical,
-    foco: f.vertical ? undefined : 'center 40%', alt: n.alts[i],
-  })), { ...t().noticia, region: n.region });
-}
-
-function buildDesfilada() {
-  const n = t().desfilada;
-  const set = (id, txt) => { document.getElementById(id).textContent = txt; };
-  set('desfilada-eyebrow', n.eyebrow);
-  set('desfilada-title', n.title);
-  ['p1', 'p2', 'p3', 'p4', 'credito'].forEach(k => set(`desfilada-${k}`, n[k]));
-  set('desfilada-video-link', n.video);
-  const video = document.getElementById('desfilada-video');
-  video.setAttribute('aria-label', n.videoLabel);
-  /* Si el archivo del vídeo no está, se quita el reproductor y queda el enlace a Instagram. */
-  if (!video.dataset.listo) {
-    video.dataset.listo = '1';
-    video.addEventListener('error', () => { document.getElementById('desfilada-video-box').hidden = true; });
+/* Textos (en el idioma de la web) y carrusel de una noticia ya montada */
+function pintarNoticia(sec, n, idNf, portada) {
+  const c = cuerpoN(n);
+  const k = corteRevista(n);
+  const arriba = k < 0 ? c : c.slice(0, k);
+  const titulo = txN(n.titulo);
+  sec.querySelector('.noticia__text').innerHTML = `
+          <p class="noticia__eyebrow">${escHtml(txN(n.antetitulo))}</p>
+          <h2 class="noticia__title" id="${escHtml(n.id)}-titulo">${escHtml(titulo)}</h2>
+          ${arriba.map(b => htmlBloque(b, portada)).join('\n          ')}`;
+  const seg = sec.querySelector('.revista__segunda');
+  if (seg) {
+    seg.innerHTML = `
+          ${htmlBloque(c[k], portada)}
+          <div class="revista__texto">
+            ${c.slice(k + 1).map(b => htmlBloque(b, portada)).join('\n            ')}
+          </div>`;
   }
-  renderCarousel('desfilada', document.getElementById('nf-desfilada'), DESFILADA_FOTOS.map((f, i) => ({
-    src: `${f.src}.webp`, mini: `${f.src}-mini.webp`, vertical: true, fija: f.fija, alt: n.alts[i],
-  })), { ...t().noticia, region: n.region });
+  /* si el archivo del vídeo no está, se quita el reproductor (queda el enlace del texto) */
+  sec.querySelectorAll('.noticia__video video').forEach(v =>
+    v.addEventListener('error', () => { v.closest('.noticia__video').hidden = true; }));
+  const root = document.getElementById(idNf);
+  if (!root) return;
+  const lab = t().carrusel;
+  renderCarousel(idNf, root, fotosN(n).map(f => {
+    const pie = txN(f.pie);
+    const i = pie.indexOf(' · ');   /* «Nombre · Falla …»: lo de detrás del punto, en letra pequeña */
+    return {
+      /* renderCarousel mete estos valores en el HTML: van escapados */
+      src: escHtml(rutaDato(f.foto)), mini: escHtml(urlCss(f.mini || f.foto)), alt: escHtml(txN(f.alt)), foco: encuadre(f),
+      vertical: f.entera === true, peq: f.pequena === true, fija: f.fija === true,
+      caption: pie ? { name: i < 0 ? pie : pie.slice(0, i), falla: i < 0 ? '' : pie.slice(i + 3) } : null,
+    };
+  }), { ...lab, region: `${lab.region}: ${titulo}` });
 }
 
-/* Noticias que salen como tarjeta bajo la principal y se leen en el lector.
-   fotos: dos [mini, foco] para la tarjeta, una junto a otra; mejor verticales 3:4,
-   que así se ven enteras (la portada es 3:2). */
-const NOTICIAS_MAS = [
-  { id: 'noticia-meri-tetuan', textos: () => t().meriTetuan, fotos: [
-    ['noticias/meri-tetuan-03-mini.webp', 'center'],
-    ['noticias/meri-tetuan-17-mini.webp', 'center'],
-  ] },
-  { id: 'noticia-amanda', textos: () => t().amanda, fotos: [
-    ['noticias/amanda-05-mini.webp', 'center'],
-    ['noticias/amanda-07-mini.webp', 'center'],
-  ] },
-  { id: 'corte-2027',   textos: () => t().corte, fotos: [
-    ['noticias/corte-2027/alejandra-01-mini.webp', 'center'],
-    ['noticias/corte-2027/laura-02-mini.webp',     'center'],
-  ] },
-  { id: 'noticia-meri', textos: () => t().meri,  fotos: [
-    ['noticias/meri-zalve-04-mini.webp', 'center'],
-    ['noticias/meri-zalve-11-mini.webp', 'center'],
-  ] },
-  { id: 'noticia-tienda', textos: () => t().tienda, fotos: [
-    ['noticias/tienda-01-mini.webp', 'center 75%'],
-    ['noticias/tienda-02-mini.webp', 'center'],
-  ] },
-  { id: 'noticia-desfilada', textos: () => t().desfilada, fotos: [
-    ['noticias/desfilada-05-mini.webp', 'center'],
-    ['noticias/desfilada-09-mini.webp', 'center'],
-  ] },
-  { id: 'noticia-joyas', textos: () => t().joyas, fotos: [
-    ['noticias/joyas-01-mini.webp', 'center'],
-    ['noticias/joyas-02-mini.webp', 'center'],
-  ] },
-  { id: 'noticia-joies-2022', textos: () => t().joies22, fotos: [
-    ['noticias/joies22-04-mini.webp', 'center'],
-    ['noticias/joies22-05-mini.webp', 'center'],
-  ] },
-  { id: 'noticia-tradicions', textos: () => t().tradicions, fotos: [
-    ['noticias/tradicions-04-mini.webp', 'center'],
-    ['noticias/tradicions-08-mini.webp', 'center'],
-  ] },
-  /* fotos apaisadas: las grandes, como la del Premio Joia */
-  { id: 'noticia-desfile-2018', textos: () => t().desfile18, fotos: [
-    ['noticias/desfile18-02.webp', 'center'],
-    ['noticias/desfile18-09.webp', 'center'],
-  ] },
-  /* una sola foto apaisada: la grande, que la mini se quedaría corta a lo ancho */
-  { id: 'noticia-joia',  textos: () => t().joia,  fotos: [
-    ['noticias/joia-01.webp', 'center 30%'],
-  ] },
-];
-
+/* La primera vez que llegan los datos se monta todo; en cada cambio de idioma solo se repintan los textos
+   (los carruseles conservan su nodo y su estado en CAR) */
+let montadas = null;
 function buildNoticias() {
   const n = t().noticias;
   document.getElementById('noticias-eyebrow').textContent = n.eyebrow;
@@ -7574,22 +6293,60 @@ function buildNoticias() {
   document.getElementById('lector-topbar').textContent    = n.title;
   document.getElementById('lector-close').setAttribute('aria-label', n.cerrar);
   document.getElementById('lector-volver').innerHTML      = `<span aria-hidden="true">←</span>${n.volver}`;
-  /* solo las que tienen contenido (la de la corte se oculta sin fotos) */
-  const visibles = NOTICIAS_MAS.filter(x => !document.getElementById(x.id).hidden);
-  document.getElementById('mas-noticias').hidden = visibles.length === 0;
-  document.getElementById('notas').innerHTML = visibles.map(x => {
-    const tx = x.textos();
+  if (!DATOS.noticias) return;   /* aún no ha llegado datos/noticias.json */
+  const { portada, mas } = noticiasWeb();
+
+  if (montadas !== DATOS.noticias) {
+    montadas = DATOS.noticias;
+    const secPortada = document.getElementById('noticia');
+    if (portada) montarNoticia(secPortada, portada, 'nf');
+    secPortada.hidden = !portada;
+    const pie = lector.querySelector('.lector__pie');
+    lector.querySelectorAll('section.noticia').forEach(s => s.remove());
+    mas.forEach(x => {
+      const sec = document.createElement('section');
+      sec.id = x.id;
+      sec.className = 'noticia noticia--crema';
+      montarNoticia(sec, x, `nf-${x.id}`);
+      pie.before(sec);
+    });
+  }
+
+  /* Portada y píldora del hero */
+  const pill = document.getElementById('hero-news');
+  const aviso = portada && portada.aviso;
+  document.getElementById('hero-news-tag').textContent  = txN(aviso && aviso.etiqueta);
+  document.getElementById('hero-news-text').textContent = txN(aviso && aviso.texto);
+  pill.hidden = !(aviso && txN(aviso.texto));
+  if (portada) pintarNoticia(document.getElementById('noticia'), portada, 'nf', true);
+
+  /* Noticias del lector y sus tarjetas en «Más noticias» */
+  mas.forEach(x => pintarNoticia(document.getElementById(x.id), x, `nf-${x.id}`, false));
+  document.getElementById('mas-noticias').hidden = mas.length === 0;
+  document.getElementById('notas').innerHTML = mas.map(x => {
+    const id = escHtml(x.id);
+    const fotos = (Array.isArray(x.tarjeta) ? x.tarjeta : []).filter(f => f && f.foto).slice(0, 2);
     /* nombre del enlace = titular; la fecha como descripción */
-    return `<li><a class="nota" href="#${x.id}" data-noticia="${x.id}" aria-labelledby="nota-t-${x.id}" aria-describedby="nota-e-${x.id}">
-      <div class="nota__img">${x.fotos.map(([src, foco]) =>
-        `<img src="${src}" alt="" width="360" height="480" loading="lazy" decoding="async" style="object-position:${foco}" />`).join('')}</div>
+    return `<li><a class="nota" href="#${id}" data-noticia="${id}" aria-labelledby="nota-t-${id}" aria-describedby="nota-e-${id}">
+      <div class="nota__img">${fotos.map(f =>
+        `<img src="${escHtml(rutaDato(f.mini || f.foto))}" alt="" width="360" height="480" loading="lazy" decoding="async" style="object-position:${encuadre(f)}" />`).join('')}</div>
       <div class="nota__body">
-        <span class="nota__eyebrow" id="nota-e-${x.id}">${tx.eyebrow}</span>
-        <h3 class="nota__title" id="nota-t-${x.id}">${tx.title}</h3>
+        <span class="nota__eyebrow" id="nota-e-${id}">${escHtml(txN(x.antetitulo))}</span>
+        <h3 class="nota__title" id="nota-t-${id}">${escHtml(txN(x.titulo))}</h3>
         <span class="nota__leer" aria-hidden="true">${n.leer}</span>
       </div>
     </a></li>`;
   }).join('');
+
+  initHeroSlider();
+}
+
+/* Fotos del pase de la portada (hero): las marcadas «pase», primero las de la noticia de portada */
+function fotosDelPase() {
+  const { portada, mas } = noticiasWeb();
+  return (portada ? [portada] : []).concat(mas)
+    .flatMap(n => fotosN(n).filter(f => f.pase === true))
+    .map(f => ({ src: rutaDato(f.foto), foco: encuadre(f), alt: () => txN(f.alt) }));
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -7601,7 +6358,6 @@ const lector = document.getElementById('lector');
 let lectorScrollY = 0;
 let lectorId = null;
 let lectorInertes = [];   /* lo de detrás del lector, inerte mientras está abierto */
-const esNoticiaMas = id => NOTICIAS_MAS.some(x => x.id === id);
 /* todo lo de detrás del lector, inerte (teclado y lectores de pantalla) */
 function inertFuera() {
   for (const el of document.body.children) {
@@ -7719,32 +6475,21 @@ window.addEventListener('popstate', () => {
 /* enlaces normales a una noticia del lector (por ejemplo desde otra parte de la web) */
 window.addEventListener('hashchange', () => {
   const id = decodeURIComponent(location.hash.slice(1));
-  if (esNoticiaMas(id) && lectorId !== id && abrirLector(id)) {
-    history.replaceState({ lector: id }, '', location.hash);
+  if (esNoticiaLector(id)) {
+    if (lectorId !== id && abrirLector(id)) history.replaceState({ lector: id }, '', location.hash);
+    return;
+  }
+  /* un enlace a otra parte de la web (o a la noticia de portada, que va en #noticia):
+     si el lector está abierto, se cierra y se va allí */
+  const destino = document.getElementById(id && id === idPortada() ? 'noticia' : id);
+  if (!lector.hidden) cerrarLector();
+  if (destino && (id === idPortada() || destino !== document.getElementById(id) || !lector.contains(destino))) {
+    destino.scrollIntoView();
   }
 });
 
-function buildNoticia() {
-  const n = t().noticia;
-  const set = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
-  set('hero-news-tag', n.pillTag);
-  set('hero-news-text', n.pill);
-  set('noticia-eyebrow', n.eyebrow);
-  set('noticia-title', n.title);
-  set('noticia-p1', n.p1);
-  set('noticia-p2', n.p2);
-  set('noticia-p3', n.p3);
-  set('noticia-link', n.link);
-  set('noticia-prensa-tag', n.prensaTag);
-  set('noticia-prensa', n.prensa);
-  set('noticia-prensa-link', n.prensaLink);
-  renderCarousel('julia', document.getElementById('nf'), NOTICIA_FOTOS.map((src, i) => ({
-    src: `${src}.webp`, mini: `${src}-mini.webp`, vertical: NOTICIA_VERTICAL[i], alt: n.alts[i],
-  })), n);
-}
-
 /* ═══════════════════════════════════════════════════════════════════════════
-   CARRUSEL (.nf) — lo usan las dos noticias; cada uno guarda su estado en CAR.
+   CARRUSEL (.nf) — lo usan todas las noticias; cada uno guarda su estado en CAR.
    Avanza cuando termina la barra dorada (animationend), así la pausa por CSS
    (ratón encima, fuera de pantalla, teclado, botón) también para el pase.
    slides: [{ src, mini, alt, vertical, foco, caption: { name, falla } }]
@@ -7881,20 +6626,8 @@ function initCarousel(c) {
 function renderAll() {
   buildStripe(); buildNav();
   renderHero(t().drops[0]);
-  buildNoticia();
-  buildCorte();
-  buildMeri();
-  buildJoyas();
-  buildJoia();
-  buildTienda();
-  buildDesfilada();
-  buildJoies22();
-  buildTradicions();
-  buildDesfile18();
-  buildMeriTetuan();
-  buildAmanda();
-  buildNoticias();
-  initHeroSlider();           /* ImagePlayer: fotos de pasarela en bucle */
+  buildNoticias();            /* noticias: portada, «Más noticias» y lector (datos/noticias.json) */
+  initHeroSlider();           /* pase de fotos de la portada (cuando hayan llegado las noticias) */
   buildArchive(); buildFMDetail(); buildZapatillas(); buildHistoria();
   buildEditorial(); buildDossierHistoria(); buildDecoracion(); buildVideos(); buildResenas();
   buildNewsletter(); buildContacto(); buildVisita(); buildFooter();
@@ -7962,12 +6695,27 @@ document.querySelectorAll('.lang-btn').forEach(b =>
   b.classList.toggle('active', b.dataset.lang === currentLang));
 document.documentElement.lang = currentLang === 'ca' ? 'ca' : 'es';
 renderAll();
-{
+/* Noticias: llegan de datos/noticias.json (panel /admin). Al llegar se pintan y, si la dirección
+   trae el enlace de una noticia (…/#noticia-meri), se abre en el lector. */
+let enlaceInicialHecho = false;
+function abrirNoticiaDelEnlace() {
+  if (enlaceInicialHecho) return;
+  enlaceInicialHecho = true;
   const id = decodeURIComponent(location.hash.slice(1));
-  if (esNoticiaMas(id) && abrirLector(id)) {
+  if (!id) return;
+  if (!esNoticiaLector(id)) {
+    /* cualquier otra ancla (#noticia, #contacto…): las noticias acaban de aparecer y han movido la
+       página, así que se vuelve a llevar a su sitio (la de portada también por su id, #noticia-julia) */
+    const destino = document.getElementById(id === idPortada() ? 'noticia' : id);
+    if (destino && !lector.contains(destino)) destino.scrollIntoView({ block: 'start', behavior: 'instant' });
+    return;
+  }
+  if (abrirLector(id)) {
     history.replaceState({ lector: id, directo: true }, '', location.hash);
-    /* el chat y lo demás que va detrás de este script aún no existe: inerte cuando esté */
-    document.addEventListener('DOMContentLoaded', () => { if (!lector.hidden) inertFuera(); }, { once: true });
+    /* el chat y lo demás que va detrás de este script puede no existir aún: inerte cuando esté */
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => { if (!lector.hidden) inertFuera(); }, { once: true });
+    } else inertFuera();
     /* Chrome lleva el foco a body al procesar el #ancla de la carga: devolverlo a la × */
     const enfocarCerrar = () => setTimeout(() => {
       if (!lector.hidden) document.getElementById('lector-close').focus({ preventScroll: true });
@@ -7976,6 +6724,10 @@ renderAll();
     else addEventListener('load', enfocarCerrar, { once: true });
   }
 }
+cargarDatos('noticias')
+  .then(d => { DATOS.noticias = Array.isArray(d) ? d : []; })
+  .catch(e => { console.error(e); DATOS.noticias = []; })
+  .then(() => { buildNoticias(); abrirNoticiaDelEnlace(); });
 
 /* ── Pedir cita bilingüe ── */
 function updateCitaBtn() {

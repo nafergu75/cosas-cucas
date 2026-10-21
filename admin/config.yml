@@ -28,6 +28,9 @@ public_folder: /galeria
 # Fotos: se convierten en el navegador a WebP de 1600 px como máximo (sin datos Exif)
 # y se renombran con la fecha y el nombre limpio: «20261021-nombre-de-la-foto.webp».
 media_libraries:
+  # sin bancos de fotos de internet en el selector: solo las fotos propias
+  stock_assets:
+    providers: []
   all:
     slugify_filename: true
     filename_template: '{{year}}{{month}}{{day}}-{{filename}}'
@@ -65,6 +68,435 @@ asset_collections:
     readonly: true
 
 collections:
+  # ── Noticias ── datos/noticias.json → [ { noticia }, { noticia }, … ] (colección de un solo archivo).
+  # Textos { es, ca } hechos a mano, como en Falleras Mayores. La web las ordena por fecha y elige la portada.
+  - name: noticias
+    label: Noticias
+    label_singular: Noticia
+    icon: newspaper
+    description: >-
+      Noticias de la portada y de «Más noticias». La web las ordena sola por fecha, de la más nueva a la más antigua,
+      y la de portada es la más reciente que tenga marcada «Noticia de portada». Esta lista sale en el orden en que
+      se crearon: para verla por fecha, pulsa «Ordenar» y elige la fecha de lo más reciente a lo más antiguo.
+      Aquí el panel no guarda borradores: pulsa «Guardar» antes de salir.
+    file: datos/noticias.json
+    format: json
+    identifier_field: id
+    media_folder: /noticias
+    public_folder: /noticias
+    preview_path: '/#{{id}}'
+    summary: '{{fecha}} · {{titulo.es}}'
+    thumbnail: [tarjeta.*.mini, tarjeta.*.foto, fotos.*.foto]
+    sortable_fields:
+      fields: [fecha, titulo.es, id]
+      default: { field: fecha, direction: descending }   # en 0.250.0 no se aplica (ver arriba)
+    view_filters:
+      - { label: Marcadas de portada, field: portada, pattern: true }
+      - { label: Más noticias, field: portada, pattern: false }
+      - { label: Sin publicar, field: publicada, pattern: false }
+    view_groups:
+      - { label: Año, field: fecha, pattern: '\d{4}' }
+    fields:
+      - name: titulo
+        label: Título
+        widget: object
+        fields:
+          - { name: es, label: Castellano, widget: string, hint: 'Ejemplo: Fallera Mayor Infantil de València 2027' }
+          - { name: ca, label: Valencià, widget: string, hint: 'Exemple: Fallera Major Infantil de València 2027' }
+
+      - name: antetitulo
+        label: Antetítulo (línea pequeña encima del título)
+        widget: object
+        fields:
+          - { name: es, label: Castellano, widget: string, hint: 'Ejemplo: Noticia · Octubre 2026' }
+          - { name: ca, label: Valencià, widget: string, hint: 'Exemple: Notícia · Octubre 2026' }
+
+      - name: id
+        label: Nombre corto de la noticia
+        widget: string
+        unique: true
+        pattern: ['^[a-z0-9-]+$', 'Solo letras minúsculas sin tildes, números y guiones. Ejemplo: noticia-meri']
+        hint: >-
+          Es la dirección de la noticia en la web (cosas-cucas.vercel.app/#**noticia-meri**). Solo minúsculas sin tildes,
+          números y guiones. **No lo cambies** en una noticia ya publicada: se romperían los enlaces que llevan a ella.
+
+      - name: fecha
+        label: Fecha
+        widget: datetime
+        type: date
+        default: '{{now}}'
+        hint: >-
+          Día en que pasó lo que cuenta la noticia. Sirve para ordenarlas: la más nueva sale la primera.
+          Si solo sabes el mes, pon el día 1.
+
+      - name: publicada
+        label: Publicada
+        widget: boolean
+        default: true
+        hint: Quita la marca para esconder la noticia de la web sin borrarla (por ejemplo, mientras la preparas).
+
+      - name: portada
+        label: Noticia de portada
+        widget: boolean
+        default: false
+        hint: >-
+          Marca esta casilla para que la noticia salga grande en la portada. Si hay varias marcadas, sale la de fecha
+          más reciente y las demás pasan solas a «Más noticias», sin perder nada.
+
+      - name: aviso
+        label: Aviso de la portada (cartelito sobre las fotos grandes)
+        widget: object
+        required: false
+        hint: >-
+          Solo se ve si esta es la noticia de portada: es el cartelito que sale encima del pase de fotos grande.
+          Si la noticia no va en portada, no hace falta.
+        fields:
+          - name: etiqueta
+            label: Etiqueta
+            widget: object
+            fields:
+              - { name: es, label: Castellano, widget: string, default: Noticia }
+              - { name: ca, label: Valencià, widget: string, default: Notícia }
+          - name: texto
+            label: Texto
+            widget: object
+            fields:
+              - { name: es, label: Castellano, widget: string, hint: 'Ejemplo: Vestimos a la Fallera Mayor Infantil de València 2027' }
+              - { name: ca, label: Valencià, widget: string }
+
+      - name: tarjeta
+        label: Fotos de la tarjeta («Más noticias»)
+        label_singular: Foto de la tarjeta
+        widget: list
+        min: 1
+        max: 2
+        thumbnail: foto
+        summary: 'Encuadre {{x}} % · {{y}} %'
+        hint: >-
+          La tarjeta que sale en «Más noticias». Lo mejor: **dos fotos verticales** (3:4, por ejemplo 900×1200), cada una
+          con su versión pequeña. Si pones **una sola**, que sea **horizontal** y sin versión pequeña: la tarjeta usa la grande.
+          La vista previa de la derecha te avisa si una foto no encaja.
+        fields:
+          - name: foto
+            label: Foto
+            widget: image
+            choose_url: false
+          - name: mini
+            label: Versión pequeña (opcional)
+            widget: image
+            required: false
+            choose_url: false
+            hint: >-
+              Con dos fotos: sube otra vez la misma foto y el panel la deja en 480 px. Si la dejas vacía se usa la grande.
+              Con una sola foto, déjala vacía.
+            media_libraries: &mini
+              all:
+                transformations:
+                  raster_image: { format: webp, quality: 80, width: 480, height: 480 }
+              default:
+                config:
+                  filename_template: '{{year}}{{month}}{{day}}-{{filename}}-mini'
+          - name: x
+            label: Encuadre de izquierda a derecha (%)
+            widget: number
+            value_type: int
+            min: 0
+            max: 100
+            step: 5
+            default: 50
+            hint: 'Qué parte de la foto se ve si hay que recortarla. 0 = el lado izquierdo, 50 = el centro, 100 = el lado derecho.'
+          - name: y
+            label: Encuadre de arriba abajo (%)
+            widget: number
+            value_type: int
+            min: 0
+            max: 100
+            step: 5
+            default: 50
+            hint: '0 = la parte de arriba (la cara), 50 = el centro, 100 = la parte de abajo (los pies).'
+
+      - name: fotos
+        label: Fotos del carrusel
+        label_singular: Foto
+        widget: list
+        min: 1
+        collapsed: true
+        thumbnail: foto
+        summary: '{{alt.es}}'
+        hint: >-
+          Las fotos que se pasan dentro de la noticia, en este orden (puedes arrastrarlas).
+          **Noticia de portada:** horizontales 3:2 de 1600×1067 (mínimo 1440×960).
+          **Las demás:** verticales 900×1200 u horizontales de 1200 a 1600 de ancho.
+        fields:
+          - name: foto
+            label: Foto
+            widget: image
+            choose_url: false
+          - name: mini
+            label: Versión pequeña (opcional)
+            widget: image
+            required: false
+            choose_url: false
+            hint: Opcional. Se usa en las miniaturas de debajo del carrusel y de fondo en las fotos enteras. Sube la misma foto y el panel la reduce sola.
+            media_libraries: *mini
+          - name: alt
+            label: Qué se ve en la foto (para buscadores y personas ciegas)
+            widget: object
+            fields:
+              - { name: es, label: Castellano, widget: string, hint: 'Ejemplo: Julia con el traje de espolín granate, de frente' }
+              - { name: ca, label: Valencià, widget: string }
+          - name: pie
+            label: Pie de foto (opcional)
+            widget: object
+            required: false
+            hint: Texto que sale debajo de la foto, por ejemplo el nombre y la falla. Casi nunca hace falta.
+            fields:
+              - { name: es, label: Castellano, widget: string }
+              - { name: ca, label: Valencià, widget: string }
+          - name: x
+            label: Encuadre de izquierda a derecha (%)
+            widget: number
+            value_type: int
+            min: 0
+            max: 100
+            step: 5
+            default: 50
+            hint: '0 = el lado izquierdo, 50 = el centro, 100 = el lado derecho.'
+          - name: y
+            label: Encuadre de arriba abajo (%)
+            widget: number
+            value_type: int
+            min: 0
+            max: 100
+            step: 5
+            default: 50
+            hint: '0 = arriba, 50 = el centro, 100 = abajo.'
+          - name: entera
+            label: Mostrar entera (sin recortar)
+            widget: boolean
+            default: false
+            hint: 'Para fotos verticales o casi cuadradas: se ve entera sobre un fondo difuminado de la misma foto.'
+          - name: pequena
+            label: Foto pequeña (no agrandar)
+            widget: boolean
+            default: false
+            hint: Para fotos de menos de 900 px de ancho, como un recorte de prensa. Se ve a su tamaño, sin estirarla.
+          - name: fija
+            label: Sin movimiento
+            widget: boolean
+            default: false
+            hint: Quita el zoom lento del carrusel en esta foto (por ejemplo, un cartel con letras).
+          - name: pase
+            label: Sale en el pase de la portada
+            widget: boolean
+            default: false
+            hint: >-
+              Marca la casilla si quieres que esta foto salga también en el pase de fotos grande de arriba del todo de la web.
+              Mejor horizontal (3:2).
+
+      - name: cuerpo
+        label: Texto de la noticia
+        label_singular: Bloque
+        widget: list
+        typeKey: tipo
+        min: 1
+        collapsed: auto
+        hint: >-
+          La noticia se escribe en bloques, en el orden en que se leen. Si pones una **foto suelta** o un **vídeo**,
+          ese bloque y los siguientes van en la segunda parte de la noticia, debajo del carrusel.
+        types:
+          - name: parrafo
+            label: Párrafo
+            description: Texto normal. Puede llevar negrita, cursiva y enlaces.
+            summary: '{{texto.es | truncate(70, "…")}}'
+            fields:
+              - name: texto
+                label: Texto
+                widget: object
+                fields:
+                  - name: es
+                    label: Castellano
+                    widget: markdown
+                    buttons: [bold, italic, link]
+                    editor_components: []
+                    modes: [rich_text]
+                    use_markdown_shortcuts: false
+                    use_emoji_autocomplete: false
+                    linked_images: false
+                    hint: 'Intro para empezar otro párrafo. Para un enlace: selecciona las palabras y pulsa el eslabón. Una web: https://… . Otra parte de esta web u otra noticia: **empieza por #** (#falleras-mayores, #noticia-meri). Sin la # el enlace no funciona.'
+                  - name: ca
+                    label: Valencià
+                    widget: markdown
+                    buttons: [bold, italic, link]
+                    editor_components: []
+                    modes: [rich_text]
+                    use_markdown_shortcuts: false
+                    use_emoji_autocomplete: false
+                    linked_images: false
+          - name: dedicatoria
+            label: Dedicatoria
+            description: Frase destacada en cursiva (por ejemplo, unas palabras para la fallera).
+            summary: '{{texto.es | truncate(70, "…")}}'
+            fields:
+              - name: texto
+                label: Texto
+                widget: object
+                fields:
+                  - { name: es, label: Castellano, widget: text }
+                  - { name: ca, label: Valencià, widget: text }
+          - name: prensa
+            label: Salió en prensa
+            description: Recuadro con una etiqueta, una frase y el enlace a la noticia del periódico.
+            summary: '{{etiqueta.es}} · {{enlace_texto.es}}'
+            fields:
+              - name: etiqueta
+                label: Etiqueta pequeña
+                widget: object
+                fields:
+                  - { name: es, label: Castellano, widget: string, default: En la prensa, hint: 'Ejemplo: En la prensa' }
+                  - { name: ca, label: Valencià, widget: string, default: A la premsa }
+              - name: texto
+                label: Frase
+                widget: object
+                fields:
+                  - { name: es, label: Castellano, widget: text }
+                  - { name: ca, label: Valencià, widget: text }
+              - name: enlace_texto
+                label: Texto del enlace
+                widget: object
+                fields:
+                  - { name: es, label: Castellano, widget: string, hint: 'Ejemplo: Leer la noticia en Official Press. Sin flecha: la → la pone la web.' }
+                  - { name: ca, label: Valencià, widget: string }
+              - name: url
+                label: Dirección de la noticia en el periódico
+                widget: string
+                pattern: ['^https?://', 'Tiene que empezar por https://']
+          - name: enlace_noticia
+            label: Enlace a otra noticia
+            description: Lleva a otra noticia de esta web. Se elige de una lista.
+            summary: '→ {{noticia}}'
+            fields:
+              - name: noticia
+                label: Noticia
+                widget: relation
+                collection: noticias
+                value_field: id
+                display_fields: ['{{titulo.es}} ({{fecha}})']
+                search_fields: [titulo.es, id]
+                filters:
+                  - { field: id, values: ['{{fields.id}}'], exclude: true }
+                hint: >-
+                  Elige la noticia. Si hay muchas, sale un buscador: escribe una palabra del título.
+                  No uses el botón «Agregar Noticia» de aquí: las noticias nuevas se crean desde la lista.
+              - name: texto
+                label: Texto del enlace
+                widget: object
+                fields:
+                  - { name: es, label: Castellano, widget: string, hint: 'Sin flecha: la flecha → la pone la web.' }
+                  - { name: ca, label: Valencià, widget: string }
+          - name: enlace
+            label: Enlace
+            description: Enlace a otra web (Instagram, YouTube…) o a otra parte de esta web.
+            summary: '{{texto.es}} · {{url}}'
+            fields:
+              - name: texto
+                label: Texto del enlace
+                widget: object
+                fields:
+                  - { name: es, label: Castellano, widget: string, hint: 'Sin flecha: la flecha → la pone la web.' }
+                  - { name: ca, label: Valencià, widget: string }
+              - name: url
+                label: Dirección
+                widget: string
+                pattern: ['^(https?://|#|mailto:|tel:)', 'Tiene que empezar por https:// o, si es de esta web, por # (ejemplo: #falleras-mayores)']
+                hint: 'Una web (https://…) u otra parte de esta web empezando por # (ejemplo: #falleras-mayores).'
+          - name: credito
+            label: Crédito
+            description: Quién hizo las fotos o el vídeo. Letra pequeña, puede llevar enlace.
+            summary: '{{texto.es | truncate(70, "…")}}'
+            fields:
+              - name: texto
+                label: Texto
+                widget: object
+                fields:
+                  - name: es
+                    label: Castellano
+                    widget: markdown
+                    buttons: [bold, italic, link]
+                    editor_components: []
+                    modes: [rich_text]
+                    use_markdown_shortcuts: false
+                    use_emoji_autocomplete: false
+                    linked_images: false
+                    hint: 'Ejemplo: Fotos: Estudio X (selecciona el nombre y pulsa el eslabón para enlazar su Instagram).'
+                  - name: ca
+                    label: Valencià
+                    widget: markdown
+                    buttons: [bold, italic, link]
+                    editor_components: []
+                    modes: [rich_text]
+                    use_markdown_shortcuts: false
+                    use_emoji_autocomplete: false
+                    linked_images: false
+          - name: figura
+            label: Foto suelta
+            description: Una foto vertical en medio del texto. Desde aquí el texto pasa a la segunda parte.
+            summary: '{{alt.es}}'
+            fields:
+              - name: foto
+                label: Foto
+                widget: image
+                choose_url: false
+                hint: Vertical 3:4 (900×1200). Si marcas «Muy alta», 9:16 (675×1200).
+              - name: mini
+                label: Versión pequeña (opcional)
+                widget: image
+                required: false
+                choose_url: false
+                media_libraries: *mini
+              - name: alt
+                label: Qué se ve en la foto (opcional)
+                widget: object
+                required: false
+                hint: Déjalo vacío si la foto solo adorna y repite lo que ya cuenta el texto.
+                fields:
+                  - { name: es, label: Castellano, widget: string, required: false }
+                  - { name: ca, label: Valencià, widget: string, required: false }
+              - name: alta
+                label: Muy alta (9:16, como una foto de móvil)
+                widget: boolean
+                default: false
+          - name: video
+            label: Vídeo
+            description: Un vídeo MP4 corto. Desde aquí el texto pasa a la segunda parte.
+            summary: '{{titulo.es}}'
+            fields:
+              - name: video
+                label: Vídeo (MP4)
+                widget: file
+                accept: 'video/mp4,.mp4'
+                choose_url: false
+                hint: Un MP4 de pocos megas (los de ahora pesan 5 a 8 MB). Los vídeos de YouTube van con un bloque «Enlace».
+              - name: poster
+                label: Foto de portada del vídeo
+                widget: image
+                choose_url: false
+                hint: Un fotograma del vídeo, del mismo tamaño (720×1280 si es 9:16; 720×960 si es 3:4).
+              - name: formato
+                label: Forma del vídeo
+                widget: select
+                default: '9:16'
+                options:
+                  - { label: 'Alto, de móvil (9:16)', value: '9:16' }
+                  - { label: 'Vertical (3:4)', value: '3:4' }
+              - name: titulo
+                label: Qué se ve en el vídeo
+                widget: object
+                hint: Para personas ciegas y buscadores; no se ve en pantalla.
+                fields:
+                  - { name: es, label: Castellano, widget: string }
+                  - { name: ca, label: Valencià, widget: string }
+
   # ── Falleras Mayores ── datos/falleras-mayores.json → { "falleras": [ … ] }
   - name: falleras_mayores
     label: Falleras Mayores
