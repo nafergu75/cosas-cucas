@@ -6,6 +6,10 @@
 
 ErrorDocument 404 /404.html
 
+# Con la compresión, Apache cambia el ETag de cada archivo y el navegador no podría preguntar «¿ha
+# cambiado?» (respuesta 304): sin ETag lo pregunta por la fecha y no vuelve a bajar lo que ya tiene.
+FileETag None
+
 # Hay carpetas que se llaman como una página (galeria/ y galeria.html, indumentaria-regional/…):
 # sin esto, el servidor mandaría /galeria a /galeria/ antes de poder enseñar la página.
 DirectorySlash Off
@@ -45,7 +49,8 @@ AddCharset utf-8 .html .css .js .json .yml .xml .txt
   RewriteCond %{THE_REQUEST} \s/+index\.html[\s?]
   RewriteRule ^index\.html$ / [L,R=301]
 
-  # /galeria.html → /galeria (el panel /admin se queda como está)
+  # /galeria.html → /galeria (el panel /admin se queda como está; tampoco la página de error interna)
+  RewriteCond %{ENV:REDIRECT_STATUS} ^$
   RewriteCond %{REQUEST_URI} !^/admin/
   RewriteCond %{THE_REQUEST} \s/+[^?\s]+\.html[\s?]
   RewriteRule ^(.+)\.html$ /$1 [L,R=301]
@@ -55,10 +60,15 @@ AddCharset utf-8 .html .css .js .json .yml .xml .txt
   RewriteCond %1.html -f
   RewriteRule ^(.+)/$ /$1 [L,R=301]
 
-  # /galeria → galeria.html (aunque exista la carpeta galeria/)
+  # /landing/ → /landing (páginas sin carpeta propia; sin esto, el servidor entraba en bucle: error 500)
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^([^/]+)/$ /$1 [L,R=301]
+
+  # /galeria → galeria.html (aunque exista la carpeta galeria/). Solo nombres sin barra: todas las
+  # páginas están en la raíz
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME}.html -f
-  RewriteRule ^(.+)$ $1.html [L]
+  RewriteRule ^([^/]+)$ $1.html [L]
 
   # Carpetas de fotos: no se listan (como en Vercel, «no encontrada»)
   RewriteCond %{REQUEST_FILENAME} -d

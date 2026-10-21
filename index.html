@@ -707,6 +707,7 @@
     .nf:fullscreen .nf__thumbs { width: 100%; max-width: 900px; margin: 14px auto 0; }
     /* ── Segunda noticia (Corte de Honor 2027): fondo crema y carrusel a la izquierda ── */
     .noticia[hidden] { display: none; }
+    .hero-news[hidden] { display: none; }   /* sin noticia de portada con aviso, no se ve la píldora */
     .noticia--crema { background: var(--color-bg); color: var(--color-text); }
     .noticia--crema .noticia__title { color: var(--color-text); }
     .noticia--crema .noticia__lead  { color: var(--color-text-muted); }
@@ -3470,7 +3471,7 @@
     <div class="hero-dots" id="hero-dots"></div>
   </div>
   <div class="hero-content">
-    <a class="hero-news" id="hero-news" href="#noticia">
+    <a class="hero-news" id="hero-news" href="#noticia" hidden>
       <span class="hero-news__dot" aria-hidden="true"></span>
       <span class="hero-news__tag" id="hero-news-tag"></span>
       <span class="hero-news__text" id="hero-news-text"></span>
@@ -3546,8 +3547,8 @@
     <!-- Cabecera de la sección (dinámica vía buildArchive) -->
     <div class="section-header">
       <div>
-        <h2 class="section-title"></h2>
-        <p class="section-subtitle"></p>
+        <h2 class="section-title" id="archive-title" data-pre>Todas las Colecciones</h2>
+        <p class="section-subtitle" id="archive-subtitle" data-pre>Trajes de fallera y de valenciano a medida, espolines y telas a metro, aderezos y peinetas, mantillas e indumentaria de Semana Santa. Nuestro trabajo, nuestra ilusión.</p>
       </div>
     </div>
 
@@ -3615,9 +3616,9 @@
 
     <!-- ✦ FALLERAS MAYORES — sección dedicada -->
     <div id="falleras-mayores">
-      <span class="sec-fm-eyebrow" id="sec-fm-eyebrow">✦ Indumentaria de Honor</span>
-      <h2 class="sec-fm-title" id="sec-fm-title">Falleras Mayores y Corte de Honor<br>vestidas por Cosas Cucas</h2>
-      <p class="sec-fm-sub" id="sec-fm-sub">Cada año el honor de vestir a las Falleras Mayores de Valencia y sus Cortes de Honor. Cuatro décadas de confianza que se renuevan.</p>
+      <span class="sec-fm-eyebrow" id="sec-fm-eyebrow" data-pre>✦ Indumentaria de Honor</span>
+      <h2 class="sec-fm-title" id="sec-fm-title" data-pre>Falleras Mayores<br><span style="color:var(--color-gold)">vestidas por Cosas Cucas</span></h2>
+      <p class="sec-fm-sub" id="sec-fm-sub" data-pre>Confección exclusiva de Cosas Cucas.</p>
       <div class="fm-detail-grid" id="fm-detail-grid"></div>
     </div>
 
@@ -3834,10 +3835,10 @@
     <p class="editorial-eyebrow" id="editorial-eyebrow" data-pre>Desde 1982, en el corazón de Valencia</p>
     <h2 class="editorial-title" id="editorial-title" data-pre>Cuarenta años confeccionando<br>la tradición valenciana.</h2>
     <p class="editorial-body" id="editorial-body" data-pre>Paquita Martorell abrió Cosas Cucas en el Cabañal de Valencia en 1982, con una misión clara: tratar la indumentaria valenciana con el respeto y la dedicación que merece. Hoy, sus hijas Noelia y María continúan ese legado en el taller de la calle Burriana, vistiendo Falleras Mayores, Cortes de Honor y a todas las que sienten que llevar la indumentaria es mucho más que un vestido — es identidad.</p>
-    <a class="btn" id="editorial-cta" href="#">Conoce la marca</a>
+    <a class="btn" id="editorial-cta" href="#dossier-historia" data-pre>Conoce nuestra historia<span class="ab-track" aria-hidden="true"><span class="ab-orb"></span></span></a>
   </div>
   <div class="editorial-image">
-    <img src="" alt="Editorial Cosas Cucas" id="editorial-img" class="img-placeholder" loading="lazy" decoding="async" />
+    <img src="Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2020.34.35_058226f2.jpg" width="660" height="825" alt="Editorial Cosas Cucas" id="editorial-img" class="img-placeholder" loading="lazy" decoding="async" />
     <span class="editorial-image-caption" id="editorial-caption" data-pre>"Vestimos la tradición<br>con el amor que<br>merece Valencia."</span>
   </div>
 </section>
@@ -3891,9 +3892,9 @@
     <!-- LA TIENDA NUEVA: Burriana, 21 (textos alternativos de t().dossier.tiendaAlts, pie en t().dossier.nuevaCaption) -->
     <figure class="dh-nueva">
       <div class="dh-nueva__fotos">
-        <img src="noticias/tienda-01.webp" width="675" height="1200" alt="" data-alt="0" loading="lazy" decoding="async">
-        <img src="noticias/tienda-10.webp" width="1600" height="1200" alt="" data-alt="9" loading="lazy" decoding="async">
-        <img src="noticias/tienda-03.webp" width="900" height="1200" alt="" data-alt="2" loading="lazy" decoding="async">
+        <img src="noticias/tienda-01.webp" width="675" height="1200" alt="Fachada de la tienda en la calle Burriana, 21, con los toldos negros y el nombre de Cosas Cucas" data-alt="0" loading="lazy" decoding="async">
+        <img src="noticias/tienda-10.webp" width="1600" height="1200" alt="La tienda vista desde el escaparate" data-alt="9" loading="lazy" decoding="async">
+        <img src="noticias/tienda-03.webp" width="900" height="1200" alt="Rollos de brocados de colores en la pared, junto a dos maniquíes" data-alt="2" loading="lazy" decoding="async">
       </div>
       <figcaption class="dh-img-caption" id="dh-nueva-caption" data-pre>Nuestra nueva casa: calle Burriana, 21 · 46005 Valencia</figcaption>
     </figure>
@@ -4393,7 +4394,7 @@ Sábados: 10:30–13:30</p>
    href="https://wa.me/34667775501?text=Hola%2C%20me%20gustar%C3%ADa%20pedir%20m%C3%A1s%20informaci%C3%B3n%20sobre%20vuestros%20servicios."
    target="_blank" rel="noopener"
    aria-label="Escríbenos por WhatsApp">
-  <span class="wa-float__tooltip">¿Hablamos por WhatsApp?</span>
+  <span class="wa-float__tooltip" id="wa-tooltip">¿Hablamos por WhatsApp?</span>
   <div class="wa-float__btn">
     <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
       <path d="M16 2C8.268 2 2 8.268 2 16c0 2.493.651 4.935 1.889 7.088L2 30l7.186-1.864A13.94 13.94 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.44 11.44 0 0 1-5.823-1.588l-.418-.248-4.268 1.107 1.134-4.148-.272-.427A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.61c-.344-.172-2.037-1.004-2.352-1.119-.316-.115-.546-.172-.776.172-.23.344-.89 1.119-1.09 1.349-.2.23-.4.258-.744.086-.344-.172-1.452-.535-2.766-1.707-1.022-.912-1.712-2.037-1.912-2.381-.2-.344-.021-.53.15-.701.154-.154.344-.402.516-.603.172-.2.23-.344.344-.574.115-.23.058-.43-.029-.603-.086-.172-.776-1.87-1.063-2.562-.28-.672-.564-.581-.776-.592l-.661-.011c-.23 0-.603.086-.919.43-.316.344-1.205 1.176-1.205 2.869s1.234 3.328 1.406 3.558c.172.23 2.428 3.71 5.882 5.203.822.355 1.463.567 1.963.726.824.262 1.574.225 2.168.137.661-.099 2.037-.832 2.324-1.635.287-.803.287-1.491.2-1.635-.086-.143-.316-.23-.66-.402z"/>
@@ -5231,6 +5232,7 @@ const translations = {
     drops: [
       {
         id: 'falles-2027-dona', title: 'Indumentària Femenina', subtitle: 'Falles 2027 · La Llum de la Tradició',
+        heroTitle: "L'art de vestir València.",
         description: "A Cosas Cucas apostem per l'artesania curada, els detalls únics i les peces que transmeten dolçor, tradició i originalitat.",
         heroImage: IMG.portada, archiveImage: IMG.archive1, badge: 'Disponible Ara',
         ctaPrimary: { label: "Veure la col·lecció", href: '#drops-archive' },
@@ -5935,7 +5937,10 @@ function initHeroSlider() {
   /* al cambiar de idioma: textos alternativos en el idioma nuevo */
   initHeroSlider.relabel = () => [elA, elB].forEach(el => { if (el._slide) el.alt = el._slide.alt(); });
 
-  /* ── Cargar primera imagen y mostrarla ── */
+  /* ── Primera foto: la que ya viene escrita en la página, si está en el pase (así no se
+     cambia por otra al llegar las noticias); si no, la primera del pase ── */
+  const yaEscrita = SLIDES.findIndex(sl => elA.getAttribute('src') === sl.src);
+  if (yaEscrita > 0) SLIDES.push(...SLIDES.splice(0, yaEscrita));
   load(elA, SLIDES[0]);
   elA.classList.add('active');
   elB.setAttribute('aria-hidden', 'true');
@@ -6069,8 +6074,8 @@ function buildTabs() {
 function buildArchive() {
   const ft = t().footer;
   /* Cabecera dinámica de la sección Colecciones */
-  document.querySelector('#drops-archive .section-title').textContent    = ft.archiveTitle;
-  document.querySelector('#drops-archive .section-subtitle').textContent = ft.archiveSubtitle;
+  document.getElementById('archive-title').textContent    = ft.archiveTitle;
+  document.getElementById('archive-subtitle').textContent = ft.archiveSubtitle;
 
   document.getElementById('drops-archive-grid').innerHTML = t().drops.map((d, i) => `
     <article class="archive-card${i === activeDropIndex ? ' active' : ''}" data-drop-index="${i}">
@@ -6084,6 +6089,8 @@ function buildArchive() {
       </div>
     </article>`).join('');
 
+  if (buildArchive.conClic) return;
+  buildArchive.conClic = true;
   document.getElementById('drops-archive-grid').addEventListener('click', e => {
     const card = e.target.closest('.archive-card');
     if (card) openCollectionModal(t().drops[+card.dataset.dropIndex]);
@@ -6115,9 +6122,9 @@ function buildFMDetail() {
   const eyebrow = document.getElementById('sec-fm-eyebrow');
   const title   = document.getElementById('sec-fm-title');
   const sub     = document.getElementById('sec-fm-sub');
-  if (eyebrow) eyebrow.textContent = '✦ Indumentaria de Honor';
+  if (eyebrow) eyebrow.textContent = currentLang === 'ca' ? "✦ Indumentària d'Honor" : '✦ Indumentaria de Honor';
   const labelSrc = (h.fmCurrentLabel || h.fmLabel).replace('✦ ', '');
-  if (title)   title.innerHTML = labelSrc.replace(' vestidas por Cosas Cucas', '<br><span style="color:var(--color-gold)">vestidas por Cosas Cucas</span>');
+  if (title)   title.innerHTML = labelSrc.replace(/ (vestidas por|vestides per) Cosas Cucas$/, '<br><span style="color:var(--color-gold)">$1 Cosas Cucas</span>');
   if (sub)     sub.textContent = currentLang === 'ca'
     ? 'Confecció exclusiva de Cosas Cucas.'
     : 'Confección exclusiva de Cosas Cucas.';
@@ -7009,10 +7016,14 @@ window.addEventListener('popstate', () => {
     history.scrollRestoration = 'manual';
     setTimeout(() => { history.scrollRestoration = 'auto'; }, 0);
   }
-  if (!(id && abrirLector(id))) cerrarLector();
+  if (!(id && abrirLector(id))) { if (!lector.hidden) cierreLectorEn = performance.now(); cerrarLector(); }
 });
 /* enlaces normales a una noticia del lector (por ejemplo desde otra parte de la web) */
+let cierreLectorEn = -1e9;
 window.addEventListener('hashchange', () => {
+  /* justo después de cerrar el lector con «atrás», la dirección vuelve al #ancla de antes
+     (por ejemplo #noticias, si se usó el menú): la página se queda junto a la tarjeta */
+  if (performance.now() - cierreLectorEn < 400) return;
   const id = idDelEnlace();
   if (esNoticiaLector(id)) {
     if (lectorId !== id && abrirLector(id)) history.replaceState({ lector: id }, '', location.hash);
@@ -7179,6 +7190,8 @@ function renderAll() {
   buildNewsletter(); buildContacto(); buildVisita(); buildFooter();
   updateCitaBtn();
   initAnimatedBorders();   /* button-border.tsx → orbe dorado en todos los botones */
+  const wa = document.getElementById('wa-tooltip');
+  if (wa) wa.textContent = currentLang === 'ca' ? 'Parlem per WhatsApp?' : '¿Hablamos por WhatsApp?';
   document.documentElement.classList.remove('pre-ca');   /* textos ya en su idioma */
 }
 

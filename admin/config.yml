@@ -141,7 +141,8 @@ collections:
         default: false
         hint: >-
           Marca esta casilla para que la noticia salga grande en la portada. Si hay varias marcadas, sale la de fecha
-          más reciente y las demás pasan solas a «Más noticias», sin perder nada.
+          más reciente y las demás pasan solas a «Más noticias», sin perder nada. Si cambias la noticia de
+          portada, avisa para poner también su primera foto en la página (así sale antes al entrar).
 
       - name: aviso
         label: Aviso de la portada (cartelito sobre las fotos grandes)

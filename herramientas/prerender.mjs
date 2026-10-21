@@ -58,13 +58,23 @@ let html = fuente, hechos = 0;
 for (const id of BLOQUES) {
   const c = res.out.find(x => x.id === id);
   if (!c) { console.log('  (sin contenido o no vacío en la fuente):', id); continue; }
-  // etiqueta de apertura con ese id y su cierre inmediato (contenido vacío o ya prerenderizado)
-  const re = new RegExp(`(<${c.tag}\\b[^>]*\\bid="${id}"[^>]*?)(\\s+data-pre)?(\\s*/?>)([\\s\\S]*?)(</${c.tag}>)`);
-  const m = html.match(re);
-  if (!m) throw new Error('No encuentro el bloque en index.html: ' + id);
-  const dentro = m[4];
-  if (!m[2] && dentro.replace(/<!--[\s\S]*?-->/g, '').trim()) throw new Error('El bloque no está vacío en index.html: ' + id);
-  html = html.replace(re, `${m[1]} data-pre${m[3]}${c.html}${m[5]}`);
+  // etiqueta de apertura con ese id y SU cierre (contando las etiquetas iguales que haya dentro:
+  // un bloque ya prerenderizado puede llevar otros <div> dentro)
+  const ini = html.search(new RegExp(`<${c.tag}\\b[^>]*\\bid="${id}"[^>]*>`));
+  if (ini < 0) throw new Error('No encuentro el bloque en index.html: ' + id);
+  const abre = html.slice(ini).match(new RegExp(`^<${c.tag}\\b[^>]*>`))[0];
+  const rx = new RegExp(`<${c.tag}\\b[^>]*>|</${c.tag}>`, 'g');
+  rx.lastIndex = ini + abre.length;
+  let nivel = 1, m;
+  while ((m = rx.exec(html))) {
+    if (m[0][1] === '/') { if (--nivel === 0) break; } else if (!m[0].endsWith('/>')) nivel++;
+  }
+  if (!m) throw new Error('Sin cierre en index.html: ' + id);
+  const dentro = html.slice(ini + abre.length, m.index);
+  const yaPre = /\sdata-pre/.test(abre);
+  if (!yaPre && dentro.replace(/<!--[\s\S]*?-->/g, '').trim()) throw new Error('El bloque no está vacío en index.html: ' + id);
+  const abreNueva = yaPre ? abre : abre.replace(/\s*>$/, ' data-pre>');
+  html = html.slice(0, ini) + abreNueva + c.html + html.slice(m.index);
   hechos++;
 }
 console.log(`${hechos} de ${BLOQUES.length} bloques`);

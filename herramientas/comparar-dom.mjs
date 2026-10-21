@@ -16,7 +16,9 @@ async function foto(url, lang) {
   const sid = (await t.send('Page.addScriptToEvaluateOnNewDocument', { source: `try{localStorage.setItem('cc-lang',${JSON.stringify(lang)})}catch(e){}` })).identifier;
   await t.ir(url);
   await t.evaluar(`new Promise(r=>{const fin=Date.now()+10000;const c=()=>(typeof DATOS!=='undefined'&&DATOS.noticias)||Date.now()>fin?r():setTimeout(c,100);c();})`);
-  await t.esperar(700);
+  /* hasta que la página deja de cambiar (llegan las Falleras Mayores, el chat…): mismo número de
+     elementos y de texto en tres medidas seguidas, como mucho 10 s */
+  await t.evaluar(`new Promise(r=>{let prev='',iguales=0;const fin=Date.now()+10000;const c=()=>{const k=document.querySelectorAll('body *').length+'/'+document.body.innerText.length;iguales=k===prev?iguales+1:0;prev=k;if(iguales>=3||Date.now()>fin)r();else setTimeout(c,300);};c();})`);
   const r = await t.evaluar(`(() => {
     const norm = h => h.replace(/\\s+data-pre(="")?/g, '').replace(/\\s+/g, ' ').trim();
     const b = {};
