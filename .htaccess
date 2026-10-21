@@ -1,0 +1,73 @@
+# Cosas Cucas: configuración del servidor (Apache) en el hosting de Arsys.
+# Hace lo mismo que vercel.json en Vercel: direcciones sin .html, páginas retiradas,
+# página 404 propia, cabeceras de seguridad y caché.
+
+ErrorDocument 404 /404.html
+
+# Hay carpetas que se llaman como una página (galeria/ y galeria.html, indumentaria-regional/…):
+# sin esto, el servidor mandaría /galeria a /galeria/ antes de poder enseñar la página.
+DirectorySlash Off
+
+AddType image/webp .webp
+AddType image/avif .avif
+AddType image/jpeg .jfif
+AddType application/json .json
+AddType text/yaml .yml
+AddCharset utf-8 .html .css .js .json .yml .xml .txt
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Archivos de configuración (.htaccess…): nunca se sirven
+  RewriteRule ^\.ht - [R=404,L]
+
+  # Cuando el certificado SSL esté activo en Arsys, quitar el # de estas dos líneas
+  # para que todo vaya por https:
+  # RewriteCond %{HTTPS} !=on
+  # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Páginas retiradas: a la portada
+  RewriteRule ^(probador|inauguracion)(\.html)?/?$ / [L,R=301]
+
+  # El panel: /admin → /admin/
+  RewriteRule ^admin$ /admin/ [L,R=301]
+
+  # /index.html → /
+  RewriteCond %{THE_REQUEST} \s/+index\.html[\s?]
+  RewriteRule ^index\.html$ / [L,R=301]
+
+  # /galeria.html → /galeria (el panel /admin se queda como está)
+  RewriteCond %{REQUEST_URI} !^/admin/
+  RewriteCond %{THE_REQUEST} \s/+[^?\s]+\.html[\s?]
+  RewriteRule ^(.+)\.html$ /$1 [L,R=301]
+
+  # /galeria/ → /galeria (hay carpetas que se llaman como una página: galeria/, indumentaria-regional/)
+  RewriteCond %{REQUEST_FILENAME} ^(.+)/$
+  RewriteCond %1.html -f
+  RewriteRule ^(.+)/$ /$1 [L,R=301]
+
+  # /galeria → galeria.html (aunque exista la carpeta galeria/)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.+)$ $1.html [L]
+
+  # Carpetas de fotos: no se listan (como en Vercel, «no encontrada»)
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{REQUEST_URI} !^/(admin/?)?$
+  RewriteRule ^ - [R=404,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+
+  # Páginas y datos: siempre la última versión
+  <FilesMatch "\.(html|json|yml|xml|txt)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+  # Fotos, vídeos, estilos y scripts: un día en caché
+  <FilesMatch "\.(jpe?g|png|webp|gif|svg|ico|avif|jfif|mp4|webm|mov|css|js)$">
+    Header set Cache-Control "public, max-age=86400, stale-while-revalidate=604800"
+  </FilesMatch>
+</IfModule>
