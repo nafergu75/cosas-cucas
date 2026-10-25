@@ -983,7 +983,7 @@
       .nf__slide { transition-duration: .2s; }
       .nf__slide.is-active img, .nf__slide.is-leaving img { animation: none; }
       /* sin el zoom lento, pero las fotos siguen pasando solas (con barra y botón de pausa) */
-      .hero-slide { transition: none; }
+      .hero-slide { transition-duration: .8s; }  /* portada: fundido corto, las fotos siguen pasando */
     }
 
     .hero-eyebrow {
@@ -5571,7 +5571,10 @@ function initHeroSlider() {
     el._slide = slide;
   };
 
-  const INTERVAL = 7000; // 7 s por foto (con 4 s iban demasiado deprisa)
+  /* Con «reducir movimiento» (muchos móviles lo activan con el ahorro de batería) las fotos
+     siguen pasando, pero más despacio y con un fundido corto (ver el CSS de .hero-slide) */
+  const REDUCIR = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const INTERVAL = REDUCIR ? 10000 : 7000; // 7 s por foto (con 4 s iban demasiado deprisa)
   let cur = 0;
 
   const elA  = document.getElementById('hero-slide-a');
@@ -5601,9 +5604,6 @@ function initHeroSlider() {
   load(elA, SLIDES[0]);
   elA.classList.add('active');
   elB.setAttribute('aria-hidden', 'true');
-
-  /* Con "reducir movimiento" la portada se queda en la primera foto */
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   /* ── Precargar la segunda foto cuando ya ha llegado la primera (si no, compiten en el móvil) ── */
   const precargar = () => load(elB, SLIDES[1 % SLIDES.length]);
