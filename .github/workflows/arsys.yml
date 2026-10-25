@@ -78,21 +78,41 @@ jobs:
           mkdir -p ~/.ssh
           echo 'cosascucas.es ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPUbSVbEfQo1/xr1QVKXX2VpoAMt7xID4Q5TYQ1CXf4I' > ~/.ssh/known_hosts
 
+          # ¿Se llega al puerto SFTP de Arsys desde GitHub, y con la misma clave?
+          if ! timeout 30 ssh-keyscan -T 20 -t ed25519 cosascucas.es 2>/dev/null | grep -q 'AAAAC3NzaC1lZDI1NTE5AAAAIPUbSVbEfQo1'; then
+            echo "::error::Desde GitHub no se llega al SFTP de Arsys (cosascucas.es, puerto 22) o su clave ha cambiado."
+            exit 1
+          fi
+          echo "Puerto SFTP de Arsys accesible y con la clave conocida."
+
           tmp="$RUNNER_TEMP"
           # cabecera de cada sesión de lftp; la contraseña la lee de LFTP_PASSWORD (--env-password)
           cat > "$tmp/abrir.lftp" <<EOF
-          set sftp:connect-program "ssh -a -x -o StrictHostKeyChecking=yes -o HostKeyAlgorithms=ssh-ed25519 -o PreferredAuthentications=password,keyboard-interactive"
+          set sftp:connect-program "ssh -a -x -o StrictHostKeyChecking=yes -o HostKeyAlgorithms=ssh-ed25519 -o PreferredAuthentications=password,keyboard-interactive -o NumberOfPasswordPrompts=1 -o ConnectTimeout=20 -o ServerAliveInterval=15 -o ServerAliveCountMax=4"
           set net:timeout 30
-          set net:max-retries 3
+          set net:max-retries 2
           set net:reconnect-interval-base 5
           set cmd:fail-exit yes
           open -u "$SFTP_USUARIO" --env-password sftp://cosascucas.es
           EOF
-          sesion() { cat "$tmp/abrir.lftp" "$1" > "$tmp/sesion.lftp"; lftp -f "$tmp/sesion.lftp"; }
+          # sesion <script> [segundos]: una sesión de lftp con tiempo máximo (25 min si no se dice)
+          sesion() { cat "$tmp/abrir.lftp" "$1" > "$tmp/sesion.lftp"; timeout "${2:-1500}" lftp -f "$tmp/sesion.lftp"; }
 
           actual="$(git rev-parse HEAD)"
           echo 'cat /html/.htdeploy-commit' > "$tmp/leer.lftp"
-          anterior="$(sesion "$tmp/leer.lftp" 2>/dev/null | tr -dc '0-9a-f' || true)"
+          if salida="$(sesion "$tmp/leer.lftp" 120 2> "$tmp/leer.err")"; then
+            anterior="$(printf '%s' "$salida" | tr -dc '0-9a-f')"
+          elif grep -qi 'no such file' "$tmp/leer.err"; then
+            anterior=""
+          else
+            # no entra: se repite con el registro de lftp para ver qué contesta el servidor
+            # (lftp escribe XXXX en lugar de la contraseña y GitHub tapa los secretos en el registro)
+            echo "::error::No se ha podido entrar por SFTP en Arsys."
+            sed 's/^/  /' "$tmp/leer.err"
+            { echo "debug 5"; cat "$tmp/leer.lftp"; } > "$tmp/leer-debug.lftp"
+            sesion "$tmp/leer-debug.lftp" 60 2>&1 | tail -40 | sed 's/^/  /' || true
+            exit 1
+          fi
           echo "Publicado en Arsys: ${anterior:-(ninguno)} · este: $actual"
 
           modo=completo
