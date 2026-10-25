@@ -1,0 +1,165 @@
+name: Publicar en cosascucas.es (Arsys)
+
+# Sube por SFTP al hosting de Arsys lo que cambia en master: los guardados del panel y los cambios
+# de código. La web es la misma que la de Vercel y Pages (herramientas/construir-web.sh) más el .htaccess.
+#
+# Necesita dos secretos del repositorio (Settings › Secrets and variables › Actions):
+# SFTP_USUARIO y SFTP_CONTRASENA, los mismos datos que en FileZilla. Sin ellos no sube nada.
+#
+# En el servidor guarda el commit publicado en /html/.htdeploy-commit (el .htaccess no deja verlo).
+# La vez siguiente sube solo los archivos que han cambiado desde ese commit y borra los que se han
+# borrado; si no lo encuentra (la primera vez) o se lanza a mano con «completo», lo sube todo.
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+    inputs:
+      completo:
+        description: 'Subir todos los archivos, no solo los cambiados'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: arsys
+  cancel-in-progress: false
+
+jobs:
+  subir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Comprobar los secretos
+        id: secretos
+        shell: bash
+        env:
+          SFTP_USUARIO: ${{ secrets.SFTP_USUARIO }}
+          SFTP_CONTRASENA: ${{ secrets.SFTP_CONTRASENA }}
+        run: |
+          if [ -z "$SFTP_USUARIO" ] || [ -z "$SFTP_CONTRASENA" ]; then
+            echo "::warning::Faltan los secretos SFTP_USUARIO y SFTP_CONTRASENA: no se sube nada a Arsys."
+            echo "listo=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "listo=si" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout
+        if: steps.secretos.outputs.listo == 'si'
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Construir la web
+        if: steps.secretos.outputs.listo == 'si'
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash herramientas/construir-web.sh _site
+          cp .htaccess _site/.htaccess
+
+      - name: Subir a Arsys por SFTP
+        id: subida
+        if: steps.secretos.outputs.listo == 'si'
+        shell: bash
+        env:
+          SFTP_USUARIO: ${{ secrets.SFTP_USUARIO }}
+          LFTP_PASSWORD: ${{ secrets.SFTP_CONTRASENA }}
+          COMPLETO: ${{ github.event.inputs.completo }}
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp > /dev/null
+
+          # Clave del servidor SFTP de Arsys, la misma que se aceptó en FileZilla el 24-10-2026
+          # (SHA256:TkUR0PmRR8DLu3X6iU8Qa+WcOFOzXpYh9gZRL0S8eW8). Si cambia, la conexión falla a propósito.
+          mkdir -p ~/.ssh
+          echo 'cosascucas.es ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPUbSVbEfQo1/xr1QVKXX2VpoAMt7xID4Q5TYQ1CXf4I' > ~/.ssh/known_hosts
+
+          tmp="$RUNNER_TEMP"
+          # cabecera de cada sesión de lftp; la contraseña la lee de LFTP_PASSWORD (--env-password)
+          cat > "$tmp/abrir.lftp" <<EOF
+          set sftp:connect-program "ssh -a -x -o StrictHostKeyChecking=yes -o HostKeyAlgorithms=ssh-ed25519 -o PreferredAuthentications=password,keyboard-interactive"
+          set net:timeout 30
+          set net:max-retries 3
+          set net:reconnect-interval-base 5
+          set cmd:fail-exit yes
+          open -u "$SFTP_USUARIO" --env-password sftp://cosascucas.es
+          EOF
+          sesion() { cat "$tmp/abrir.lftp" "$1" > "$tmp/sesion.lftp"; lftp -f "$tmp/sesion.lftp"; }
+
+          actual="$(git rev-parse HEAD)"
+          echo 'cat /html/.htdeploy-commit' > "$tmp/leer.lftp"
+          anterior="$(sesion "$tmp/leer.lftp" 2>/dev/null | tr -dc '0-9a-f' || true)"
+          echo "Publicado en Arsys: ${anterior:-(ninguno)} · este: $actual"
+
+          modo=completo
+          if [ "${COMPLETO:-false}" != "true" ] && [ ${#anterior} -eq 40 ] && git cat-file -e "$anterior^{commit}" 2>/dev/null; then
+            modo=cambios
+            if [ "$anterior" != "$actual" ] && git merge-base --is-ancestor "$actual" "$anterior"; then
+              echo "En Arsys ya hay una versión más nueva ($anterior): no se sube nada."
+              echo "comprobar=no" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+
+          : > "$tmp/borrar.lftp"
+          if [ "$modo" = completo ]; then
+            echo "Subida completa."
+            origen=_site
+          else
+            # solo los archivos publicables que han cambiado desde el commit publicado
+            origen=_cambios
+            rm -rf _cambios && mkdir _cambios
+            n=0; b=0
+            while IFS= read -r -d '' estado && IFS= read -r -d '' ruta; do
+              case "$ruta" in *'"'*|*'\'*) echo "::error::Nombre de archivo no admitido: $ruta"; exit 1 ;; esac
+              if [ "$estado" = D ]; then
+                if [ ! -e "_site/$ruta" ]; then echo "rm \"/html/$ruta\"" >> "$tmp/borrar.lftp"; b=$((b+1)); fi
+              elif [ -f "_site/$ruta" ]; then
+                mkdir -p "_cambios/$(dirname "$ruta")"
+                cp -p "_site/$ruta" "_cambios/$ruta"
+                touch "_cambios/$ruta"
+                n=$((n+1))
+              fi
+            done < <(git diff --name-status --no-renames -z "$anterior" "$actual")
+            echo "Archivos de la web cambiados: $n · borrados: $b"
+          fi
+
+          {
+            # sube la carpeta (crea las subcarpetas que falten); en cambios, solo lo cambiado
+            echo "mirror -R --no-perms --parallel=2 --verbose=1 $origen /html"
+            # red de seguridad: lo que esté en la web y falte en el servidor
+            echo "mirror -R --no-perms --only-missing --parallel=2 --verbose=1 _site /html"
+          } > "$tmp/subir.lftp"
+          sesion "$tmp/subir.lftp"
+
+          if [ -s "$tmp/borrar.lftp" ]; then
+            { echo "set cmd:fail-exit no"; cat "$tmp/borrar.lftp"; } > "$tmp/borrar2.lftp"
+            sesion "$tmp/borrar2.lftp" || echo "::warning::No se pudo borrar algún archivo del servidor."
+          fi
+
+          echo "$actual" > "$tmp/marca"
+          echo "put \"$tmp/marca\" -o /html/.htdeploy-commit" > "$tmp/marca.lftp"
+          sesion "$tmp/marca.lftp"
+          echo "Publicado $actual ($modo)."
+
+      - name: Comprobar la web publicada
+        if: steps.secretos.outputs.listo == 'si' && steps.subida.outputs.comprobar != 'no'
+        shell: bash
+        run: |
+          set -euo pipefail
+          for u in / /galeria /indumentaria-regional /datos/noticias.json; do
+            code="$(curl -s -o /dev/null -w '%{http_code}' "https://cosascucas.es$u")"
+            echo "$u → $code"
+            [ "$code" = 200 ] || { echo "::error::https://cosascucas.es$u responde $code"; exit 1; }
+          done
+          for f in index.html datos/noticias.json; do
+            url="https://cosascucas.es/$f"; [ "$f" = index.html ] && url="https://cosascucas.es/"
+            if [ "$(curl -s -H 'Accept-Encoding: identity' "$url" | sha256sum | cut -c1-64)" != "$(sha256sum "_site/$f" | cut -c1-64)" ]; then
+              echo "::error::$url no es la versión de este commit"; exit 1
+            fi
+          done
+          echo "cosascucas.es sirve la versión de este commit."

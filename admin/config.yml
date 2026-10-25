@@ -1,7 +1,8 @@
 # yaml-language-server: $schema=https://unpkg.com/@sveltia/cms@0.250.0/schema/sveltia-cms.json
 #
 # Panel de Cosas Cucas (Sveltia CMS 0.250.0), en https://cosas-cucas.vercel.app/admin
-# Cada «Guardar» hace un commit en master y la web se vuelve a publicar sola.
+# Cada «Guardar» hace un commit en master y la web se vuelve a publicar sola en cosascucas.es
+# (Arsys, con .github/workflows/arsys.yml). La web de vercel.app solo sirve el panel: el resto redirige.
 # Este archivo es público: nunca poner claves aquí.
 
 backend:
@@ -17,10 +18,10 @@ backend:
     deleteMedia: 'Panel: borrar foto «{{path}}»'
 
 publish_mode: simple             # commit directo a master, sin revisión
-site_url: https://cosas-cucas.vercel.app
+site_url: https://cosascucas.es
 app_title: Cosas Cucas · Panel
 logo:
-  src: https://cosas-cucas.vercel.app/favicon.png
+  src: https://cosascucas.es/favicon.png
 
 media_folder: /galeria
 public_folder: /galeria

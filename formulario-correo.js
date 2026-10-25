@@ -11,23 +11,17 @@
    del mensaje). data-correo-extra (opcional) se añade al asunto, por
    ejemplo la colección desde la que se pide la cita.
 
-   APAGADO (ACTIVO = false) desde el 20-10-2026: el dominio cosascucas.es no
-   resuelve (los servidores de IONOS rechazan las consultas), así que a
-   info@ no llega ningún correo. Mientras esté apagado, el script no hace
-   nada y cada botón sigue con su enlace de siempre.
-
-   PARA ACTIVARLO, cuando info@cosascucas.es vuelva a recibir correo:
-   1. ACTIVO = true.
-   2. Subir el ?v= de este archivo en index.html y landing.html (caché).
-   3. Añadir FormSubmit a politica-privacidad.html.
-   4. Publicar y mandar un mensaje de prueba desde la web. FormSubmit envía
-      a info@ un correo «Activate Form»: hasta que se pulsa ese enlace no
-      entrega nada.
+   ACTIVO = true desde el 24-10-2026 (el dominio ya resuelve y info@ recibe
+   correo). Con ACTIVO = false el script no hace nada y cada botón sigue con
+   su enlace de siempre. Al cambiarlo, subir el ?v= de este archivo en
+   index.html y landing.html (caché).
+   FormSubmit envía a info@ un correo «Activate Form» con el primer mensaje:
+   hasta que se pulsa ese enlace no entrega nada.
 ═══════════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
 
-  var ACTIVO = false;
+  var ACTIVO = true;
   var DESTINO = 'https://formsubmit.co/ajax/info@cosascucas.es';
   var WHATSAPP = '34667775501';
 

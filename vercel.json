@@ -3,6 +3,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/resenas",
+      "destination": "https://g.page/r/Cb2PzDJDyPBrEBM/review",
+      "permanent": false
+    },
+    {
       "source": "/probador",
       "destination": "/",
       "permanent": true
@@ -20,6 +25,11 @@
     {
       "source": "/inauguracion.html",
       "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/((?!admin(?:/|$)).*)",
+      "destination": "https://cosascucas.es/$1",
       "permanent": true
     }
   ],

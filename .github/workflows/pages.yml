@@ -27,34 +27,38 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v6
 
-      # Only the public website goes into _site. The list of files is the
-      # allowlist in .vercelignore (gitignore syntax), so GitHub Pages and
-      # Vercel always publish the same files.
-      - name: Build _site (only the website files)
+      # Desde el 25-10-2026 la web está en https://cosascucas.es (Arsys). Aquí solo se publican
+      # páginas que llevan a la misma dirección allí, para no tener la web duplicada en Google:
+      # una por cada página de la web (misma lista que construir-web.sh) y un 404.html que lleva
+      # cualquier otra dirección (fotos, carpetas, enlaces viejos) a la misma ruta en cosascucas.es.
+      - name: Build _site (redirecciones a cosascucas.es)
         shell: bash
         run: |
           set -euo pipefail
-          export LC_ALL=C
-          tmp="${RUNNER_TEMP:-/tmp}"
-          git ls-files -z | sort -z > "$tmp/all.lst"
-          git ls-files -z --cached --ignored --exclude-from=.vercelignore | sort -z > "$tmp/excluded.lst"
-          comm -z -23 "$tmp/all.lst" "$tmp/excluded.lst" > "$tmp/site.lst"
-          rm -rf _site
-          mkdir _site
-          tar --null --verbatim-files-from --files-from="$tmp/site.lst" -cf - | tar -xf - -C _site
-          rm -f _site/vercel.json
-          # El panel (/admin) solo va en Vercel: en nafergu75.github.io compartiría origen (y la clave
-          # guardada en el navegador) con las demás webs de la cuenta publicadas en Pages.
-          rm -rf _site/admin
-          test -f _site/index.html
-          bad="$(find _site -type f \( -name 'server.js' -o -name 'worker.js' -o -name '*.ps1' -o -name '*.bat' -o -name '*.exe' \
-            -o -name '*.pdf' -o -name '*.doc' -o -name '*.docx' -o -name '*.xls' -o -name '*.xlsx' -o -path '*/.*' \) -print)"
-          if [ -n "$bad" ]; then
-            echo "::error::Files that must not be published ended up in _site:"
-            echo "$bad"
-            exit 1
-          fi
-          echo "_site: $(find _site -type f | wc -l) files, $(du -sh _site | cut -f1)"
+          bash herramientas/construir-web.sh _site
+          cd _site
+          find . -mindepth 1 -maxdepth 1 ! -name '*.html' -exec rm -rf {} +
+          rm -f google*.html
+          for f in *.html; do
+            n="${f%.html}"
+            case "$n" in
+              404) continue ;;
+              index) u="https://cosascucas.es/" ;;
+              *) u="https://cosascucas.es/$n" ;;
+            esac
+            printf '%s\n' '<!doctype html>' '<html lang="es"><head><meta charset="utf-8">' \
+              '<title>Cosas Cucas</title>' \
+              "<link rel=\"canonical\" href=\"$u\">" \
+              "<script>location.replace('$u'+location.search+location.hash)</script>" \
+              "<meta http-equiv=\"refresh\" content=\"0; url=$u\">" \
+              "</head><body><p>La web de Cosas Cucas est&aacute; en <a href=\"$u\">cosascucas.es</a>.</p></body></html>" > "$f"
+          done
+          printf '%s\n' '<!doctype html>' '<html lang="es"><head><meta charset="utf-8">' \
+            '<title>Cosas Cucas</title>' \
+            '<script>location.replace("https://cosascucas.es"+location.pathname.replace(/^\/cosas-cucas(?=\/|$)/,"").replace(/\.html$/,"").replace(/\/index$/,"/")+location.search+location.hash)</script>' \
+            '<meta http-equiv="refresh" content="0; url=https://cosascucas.es/">' \
+            '</head><body><p>La web de Cosas Cucas est&aacute; en <a href="https://cosascucas.es/">cosascucas.es</a>.</p></body></html>' > 404.html
+          ls -la
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
