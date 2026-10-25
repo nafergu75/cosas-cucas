@@ -21,7 +21,7 @@ publish_mode: simple             # commit directo a master, sin revisión
 site_url: https://cosascucas.es
 app_title: Cosas Cucas · Panel
 logo:
-  src: https://cosascucas.es/favicon.png
+  src: /admin/logo.png
 
 media_folder: /galeria
 public_folder: /galeria
