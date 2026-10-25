@@ -2154,8 +2154,6 @@
       #editorial .editorial-text { padding: 0 20px !important; }
       .editorial-image-caption { right: 0; bottom: 0; font-size: 0.88rem; max-width: 160px; padding: 14px 16px; }
 
-      /* DECORACIÓN */
-      .deco-mosaic { grid-template-columns: repeat(2, 1fr); gap: 8px; }
 
       /* GALERÍA */
       #galeria { padding: 56px 0; }
@@ -2873,148 +2871,6 @@
     }
 
     /* ═══════════════════════════════════════════════════════════════════════════
-       DECORACIÓN E INTERIORISMO
-    ═══════════════════════════════════════════════════════════════════════════ */
-    #decoracion { padding: 90px 0; background: var(--color-bg); position: relative; scroll-margin-top: var(--header-h); }
-    /* ── TELÓN de Decoración: al llegar a la sección, dos paños de cortina en crema con galón dorado
-       se recogen hacia los lados (1,2 s) y el contenido va apareciendo detrás. Solo una vez por visita.
-       Lo arma el script que va justo después de la sección (clases .telon → .is-open → .telon-fin);
-       sin JS, con «reducir movimiento» o si la sección ya se ve al cargar, no hay telón. ── */
-    #decoracion.telon::before, #decoracion.telon::after {
-      content: ''; position: absolute; top: 0; width: 50.5%;
-      height: 100%; height: min(100%, 100vh);
-      z-index: 5; pointer-events: none; will-change: transform;
-      background: repeating-linear-gradient(90deg, var(--color-bg-alt) 0, #F3ECDA 9px, #E0D3B3 24px, var(--color-bg-alt) 34px);
-      transition: transform 1.2s cubic-bezier(.7,0,.25,1), opacity .4s ease .9s;
-    }
-    #decoracion.telon::before { left: 0; transform-origin: left center; box-shadow: inset -3px 0 0 var(--color-gold), inset 0 -3px 0 var(--color-gold); }
-    #decoracion.telon::after { right: 0; transform-origin: right center; box-shadow: inset 3px 0 0 var(--color-gold), inset 0 -3px 0 var(--color-gold); }
-    #decoracion.telon.is-open::before, #decoracion.telon.is-open::after { transform: scaleX(.04); opacity: 0; }
-    #decoracion.telon-fin::before, #decoracion.telon-fin::after { content: none; }
-    #decoracion.telon .section-header, #decoracion.telon .deco-body, #decoracion.telon .deco-cell {
-      opacity: 0; transform: translateY(18px);
-      transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);
-    }
-    #decoracion.telon.is-open .section-header { opacity: 1; transform: none; transition-delay: .45s; }
-    #decoracion.telon.is-open .deco-body { opacity: 1; transform: none; transition-delay: .6s; }
-    #decoracion.telon.is-open .deco-cell { opacity: 1; transform: none; transition-delay: calc(.75s + var(--i, 0) * 90ms); }
-    @media (prefers-reduced-motion: reduce) {
-      #decoracion.telon::before, #decoracion.telon::after { content: none; }
-      #decoracion.telon .section-header, #decoracion.telon .deco-body, #decoracion.telon .deco-cell { opacity: 1; transform: none; transition: none; }
-    }
-    @media print {
-      #decoracion.telon .section-header, #decoracion.telon .deco-body, #decoracion.telon .deco-cell { opacity: 1 !important; transform: none !important; }
-    }
-    .deco-body {
-      font-size: 0.95rem; color: var(--color-text-muted); line-height: 1.85;
-      max-width: 720px; margin-top: 20px; margin-bottom: 56px;
-    }
-    .deco-mosaic {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-    .deco-cell {
-      overflow: hidden; position: relative;
-      background: var(--color-bg-alt);
-      aspect-ratio: 4/3;
-      cursor: zoom-in;
-    }
-    .deco-cell img {
-      width: 100%; height: 100%;
-      object-fit: contain;
-      object-position: center;
-      transition: transform 0.55s ease;
-      display: block;
-    }
-    .deco-cell:hover img { transform: scale(1.06); }
-    /* Lupa hover */
-    .deco-cell__zoom {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(26,23,20,0.32);
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .deco-cell:hover .deco-cell__zoom { opacity: 1; }
-    .deco-zoom-icon {
-      width: 64px; height: 64px;
-      border: 2px solid rgba(253,250,243,0.9);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--color-white);
-      backdrop-filter: blur(4px);
-      transition: transform 0.2s;
-    }
-    .deco-cell:hover .deco-zoom-icon { transform: scale(1.1); }
-    .deco-zoom-icon svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.8; }
-    /* Lightbox decoración */
-    #deco-lightbox {
-      position: fixed; inset: 0;
-      background: rgba(8,6,4,0.97);
-      z-index: 4000;
-      display: none; align-items: center; justify-content: center;
-    }
-    #deco-lightbox.open { display: flex; }
-    #deco-lightbox .lb-img {
-      max-width: min(92vw, 1300px);
-      max-height: 90vh;
-      object-fit: contain;
-      display: block;
-      border-radius: 2px;
-      box-shadow: 0 8px 60px rgba(0,0,0,0.7);
-      transition: opacity 0.2s;
-    }
-    #deco-lightbox .lb-close {
-      position: absolute; top: 18px; right: 22px;
-      width: 46px; height: 46px;
-      border: 1.5px solid rgba(255,255,255,0.25); border-radius: 50%;
-      background: rgba(255,255,255,0.08); color: white;
-      font-size: 1.4rem; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s, transform 0.2s;
-    }
-    #deco-lightbox .lb-close:hover { background: rgba(255,255,255,0.22); transform: scale(1.1); }
-    #deco-lightbox .lb-nav {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      width: 52px; height: 52px;
-      border: 1.5px solid rgba(255,255,255,0.25); border-radius: 50%;
-      background: rgba(255,255,255,0.08); color: white;
-      font-size: 2rem; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s, transform 0.2s;
-      user-select: none;
-    }
-    #deco-lightbox .lb-nav:hover { background: rgba(255,255,255,0.2); transform: translateY(-50%) scale(1.08); }
-    #deco-lightbox .lb-prev { left: 18px; }
-    #deco-lightbox .lb-next { right: 18px; }
-    #deco-lightbox .lb-caption {
-      position: absolute; bottom: 22px; left: 0; right: 0;
-      text-align: center; color: rgba(253,250,243,0.55);
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-    }
-    #deco-lightbox .lb-counter {
-      position: absolute; top: 22px; left: 22px;
-      color: rgba(255,255,255,0.38); font-size: 0.7rem; letter-spacing: 0.08em;
-    }
-    @media (max-width: 600px) {
-      #deco-lightbox .lb-nav { width: 40px; height: 40px; font-size: 1.5rem; }
-      #deco-lightbox .lb-prev { left: 8px; }
-      #deco-lightbox .lb-next { right: 8px; }
-    }
-    .deco-cell__caption {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      background: linear-gradient(to top, rgba(26,23,20,0.72) 0%, transparent 100%);
-      color: var(--color-white); padding: 28px 16px 14px;
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .deco-cell:hover .deco-cell__caption { opacity: 1; }
-    @media (max-width: 1024px) {
-      .deco-mosaic { grid-template-columns: repeat(2, 1fr); }
-    }
-    /* móvil: ver bloque responsive principal */
-
-    /* ═══════════════════════════════════════════════════════════════════════════
        REDES SOCIALES (sección flotante)
     ═══════════════════════════════════════════════════════════════════════════ */
     .footer-social svg { width: 14px; height: 14px; fill: currentColor; vertical-align: middle; }
@@ -3203,8 +3059,6 @@
       .hist-corts-section { padding-bottom: 4px; }
       .fm-card__name { font-size: 0.78rem; }
       .fm-card__info { padding: 11px 9px 13px; min-height: 64px; }
-      #decoracion { padding: 56px 0; }
-      .deco-body   { font-size: 0.88rem; margin-bottom: 32px; }
       #videos { padding: 60px 0; }
       .videos-grid { grid-template-columns: 1fr; gap: 16px; }
       #resenas { padding: 60px 0; }
@@ -3213,7 +3067,6 @@
     @media (max-width: 480px) {
       .hito    { min-width: 110px; padding: 22px 12px; }
       .hito__year { font-size: 1.6rem; }
-      .deco-mosaic { grid-template-columns: 1fr; }
     }
 
     /* Ajustes finales iPhone / móvil: esta capa va al final para que no la
@@ -3221,7 +3074,6 @@
     @media (max-width: 768px) {
       .products-grid,
       .galeria-grid,
-      .deco-mosaic,
       .fm-grid,
       .corts-grid {
         gap: 10px;
@@ -3233,14 +3085,12 @@
       }
 
       .galeria-cell,
-      .deco-cell,
       .fm-card__img,
       .cort-card {
         aspect-ratio: 4 / 5;
       }
 
       .galeria-cell img,
-      .deco-cell img,
       .fm-card__img img,
       .cort-card img {
         width: 100%;
@@ -3249,21 +3099,18 @@
         object-position: center top;
       }
 
-      .galeria-cell__overlay,
-      .deco-cell__caption {
+      .galeria-cell__overlay {
         opacity: 1;
         padding: 34px 10px 10px;
       }
 
-      .lightbox,
-      #deco-lightbox {
+      .lightbox {
         min-height: 100vh;
         min-height: 100dvh;
         padding: calc(env(safe-area-inset-top) + 64px) 14px calc(env(safe-area-inset-bottom) + 72px);
       }
 
-      .lightbox__img,
-      #deco-lightbox .lb-img {
+      .lightbox__img {
         width: 100%;
         height: auto;
         max-width: 100%;
@@ -3271,29 +3118,25 @@
         object-fit: contain;
       }
 
-      .lightbox__close,
-      #deco-lightbox .lb-close {
+      .lightbox__close {
         top: calc(env(safe-area-inset-top) + 12px);
         right: 14px;
         width: 42px;
         height: 42px;
       }
 
-      .lightbox__counter,
-      #deco-lightbox .lb-counter {
+      .lightbox__counter {
         top: calc(env(safe-area-inset-top) + 24px);
         left: 16px;
       }
 
-      .lightbox__caption,
-      #deco-lightbox .lb-caption {
+      .lightbox__caption {
         bottom: calc(env(safe-area-inset-bottom) + 18px);
         padding: 0 58px;
         line-height: 1.45;
       }
 
-      .lightbox__nav,
-      #deco-lightbox .lb-nav {
+      .lightbox__nav {
         top: auto;
         bottom: calc(env(safe-area-inset-bottom) + 14px);
         transform: none;
@@ -3302,13 +3145,11 @@
         z-index: 2;
       }
 
-      .lightbox__prev,
-      #deco-lightbox .lb-prev {
+      .lightbox__prev {
         left: 14px;
       }
 
-      .lightbox__next,
-      #deco-lightbox .lb-next {
+      .lightbox__next {
         right: 14px;
       }
 
@@ -3348,7 +3189,6 @@
         aspect-ratio: 3 / 4;
       }
 
-      .deco-mosaic,
       .col-modal__grid {
         grid-template-columns: 1fr;
       }
@@ -3384,12 +3224,7 @@
         aspect-ratio: 4 / 5;
       }
 
-      .deco-cell {
-        aspect-ratio: 4 / 3;
-      }
-
-      .lightbox,
-      #deco-lightbox {
+      .lightbox {
         padding-left: 10px;
         padding-right: 10px;
       }
@@ -3449,7 +3284,7 @@
 </header>
 
 <!-- MOBILE MENU -->
-<nav class="mobile-menu" id="mobile-menu" data-pre><a href="#noticias">Noticias</a><a href="#drops-archive">Colecciones</a><a href="#falleras-mayores">Falleras Mayores</a><a href="#zapatillas">Deportivas Fallera</a><a href="#historia">Historia</a><a href="#decoracion">Decoración</a><a href="#videos">Vídeos</a><a href="galeria" target="_blank" rel="noopener">Galería</a><a href="#contacto">Contacto</a></nav>
+<nav class="mobile-menu" id="mobile-menu" data-pre><a href="#noticias">Noticias</a><a href="#drops-archive">Colecciones</a><a href="#falleras-mayores">Falleras Mayores</a><a href="#zapatillas">Deportivas Fallera</a><a href="#historia">Historia</a><a href="decoracion">Decoración</a><a href="#videos">Vídeos</a><a href="galeria" target="_blank" rel="noopener">Galería</a><a href="#contacto">Contacto</a></nav>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
      ANNOUNCEMENT STRIPE
@@ -3903,137 +3738,6 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
-     DECORACIÓN
-═══════════════════════════════════════════════════════════════════════════ -->
-<div class="puntilla" style="--arriba:var(--color-bg-alt);--abajo:var(--color-bg)" aria-hidden="true"></div>
-<section id="decoracion">
-  <div class="container">
-    <div class="section-header">
-      <div>
-        <h2 class="section-title" id="deco-title" data-pre>Decoración e Interiorismo</h2>
-        <p class="section-subtitle" id="deco-sub" data-pre>Espacios vestidos con el alma de Valencia.</p>
-      </div>
-      <a class="btn" id="deco-cta" href="mailto:info@cosascucas.es" data-correo="proyecto" data-pre>Consultar proyecto<span class="ab-track" aria-hidden="true"><span class="ab-orb"></span></span></a>
-    </div>
-    <div class="deco-body" id="deco-body" data-pre><p>Más allá de la indumentaria, en Cosas Cucas llevamos décadas ayudando a familias valencianas a vestir también sus hogares. Cortinas, tapizados, colchas y complementos textiles confeccionados con los mismos tejidos exclusivos de nuestro taller: sedas, brocados, terciopelos y telas artesanales que transforman cualquier estancia.</p><p>Desde la elección de la tela hasta la confección final, nuestro equipo te asesora para crear ambientes únicos que reflejan la riqueza de la tradición textil valenciana. Una decoración con carácter propio, hecha a medida, con el mismo amor con que confeccionamos cada pieza de indumentaria.</p></div>
-    <div class="deco-mosaic" id="deco-mosaic" data-pre><div class="deco-cell" style="--i:0" data-index="0" data-img="decoracion/cortinas.jpg" data-caption="Cortinas — Confección a Medida">
-      <img src="decoracion/cortinas.jpg" alt="Cortinas — Confección a Medida" loading="lazy" decoding="async">
-      <div class="deco-cell__zoom">
-        <div class="deco-zoom-icon">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="11" cy="11" r="7"></circle>
-            <line x1="16.5" y1="16.5" x2="22" y2="22"></line>
-            <line x1="11" y1="8" x2="11" y2="14"></line>
-            <line x1="8" y1="11" x2="14" y2="11"></line>
-          </svg>
-        </div>
-      </div>
-      <div class="deco-cell__caption">Cortinas — Confección a Medida</div>
-    </div><div class="deco-cell" style="--i:1" data-index="1" data-img="decoracion/cortinas%202.jpg" data-caption="Cortinas — Ambiente Salón">
-      <img src="decoracion/cortinas%202.jpg" alt="Cortinas — Ambiente Salón" loading="lazy" decoding="async">
-      <div class="deco-cell__zoom">
-        <div class="deco-zoom-icon">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="11" cy="11" r="7"></circle>
-            <line x1="16.5" y1="16.5" x2="22" y2="22"></line>
-            <line x1="11" y1="8" x2="11" y2="14"></line>
-            <line x1="8" y1="11" x2="14" y2="11"></line>
-          </svg>
-        </div>
-      </div>
-      <div class="deco-cell__caption">Cortinas — Ambiente Salón</div>
-    </div><div class="deco-cell" style="--i:2" data-index="2" data-img="decoracion/cortinas3.jpg" data-caption="Cortinas — Detalle Tejido">
-      <img src="decoracion/cortinas3.jpg" alt="Cortinas — Detalle Tejido" loading="lazy" decoding="async">
-      <div class="deco-cell__zoom">
-        <div class="deco-zoom-icon">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="11" cy="11" r="7"></circle>
-            <line x1="16.5" y1="16.5" x2="22" y2="22"></line>
-            <line x1="11" y1="8" x2="11" y2="14"></line>
-            <line x1="8" y1="11" x2="14" y2="11"></line>
-          </svg>
-        </div>
-      </div>
-      <div class="deco-cell__caption">Cortinas — Detalle Tejido</div>
-    </div><div class="deco-cell" style="--i:3" data-index="3" data-img="decoracion/cortinas4.jpg" data-caption="Cortinas — Acabado Artesanal">
-      <img src="decoracion/cortinas4.jpg" alt="Cortinas — Acabado Artesanal" loading="lazy" decoding="async">
-      <div class="deco-cell__zoom">
-        <div class="deco-zoom-icon">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="11" cy="11" r="7"></circle>
-            <line x1="16.5" y1="16.5" x2="22" y2="22"></line>
-            <line x1="11" y1="8" x2="11" y2="14"></line>
-            <line x1="8" y1="11" x2="14" y2="11"></line>
-          </svg>
-        </div>
-      </div>
-      <div class="deco-cell__caption">Cortinas — Acabado Artesanal</div>
-    </div><div class="deco-cell" style="--i:4" data-index="4" data-img="decoracion/sillon.jpg" data-caption="Sillón — Tapizado Exclusivo">
-      <img src="decoracion/sillon.jpg" alt="Sillón — Tapizado Exclusivo" loading="lazy" decoding="async">
-      <div class="deco-cell__zoom">
-        <div class="deco-zoom-icon">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="11" cy="11" r="7"></circle>
-            <line x1="16.5" y1="16.5" x2="22" y2="22"></line>
-            <line x1="11" y1="8" x2="11" y2="14"></line>
-            <line x1="8" y1="11" x2="14" y2="11"></line>
-          </svg>
-        </div>
-      </div>
-      <div class="deco-cell__caption">Sillón — Tapizado Exclusivo</div>
-    </div><div class="deco-cell" style="--i:5" data-index="5" data-img="decoracion/cama.jpg" data-caption="Colcha — Dormitorio a Medida">
-      <img src="decoracion/cama.jpg" alt="Colcha — Dormitorio a Medida" loading="lazy" decoding="async">
-      <div class="deco-cell__zoom">
-        <div class="deco-zoom-icon">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="11" cy="11" r="7"></circle>
-            <line x1="16.5" y1="16.5" x2="22" y2="22"></line>
-            <line x1="11" y1="8" x2="11" y2="14"></line>
-            <line x1="8" y1="11" x2="14" y2="11"></line>
-          </svg>
-        </div>
-      </div>
-      <div class="deco-cell__caption">Colcha — Dormitorio a Medida</div>
-    </div></div>
-  </div>
-</section>
-<script>
-/* Telón de Decoración (ver el CSS de #decoracion.telon). Va aparte del script principal para que,
-   si este falla, la sección no se quede escondida. */
-(function () {
-  var sec = document.getElementById('decoracion');
-  if (!sec || !('IntersectionObserver' in window)) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (sec.getBoundingClientRect().top < window.innerHeight * 0.7) return; // ya a la vista: sin telón
-  sec.classList.add('telon');
-  var abierto = false, io;
-  function abrir() {
-    if (abierto) return;
-    abierto = true;
-    sec.classList.add('is-open');
-    io.disconnect();
-    removeEventListener('scroll', mirar);
-    setTimeout(function () { sec.classList.add('telon-fin'); }, 1600);
-  }
-  /* Segunda vía por si el observador llega tarde: al hacer scroll, abrir en cuanto el borde de arriba pasa del 70 % de la pantalla */
-  function mirar() { if (sec.getBoundingClientRect().top < window.innerHeight * 0.7) abrir(); }
-  io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) abrir(); }, { rootMargin: '0px 0px -30% 0px' });
-  io.observe(sec);
-  addEventListener('scroll', mirar, { passive: true });
-})();
-</script>
-
-<!-- Lightbox Decoración -->
-<div id="deco-lightbox" role="dialog" aria-modal="true">
-  <button class="lb-close" id="deco-lb-close" aria-label="Cerrar">✕</button>
-  <button class="lb-nav lb-prev" id="deco-lb-prev" aria-label="Anterior">&#8249;</button>
-  <img class="lb-img" id="deco-lb-img" src="" alt="" />
-  <button class="lb-nav lb-next" id="deco-lb-next" aria-label="Siguiente">&#8250;</button>
-  <div class="lb-caption" id="deco-lb-caption"></div>
-  <div class="lb-counter" id="deco-lb-counter"></div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════════════════════
      MODAL COLECCIÓN COMPLETA
 ═══════════════════════════════════════════════════════════════════════════ -->
 <div class="col-modal" id="col-modal">
@@ -4066,7 +3770,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      VÍDEOS
 ═══════════════════════════════════════════════════════════════════════════ -->
-<div class="puntilla" style="--arriba:var(--color-bg);--abajo:var(--color-bg-dark)" aria-hidden="true"></div>
+<div class="puntilla" style="--arriba:var(--color-bg-alt);--abajo:var(--color-bg-dark)" aria-hidden="true"></div>
 <section id="videos">
   <div class="container">
     <div class="section-header">
@@ -4528,19 +4232,6 @@ const IMG = {
   cort3: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_c4be4477.jpg',
   cortXiq: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.05_3665fa3e.jpg',
   hRecent: 'Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2023.20.04_81aff3dd.jpg',
-  /* Decoración — fotos propias */
-  d1: 'fotos%20nuevas/foto%20fachada.jpeg',
-  d2: 'galeria/Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2020.36.20_5fc7902b.jpg',
-  d3: 'galeria/Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2020.36.43_39b3a58f.jpg',
-  d4: 'galeria/Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2020.37.20_6f6d149b.jpg',
-  d5: 'galeria/Imagen%20de%20WhatsApp%202025-03-04%20a%20las%2018.03.00_6b8a4b5f.jpg',
-  /* Decoración — interiorismo (fotos propias) */
-  int1: 'decoracion/cortinas.jpg',
-  int2: 'decoracion/cortinas%202.jpg',
-  int3: 'decoracion/cortinas3.jpg',
-  int4: 'decoracion/cortinas4.jpg',
-  int5: 'decoracion/sillon.jpg',
-  int6: 'decoracion/cama.jpg',
   /* Portada hero */
   portada: 'portada.jpg',
   /* Hombre — Falles 2027 (fotos carpeta hombre/) */
@@ -4690,7 +4381,7 @@ const translations = {
       { label: 'Falleras Mayores', href: '#falleras-mayores' },
       { label: 'Deportivas Fallera', href: '#zapatillas'   },
       { label: 'Historia',         href: '#historia'        },
-      { label: 'Decoración',   href: '#decoracion'    },
+      { label: 'Decoración',   href: 'decoracion'    },
       { label: 'Vídeos',       href: '#videos'        },
       { label: 'Galería',      href: 'galeria', target: '_blank' },
       { label: 'Contacto', href: '#contacto' },
@@ -5090,23 +4781,6 @@ const translations = {
       ],
       cortsText: 'Cada Cort d\'Honor es una historia escrita con hilos de seda, lágrimas contenidas y el orgullo de generaciones. En Cosas Cucas tenemos el privilegio de vestir ese momento —el más luminoso de la fiesta— con la misma devoción con que Valencia honra su tradición desde hace siglos. Falleras que brillan no solo por los bordados, sino por todo lo que llevan dentro.',
     },
-    decoracion: {
-      title: 'Decoración e Interiorismo',
-      subtitle: 'Espacios vestidos con el alma de Valencia.',
-      body: [
-        'Más allá de la indumentaria, en Cosas Cucas llevamos décadas ayudando a familias valencianas a vestir también sus hogares. Cortinas, tapizados, colchas y complementos textiles confeccionados con los mismos tejidos exclusivos de nuestro taller: sedas, brocados, terciopelos y telas artesanales que transforman cualquier estancia.',
-        'Desde la elección de la tela hasta la confección final, nuestro equipo te asesora para crear ambientes únicos que reflejan la riqueza de la tradición textil valenciana. Una decoración con carácter propio, hecha a medida, con el mismo amor con que confeccionamos cada pieza de indumentaria.',
-      ],
-      ctaLabel: 'Consultar proyecto',
-      cells: [
-        { img: IMG.int1, caption: 'Cortinas — Confección a Medida' },
-        { img: IMG.int2, caption: 'Cortinas — Ambiente Salón' },
-        { img: IMG.int3, caption: 'Cortinas — Detalle Tejido' },
-        { img: IMG.int4, caption: 'Cortinas — Acabado Artesanal' },
-        { img: IMG.int5, caption: 'Sillón — Tapizado Exclusivo' },
-        { img: IMG.int6, caption: 'Colcha — Dormitorio a Medida' },
-      ],
-    },
     videos: {
       eyebrow: 'Cosas Cucas en Vídeo',
       title: 'Vídeos',
@@ -5192,7 +4866,7 @@ const translations = {
       { label: 'Falleres Majors',    href: '#falleras-mayores' },
       { label: 'Deportives Fallera', href: '#zapatillas'       },
       { label: "Història",           href: '#historia'         },
-      { label: 'Decoració',     href: '#decoracion'    },
+      { label: 'Decoració',     href: 'decoracion'    },
       { label: 'Vídeos',        href: '#videos'        },
       { label: 'Galeria',       href: 'galeria', target: '_blank' },
       { label: 'Contacte', href: '#contacto' },
@@ -5572,23 +5246,6 @@ const translations = {
         { img: IMG.cortXiq, label: 'Fallera Xiqueta · Cosas Cucas' },
       ],
       cortsText: "Cada Cort d'Honor és una història escrita amb fils de seda, llàgrimes contingudes i l'orgull de generacions. A Cosas Cucas tenim el privilegi de vestir aquell moment —el més lluminós de la festa— amb la mateixa devoció amb què València honra la seua tradició des de fa segles. Falleres que brillen no sols pels brodats, sinó per tot allò que porten dins.",
-    },
-    decoracion: {
-      title: 'Decoració i Interiorisme',
-      subtitle: "Espais vestits amb l'ànima de València.",
-      body: [
-        "Més enllà de la indumentària, a Cosas Cucas portem dècades ajudant famílies valencianes a vestir també les seues llars. Cortines, tapissats, mantes i complements tèxtils confeccionats amb els mateixos teixits exclusius del nostre taller: sedes, brocats, velluts i teles artesanals que transformen qualsevol estança.",
-        "Des de la tria de la tela fins a la confecció final, el nostre equip t'assessora per a crear ambients únics que reflecteixen la riquesa de la tradició tèxtil valenciana. Una decoració amb caràcter propi, feta a mida, amb el mateix amor amb què confeccionem cada peça d'indumentària.",
-      ],
-      ctaLabel: 'Consultar projecte',
-      cells: [
-        { img: IMG.int1, caption: 'Cortines — Confecció a Mida' },
-        { img: IMG.int2, caption: 'Cortines — Ambient Saló' },
-        { img: IMG.int3, caption: 'Cortines — Detall Teixit' },
-        { img: IMG.int4, caption: 'Cortines — Acabat Artesanal' },
-        { img: IMG.int5, caption: 'Butaca — Tapat Exclusiu' },
-        { img: IMG.int6, caption: 'Manta — Dormitori a Mida' },
-      ],
     },
     videos: {
       eyebrow: 'Cosas Cucas en Vídeo',
@@ -6397,29 +6054,6 @@ function buildHistoria() {
     `<div class="hist-corts-text">${h.cortsText}</div>`;
 }
 
-function buildDecoracion() {
-  const d = t().decoracion;
-  document.getElementById('deco-title').textContent = d.title;
-  document.getElementById('deco-sub').textContent   = d.subtitle;
-  document.getElementById('deco-cta').textContent   = d.ctaLabel;
-  document.getElementById('deco-body').innerHTML    = d.body.map(p => `<p>${p}</p>`).join('');
-  document.getElementById('deco-mosaic').innerHTML  = d.cells.map((c, i) =>
-    `<div class="deco-cell" style="--i:${i}" data-index="${i}" data-img="${c.img}" data-caption="${c.caption}">
-      <img src="${c.img}" alt="${c.caption}" loading="lazy" decoding="async" />
-      <div class="deco-cell__zoom">
-        <div class="deco-zoom-icon">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="11" cy="11" r="7"/>
-            <line x1="16.5" y1="16.5" x2="22" y2="22"/>
-            <line x1="11" y1="8" x2="11" y2="14"/>
-            <line x1="8" y1="11" x2="14" y2="11"/>
-          </svg>
-        </div>
-      </div>
-      <div class="deco-cell__caption">${c.caption}</div>
-    </div>`).join('');
-}
-
 /* ═══════════════════════════════════════════════════════════════════
    CONTACTO — WhatsApp
    ─────────────────────────────────────────────────────────────────
@@ -7186,7 +6820,7 @@ function renderAll() {
   buildNoticias();            /* noticias: portada, «Más noticias» y lector (datos/noticias.json) */
   initHeroSlider();           /* pase de fotos de la portada (cuando hayan llegado las noticias) */
   buildArchive(); buildFMDetail(); buildZapatillas(); buildHistoria();
-  buildEditorial(); buildDossierHistoria(); buildDecoracion(); buildVideos(); buildResenas();
+  buildEditorial(); buildDossierHistoria(); buildVideos(); buildResenas();
   buildNewsletter(); buildContacto(); buildVisita(); buildFooter();
   updateCitaBtn();
   initAnimatedBorders();   /* button-border.tsx → orbe dorado en todos los botones */
@@ -7310,74 +6944,6 @@ function updateCitaBtn() {
 
 /* chatbot anterior eliminado — único chatbot activo: #chat-fab / #chat-panel al final */
 /* drag-to-scroll zapatillas eliminado — ahora usa auto-slider CSS */
-
-/* ── Lightbox Decoración ─────────────────────────────────────────────────── */
-(function() {
-  'use strict';
-  let currentIndex = 0;
-
-  const lb        = document.getElementById('deco-lightbox');
-  const lbImg     = document.getElementById('deco-lb-img');
-  const lbCaption = document.getElementById('deco-lb-caption');
-  const lbCounter = document.getElementById('deco-lb-counter');
-  const lbClose   = document.getElementById('deco-lb-close');
-  const lbPrev    = document.getElementById('deco-lb-prev');
-  const lbNext    = document.getElementById('deco-lb-next');
-
-  if (!lb) return; // guard
-
-  function getCells() {
-    return Array.from(document.querySelectorAll('#deco-mosaic .deco-cell'));
-  }
-
-  function show(i) {
-    const cells = getCells();
-    if (!cells.length) return;
-    currentIndex = ((i % cells.length) + cells.length) % cells.length;
-    const cell = cells[currentIndex];
-    lbImg.style.opacity = '0';
-    lbImg.src     = cell.dataset.img;
-    lbImg.alt     = cell.dataset.caption;
-    lbCaption.textContent = cell.dataset.caption;
-    lbCounter.textContent = (currentIndex + 1) + ' / ' + cells.length;
-    lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    lbImg.onload = function() { lbImg.style.opacity = '1'; };
-    // fallback if already cached
-    if (lbImg.complete) lbImg.style.opacity = '1';
-    lbClose.focus();
-  }
-
-  function close() {
-    lb.classList.remove('open');
-    document.body.style.overflow = '';
-    lbImg.src = '';
-  }
-
-  // Click delegation on mosaic (works after any language rebuild)
-  document.addEventListener('click', function(e) {
-    const cell = e.target.closest('#deco-mosaic .deco-cell');
-    if (cell) show(parseInt(cell.dataset.index, 10));
-  });
-
-  // Controls
-  lbClose.addEventListener('click', close);
-  lbPrev.addEventListener('click',  function() { show(currentIndex - 1); });
-  lbNext.addEventListener('click',  function() { show(currentIndex + 1); });
-
-  // Click the dark backdrop to close
-  lb.addEventListener('click', function(e) {
-    if (e.target === lb) close();
-  });
-
-  // Keyboard: Esc / ← / →
-  document.addEventListener('keydown', function(e) {
-    if (!lb.classList.contains('open')) return;
-    if (e.key === 'Escape')      { e.preventDefault(); close(); }
-    if (e.key === 'ArrowLeft')   { e.preventDefault(); show(currentIndex - 1); }
-    if (e.key === 'ArrowRight')  { e.preventDefault(); show(currentIndex + 1); }
-  });
-})();
 
 </script>
 
