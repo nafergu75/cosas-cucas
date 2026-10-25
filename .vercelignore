@@ -27,6 +27,8 @@
 
 # Estilos, icono, imagen para redes y SEO
 !/styles.css
+!/paginas.css
+!/paginas.js
 !/regional-datos.js
 !/formulario-correo.js
 
