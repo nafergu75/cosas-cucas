@@ -56,9 +56,6 @@
     .section--soft { background: var(--color-bg-soft); }
     .card { cursor: default; }
 
-    /* telas: la foto de la tienda, apaisada recortada a 4:5 como en el taller de landing */
-    .telas .taller__photo img { object-position: center 40%; }
-
     /* cómo trabajamos */
     .pasos {
       max-width: var(--maxw); margin: 0 auto;
@@ -135,7 +132,6 @@
     <nav class="nav__links" aria-label="Navegación" data-t-aria="navAria">
       <a href="./" data-t="nInicio">Inicio</a>
       <a href="#servicios" data-t="nServicios">Qué hacemos</a>
-      <a href="#telas" data-t="nTelas">Telas</a>
       <a href="#ideas" data-t="nIdeas">Ideas</a>
       <a href="#visita" data-t="nVisita">Tiendas</a>
     </nav>
@@ -197,25 +193,6 @@
           <p data-t="c3Text">Hechas a la medida de tu cama.</p>
         </div>
       </article>
-    </div>
-  </section>
-
-  <!-- ====== TELAS ====== -->
-  <section class="section section--dark telas" id="telas">
-    <div class="taller">
-      <figure class="taller__photo">
-        <img src="noticias/tienda-03.webp" alt="Rollos de brocados de colores en la pared de la tienda, junto a dos maniquíes" data-t-alt="altTelas" width="900" height="1200" loading="lazy" decoding="async" />
-      </figure>
-      <div class="taller__copy">
-        <p class="eyebrow eyebrow--gold" data-t="tEyebrow">✦ Nuestras telas</p>
-        <h2 data-t="tTitle">Las telas de los trajes, en tu salón</h2>
-        <p class="lead" data-t="tLead">Trabajamos con los mismos tejidos que en el taller de indumentaria: sedas, brocados, terciopelos y telas artesanales.</p>
-        <p data-t="tText">Por eso una cortina o un sillón de Cosas Cucas pueden tener el mismo carácter que un traje valenciano. Pásate por la tienda y míralas de cerca antes de decidir.</p>
-        <div class="taller__cta-row">
-          <a class="btn btn--gold" href="#visita" data-correo="cita" data-correo-extra="Decoración" data-t="pedirCita">Pedir cita</a>
-          <a class="btn btn--ghost-light" href="#ideas" data-t="verIdeas">Ver ideas</a>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -334,7 +311,7 @@
     var VAL = {
       tag: 'Decoració tèxtil · València',
       navAria: 'Navegació',
-      nInicio: 'Inici', nServicios: 'Què fem', nTelas: 'Teles', nIdeas: 'Idees', nVisita: 'Botigues',
+      nInicio: 'Inici', nServicios: 'Què fem', nIdeas: 'Idees', nVisita: 'Botigues',
       cta: 'Consultar projecte',
       heroEyebrow: '✦ Decoració i interiorisme',
       heroTitle: 'Cortines, entapissats i cobrellits <em>a mida</em> a València',
@@ -347,12 +324,6 @@
       c1Tag: 'A mida', c1Title: 'Cortines', c1Text: 'Confeccionades a la mida de cada finestra, amb la tela que tries.',
       c2Tag: 'Entapissat', c2Title: 'Sillons i butaques', c2Text: 'Entapissats amb les teles del nostre taller.',
       c3Tag: 'Dormitori', c3Title: 'Cobrellits', c3Text: 'Fets a la mida del teu llit.',
-      tEyebrow: '✦ Les nostres teles',
-      tTitle: 'Les teles dels vestits, al teu saló',
-      tLead: 'Treballem amb els mateixos teixits que al taller d\'indumentària: sedes, brocats, velluts i teles artesanals.',
-      tText: 'Per això una cortina o un silló de Cosas Cucas poden tindre el mateix caràcter que un vestit valencià. Passa per la botiga i mira-les de prop abans de decidir.',
-      pedirCita: 'Demanar cita',
-      altTelas: 'Rotlles de brocats de colors a la paret de la botiga, al costat de dos maniquins',
       pEyebrow: '✦ Com treballem',
       pTitle: 'De la tela a la teua casa',
       p1Title: 'Ens contes la idea', p1Text: 'Escriu-nos o vine a la botiga amb el que tens al cap. Si ja tens les mesures, millor.',
