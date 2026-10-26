@@ -1,18 +1,6 @@
 {
   "falleras": [
     {
-      "foto": "falleras mayores/fallera mayor 2026 falla exposicion.jpg",
-      "nombre": "Laura Llobell López",
-      "falla": {
-        "es": "Exposición",
-        "ca": "Exposició"
-      },
-      "cargo": {
-        "es": "Fallera Mayor 2026",
-        "ca": "Fallera Major 2026"
-      }
-    },
-    {
       "foto": "falleras mayores/fallera mayor2026 Matías perellolluis Santángel.jpeg",
       "nombre": "Cristina Huerta Pérez",
       "falla": {
@@ -26,7 +14,7 @@
     },
     {
       "foto": "falleras mayores/fallera mayor 2026 falla rosario plaza calabuig lourdes oreo.jpeg",
-      "nombre": "Lourdes Oreo",
+      "nombre": "Lourdes Orero",
       "falla": {
         "es": "Rosario · Plaza Calabuig",
         "ca": "Rosario · Plaza Calabuig"
@@ -61,6 +49,30 @@
       }
     },
     {
+      "foto": "falleras mayores/fm-2026-avinguda-de-loest-laura-miquel-obarti.webp",
+      "nombre": "Laura Miquel Obarti",
+      "falla": {
+        "es": "Avenida del Oeste",
+        "ca": "Avinguda de l'Oest"
+      },
+      "cargo": {
+        "es": "Fallera Mayor 2026",
+        "ca": "Fallera Major 2026"
+      }
+    },
+    {
+      "foto": "falleras mayores/fallera mayor 2026 falla blocs platja.jpeg",
+      "nombre": "María Chuliá Zaragoza",
+      "falla": {
+        "es": "Blocs · Platja",
+        "ca": "Blocs · Platja"
+      },
+      "cargo": {
+        "es": "Fallera Mayor 2026",
+        "ca": "Fallera Major 2026"
+      }
+    },
+    {
       "foto": "falleras mayores/fallera infantil 2026 falla la manta al coll de algunet.jpeg",
       "nombre": "Miranda Muñoz Gómez",
       "falla": {
@@ -85,11 +97,11 @@
       }
     },
     {
-      "foto": "falleras mayores/fallera mayor 2026 falla blocs platja.jpeg",
-      "nombre": "María Chuliá Zaragoza",
+      "foto": "falleras mayores/fallera mayor 2026 falla exposicion.jpg",
+      "nombre": "Laura Llobell López",
       "falla": {
-        "es": "Blocs · Platja",
-        "ca": "Blocs · Platja"
+        "es": "Exposición",
+        "ca": "Exposició"
       },
       "cargo": {
         "es": "Fallera Mayor 2025",
