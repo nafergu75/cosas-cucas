@@ -49,6 +49,7 @@ a.card { cursor: pointer; }
   color: var(--color-gold); margin-bottom: 14px;
 }
 .paso p { margin: 0; color: var(--color-text-soft); font-size: .95rem; }
+.pasos--sin-numero .paso::before { content: none; }  /* tarjetas que no son pasos seguidos */
 @media (max-width: 820px) { .pasos { grid-template-columns: 1fr; } }
 
 /* ---------- fotos que se abren en grande ---------- */
@@ -112,10 +113,31 @@ a.card { cursor: pointer; }
 .faq details[open] summary::after { content: "−"; }
 .faq details p { margin: 0; padding: 0 22px 20px; color: var(--color-text-soft); }
 
-/* ---------- enlaces a las otras páginas ---------- */
+/* ---------- historia contada (texto sin foto, centrado) ---------- */
+.bloque { max-width: 760px; margin: 0 auto; }
+.bloque p { color: var(--color-text-soft); font-size: 1.05rem; }
+.bloque .lead { color: var(--color-text); font-size: 1.2rem; }
+.bloque .link-arrow { margin-top: .5rem; }
+
+/* crédito de la foto, bajo ella */
+.credito { margin-top: 10px; font-size: .78rem; letter-spacing: .05em; color: var(--color-text-soft); text-align: right; }
+.section--dark .credito { color: rgba(244, 237, 216, 0.6); }
+
+/* pies de dos líneas en las rejillas de fotos (nombre y cargo) */
+.ideas span strong { display: block; font-weight: 600; font-size: .86rem; }
+.ideas span em { display: block; font-style: normal; opacity: .85; }
+.ideas span .credito { display: block; margin-top: 4px; text-align: left; font-size: .7rem; color: rgba(244, 237, 216, .7); }
+
+/* crédito de la foto de portada, abajo a la derecha */
+.hero__credito {
+  position: absolute; right: 16px; bottom: 12px; z-index: 1; margin: 0;
+  font-size: .72rem; letter-spacing: .05em; color: rgba(244, 237, 216, .75);
+}
+
+/* ---------- enlaces a las otras páginas (siempre tres: filas completas) ---------- */
 .otras {
   max-width: var(--maxw); margin: 0 auto;
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
 }
 .otras a {
   display: block; padding: 22px 20px; border: 1.5px solid var(--color-gold); border-radius: var(--radius);
@@ -125,8 +147,7 @@ a.card { cursor: pointer; }
 .otras span { font-size: .88rem; opacity: .8; }
 .section--dark .otras a { color: var(--color-bg); }
 .section--dark .otras a:hover { color: var(--color-gold-soft); }
-@media (max-width: 900px) { .otras { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 520px) { .otras { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .otras { grid-template-columns: 1fr; } }
 
 .visit-cta { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
 

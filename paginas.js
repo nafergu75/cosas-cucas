@@ -34,7 +34,11 @@
       [].forEach.call(document.querySelectorAll('.nav__lang button'), function (b) {
         b.setAttribute('aria-pressed', String(b.dataset.lang === lang));
       });
+      // para lo que la página pinta con datos (por ejemplo la lista de Falleras Mayores Infantiles)
+      window.CC_LANG = lang;
+      document.dispatchEvent(new CustomEvent('cc-idioma', { detail: lang }));
     };
+    window.CC_LANG = 'es';
 
     var inicial = 'es';
     try { if (localStorage.getItem('cc-lang') === 'ca') inicial = 'ca'; } catch (e) {}
@@ -61,12 +65,13 @@
   onScroll();
 })();
 
-/* Visor: las fotos de .ideas se abren en grande; flechas del teclado y Esc para cerrar */
+/* Visor: las fotos de .ideas se abren en grande; flechas del teclado y Esc para cerrar.
+   Se pasa de una foto a otra dentro de la misma rejilla. Funciona también con fotos que la
+   página añade después (se buscan al hacer clic). */
 (function () {
   var visor = document.getElementById('visor');
   if (!visor || typeof visor.showModal !== 'function') return;
-  var botones = [].slice.call(document.querySelectorAll('.ideas button'));
-  if (!botones.length) return;
+  var botones = [];
   var img = document.getElementById('visor-img');
   var pie = document.getElementById('visor-pie');
   var cuenta = document.getElementById('visor-cuenta');
@@ -77,11 +82,18 @@
     var texto = botones[actual].querySelector('span');
     img.src = foto.currentSrc || foto.src;
     img.alt = foto.alt;
-    pie.textContent = texto ? texto.textContent : '';
+    // pie de dos líneas (nombre y cargo): en el visor van seguidos con « · »
+    pie.textContent = !texto ? '' : texto.children.length
+      ? [].map.call(texto.children, function (c) { return c.textContent; }).join(' · ')
+      : texto.textContent;
     cuenta.textContent = (actual + 1) + ' / ' + botones.length;
   }
-  botones.forEach(function (b, i) {
-    b.addEventListener('click', function () { mostrar(i); visor.showModal(); });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.ideas button');
+    if (!b) return;
+    botones = [].slice.call(b.closest('.ideas').querySelectorAll('button'));
+    mostrar(botones.indexOf(b));
+    visor.showModal();
   });
   document.getElementById('visor-cerrar').addEventListener('click', function () { visor.close(); });
   document.getElementById('visor-ant').addEventListener('click', function () { mostrar(actual - 1); });
