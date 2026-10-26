@@ -5553,7 +5553,7 @@ function renderHero(drop) {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   IMAGE PLAYER — pase de fotos de la portada (crossfade, 7 s por foto)
+   IMAGE PLAYER — pase de fotos de la portada (crossfade, 3,5 s por foto)
    Fotos: las marcadas «Sale en el pase de la portada» en las noticias (panel /admin)
 ═══════════════════════════════════════════════════════════════════════ */
 function initHeroSlider() {
@@ -5574,7 +5574,7 @@ function initHeroSlider() {
   /* Con «reducir movimiento» (muchos móviles lo activan con el ahorro de batería) las fotos
      siguen pasando, pero más despacio y con un fundido corto (ver el CSS de .hero-slide) */
   const REDUCIR = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const INTERVAL = REDUCIR ? 10000 : 7000; // 7 s por foto (con 4 s iban demasiado deprisa)
+  const INTERVAL = REDUCIR ? 5000 : 3500; // 3,5 s por foto (con 7 s iba demasiado lento; Ignacio lo quiere más dinámico)
   let cur = 0;
 
   const elA  = document.getElementById('hero-slide-a');
