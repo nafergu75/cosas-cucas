@@ -42,6 +42,7 @@
       display: flex; align-items: center; justify-content: space-between; gap: 16px;
       position: sticky; top: 0; z-index: 100;
     }
+    .r-header__logo img { display: block; height: 32px; width: auto; }
     .r-header__logo { font-family: var(--font-display); font-size: 1.35rem; color: var(--color-gold); text-decoration: none; letter-spacing: 0.05em; }
     .r-header__der { display: flex; align-items: center; gap: 22px; }
     .r-lang { display: flex; gap: 2px; }
@@ -119,7 +120,7 @@
 <body>
 
 <header class="r-header">
-  <a href="./" class="r-header__logo">Cosas Cucas</a>
+  <a href="./" class="r-header__logo"><img src="logo-cosas-cucas-fondo-oscuro.svg" width="401" height="124" alt="Cosas Cucas" /></a>
   <div class="r-header__der">
     <div class="r-lang" role="group" aria-label="Idioma">
       <button type="button" data-lang="es" aria-pressed="true">ES</button>

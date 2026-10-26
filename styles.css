@@ -95,6 +95,14 @@ p  { margin: 0 0 1rem; }
   border-bottom-color: var(--color-line);
 }
 .nav__brand { display: flex; flex-direction: column; line-height: 1.1; }
+/* logo en vector, el mismo de la portada (logo-cosas-cucas.svg; en fondo oscuro, -fondo-oscuro.svg) */
+.nav__brand-logo {
+  display: block; height: 32px; width: auto; align-self: flex-start;
+  filter: drop-shadow(0 1px 1px rgba(26, 23, 20, 0.18));
+  transition: height .3s var(--ease);
+}
+.nav--shrunk .nav__brand-logo { height: 28px; }
+@media (max-width: 560px) { .nav__brand-logo { height: 28px; } }
 .nav__brand-name {
   font-family: var(--font-serif);
   font-size: 1.35rem;
@@ -567,6 +575,7 @@ p  { margin: 0 0 1rem; }
   padding-bottom: 48px;
   border-bottom: 1px solid var(--color-line-inv);
 }
+.footer__brand img { display: block; height: 40px; width: auto; }
 .footer__brand {
   font-family: var(--font-serif);
   font-size: 1.5rem;

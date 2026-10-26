@@ -2395,6 +2395,12 @@
     .corte-personas > .fm-card { flex: 0 0 calc((100% - 48px) / 4); min-width: 0; }
     @media (max-width: 1024px) { .corte-personas > .fm-card { flex-basis: calc((100% - 32px) / 3); } }
     @media (max-width: 768px)  { .corte-personas > .fm-card { flex-basis: calc((100% - 16px) / 2); } }
+    /* Falleras Mayores e Infantiles de València: igual, la última fila incompleta va centrada (Begoña sola en móvil,
+       las tres mayores en ordenador). Mismos huecos que la rejilla: 16 px, 14 px hasta 1024 y 10 px hasta 768 */
+    .fm-grid.fm-grid--centrada { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+    .fm-grid--centrada > .fm-card { flex: 0 0 calc((100% - 48px) / 4); min-width: 0; }
+    @media (max-width: 1024px) { .fm-grid.fm-grid--centrada { gap: 14px; } .fm-grid--centrada > .fm-card { flex-basis: calc((100% - 28px) / 3); } }
+    @media (max-width: 768px)  { .fm-grid.fm-grid--centrada { gap: 10px; } .fm-grid--centrada > .fm-card { flex-basis: calc((100% - 10px) / 2); } }
     .fm-card__falla { font-size: 0.72rem; line-height: 1.35; color: var(--color-text-muted); }
     .fm-card__credito { font-size: 0.6rem; color: var(--color-text-muted); opacity: .8; }
     .fm-card__year {
@@ -3505,7 +3511,7 @@
       <p class="hist-gallery-label" id="hist-fm-label" data-pre>✦ Falleras Mayores y Corte de Honor de Valencia vestidas por Cosas Cucas</p>
       <div class="fm-grupo">
         <h3 class="fm-grupo__title" id="fm-t-mayor" data-pre>Falleras Mayores de València</h3>
-        <div class="fm-grid" id="fm-grid-mayor" data-pre><div class="fm-card">
+        <div class="fm-grid fm-grid--centrada" id="fm-grid-mayor" data-pre><div class="fm-card">
       <div class="fm-card__img"><img src="falleras-valencia/fm-1992-monica-palmer-cuenca.webp" alt="Mónica Palmer Cuenca, Fallera Mayor de València 1992" loading="lazy" decoding="async"></div>
       <div class="fm-card__info">
         <p class="fm-card__name">Mónica Palmer Cuenca</p>
@@ -3527,7 +3533,7 @@
       </div>
       <div class="fm-grupo">
         <h3 class="fm-grupo__title" id="fm-t-infantil" data-pre>Falleras Mayores Infantiles de València</h3>
-        <div class="fm-grid" id="fm-grid-infantil" data-pre><div class="fm-card">
+        <div class="fm-grid fm-grid--centrada" id="fm-grid-infantil" data-pre><div class="fm-card">
       <div class="fm-card__img"><img src="falleras-valencia/fmi-1988-sandra-leiva-herrero.webp" alt="Sandra Leiva Herrero, Fallera Mayor Infantil de València 1988" loading="lazy" decoding="async"></div>
       <div class="fm-card__info">
         <p class="fm-card__name">Sandra Leiva Herrero</p>
