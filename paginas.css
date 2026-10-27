@@ -27,6 +27,8 @@ html.pre-ca body { visibility: hidden; animation: cc-mostrar 0s 2s forwards; }
 a.card { cursor: pointer; }
 
 /* ---------- texto largo con foto (sobre .trayectoria de styles.css) ---------- */
+/* el alto lo da la proporción (4:5 en styles.css), no el atributo height del <img>, que la estiraba */
+.trayectoria__photo img { height: auto; }
 .texto p { color: var(--color-text-soft); }
 .texto .lead { color: var(--color-text); }
 .section--dark .texto p { color: rgba(244, 237, 216, 0.78); }
