@@ -7132,6 +7132,7 @@ function updateCitaBtn() {
     color: rgba(253,250,243,.88);
   }
   .ch-bubble b { color: var(--color-gold-light); }
+  .ch-bubble a { color: var(--color-gold-light); text-decoration: underline; text-underline-offset: 2px; }
   .ch-topic {
     font-family: var(--font-display); font-size: .79rem; font-weight: 600;
     color: var(--color-gold-light); display: block; margin-bottom: 5px;
@@ -7249,7 +7250,8 @@ function updateCitaBtn() {
   function lg() { return document.documentElement.lang === 'ca' ? 'ca' : 'es'; }
   function L(v) { return (v && typeof v === 'object') ? (v[lg()] || v.es) : v; }
 
-  /* Base de conocimiento revisada y ampliada el 20-10-2026: cada dato está contrastado con
+  /* Base de conocimiento revisada y ampliada el 20-10-2026 y el 28-10-2026 (Fallas, historia del espolín
+     y del traje de valenciano, y lo que publica la web): cada dato está contrastado con
      fuentes. El orden importa: si dos
      entradas empatan gana la primera, así que las concretas van antes que las generales
      (mangas, corpiño, falda, telas, metros, épocas, historia, partes) y al final precio,
@@ -7262,7 +7264,7 @@ function updateCitaBtn() {
         es:"Ha sustituido a las sayas almidonadas que se ponían una encima de otra. Hoy esas sayas solo se ven en un vestir más historicista.\n\nSe elige según lo que pese la falda: más firme para sedas muy tramadas, telas con metales o lanas gruesas, y más ligero para sedas salvajes, percales o indianas. Suele ir unos 5 cm más corto que la falda, medido desde debajo de la cinturilla. Con el uso pierde algo de vuelo.",
         ca:"Ha substituït les saies emmidonades que es posaven una damunt de l'altra. Hui eixes saies només es veuen en un vestir més historicista.\n\nEs tria segons el pes de la falda: més ferm per a sedes molt tramades, teles amb metalls o llanes gruixudes, i més lleuger per a sedes salvatges, percals o indianes. Sol anar uns 5 cm més curt que la falda, mesurat des de davall de la pretina. Amb l'ús perd una mica de vol." } },
     { id:"interior",
-      keys:["enagua", "enagües", "enagues", "sinagües", "sinagues", "pololo", "camisa interior", "ropa interior", "roba interior", "debajo", "davall", "orden", "ordre", "vestirme", "vestir-me"],
+      keys:["enagua", "enagües", "enagues", "sinagües", "sinagues", "pololo", "camisa interior", "ropa interior", "roba interior", "debajo", "davall", "orden", "ordre", "vestirme", "vestir-me", "per dins", "por dentro"],
       title:{ es:"Lo que va debajo", ca:"El que va per dins" },
       body:{
         es:"Por orden: primero las medias, de seda o de algodón. Luego los pololos y la camisa interior. Después el cancán, y encima las enaguas, que dan más cuerpo a la falda.\n\nNormalmente son de algodón. Las enaguas suelen ser blancas y a juego con la camisa interior.",
@@ -7298,7 +7300,7 @@ function updateCitaBtn() {
         es:"Va en la cabeza, no sobre los hombros. Se lleva sobre todo en actos religiosos, como la Ofrenda a la Virgen o la misa de San José.\n\nLas hay de media luna, de tres picos, de toalla y dengue. Las oficiales de la JCF son de color marfil o crudo, bordadas a mano sobre tul u organza, casi siempre a cadeneta.\n\nEn la tienda tenemos mantillas de encaje negro o blanco.",
         ca:"Va al cap, no sobre els muscles. Es porta sobretot en actes religiosos, com l'Ofrena a la Mare de Déu o la missa de Sant Josep.\n\nN'hi ha de mitja lluna, de tres pics, de «toalla» i de dengue. Les oficials de la JCF són de color ivori o cru, brodades a mà sobre tul o organza, quasi sempre a cadeneta.\n\nA la botiga tenim mantellines de punta negra o blanca." } },
     { id:"postizos",
-      keys:["postizo", "postís", "postis", "pelo corto", "poco pelo", "cabell curt", "poc cabell", "malla", "trenza", "trena", "moño cosido", "monyo cosit", "cojín", "cojin", "coixí", "coixi", "dormir"],
+      keys:["postizo", "postís", "postis", "pelo corto", "poco pelo", "cabell curt", "poc cabell", "malla", "trenza", "trena", "moño cosido", "monyo cosit", "cojín", "cojin", "coixí", "coixi", "dormir", "duerme", "dorm"],
       title:{ es:"Postizos y moños cosidos", ca:"Postissos i monyos cosits" },
       body:{
         es:"Si no tienes pelo suficiente, el moño se hace con postizo. Los rodetes se pueden coser a mano con pelo natural, a medida del color y del tamaño de tu pelo, y las trenzas del moño de atrás se hacen con mallas.\n\nUn peinado completo lleva unos 25 minutos, algo menos con moño cosido. Muchas falleras se peinan el 15 de marzo y no se quitan los moños hasta el 19.",
@@ -7334,17 +7336,17 @@ function updateCitaBtn() {
         es:"Los zapatos suelen ir forrados con la misma tela del traje, y muchos se hacen a mano, a juego con el corpiño.\n\nLas medias son de seda o de algodón y suelen ir bordadas.",
         ca:"Les sabates solen anar folrades amb la mateixa tela del vestit, i moltes es fan a mà, a joc amb el cosset.\n\nLes calces són de seda o de cotó i solen anar brodades." } },
     { id:"ramo",
-      keys:["ramo", "ram", "ramillete", "clavel", "clavell", "flores", "flors", "vestidores", "vestidors"],
+      keys:["ramo", "el ram", "un ram", "ram de", "ramillete", "clavel", "clavell", "flores", "flors", "vestidores", "vestidors"],
       title:{ es:"El ramo de la Ofrenda", ca:"El ram de l'Ofrena" },
       body:{
         es:"La JCF recomienda un bouquet de 35 a 40 cm, con el verde por debajo de las flores y sin agujas de hierro. El color lo asigna a cada comisión.\n\nLa flor es el <b>clavel</b>: dura más, aguanta mejor y no pierde pétalos. Con los ramos, los Vestidores de la Virgen van formando el manto en la plaza de la Virgen. El dibujo se guarda en secreto hasta el final.",
         ca:"La JCF recomana un ram de 35 a 40 cm, amb el verd per davall de les flors i sense agulles de ferro. El color l'assigna a cada comissió.\n\nLa flor és el <b>clavell</b>: dura més, aguanta millor i no perd pètals. Amb els rams, els Vestidors de la Mare de Déu van formant el mant a la plaça de la Mare de Déu. El dibuix es guarda en secret fins al final." } },
     { id:"ofrenda",
-      keys:["ofrenda", "ofrena", "desfil", "fila", "blus", "brusó", "bruso", "reglamento", "reglament", "normas"],
+      keys:["ofrenda", "ofrena", "desfil", "fila", "blus", "brusó", "bruso", "reglamento", "reglament", "normas", "para la ofrenda", "a la ofrenda", "per a l ofrena", "a l ofrena", "manto de flores", "mant de flors", "virgen", "mare de deu", "desamparados", "desemparats"],
       title:{ es:"La Ofrenda", ca:"L'Ofrena" },
       body:{
-        es:"En 2026 fue el 17 y el 18 de marzo. Las normas de la JCF obligan a desfilar con indumentaria tradicional, según los artículos 64 y 65 del Reglamento Fallero, y sancionan ir con ropa de calle o con blusón. La fallera debe llevar el traje de valenciana.\n\nSe desfila en filas de cinco como mínimo. Si no salen las cuentas, se admiten filas de cuatro y una de tres, siempre al final de la comisión.",
-        ca:"En 2026 va ser el 17 i el 18 de març. Les normes de la JCF obliguen a desfilar amb indumentària tradicional, segons els articles 64 i 65 del Reglament Faller, i sancionen anar amb roba de carrer o amb brusó. La fallera ha de portar el vestit de valenciana.\n\nEs desfila en files de cinc com a mínim. Si no ixen els comptes, s'admeten files de quatre i una de tres, sempre al final de la comissió." } },
+        es:"Son dos tardes, el 17 y el 18 de marzo, desde las 15:30 hasta pasada la medianoche. Las comisiones bajan en dos columnas, por San Vicente y por la calle de la Paz, hasta la plaza de la Virgen, y con los ramos se va formando el manto de flores de una gran imagen de la Mare de Déu dels Desemparats.\n\nLas normas de la JCF obligan a desfilar con indumentaria tradicional, según los artículos 64 y 65 del Reglamento Fallero, y sancionan ir con ropa de calle o con blusón. La fallera debe llevar el traje de valenciana.\n\nSe desfila en filas de cinco como mínimo. Si no salen las cuentas, se admiten filas de cuatro y una de tres, siempre al final de la comisión.\n\nEl blusón, con el emblema de la falla, queda para los actos que no son oficiales.",
+        ca:"Són dues vesprades, el 17 i el 18 de març, des de les 15:30 fins passada la mitjanit. Les comissions baixen en dues columnes, per Sant Vicent i pel carrer de la Pau, fins a la plaça de la Mare de Déu, i amb els rams es va formant el mant de flors d'una gran imatge de la Mare de Déu dels Desemparats.\n\nLes normes de la JCF obliguen a desfilar amb indumentària tradicional, segons els articles 64 i 65 del Reglament Faller, i sancionen anar amb roba de carrer o amb brusó. La fallera ha de portar el vestit de valenciana.\n\nEs desfila en files de cinc com a mínim. Si no ixen els comptes, s'admeten files de quatre i una de tres, sempre al final de la comissió.\n\nEl brusó, amb l'emblema de la falla, queda per als actes que no són oficials." } },
     { id:"banda",
       keys:["banda", "fajín", "fajin", "faixí", "faixi", "presidente", "president", "vocal", "escudo", "escut"],
       title:{ es:"Fajín y banda", ca:"Faixí i banda" },
@@ -7364,17 +7366,17 @@ function updateCitaBtn() {
         es:"Con el traje de hombre se lleva pañuelo en la cabeza, también debajo del sombrero. Va por encima de las orejas, sin taparlas, y sin puntas colgando por detrás «a lo pirata».\n\nLo más tradicional es anudarlo atrás y rematar las puntas con un segundo nudo pequeño delante. Otra forma es la de «fumeral», con un hueco arriba, como una chimenea. El de seda es el que mejor se anuda.",
         ca:"Amb el vestit d'home es porta mocador al cap, també davall del barret. Va per damunt de les orelles, sense tapar-les, i sense puntes penjant per darrere «a la pirata».\n\nEl més tradicional és nugar-lo darrere i rematar les puntes amb un segon nuet xicotet davant. Una altra manera és la de «fumeral», amb un buit dalt, com una xemeneia. El de seda és el que millor es nuga." } },
     { id:"hombre",
-      keys:["hombre", "home", "mascul", "fallero", "chaleco", "armilla", "faja", "faixa", "manta", "alpargata", "espardenya", "sombrero", "barret", "niño", "nino"],
+      keys:["hombre", "home", "mascul", "fallero", "chaleco", "armilla", "faja", "faixa", "manta", "alpargata", "espardenya", "sombrero", "barret", "de niño", "para niño", "per a xiquet", "traje de fallero", "vestit de faller", "traje de valenciano", "vestit de valencia"],
       title:{ es:"El traje de hombre", ca:"El vestit d'home" },
       body:{
-        es:"El Reglamento Fallero pide al fallero el traje del IV Congreso General Fallero o cualquier otro traje tradicional valenciano.\n\nLleva pañuelo o sombrero en la cabeza, camisa blanca, chaleco, saragüells y alpargatas, que suelen atarse con cintas. La faja es obligatoria y marca el cargo. A veces se añade la manta.\n\nEn Cosas Cucas lo confeccionamos a medida, para adulto y para niño.",
-        ca:"El Reglament Faller demana al faller el vestit del IV Congrés General Faller o qualsevol altre vestit tradicional valencià.\n\nPorta mocador o barret al cap, camisa blanca, armilla, saragüells i espardenyes, que es solen lligar amb cintes. La faixa és obligatòria i marca el càrrec. De vegades s'hi afig la manta.\n\nA Cosas Cucas el confeccionem a mida, per a adult i per a xiquet." } },
+        es:"El Reglamento Fallero pide al fallero el traje del IV Congreso General Fallero o cualquier otro traje tradicional valenciano.\n\nLleva pañuelo o sombrero en la cabeza, camisa blanca, chaleco, saragüells y alpargatas, que suelen atarse con cintas. La faja es obligatoria y marca el cargo. A veces se añade la manta.\n\nEn Cosas Cucas lo confeccionamos a medida, para adulto y para niño: <a href='traje-de-valenciano'>Traje de valenciano</a>.",
+        ca:"El Reglament Faller demana al faller el vestit del IV Congrés General Faller o qualsevol altre vestit tradicional valencià.\n\nPorta mocador o barret al cap, camisa blanca, armilla, saragüells i espardenyes, que es solen lligar amb cintes. La faixa és obligatòria i marca el càrrec. De vegades s'hi afig la manta.\n\nA Cosas Cucas el confeccionem a mida, per a adult i per a xiquet: <a href='traje-de-valenciano'>Vestit de valencià</a>." } },
     { id:"espolin",
       keys:["espolín", "espolí", "espolinado", "espolinat", "telar", "teler", "lanzadera", "llançadora", "llancadora", "jacquard", "revés", "reves"],
       title:{ es:"El espolín", ca:"L'espolí" },
       body:{
-        es:"Es una seda estrecha, de unos 54 cm, tejida a mano en telar Jacquard sin motor. El tejedor pasa a mano lanzaderas pequeñas, una por color, solo donde va el dibujo. En la fábrica Garín avanza unos 3 cm por hora, y la tela de un traje puede llevar hasta tres meses.\n\n¿Cómo reconocerlo? Dale la vuelta: por el revés se ve el dibujo, con los hilos cortados y rematados. La tela hecha a máquina queda lisa por detrás.",
-        ca:"És una seda estreta, d'uns 54 cm, teixida a mà en teler Jacquard sense motor. El teixidor passa a mà llançadores xicotetes, una per color, només on va el dibuix. A la fàbrica Garín avança uns 3 cm per hora, i la tela d'un vestit pot costar fins a tres mesos de faena.\n\nCom es reconeix? Gira la tela: pel revés es veu el dibuix, amb els fils tallats i rematats. La tela feta a màquina queda llisa per darrere." } },
+        es:"Es una seda estrecha, de unos 54 cm, tejida a mano en telar Jacquard sin motor. El tejedor pasa a mano lanzaderas pequeñas, una por color, solo donde va el dibujo. En la fábrica Garín avanza unos 3 cm por hora, y la tela de un traje puede llevar hasta tres meses.\n\n¿Cómo reconocerlo? Dale la vuelta: por el revés se ve el dibujo, con los hilos cortados y rematados. La tela hecha a máquina queda lisa por detrás.\n\nMás en <a href='espolin'>Espolín</a>.",
+        ca:"És una seda estreta, d'uns 54 cm, teixida a mà en teler Jacquard sense motor. El teixidor passa a mà llançadores xicotetes, una per color, només on va el dibuix. A la fàbrica Garín avança uns 3 cm per hora, i la tela d'un vestit pot costar fins a tres mesos de faena.\n\nCom es reconeix? Gira la tela: pel revés es veu el dibuix, amb els fils tallats i rematats. La tela feta a màquina queda llisa per darrere.\n\nMés a <a href='espolin'>Espolí</a>." } },
     { id:"seda-rayon",
       keys:["seda", "rayón", "rayon", "raió", "raio", "viscosa"],
       title:{ es:"Seda natural o rayón", ca:"Seda natural o raió" },
@@ -7382,7 +7384,7 @@ function updateCitaBtn() {
         es:"La seda natural sale del gusano de seda. El rayón, o viscosa, es una fibra artificial de celulosa que nació en 1884 como «seda artificial». Brilla, es suave y puede imitar el tacto de la seda, pero algunos tipos pierden resistencia al mojarse y conviene limpiarlo en seco.\n\nLa falda puede ser de una o de otra, y muchos dibujos se tejen en espolín, en seda estrecha o en rayón.",
         ca:"La seda natural ix del cuc de seda. El raió, o viscosa, és una fibra artificial de cel·lulosa que va nàixer el 1884 com a «seda artificial». Brilla, és suau i pot imitar el tacte de la seda, però alguns tipus perden resistència en mullar-se i convé netejar-lo en sec.\n\nLa falda pot ser de l'una o de l'altra, i molts dibuixos es teixixen en espolí, en seda estreta o en raió." } },
     { id:"seda-historia",
-      keys:["historia de la seda", "velluters", "vellut", "terciopelo", "lonja", "llotja", "pebrina", "morera", "gusano", "museo", "museu", "garín", "garin", "sedero", "sedera", "seder"],
+      keys:["historia de la seda", "velluters", "vellut", "terciopelo", "lonja", "llotja", "pebrina", "morera", "gusano", "museo de la seda", "museu de la seda", "sedero", "sedera", "seder"],
       title:{ es:"Valencia y la seda", ca:"València i la seda" },
       body:{
         es:"Valencia llegó a ser el principal centro de fabricación de seda del país. En 1547 las Cortes valencianas declararon la seda el principal fruto del Reino, y en 1788 trabajaban en ella 7.764 personas. La pebrina, una epidemia del gusano de seda que llegó en 1854, casi acabó con el sector.\n\nHoy se puede visitar el <b>Museo de la Seda</b>, en el Colegio del Arte Mayor de la Seda (calle del Hospital), y la Lonja, Patrimonio de la Humanidad.",
@@ -7403,14 +7405,14 @@ function updateCitaBtn() {
       keys:["niña", "nina", "nena", "infantil", "hija", "filla", "crecer", "créixer", "creixer", "arreglo", "arranjament", "sacar", "traure", "lorza"],
       title:{ es:"Trajes de niña", ca:"Vestits de xiqueta" },
       body:{
-        es:"Se piden igual que los de adulta: el traje completo y, si quieres, un corpiño de manga larga. Llevan algo menos de tela.\n\nCuando a una niña se le queda pequeño, el arreglo más pedido es sacar tela. Y los cancanes de niña suelen llevar una lorza que se suelta cuando crece, para ganar largo.\n\nPregúntanos y te asesoramos.",
-        ca:"Es demanen igual que els d'adulta: el vestit complet i, si vols, un cosset de mànega llarga. Porten una mica menys de tela.\n\nQuan a una xiqueta se li queda xicotet, l'arranjament més demanat és traure tela. I els cancans de xiqueta solen portar un plec cosit que es desfà quan creix, per a guanyar llargària.\n\nPregunta'ns i t'assessorem." } },
+        es:"Se piden igual que los de adulta: el traje completo y, si quieres, un corpiño de manga larga. Llevan algo menos de tela.\n\nCuando a una niña se le queda pequeño, el arreglo más pedido es sacar tela. Y los cancanes de niña suelen llevar una lorza que se suelta cuando crece, para ganar largo.\n\nPregúntanos y te asesoramos. Más en <a href='indumentaria-infantil'>Indumentaria infantil</a>.",
+        ca:"Es demanen igual que els d'adulta: el vestit complet i, si vols, un cosset de mànega llarga. Porten una mica menys de tela.\n\nQuan a una xiqueta se li queda xicotet, l'arranjament més demanat és traure tela. I els cancans de xiqueta solen portar un plec cosit que es desfà quan creix, per a guanyar llargària.\n\nPregunta'ns i t'assessorem. Més a <a href='indumentaria-infantil'>Indumentària infantil</a>." } },
     { id:"encargo",
       keys:["encargo", "encargar", "encàrrec", "encarrec", "encarregar", "a medida", "a mida", "plazo", "termini", "cuanto tarda", "quant tarda", "tardáis", "tardais", "tardeu", "agenda"],
       title:{ es:"Encargar un traje", ca:"Encarregar un vestit" },
       body:{
-        es:"Al encargarlo, aclara quién pone la tela y qué piezas entran: cancán, cintas, puntillas, forros, manteleta, zapatos...\n\nNo hay un plazo fijo, pero los talleres se llenan pronto: en 2019, a tres meses de Fallas, la mayoría ya tenía la agenda completa. Cuanto antes vengas, mejor.\n\nPide cita en la tienda o escríbenos al WhatsApp <b>667 775 501</b>.",
-        ca:"En encarregar-lo, aclarix qui posa la tela i quines peces hi entren: cancan, cintes, puntes, folres, manteleta, sabates...\n\nNo hi ha un termini fix, però els tallers s'omplin prompte: el 2019, a tres mesos de Falles, la majoria ja tenia l'agenda plena. Com més prompte vingues, millor.\n\nDemana cita a la botiga o escriu-nos al WhatsApp <b>667 775 501</b>." } },
+        es:"Al encargarlo, aclara quién pone la tela y qué piezas entran: cancán, cintas, puntillas, forros, manteleta, zapatos...\n\nNo hay un plazo fijo, pero los talleres se llenan pronto: en 2019, a tres meses de Fallas, la mayoría ya tenía la agenda completa. Cuanto antes vengas, mejor.\n\nPide cita en la tienda o escríbenos al WhatsApp <b>667 775 501</b>. Así trabajamos: <a href='trajes-a-medida'>Trajes a medida</a>.",
+        ca:"En encarregar-lo, aclarix qui posa la tela i quines peces hi entren: cancan, cintes, puntes, folres, manteleta, sabates...\n\nNo hi ha un termini fix, però els tallers s'omplin prompte: el 2019, a tres mesos de Falles, la majoria ja tenia l'agenda plena. Com més prompte vingues, millor.\n\nDemana cita a la botiga o escriu-nos al WhatsApp <b>667 775 501</b>. Així treballem: <a href='trajes-a-medida'>Vestits a mida</a>." } },
     { id:"mangas",
       keys:["manga", "mànega", "manega", "mànegues", "manegues", "màniga", "maniga", "farol", "farolet", "fanalet", "francesa", "codera", "tres cuartos", "tres quarts"],
       title:{ es:"Las mangas", ca:"Les mànegues" },
@@ -7465,6 +7467,226 @@ function updateCitaBtn() {
       body:{
         es:"Son faldas del traje histórico, cada una para un uso.\n\n<b>Guardapiés</b>: la falda larga de vestir, casi siempre de seda. Los más comunes eran azules o verdes.\n<b>Sagaleco</b>: la de diario, más pobre, de lana o de lienzo.\n<b>Basquiña</b>: una sobrefalda oscura para salir a la calle, sobre todo a misa. Se llevaba con mantilla y sin delantal. Hoy se ve en procesiones y misas.",
         ca:"Són faldes del vestit històric, cadascuna per a un ús.\n\n<b>Guardapeu</b>: la falda llarga de vestir, quasi sempre de seda. Els més comuns eren blaus o verds.\n<b>Sagaleco</b>: la de cada dia, més pobra, de llana o de llenç.\n<b>Basquinya</b>: una sobrefalda fosca per a eixir al carrer, sobretot a missa. Es portava amb mantellina i sense davantal. Hui es veu en processons i misses." } },
+    /* ── Ampliación del 28-10-2026: las Fallas en general, historia del espolín y del traje de
+       valenciano, y lo que publica la propia web. Fuentes en ASISTENTE_FUENTES.md. Van detrás de
+       las del traje porque, si empatan, gana la primera: así una pregunta sobre una pieza no
+       acaba en una respuesta general de Fallas. ── */
+    { id:"espolin-historia",
+      keys:["historia del espolin", "historia de l espoli", "donde viene el espolin", "on ve l espoli", "quien teje", "qui teixix", "espolin de la fallera", "espoli de la fallera", "origen del espolin", "origen de l espoli", "garin", "moncada", "espolin oficial", "espoli oficial", "vives i mari", "compania valenciana"],
+      title:{ es:"Historia del espolín", ca:"Història de l'espolí" },
+      body:{
+        es:"La palabra viene de la lanzadera pequeña, el espolín, con la que se tejen aparte las flores del dibujo. El Museo de la Seda cree probable que la técnica naciera en España, en tejidos hispanoárabes del siglo XV.\n\nEn València la seda la trabajaba el gremio de velluters, creado en 1479, que en 1686 pasó a ser el Colegio del Arte Mayor de la Seda. Su gran época fue el siglo XVIII, con unos 3.500 telares en la ciudad. Con el telar Jacquard, inventado en 1801, se tejieron más espolines, damascos y brocados. La pebrina, desde 1854, casi acabó con el sector.\n\nHoy lo tejen a mano muy pocas casas, como Garín (fundada en 1820; su fábrica de Moncada es también museo), la Compañía Valenciana de la Seda o Vives i Marí. Desde 2001 la Fallera Mayor y la Fallera Mayor Infantil de València llevan un espolín oficial, propiedad del Ayuntamiento.",
+        ca:"La paraula ve de la llançadora xicoteta, l'espolí, amb què es teixixen a banda les flors del dibuix. El Museu de la Seda creu probable que la tècnica nasquera a Espanya, en teixits hispanoàrabs del segle XV.\n\nA València la seda la treballava el gremi de velluters, creat el 1479, que el 1686 va passar a ser el Col·legi de l'Art Major de la Seda. La seua gran època va ser el segle XVIII, amb uns 3.500 telers a la ciutat. Amb el teler Jacquard, inventat el 1801, es van teixir més espolins, domassos i brocats. La pebrina, des de 1854, quasi va acabar amb el sector.\n\nHui el teixixen a mà molt poques cases, com Garín (fundada el 1820; la seua fàbrica de Montcada és també museu), la Compañía Valenciana de la Seda o Vives i Marí. Des de 2001 la Fallera Major i la Fallera Major Infantil de València porten un espolí oficial, propietat de l'Ajuntament." } },
+    { id:"traje-historia",
+      keys:["historia del traje de valenciano", "historia del traje de hombre", "historia del traje de fallero", "historia del vestit de valencia", "historia del vestit d home", "historia del vestit de faller", "origen del traje de valenciano", "origen del traje de hombre", "cucaracha", "labrador de gala", "llaurador de gala", "traje negro", "vestit negre", "llaurador"],
+      title:{ es:"Historia del traje de valenciano", ca:"Història del vestit de valencià" },
+      body:{
+        es:"Es el traje del labrador de la huerta. Su forma viene de la moda del siglo XVIII, aunque algunas prendas son más antiguas, y en el siglo XIX se convirtió en el traje «típico» valenciano. Los saragüells, calzones anchos de lino o de algodón, eran ropa de trabajo; la Viquipèdia los considera de reminiscencia morisca. En las fiestas se lucían jupetins de seda con brocados y bordados.\n\nEn Fallas no hubo traje de fallero hasta los años veinte. Según Distrito Fallas, en 1954 la Junta Central creó un traje negro, el «de labrador de gala», al que se llamó «de cucaracha»; hacia los años setenta se fue dejando y volvieron el saragüell y el torrentí.\n\nHoy el Reglamento Fallero pide el traje del IV Congreso General Fallero o cualquier traje tradicional valenciano. Más en <a href='traje-de-valenciano'>Traje de valenciano</a>.",
+        ca:"És el vestit del llaurador de l'horta. La seua forma ve de la moda del segle XVIII, encara que algunes peces són més antigues, i en el segle XIX es va convertir en el vestit «típic» valencià. Els saragüells, calçons amples de lli o de cotó, eren roba de faena; la Viquipèdia els considera de reminiscència morisca. En les festes es lluïen jupetins de seda amb brocats i brodats.\n\nEn Falles no hi va haver vestit de faller fins als anys vint. Segons Distrito Fallas, el 1954 la Junta Central va crear un vestit negre, el «de llaurador de gala», que es va anomenar «de cucaracha»; cap als anys setanta es va anar deixant i van tornar el saragüell i el torrentí.\n\nHui el Reglament Faller demana el vestit del IV Congrés General Faller o qualsevol vestit tradicional valencià. Més a <a href='traje-de-valenciano'>Vestit de valencià</a>." } },
+    { id:"fallas-que",
+      keys:["que son las fallas", "que son les falles", "cuando son las fallas", "quan son les falles", "fechas de las fallas", "dates de les falles", "dias de fallas", "dies de falles", "semana fallera", "setmana fallera", "unesco", "patrimonio", "patrimoni", "inmaterial", "immaterial", "fiesta fallera", "festa fallera"],
+      title:{ es:"Las Fallas", ca:"Les Falles" },
+      body:{
+        es:"Son la fiesta grande de València. Se plantan en la calle monumentos de madera y cartón piedra, las fallas, llenos de ninots que se ríen de la actualidad, y la noche del 19 de marzo, día de San José, se queman.\n\nLos días grandes van del 15 al 19 de marzo, aunque la fiesta empieza antes: la Crida, a finales de febrero, la abre. No son solo de la ciudad: se celebran también en muchos pueblos valencianos.\n\nDesde 2016 son Patrimonio Cultural Inmaterial de la Humanidad de la UNESCO.",
+        ca:"Són la festa gran de València. Es planten al carrer monuments de fusta i cartó pedra, les falles, plens de ninots que es riuen de l'actualitat, i la nit del 19 de març, dia de Sant Josep, es cremen.\n\nEls dies grans van del 15 al 19 de març, encara que la festa comença abans: la Crida, a finals de febrer, l'obri. No són només de la ciutat: se celebren també en molts pobles valencians.\n\nDes de 2016 són Patrimoni Cultural Immaterial de la Humanitat de la UNESCO." } },
+    { id:"fallas-origen",
+      keys:["origen de las fallas", "origen de les falles", "historia de las fallas", "historia de les falles", "como empezaron las fallas", "com van comencar les falles", "carpintero", "fuster", "la traca", "cadafal", "parot"],
+      title:{ es:"De dónde vienen las Fallas", ca:"D'on venen les Falles" },
+      body:{
+        es:"Según la tradición, los carpinteros quemaban el día de San José, su patrón, los trastos viejos y los soportes de madera de las velas que alumbraban el taller. Con el tiempo se les unieron los vecinos.\n\nA mediados del siglo XVIII los vecinos ya levantaban cadafals satíricos. A finales del XIX la revista La Traca empezó a premiar las mejores fallas, y en 1901 llegaron los premios del Ayuntamiento. Ya en el siglo XX nacieron la Semana Fallera, la Fallera Mayor, la Ofrenda y las mascletàs.\n\nLa UNESCO recuerda que la fiesta ayudó a conservar el valenciano cuando se prohibió su uso.",
+        ca:"Segons la tradició, els fusters cremaven el dia de Sant Josep, el seu patró, els trastos vells i els suports de fusta de les llums que il·luminaven el taller. Amb el temps s'hi van ajuntar els veïns.\n\nA mitjan segle XVIII els veïns ja alçaven cadafals satírics. A finals del XIX la revista La Traca va començar a premiar les millors falles, i el 1901 van arribar els premis de l'Ajuntament. Ja en el segle XX van nàixer la Setmana Fallera, la Fallera Major, l'Ofrena i les mascletades.\n\nLa UNESCO recorda que la festa va ajudar a conservar el valencià quan se'n va prohibir l'ús." } },
+    { id:"jcf",
+      keys:["junta central", "jcf", "comite central"],
+      title:{ es:"La Junta Central Fallera", ca:"La Junta Central Fallera" },
+      body:{
+        es:"Es el máximo organismo de las fallas de València: regula y coordina la fiesta y depende del Ayuntamiento. Se creó en 1939, en lugar del Comité Central Fallero, que existía desde 1928.\n\nDe ella dependen las comisiones. Organiza los actos que afectan a todas, guarda sus archivos y fomenta el uso del valenciano.",
+        ca:"És el màxim organisme de les falles de València: regula i coordina la festa i depén de l'Ajuntament. Es va crear el 1939, en lloc del Comité Central Faller, que existia des de 1928.\n\nD'ella depenen les comissions. Organitza els actes que les afecten totes, guarda els seus arxius i fomenta l'ús del valencià." } },
+    { id:"comision",
+      keys:["comision", "comissio", "casal", "sector faller", "sectores", "sectors", "censo", "cens faller", "cuantas fallas", "quantes falles", "fallera mayor de cada falla", "fallera major de cada falla"],
+      title:{ es:"La comisión y el casal", ca:"La comissió i el casal" },
+      body:{
+        es:"Cada falla la organiza una comisión: una asociación sin ánimo de lucro cuya tarea principal es plantar su falla. Su sede es el casal, donde se reúne y hace la fiesta. Puede tener sección infantil, y cada una elige a su Fallera Mayor y a su Fallera Mayor Infantil.\n\nLas comisiones se agrupan en sectores. En octubre de 2026 la Junta Central tenía unas 380 comisiones en 26 sectores, algunas de municipios adheridos como Mislata o Burjassot. El censo de 2026 fue de 128.675 falleras y falleros.",
+        ca:"Cada falla l'organitza una comissió: una associació sense ànim de lucre que té com a faena principal plantar la seua falla. La seu és el casal, on es reunix i fa la festa. Pot tindre secció infantil, i cadascuna tria la seua Fallera Major i la seua Fallera Major Infantil.\n\nLes comissions s'agrupen en sectors. A l'octubre de 2026 la Junta Central tenia unes 380 comissions en 26 sectors, algunes de municipis adherits com Mislata o Burjassot. El cens de 2026 va ser de 128.675 falleres i fallers." } },
+    { id:"monumento",
+      keys:["monumento", "monument", "ninot", "artista fallero", "artista faller", "ciutat fallera", "ciudad del artista", "carton piedra", "carto pedra", "llibret", "como se hace una falla", "com es fa una falla"],
+      title:{ es:"El monumento y los ninots", ca:"El monument i els ninots" },
+      body:{
+        es:"La falla es un monumento de madera y cartón piedra formado por figuras, los ninots, que según la UNESCO caricaturizan la actualidad política y social. Hay fallas grandes e infantiles: unos 800 monumentos, mitad y mitad.\n\nLas hacen los artistas falleros, sobre todo en las naves de la Ciudad del Artista Fallero (Ciutat Fallera), en Benicalap, y allí se quedan hasta la plantà. El Gremio de Artistas Falleros tiene museo en la avenida San José Artesano, 17.\n\nCada falla publica además su llibret, un folleto que la explica, muchas veces en verso.",
+        ca:"La falla és un monument de fusta i cartó pedra format per figures, els ninots, que segons la UNESCO caricaturitzen l'actualitat política i social. Hi ha falles grans i infantils: uns 800 monuments, meitat i meitat.\n\nLes fan els artistes fallers, sobretot a les naus de la Ciutat Fallera, a Benicalap, i allí es queden fins a la plantà. El Gremi d'Artistes Fallers té museu a l'avinguda San José Artesano, 17.\n\nCada falla publica a més el seu llibret, un fullet que l'explica, moltes vegades en vers." } },
+    { id:"premios",
+      keys:["premio", "premi", "seccion especial", "seccio especial", "ingenio y gracia", "enginy", "concurso", "concurs", "mejor falla", "millor falla", "ganador", "guanyador"],
+      title:{ es:"Secciones y premios", ca:"Seccions i premis" },
+      body:{
+        es:"Las fallas compiten por secciones, de mayor a menor presupuesto: Especial, Primera A, Primera B, Segunda… El premio más deseado es el primero de la Sección Especial. La falla de la plaza del Ayuntamiento va fuera de concurso.\n\nTambién hay premios de Ingenio y Gracia, al llibret, a la calle iluminada y a la Cabalgata del Ninot.\n\nEn 2026 el primero de Especial fue para Convento Jerusalén-Matemático Marzal, por segundo año seguido.",
+        ca:"Les falles competixen per seccions, de més a menys pressupost: Especial, Primera A, Primera B, Segona… El premi més desitjat és el primer de la Secció Especial. La falla de la plaça de l'Ajuntament va fora de concurs.\n\nTambé hi ha premis d'Enginy i Gràcia, al llibret, al carrer il·luminat i a la Cavalcada del Ninot.\n\nEl 2026 el primer d'Especial va ser per a Convent Jerusalem-Matemàtic Marzal, per segon any seguit." } },
+    { id:"indultat",
+      keys:["indultat", "indultado", "indulto", "indult", "ninot indultat", "exposicion del ninot", "exposicio del ninot", "museo fallero", "museu faller"],
+      title:{ es:"El ninot indultat", ca:"El ninot indultat" },
+      body:{
+        es:"En la Exposición del Ninot, que abre unas semanas antes de Fallas, cada comisión lleva un ninot y el público vota. El más votado, el ninot indultat, se salva del fuego y pasa al Museo Fallero, en Montolivet. Hay uno de las fallas grandes y otro de las infantiles.\n\nSe indulta un ninot por votación popular desde 1934. El primero fue «Iaia i neta», de Vicente Benedito.",
+        ca:"A l'Exposició del Ninot, que obri unes setmanes abans de Falles, cada comissió porta un ninot i el públic vota. El més votat, el ninot indultat, se salva del foc i passa al Museu Faller, a Montolivet. N'hi ha un de les falles grans i un altre de les infantils.\n\nEs fa l'indult per votació popular des de 1934. El primer va ser «Iaia i neta», de Vicente Benedito." } },
+    { id:"crida",
+      keys:["crida", "torres de serranos", "torres de serrans", "empiezan las fallas", "comencen les falles", "pregon"],
+      title:{ es:"La Crida", ca:"La Crida" },
+      body:{
+        es:"Es el acto que abre las Fallas. Las Falleras Mayores de València la hacen desde las Torres de Serranos: «Valencians i valencianes, fallers i falleres, gent de tot el món, ja estem en Falles!». Después suena el himno y hay fuegos.\n\nEn 2026 fue el 22 de febrero. Para 2027 el Bando Fallero la pone el último domingo de febrero, que cae en día 28; la hora aún no se ha publicado.",
+        ca:"És l'acte que obri les Falles. Les Falleres Majors de València la fan des de les Torres de Serrans: «Valencians i valencianes, fallers i falleres, gent de tot el món, ja estem en Falles!». Després sona l'himne i hi ha focs.\n\nEl 2026 va ser el 22 de febrer. Per al 2027 el Ban Faller la posa l'últim diumenge de febrer, que cau en dia 28; l'hora encara no s'ha publicat." } },
+    { id:"mascleta",
+      keys:["mascleta", "mascletada", "polvora", "pirotecnia", "pirotecnica", "petardo", "traca"],
+      title:{ es:"La mascletà", ca:"La mascletà" },
+      body:{
+        es:"Es un espectáculo de pólvora de día: más ruido que luz, con un ritmo que va creciendo hasta el final, y acaba en aplausos.\n\nLa oficial es en la plaza del Ayuntamiento a las 14:00, cada día de una pirotecnia distinta. En 2026 hubo del 1 al 19 de marzo, y otra el día de la Crida. Además, muchas comisiones disparan la suya en su barrio.",
+        ca:"És un espectacle de pólvora de dia: més soroll que llum, amb un ritme que va creixent fins al final, i acaba amb aplaudiments.\n\nL'oficial és a la plaça de l'Ajuntament a les 14:00, cada dia d'una pirotècnia diferent. El 2026 n'hi va haver de l'1 al 19 de març, i una altra el dia de la Crida. A més, moltes comissions disparen la seua al barri." } },
+    { id:"desperta",
+      keys:["desperta", "despertador", "macrodesperta", "madrugar"],
+      title:{ es:"La despertà", ca:"La despertà" },
+      body:{
+        es:"Es el despertador fallero: de buena mañana, los falleros recorren las calles con ruido y pólvora.\n\nLa más grande es la Macrodespertà, el día de la Crida: en 2026 empezó a las 7:30 y acabó en la plaza del Ayuntamiento. Solo desfilan falleros censados; el público mira desde las zonas preparadas.",
+        ca:"És el despertador faller: de bon matí, els fallers recorren els carrers amb soroll i pólvora.\n\nLa més gran és la Macrodespertà, el dia de la Crida: el 2026 va començar a les 7:30 i va acabar a la plaça de l'Ajuntament. Només desfilen fallers censats; el públic mira des de les zones preparades." } },
+    { id:"planta",
+      keys:["planta", "plantar", "plantan", "planten", "ver las fallas", "veure les falles", "visitar las fallas", "visitar les falles"],
+      title:{ es:"La plantà", ca:"La plantà" },
+      body:{
+        es:"Es cuando los monumentos se montan en la calle y se enseñan al jurado. Primero se plantan las infantiles, la mañana del 15 de marzo, y después las grandes: en 2026 tenían que estar acabadas a las 8:00 del 16.\n\nDesde entonces se pueden ir a ver todas, hasta la cremà del 19.",
+        ca:"És quan els monuments es munten al carrer i s'ensenyen al jurat. Primer es planten les infantils, el matí del 15 de març, i després les grans: el 2026 havien d'estar acabades a les 8:00 del 16.\n\nDes d'aleshores es poden anar a veure totes, fins a la cremà del 19." } },
+    { id:"castillos",
+      keys:["nit del foc", "castillo", "castell", "fuegos artificiales", "focs artificials", "alba de les falles"],
+      title:{ es:"Castillos y Nit del Foc", ca:"Castells i Nit del Foc" },
+      body:{
+        es:"Por la noche hay castillos de fuegos artificiales. El más grande es la <b>Nit del Foc</b>, la noche del 18 de marzo, en el Jardín del Turia, junto al puente de Monteolivete y cerca del Palau de les Arts.\n\nEn 2026 hubo castillos a las 23:59 el 16, el 17 y el 18 de marzo, y la noche del 15, L'Alba de les Falles, con el espectáculo principal en la plaza del Ayuntamiento.",
+        ca:"A la nit hi ha castells de focs artificials. El més gran és la <b>Nit del Foc</b>, la nit del 18 de març, al Jardí del Túria, al costat del pont de Montolivet i prop del Palau de les Arts.\n\nEl 2026 hi va haver castells a les 23:59 el 16, el 17 i el 18 de març, i la nit del 15, l'Alba de les Falles, amb l'espectacle principal a la plaça de l'Ajuntament." } },
+    { id:"crema",
+      keys:["crema", "quema", "queman", "quemar", "cremen", "cremar", "cabalgata del fuego", "cavalcada del foc", "ultimo dia de fallas", "ultim dia de falles"],
+      title:{ es:"La cremà", ca:"La cremà" },
+      body:{
+        es:"Es el final de la fiesta: la noche del 19 de marzo, día de San José, se queman todas las fallas. Primero arden las infantiles y después las grandes; la última es la de la plaza del Ayuntamiento.\n\nEn 2026: infantiles a las 20:00 (la de la plaza, a las 21:00) y grandes a las 22:00; la del primer premio de Especial, a las 22:30, y la del Ayuntamiento, a las 23:00. Las horas cambian un poco cada año. Antes, a las 19:00, salió la Cabalgata del Fuego.",
+        ca:"És el final de la festa: la nit del 19 de març, dia de Sant Josep, es cremen totes les falles. Primer cremen les infantils i després les grans; l'última és la de la plaça de l'Ajuntament.\n\nEl 2026: infantils a les 20:00 (la de la plaça, a les 21:00) i grans a les 22:00; la del primer premi d'Especial, a les 22:30, i la de l'Ajuntament, a les 23:00. Les hores canvien una mica cada any. Abans, a les 19:00, va eixir la Cavalcada del Foc." } },
+    { id:"cabalgatas",
+      keys:["cabalgata del ninot", "cavalcada del ninot", "cabalgata", "cavalcada", "correfoc"],
+      title:{ es:"Las cabalgatas", ca:"Les cavalcades" },
+      body:{
+        es:"En la <b>Cabalgata del Ninot</b> las comisiones desfilan parodiando la actualidad. En 2026 fue la tarde del 28 de febrero: salió de la Glorieta y llegó a la calle Xàtiva, pasando por la plaza del Ayuntamiento.\n\nLa <b>Cabalgata del Fuego</b> es un desfile de fuego, tipo correfoc, la tarde del 19 de marzo, antes de la cremà.",
+        ca:"A la <b>Cavalcada del Ninot</b> les comissions desfilen parodiant l'actualitat. El 2026 va ser la vesprada del 28 de febrer: va eixir de la Glorieta i va arribar al carrer de Xàtiva, passant per la plaça de l'Ajuntament.\n\nLa <b>Cavalcada del Foc</b> és una desfilada de foc, tipus correfoc, la vesprada del 19 de març, abans de la cremà." } },
+    { id:"sanjose",
+      keys:["san jose", "sant josep", "19 de marzo", "19 de marc", "misa", "missa"],
+      title:{ es:"San José, 19 de marzo", ca:"Sant Josep, 19 de març" },
+      body:{
+        es:"El 19 de marzo es San José, patrón de los carpinteros y día grande de las Fallas. En 2026, por la mañana, las Falleras Mayores y sus Cortes llevaron flores al santo en el puente de San José, y a mediodía hubo misa solemne en la Catedral. Por la noche, la cremà.",
+        ca:"El 19 de març és Sant Josep, patró dels fusters i dia gran de les Falles. El 2026, pel matí, les Falleres Majors i les seues Corts van portar flors al sant al pont de Sant Josep, i a migdia hi va haver missa solemne a la Catedral. A la nit, la cremà." } },
+    { id:"eleccion",
+      keys:["como se elige", "com es tria", "elige a la fallera", "eligen a la fallera", "elegir a la fallera", "tria la fallera", "trien la fallera", "eleccion", "eleccio", "candidata", "jurado", "jurat", "telefonada", "la telefonada", "proclamacion", "proclamacio", "exaltacion", "exaltacio", "palau de la musica", "corte de honor", "cort d honor"],
+      title:{ es:"Cómo se elige a la Fallera Mayor", ca:"Com es tria la Fallera Major" },
+      body:{
+        es:"Cada año se eligen 13 jóvenes y 13 niñas entre las candidatas que presentan las fallas. De ellas salen la Fallera Mayor y la Fallera Mayor Infantil de València; las otras doce de cada grupo forman su Corte de Honor.\n\nEn verano hay preselecciones por sectores; en septiembre el jurado conoce a las candidatas, vestidas de valenciana y de calle, y una gala elige a las Cortes. A mediados de octubre llega la <b>telefonada</b>: desde la alcaldía se llama a las elegidas, y al día siguiente se proclaman en el Ayuntamiento.\n\nEn la <b>Exaltación</b>, en el Palau de la Música, reciben la banda. En 2026 fue a finales de enero.",
+        ca:"Cada any es trien 13 jóvens i 13 xiquetes entre les candidates que presenten les falles. D'elles ixen la Fallera Major i la Fallera Major Infantil de València; les altres dotze de cada grup formen la seua Cort d'Honor.\n\nA l'estiu hi ha preseleccions per sectors; al setembre el jurat coneix les candidates, vestides de valenciana i de carrer, i una gala tria les Corts. A mitjan octubre arriba la <b>telefonada</b>: des de l'alcaldia es telefona a les elegides, i l'endemà es proclamen a l'Ajuntament.\n\nEn l'<b>Exaltació</b>, al Palau de la Música, reben la banda. El 2026 va ser a finals de gener." } },
+    { id:"fm-2027",
+      keys:["fallera mayor 2027", "fallera major 2027", "fallera mayor de valencia", "fallera major de valencia", "quien es la fallera mayor", "qui es la fallera major", "beatriz blanco", "julia vizcayno", "fallera mayor infantil", "fallera major infantil"],
+      title:{ es:"Falleras Mayores de València 2027", ca:"Falleres Majors de València 2027" },
+      body:{
+        es:"La <b>Fallera Mayor de València 2027</b> es Beatriz Blanco Tamarit, de la falla Castelló-Sogorb, y la <b>Fallera Mayor Infantil</b>, Julia Vizcayno Orero, de Rosari-Plaça Calabuig. Las eligieron en octubre de 2026.\n\nA Julia la vestimos en Cosas Cucas, y también a Alejandra Blanco Beltrán y a Laura Miquel Obarti, de la Corte de Honor de 2027. Lo contamos en las <a href='#noticias'>noticias</a>.",
+        ca:"La <b>Fallera Major de València 2027</b> és Beatriz Blanco Tamarit, de la falla Castelló-Sogorb, i la <b>Fallera Major Infantil</b>, Julia Vizcayno Orero, de Rosari-Plaça Calabuig. Les van triar a l'octubre de 2026.\n\nA Julia la vestim a Cosas Cucas, i també a Alejandra Blanco Beltrán i a Laura Miquel Obarti, de la Cort d'Honor de 2027. Ho contem a les <a href='#noticias'>notícies</a>." } },
+    { id:"pasodoble",
+      keys:["pasodoble el fallero", "pasdoble el faller", "pasodoble", "pasdoble", "himno", "himne", "maestro serrano", "mestre serrano", "musica", "cancion", "can o"],
+      title:{ es:"«El Fallero» y el himno", ca:"«El Faller» i l'himne" },
+      body:{
+        es:"«El Fallero» es el pasodoble que suena en todas las fallas. Lo compuso en 1929 el maestro José Serrano, de Sueca, con letra de Maximiliano Thous. Se le tiene por el himno de las Fallas, aunque no es un himno oficial.\n\nSerrano compuso también el himno de la Exposición Regional de 1909, que desde 1925 es el Himno a Valencia.",
+        ca:"«El Faller» és el pasdoble que sona en totes les falles. El va compondre el 1929 el mestre Josep Serrano, de Sueca, amb lletra de Maximilià Thous. Se'l considera l'himne de les Falles, encara que no és un himne oficial.\n\nSerrano va compondre també l'himne de l'Exposició Regional de 1909, que des de 1925 és l'Himne a València." } },
+    { id:"bunyols",
+      keys:["bunuelo", "bunyol", "calabaza", "carabassa", "chocolate", "xocolate", "que se come", "que es menja", "dulce", "dolc", "churro"],
+      title:{ es:"Buñuelos de calabaza", ca:"Bunyols de carabassa" },
+      body:{
+        es:"Son el dulce de las Fallas: masa frita y crujiente, y los típicos son de calabaza, los <b>bunyols de carabassa</b>. Se toman con una taza de chocolate. En Fallas se montan buñolerías en la calle, y algunas los hacen todo el año.",
+        ca:"Són el dolç de les Falles: massa fregida i cruixent, i els típics són de carabassa. Es prenen amb una tassa de xocolate. En Falles es munten bunyoleries al carrer, i algunes en fan tot l'any." } },
+    { id:"fallas-2027",
+      keys:["las fallas 2027", "les falles 2027", "las fallas de 2027", "les falles de 2027", "fallas 2027", "falles 2027", "fallas de 2027", "falles de 2027", "programa", "calendario", "calendari", "bando", "ban faller", "proximas fallas", "properes falles", "trafico", "transit"],
+      title:{ es:"Fallas 2027", ca:"Falles 2027" },
+      body:{
+        es:"Los días grandes serán del 15 al 19 de marzo de 2027, y el 19 cae en viernes. Lo que ya se sabe por el Bando Fallero, según la prensa: la Crida, el último domingo de febrero (el 28); carpas desde el 11 de marzo; y el centro se cierra al tráfico a las 8:30 del 16 de marzo. El programa con las horas aún no está publicado.\n\nSi necesitas traje para estas Fallas, cuanto antes vengas, mejor: los talleres se llenan pronto.",
+        ca:"Els dies grans seran del 15 al 19 de març de 2027, i el 19 cau en divendres. El que ja se sap pel Ban Faller, segons la premsa: la Crida, l'últim diumenge de febrer (el 28); carpes des de l'11 de març; i el centre es tanca al trànsit a les 8:30 del 16 de març. El programa amb les hores encara no està publicat.\n\nSi necessites vestit per a estes Falles, com més prompte vingues, millor: els tallers s'omplin prompte." } },
+    { id:"quienes",
+      keys:["quienes sois", "quien sois", "qui sou", "sobre vosotras", "sobre vosaltres", "fundadora", "fundo", "fundacion", "fundacio", "paquita", "martorell", "noelia", "hijas", "filles", "historia de la tienda", "historia de la botiga", "historia del taller", "cuantos anos", "quants anys"],
+      title:{ es:"Quiénes somos", ca:"Qui som" },
+      body:{
+        es:"Cosas Cucas la fundó Paquita Martorell en el Cabañal, el barrio donde empezó todo. Hoy llevan el taller sus hijas, <b>Noelia y María</b>, que han traído nuevos dibujos exclusivos y cambios en la forma de confeccionar.\n\nLlevamos más de cuarenta años cosiendo trajes de fallera y de valenciano a medida. En 2018 el Gremio Artesano de Sastres y Modistas dio a Paquita su Premio Joia.\n\nMás en la sección <a href='#historia'>Historia</a>.",
+        ca:"Cosas Cucas la va fundar Paquita Martorell al Cabanyal, el barri on va començar tot. Hui porten el taller les seues filles, <b>Noelia i María</b>, que han portat nous dibuixos exclusius i canvis en la manera de confeccionar.\n\nPortem més de quaranta anys cosint vestits de fallera i de valencià a mida. El 2018 el Gremi Artesà de Sastres i Modistes va donar a Paquita el seu Premi Joia.\n\nMés a la secció <a href='#historia'>Història</a>." } },
+    { id:"traslado",
+      keys:["grabador esteve", "gravador esteve", "traslado", "trasllat", "mudado", "mudanza", "nueva tienda", "nova botiga", "como llegar", "como llego", "com arribar", "com arribe", "en metro", "joaquin costa", "antigua tienda"],
+      title:{ es:"La tienda de Burriana, 21", ca:"La botiga de Burriana, 21" },
+      body:{
+        es:"Desde el 1 de julio de 2026 la Tienda Centro está en la <b>calle Burriana, 21</b>, esquina con Joaquín Costa. Antes estábamos en Grabador Esteve, 30, a unos diez minutos andando. Hemos cambiado de calle, no de manera de trabajar.\n\nEl metro de Russafa (línea 10) está al final de la calle. En el Cabañal seguimos en Vicent Gallart, 49.",
+        ca:"Des de l'1 de juliol de 2026 la Botiga Centre és al <b>carrer Burriana, 21</b>, cantonada amb Joaquim Costa. Abans érem a Gravador Esteve, 30, a uns deu minuts a peu. Hem canviat de carrer, no de manera de treballar.\n\nEl metro de Russafa (línia 10) és al final del carrer. Al Cabanyal continuem a Vicent Gallart, 49." } },
+    { id:"redes",
+      keys:["instagram", "tiktok", "facebook", "redes", "xarxes", "youtube", "video", "seguiros", "seguir-vos"],
+      title:{ es:"Redes y vídeos", ca:"Xarxes i vídeos" },
+      body:{
+        es:"Estamos en Instagram (<a href='https://www.instagram.com/cosascucass/' target='_blank' rel='noopener'>@cosascucass</a>), en TikTok (@cosas.cucas1982) y en Facebook. En la web, la sección <a href='#videos'>Vídeos</a> tiene nuestro taller y nuestros desfiles.",
+        ca:"Som a Instagram (<a href='https://www.instagram.com/cosascucass/' target='_blank' rel='noopener'>@cosascucass</a>), a TikTok (@cosas.cucas1982) i a Facebook. A la web, la secció <a href='#videos'>Vídeos</a> té el nostre taller i les nostres desfilades." } },
+    { id:"colecciones",
+      keys:["coleccion", "colleccio", "catalogo", "cataleg", "que vendeis", "que veneu", "productos", "productes", "que haceis", "que feu", "servicios", "serveis", "que ofreceis", "que oferiu"],
+      title:{ es:"Lo que hacemos", ca:"El que fem" },
+      body:{
+        es:"Confeccionamos a medida trajes de fallera y de valenciano, de adulto y de niño. En la portada tienes seis <a href='#drops-archive'>colecciones</a>: Indumentaria Femenina, Indumentaria Masculina, Aderezos y Peinetas, Telas Valencianas, Mantillas y Semana Santa, y además nuestras <a href='#zapatillas'>deportivas falleras</a>. También hacemos <a href='decoracion'>decoración</a> para casa.\n\nNo ponemos precios en la web: te hacemos el presupuesto sin compromiso.",
+        ca:"Confeccionem a mida vestits de fallera i de valencià, d'adult i de xiquet. A la portada tens sis <a href='#drops-archive'>col·leccions</a>: Indumentària Femenina, Indumentària Masculina, Aderezos i Pintes, Teles Valencianes, Mantellines i Setmana Santa, i a més les nostres <a href='#zapatillas'>esportives falleres</a>. També fem <a href='decoracion'>decoració</a> per a casa.\n\nNo posem preus a la web: et fem el pressupost sense compromís." } },
+    { id:"semana-santa",
+      keys:["semana santa", "setmana santa", "procesion", "processo", "tunica", "mantos", "cofradia", "confraria"],
+      title:{ es:"Semana Santa", ca:"Setmana Santa" },
+      body:{
+        es:"También vestimos la Semana Santa: mantillas de encaje negro, mantos bordados y túnicas confeccionadas a medida en nuestro taller. Lo tienes en la colección Semana Santa de la portada (<a href='#drops-archive'>Colecciones</a>). Pregúntanos y te asesoramos.",
+        ca:"També vestim la Setmana Santa: mantellines de punta negra, mants brodats i túniques confeccionades a mida al nostre taller. Ho tens en la col·lecció Setmana Santa de la portada (<a href='#drops-archive'>Col·leccions</a>). Pregunta'ns i t'assessorem." } },
+    { id:"deportivas",
+      keys:["deportiva", "zapatilla", "esportiva", "sabatilla", "bamba", "sneaker", "pedir mi par"],
+      title:{ es:"Deportivas falleras", ca:"Esportives falleres" },
+      body:{
+        es:"Son un diseño exclusivo de la casa: deportivas blancas con tela valenciana y el logo CC dorado bordado a mano. Edición limitada, en modelo bajo y alto. Míralas en <a href='#zapatillas'>Deportivas Fallera</a> y pide tu par desde allí; el precio, a consultar.",
+        ca:"Són un disseny exclusiu de la casa: esportives blanques amb tela valenciana i el logo CC daurat brodat a mà. Edició limitada, en model baix i alt. Mira-les en <a href='#zapatillas'>Esportives Falleres</a> i demana el teu parell des d'allí; el preu, a consultar." } },
+    { id:"telas-casa",
+      keys:["tela a metro", "tela a metres", "a metro", "a metres", "tela suelta", "tela solta", "telas exclusivas", "teles exclusives", "vendeis tela", "veneu tela", "venden tela", "calanda", "san manuel", "guadalquivir", "vuestras telas", "les vostres teles"],
+      title:{ es:"Nuestras telas", ca:"Les nostres teles" },
+      body:{
+        es:"No vendemos tela a metro ni suelta. Tenemos <b>telas exclusivas</b> de la casa, brocateles y damascos de seda natural o de rayón, cada dibujo con su nombre (Calanda, San Manuel, Cestas, Guadalquivir…), y con ellas te confeccionamos el traje en nuestro taller.\n\nVen a verlas y a tocarlas, o mira la página de <a href='telas-valencianas'>telas exclusivas</a>.",
+        ca:"No venem tela a metres ni solta. Tenim <b>teles exclusives</b> de la casa, brocatells i domassos de seda natural o de raió, cada dibuix amb el seu nom (Calanda, San Manuel, Cestas, Guadalquivir…), i amb elles et confeccionem el vestit al nostre taller.\n\nVine a veure-les i a tocar-les, o mira la pàgina de <a href='telas-valencianas'>teles exclusives</a>." } },
+    { id:"propia-tela",
+      keys:["propia tela", "propio espolin", "mi tela", "mi espolin", "traer la tela", "traigo la tela", "traer mi", "tengo mi", "tinc el meu", "la meua tela", "el meu espoli", "portar la tela", "porte la tela", "pròpia tela"],
+      title:{ es:"¿Puedo traer mi tela?", ca:"Puc portar la meua tela?" },
+      body:{
+        es:"Sí. Al encargar el traje se deja claro quién pone la tela. Meri, por ejemplo, nos trajo su espolín «Tetuán» y en el taller lo convertimos en su traje. Si no la tienes, en la tienda tenemos telas exclusivas y te asesoramos sin compromiso.",
+        ca:"Sí. En encarregar el vestit es deixa clar qui posa la tela. Meri, per exemple, ens va portar el seu espolí «Tetuán» i al taller el vam convertir en el seu vestit. Si no en tens, a la botiga tenim teles exclusives i t'assessorem sense compromís." } },
+    { id:"decoracion",
+      keys:["decoracion", "decoracio", "cortina", "cortines", "estors", "cobrellits", "estor", "tapizado", "tapizar", "entapissat", "colcha", "cobrellit", "butaca", "sillon"],
+      title:{ es:"Decoración", ca:"Decoració" },
+      body:{
+        es:"Además de indumentaria cosemos para tu casa: cortinas, estores, tapizados de sillones y butacas, colchas y complementos textiles, todo a medida y con telas como las de los trajes.\n\nLa decoración se atiende en la <b>Tienda Cabañal</b> (C/ Vicent Gallart, 49 · 963 714 997). Por WhatsApp (<b>667 775 501</b>) puedes mandarnos fotos y medidas. Más en <a href='decoracion'>Decoración</a>.",
+        ca:"A més d'indumentària cosim per a ta casa: cortines, estors, entapissats de cadires de braços i butaques, cobrellits i complements tèxtils, tot a mida i amb teles com les dels vestits.\n\nLa decoració s'atén a la <b>Botiga Cabanyal</b> (C/ Vicent Gallart, 49 · 963 714 997). Per WhatsApp (<b>667 775 501</b>) ens pots enviar fotos i mesures. Més a <a href='decoracion'>Decoració</a>." } },
+    { id:"galeria",
+      keys:["galeria", "fotos", "fotografias", "fotografies", "imagenes", "imatges", "ver trajes", "veure vestits"],
+      title:{ es:"La galería", ca:"La galeria" },
+      body:{
+        es:"En la <a href='galeria'>galería</a> hay más de cien fotos de nuestros trajes, en dos apartados: Indumentaria femenina e Indumentaria masculina. En cada uno verás la pasarela del I Desfile del Gremio (2018) y las fotos de «Nuestras falleras» y «Nuestros falleros».",
+        ca:"A la <a href='galeria'>galeria</a> hi ha més de cent fotos dels nostres vestits, en dos apartats: Indumentària femenina i Indumentària masculina. En cadascun veuràs la passarel·la de la I Desfilada del Gremi (2018) i les fotos de «Nuestras falleras» i «Nuestros falleros»." } },
+    { id:"vestidas",
+      keys:["habeis vestido", "heu vestit", "a quien habeis", "a qui heu", "vestido a", "famosas", "alejandra blanco", "laura miquel", "marta capella", "laura llobell", "lourdes serrano", "begona", "monica palmer", "adriana polo", "zalve", "amanda", "lara martin", "meri"],
+      title:{ es:"A quién hemos vestido", ca:"A qui hem vestit" },
+      body:{
+        es:"Hemos vestido a Falleras Mayores de València como Mónica Palmer (1992), Adriana Polo (2001) y Begoña Jiménez (2013), y a Falleras Mayores Infantiles de València como Julia Vizcayno, la de 2027.\n\nEn las Cortes de Honor, a Alejandra Blanco y Laura Miquel (2027), Marta Capella y Laura Llobell (2026) y Lourdes Serrano (Corte infantil de 2025). Y a muchas Falleras Mayores de falla, como Meri, de Pinedo, este 2027.\n\nLas tienes en <a href='#falleras-mayores'>Falleras Mayores</a> y en <a href='#historia'>Historia</a>.",
+        ca:"Hem vestit Falleres Majors de València com Mónica Palmer (1992), Adriana Polo (2001) i Begoña Jiménez (2013), i Falleres Majors Infantils de València com Julia Vizcayno, la de 2027.\n\nEn les Corts d'Honor, Alejandra Blanco i Laura Miquel (2027), Marta Capella i Laura Llobell (2026) i Lourdes Serrano (Cort infantil de 2025). I moltes Falleres Majors de falla, com Meri, de Pinedo, este 2027.\n\nLes tens a <a href='#falleras-mayores'>Falleres Majors</a> i a <a href='#historia'>Història</a>." } },
+    { id:"regional",
+      keys:["indumentaria regional", "regional", "otros pueblos", "altres pobles", "reina de las fiestas", "reina de les festes", "reinas de burriana", "reina fallera de burriana", "reines de borriana", "borriana", "navajas", "segorbe", "vinaros", "almazora", "almassora", "almenara", "vila real", "castellon", "castello"],
+      title:{ es:"Indumentaria regional", ca:"Indumentària regional" },
+      body:{
+        es:"También vestimos fuera de València: reinas, falleras y cortes de honor de Almazora, Almenara, Burriana, Navajas, Segorbe, Vila-real y Vinaròs. En la sección Historia están además las Reinas Falleras de Burriana de 2025. Míralo en <a href='indumentaria-regional'>Indumentaria regional</a>.",
+        ca:"També vestim fora de València: reines, falleres i corts d'honor d'Almassora, Almenara, Borriana, Navajas, Sogorb, Vila-real i Vinaròs. A la secció Història hi ha a més les Reines Falleres de Borriana de 2025. Mira-ho a <a href='indumentaria-regional'>Indumentària regional</a>." } },
+    { id:"reconocimientos",
+      keys:["premio joia", "premi joia", "gremio", "gremi", "sastres", "desfile", "algun desfile", "algun desfil", "desfilada", "tradicions", "joyas de la indumentaria", "joies de la indumentaria", "exposicion", "exposicio", "reconocimiento", "reconeixement"],
+      title:{ es:"Premios y desfiles", ca:"Premis i desfilades" },
+      body:{
+        es:"En 2018 el Gremio Artesano de Sastres y Modistas de la Comunidad Valenciana dio a Paquita Martorell su <b>Premio Joia</b>, por más de treinta años de trabajo en la indumentaria valenciana. Somos parte del Gremio.\n\nHemos llevado nuestros trajes al I Desfile del Gremio (2018), a Tradicions (2021), a las exposiciones «Joies de la Indumentària» (2022) y «Joyas de la Indumentaria» (2026) y a la VI Desfilada (2026). Lo contamos en las <a href='#noticias'>noticias</a>.",
+        ca:"El 2018 el Gremi Artesà de Sastres i Modistes de la Comunitat Valenciana va donar a Paquita Martorell el seu <b>Premi Joia</b>, per més de trenta anys de treball en la indumentària valenciana. Som part del Gremi.\n\nHem portat els nostres vestits a la I Desfilada del Gremi (2018), a Tradicions (2021), a les exposicions «Joies de la Indumentària» (2022) i «Joyas de la Indumentaria» (2026) i a la VI Desfilada (2026). Ho contem a les <a href='#noticias'>notícies</a>." } },
+    { id:"noticias",
+      keys:["noticia", "noticies", "novedad", "novetat", "que hay de nuevo", "que hi ha de nou"],
+      title:{ es:"Noticias", ca:"Notícies" },
+      body:{
+        es:"En <a href='#noticias'>Noticias</a> contamos lo último del taller: los trajes de Meri, Fallera Mayor 2027 de Pinedo, y el día de su presentación; Julia, Fallera Mayor Infantil de València 2027; Amanda, de la Malvarrosa; la Corte de Honor de 2027 y nuestra tienda nueva de Burriana, 21.",
+        ca:"A <a href='#noticias'>Notícies</a> contem l'últim del taller: els vestits de Meri, Fallera Major 2027 de Pinedo, i el dia de la seua presentació; Julia, Fallera Major Infantil de València 2027; Amanda, de la Malva-rosa; la Cort d'Honor de 2027 i la nostra botiga nova de Burriana, 21." } },
     { id:"precio",
       keys:["precio", "preu", "presupuesto", "pressupost", "cuest", "costa", "coste", "cuanto vale", "quant val", "caro", "barato"],
       title:{ es:"Presupuesto", ca:"Pressupost" },
@@ -7472,17 +7694,17 @@ function updateCitaBtn() {
         es:"El precio depende sobre todo de la tela y de las joyas, y también de los bordados y de la confección. Un espolín tejido a mano lo encarece mucho, según el dibujo, los metales y el tipo de hilo.\n\nPregunta qué piezas entran en el presupuesto. Te lo hacemos sin compromiso:\n963 511 556 o 963 714 997\nWhatsApp: <b>667 775 501</b>",
         ca:"El preu depén sobretot de la tela i de les joies, i també dels brodats i de la confecció. Un espolí teixit a mà l'encarix molt, segons el dibuix, els metalls i el tipus de fil.\n\nPregunta quines peces entren en el pressupost. Te'l fem sense compromís:\n963 511 556 o 963 714 997\nWhatsApp: <b>667 775 501</b>" } },
     { id:"tienda",
-      keys:["tienda", "botiga", "horario", "horari", "abierto", "abrís", "abris", "obert", "obriu", "sábado", "sabado", "dissabte", "domingo", "diumenge", "donde", "on sou", "dirección", "adreça", "adreca", "teléfono", "telefono", "telèfon", "telefon", "llamar", "cridar", "whatsapp", "correo", "email", "contact", "cita", "visita", "mapa", "cabañal", "cabanyal", "burriana", "gallart"],
+      keys:["tienda", "botiga", "horario", "horari", "abierto", "abrís", "abris", "obert", "obriu", "sábado", "sabado", "dissabte", "domingo", "diumenge", "donde", "on sou", "dirección", "adreça", "adreca", "teléfono", "telefono", "telèfon", "telefon", "llamar", "cridar", "whatsapp", "correo", "email", "contact", "cita", "visita", "mapa", "cabañal", "cabanyal", "burriana", "gallart", "formulario", "formulari"],
       title:{ es:"Visítanos", ca:"Visita'ns" },
       body:{
-        es:"<b>Tienda Centro</b>\nC/ Burriana, 21 · 46005 Valencia\nTel. 963 511 556\n\n<b>Tienda Cabañal</b>\nC/ Vicent Gallart, 49 · 46011 Valencia\nTel. 963 714 997\n\nLun–Vie: 10:00–13:30 y 17:00–20:00\nSábado: 10:30–13:30 · Domingo: cerrado\n\nWhatsApp: <b>667 775 501</b>\n\nPara pedir cita, escríbenos por WhatsApp o llámanos.",
-        ca:"<b>Botiga Centre</b>\nC/ Burriana, 21 · 46005 València\nTel. 963 511 556\n\n<b>Botiga Cabanyal</b>\nC/ Vicent Gallart, 49 · 46011 València\nTel. 963 714 997\n\nDl–dv: 10:00–13:30 i 17:00–20:00\nDissabte: 10:30–13:30 · Diumenge: tancat\n\nWhatsApp: <b>667 775 501</b>\n\nPer a demanar cita, escriu-nos per WhatsApp o telefona'ns." } },
+        es:"<b>Tienda Centro</b>\nC/ Burriana, 21 · 46005 Valencia\nTel. 963 511 556\n\n<b>Tienda Cabañal</b>\nC/ Vicent Gallart, 49 · 46011 Valencia\nTel. 963 714 997\n\nLun–Vie: 10:00–13:30 y 17:00–20:00\nSábado: 10:30–13:30 · Domingo: cerrado\n\nWhatsApp: <b>667 775 501</b>\nCorreo: info@cosascucas.es\n\nAtendemos con cita previa: pídela por WhatsApp o llámanos.",
+        ca:"<b>Botiga Centre</b>\nC/ Burriana, 21 · 46005 València\nTel. 963 511 556\n\n<b>Botiga Cabanyal</b>\nC/ Vicent Gallart, 49 · 46011 València\nTel. 963 714 997\n\nDl–dv: 10:00–13:30 i 17:00–20:00\nDissabte: 10:30–13:30 · Diumenge: tancat\n\nWhatsApp: <b>667 775 501</b>\nCorreu: info@cosascucas.es\n\nAtenem amb cita prèvia: demana-la per WhatsApp o telefona'ns." } },
     { id:"hola",
       keys:["hola", "buenas", "buenos", "bon dia", "saludos", "salutacions", "bones", "hey"],
       title:{ es:"", ca:"" },
       body:{
-        es:"¡Hola! Soy la asistente de <b>Cosas Cucas</b>. Pregúntame por cualquier pieza del traje de valenciana o de fallero, por las telas o por cómo cuidarlo. ¿Qué quieres saber?",
-        ca:"Hola! Sóc l'assistent de <b>Cosas Cucas</b>. Pregunta'm per qualsevol peça del vestit de valenciana o de faller, per les teles o per com cuidar-lo. Què vols saber?" } },
+        es:"¡Hola! Soy la asistente de <b>Cosas Cucas</b>. Pregúntame por el traje de valenciana o de valenciano, las telas, las Fallas o nuestras tiendas. ¿Qué quieres saber?",
+        ca:"Hola! Sóc l'assistent de <b>Cosas Cucas</b>. Pregunta'm pel vestit de valenciana o de valencià, les teles, les Falles o les nostres botigues. Què vols saber?" } },
     { id:"gracias",
       keys:["gracias", "gràcies", "gracies", "merci", "genial", "entendido", "entesos"],
       title:{ es:"", ca:"" },
@@ -7492,17 +7714,17 @@ function updateCitaBtn() {
   ];
 
   var SUGGS = {
-    es: ["¿Qué piezas lleva el traje?", "Traje del XVIII o del XIX", "¿Qué es el espolín?", "¿Cómo se pone la mantilla?", "¿Cómo guardo el traje?", "Horario y tiendas"],
-    ca: ["Quines peces porta el vestit?", "Vestit del XVIII o del XIX", "Què és l'espolí?", "Com es posa la mantellina?", "Com guarde el vestit?", "Horari i botigues"]
+    es: ["¿Qué piezas lleva el traje?", "Traje del XVIII o del XIX", "¿Qué es el espolín?", "¿Qué son las Fallas?", "¿Cuándo es la cremà?", "¿Quiénes sois?", "¿Cómo guardo el traje?", "Horario y tiendas"],
+    ca: ["Quines peces porta el vestit?", "Vestit del XVIII o del XIX", "Què és l'espolí?", "Què són les Falles?", "Quan és la cremà?", "Qui sou?", "Com guarde el vestit?", "Horari i botigues"]
   };
 
   var BIENVENIDA = {
-    es: '¡Hola! Soy la asistente de <b>Cosas Cucas</b>. Pregúntame por el traje de valenciana o de fallero, las telas, cómo cuidarlo o la tienda.',
-    ca: "Hola! Sóc l'assistent de <b>Cosas Cucas</b>. Pregunta'm pel vestit de valenciana o de faller, les teles, com cuidar-lo o la botiga."
+    es: '¡Hola! Soy la asistente de <b>Cosas Cucas</b>. Pregúntame por el traje de valenciana o de valenciano, las telas, las Fallas, la tienda o lo que hacemos en el taller.',
+    ca: "Hola! Sóc l'assistent de <b>Cosas Cucas</b>. Pregunta'm pel vestit de valenciana o de valencià, les teles, les Falles, la botiga o el que fem al taller."
   };
   var NO_ENTIENDO = {
-    es: 'No he entendido la pregunta. Prueba con una pieza del traje (<b>falda, corpiño, manteleta, peinado</b>…), las <b>telas</b>, cómo <b>guardar</b> el traje o la <b>tienda y el horario</b>.',
-    ca: "No he entés la pregunta. Prova amb una peça del vestit (<b>falda, cosset, manteleta, pentinat</b>…), les <b>teles</b>, com <b>guardar</b> el vestit o la <b>botiga i l'horari</b>."
+    es: 'No he entendido la pregunta. Prueba con una pieza del traje (<b>falda, corpiño, manteleta, peinado</b>…), las <b>telas</b>, las <b>Fallas</b> (<b>mascletà, Ofrenda, cremà</b>…) o la <b>tienda y el horario</b>. Si es algo de tu traje, escríbenos al WhatsApp <b>667 775 501</b>.',
+    ca: "No he entés la pregunta. Prova amb una peça del vestit (<b>falda, cosset, manteleta, pentinat</b>…), les <b>teles</b>, les <b>Falles</b> (<b>mascletà, Ofrena, cremà</b>…) o la <b>botiga i l'horari</b>. Si és alguna cosa del teu vestit, escriu-nos al WhatsApp <b>667 775 501</b>."
   };
   var UI = {
     es: { fab: 'Abrir asistente virtual', panel: 'Asistente virtual Cosas Cucas', nombre: 'Asistente Cosas Cucas',
@@ -7514,7 +7736,9 @@ function updateCitaBtn() {
   /* Palabras que no cuentan al buscar (si no, «más» casaba con «damasco» o «quin» con «basquiña») */
   var STOP = {que:1,del:1,los:1,las:1,con:1,por:1,para:1,una:1,uno:1,com:1,per:1,les:1,els:1,des:1,esta:1,este:1,
               quin:1,quina:1,quins:1,amb:1,son:1,hay:1,mes:1,mas:1,cal:1,dir:1,vol:1,fer:1,ser:1,como:1,cual:1,
-              cuales:1,pero:1,sus:1,tus:1,mis:1,mejor:1,millor:1,the:1,and:1};
+              cuales:1,pero:1,sus:1,tus:1,mis:1,mejor:1,millor:1,the:1,and:1,
+              /* «fallas» o «valencia» salen en casi todas las preguntas: no deben inclinar la balanza */
+              fallas:1,falles:1,falla:1,valencia:1};
 
   /* Normalizar: minusculas, sin tildes, sin puntuacion */
   function norm(s) {
@@ -7538,14 +7762,16 @@ function updateCitaBtn() {
     var toks = q.split(' ').filter(function(t){ return t.length > 2 && !STOP[t]; });
     var best = null, top = 0;
     for (var i = 0; i < KB.length; i++) {
-      var entry = KB[i], sc = 0;
+      /* cada palabra suelta de la pregunta suma una sola vez por respuesta: si no, una respuesta
+         con muchas claves largas que contienen «traje» o «fallera» se llevaría todas esas preguntas */
+      var entry = KB[i], sc = 0, vista = {};
       for (var j = 0; j < entry.keys.length; j++) {
         var k = norm(entry.keys[j]);
         if (q.indexOf(k) !== -1) {
           sc += k.split(' ').length * 2;
         } else {
           for (var ti = 0; ti < toks.length; ti++) {
-            if (k.indexOf(toks[ti]) !== -1) sc += 1;
+            if (!vista[toks[ti]] && k.indexOf(toks[ti]) !== -1) { vista[toks[ti]] = 1; sc += 1; }
           }
         }
       }
@@ -7560,6 +7786,10 @@ function updateCitaBtn() {
   var msgs  = document.getElementById('chat-msgs');
   var inp   = document.getElementById('chat-inp');
   if (!fab || !panel || !msgs || !inp) return;
+  msgs.addEventListener('click', function(e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (a) closePanel();
+  });
 
   function openPanel() {
     panel.classList.add('open');

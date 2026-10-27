@@ -348,3 +348,85 @@ Este archivo no se publica. Sirve para saber de dónde sale cada dato si alguien
 ### gracias · (saludo) / (salutació)
 
 - C:\Users\NACHO PC\Desktop\documntos prueba\cosas-cucas\index.html
+
+
+## Ampliación del 28-10-2026: Fallas, historia del espolín y del traje de valenciano, y la propia web
+
+Ignacio pidió que el chat supiera más de las Fallas en general y de la información de la web, y después la historia
+del espolín y la del traje de valenciano. Tres investigadores buscaron por temas (qué son las Fallas y su organización;
+los actos; las Falleras Mayores, la música y la gastronomía) y un verificador por tema abrió cada fuente y buscó una
+segunda. Otros dos pares investigador/verificador hicieron la historia del espolín y la del traje de valenciano. Tres
+lectores sacaron de los archivos de la web lo que ya está publicado (y lo que no hay que decir). Lo que solo tenía una
+fuente se atribuye en la respuesta («según Distrito Fallas», «la Viquipèdia»…); lo que no se pudo confirmar se quedó fuera.
+
+**Lo que se dejó fuera a propósito:** el año del IV Congreso General Fallero (ninguna fuente lo da), el origen del nombre
+«torrentí» (solo en un blog), el año exacto de llegada del telar Jacquard a València, que València sea «la única ciudad»
+que mantiene el espolín, el año de fundación de Cosas Cucas (pendiente 1981/1982: el chat dice «más de cuarenta años»),
+la nota 4,9 y las «+5000 clientas», precios, plazos y horarios especiales. De menores, solo nombre y cargo ya publicados.
+
+**Datos de un año concreto:** van marcados con el año («en 2026…»). Las fechas de 2027 salen del Bando Fallero tal como lo
+publicó la prensa; el 28 de febrero (Crida) y el viernes 19 de marzo son cálculo de calendario. Revisar cada temporada:
+`crida`, `mascleta`, `planta`, `castillos`, `crema`, `cabalgatas`, `sanjose`, `premios`, `fm-2027`, `fallas-2027`.
+
+**Buscador:** desde esta ampliación, cada palabra suelta de la pregunta suma una sola vez por respuesta (antes sumaba una
+vez por cada clave que la contenía, y las respuestas con muchas claves largas se llevaban preguntas ajenas). «fallas»,
+«falles», «falla» y «valencia» no cuentan como palabras sueltas. Se quitaron claves cortas que se colaban dentro de otras
+palabras: «ram» (en «programa» e «Instagram») y «nino» (en «ninot»). Batería de pruebas:
+`node herramientas/probar-asistente.mjs` con `herramientas/asistente-preguntas.json` (179 preguntas, ES y VAL).
+
+### espolin-historia · Historia del espolín
+
+- https://garin1820.com/que-es-un-espolin/ (la palabra, citando la definición de la RAE)
+- https://www.museodelasedavalencia.com/espolin-genoves/ (spuole; «parece ser» invención española, tejidos hispanoárabes del XV)
+- https://www.uv.es/vlc-silk-road/en/l-influencia-de-la-seda-en-la-historia-i-la-cultura-valenciana.html (velluters 1479; pebrina 1854)
+- https://www.valencia.es/cas/infociudad/-/asset_publisher/DFHqZCbLF0Iv/content/infociudad-museo-del-colegio-arte-mayor-de-la-seda (Colegio, 1686)
+- https://www.museodelasedavalencia.com/telar-de-vellut/ (unos 3.500 telares en el XVIII)
+- https://garin1820.com/la-revolucion-de-la-maquina-jacquard/ (Jacquard, 1801)
+- https://garin1820.com/sobre-nosotros/ y https://lexquisit.comunitatvalenciana.com/en/recursos/moncada-silk-museum-garin-factory (Garín, 1820; Moncada; museo)
+- https://valenciaplaza.com/arquitectura-patrimonio-valencia-comunitat-valenciana/del-cuc-a-lespoli-un-patrimoni-vulnerable (Compañía Valenciana de la Seda, Vives i Marí)
+- https://www.valencia.es/val/actualitat/-/content/licitación-espolines-falleras-mayores y https://officialpress.es/espolin-fallera-mayor-de-valencia-su-historia/ (espolín oficial desde 2001)
+
+### traje-historia · Historia del traje de valenciano
+
+- https://dialnet.unirioja.es/servlet/articulo?codigo=1988083 (Ruth de la Puerta, 2002: moda del XVIII, «típico» en el XIX)
+- https://www.enciclopedia.cat/tradicionari/la-indumentaria-tradicional (saragüells de trabajo; jupetins de seda)
+- https://ca.wikipedia.org/wiki/Saragüells (reminiscencia morisca)
+- https://www.distritofallas.com/historia/historia-del-traje-de-fallera-y-de-fallero/ (años veinte; 1954 «de cucaracha»; años setenta) · 1954 también en https://www.folklore.ee/folklore/vol66/wilk.pdf
+- https://sede.valencia.es/sede/descarga/doc/DOCUMENT_1_ORD0157_C (Reglamento Fallero, art. 64: traje del IV Congreso)
+
+### fallas-que · fallas-origen · jcf · comision · monumento · premios · indultat
+
+- https://ich.unesco.org/es/RL/las-fallas-de-valencia-00859 (UNESCO 2016, ninots, valenciano)
+- https://www.visitvalencia.com/agenda-valencia/fiestas/las-fallas-de-valencia/preguntas (15-19 de marzo, madera y cartón piedra, 800 monumentos, Ciudad del Artista Fallero)
+- https://cultural.valencia.es/en/patrimonio-cultural/fallas-festival-unesco-world-heritage-site/ (cadafals del XVIII, 1934, Benicalap)
+- https://www.comunitatvalenciana.com/en/festivities/fallas/history y https://fallas.com/de-l-estoreta-velleta-a-la-gran-fiesta-de-las-fallas/ (carpinteros; 1901)
+- https://www.enciclopedia.cat/EC-GEC-22167043 (La Traca; llibret; pueblos)
+- https://www.fallas.com/quienes-somos/ y https://fallas.com/reglamento-fallero/ (JCF 1939; comisión, casal, sector)
+- https://fallas.com/comisiones-falleras/ (26 sectores, unas 380 comisiones, octubre de 2026) · https://www.valencia.es/cas/actualidad/-/content/censo-fallero-val%C3%A8ncia-2026
+- https://www.valencia.es/cas/infociudad2/004289 (Museo del Gremio de Artistas Falleros)
+- https://www.visitvalencia.com/agenda-valencia/entrega-de-premios-de-fallas · https://www.elespanol.com/valencia/cultura/20260316/convento-jerusalen-convierte-mejor-falla-valencia-repite-segundo-ano-consecutivo-alto/1003744172328_0.html
+- https://www.visitvalencia.com/agenda-valencia/el-ninot-indultat-el-unico-que-se-salva-del-fuego-en-fallas · https://www.comunitatvalenciana.com/es/fiestas/fallas/exposicion-del-ninot
+
+### crida · mascleta · desperta · planta · castillos · crema · cabalgatas · sanjose · ofrenda (ampliada)
+
+- https://www.visitvalencia.com/agenda-valencia/programa-fallas-2026 (fechas y horas de 2026)
+- https://www.visitvalencia.com/agenda-valencia/la-crida-de-las-fallas · .../mascletas-de-las-fallas · .../macrodesperta-de-las-fallas · .../planta-fallas · .../ofrenda-flores-fallas
+- https://visitvalencia.com/en/events-valencia/castillos-nit-del-foc
+- https://www.distritofallas.com/2025/12/03/jcf-aprueba-el-refrito-del-programa-de-festejos-para-las-fallas-de-2026/
+- https://www.eldebate.com/espana/comunidad-valenciana/20260319/programa-oficial-fallas-2026-valencia-este-jueves-19-marzo_391512_amp.html
+- https://www.valencia.es/cas/actualidad/-/content/pirotecnia-descentralizada-fallas-barrios-y-pedan%C3%ADas-val%C3%A8ncia
+- https://www.folklore.ee/Folklore/vol66/wilk.pdf (blusón en actos no oficiales)
+
+### eleccion · fm-2027 · pasodoble · bunyols · fallas-2027
+
+- https://elmeridiano.es/las-26-falleras-elegidas-para-las-cortes-de-honor-de-las-fallas-de-valencia-2027/ (13 y 13)
+- https://officialpress.es/listado-candidatas-a-falleras-mayores-de-valencia-2027/ (preselecciones, pruebas, gala)
+- https://www.valencia.es/cas/actualidad/-/content/falleras-mayores-2027 y .../telefonada-2027 y .../proclamaci%C3%B3n-falleras-mayores-val%C3%A8ncia-2027
+- https://www.eldebate.com/espana/comunidad-valenciana/20260130/sigue-directo-exaltacion-fallera-mayor-valencia-2026_380105.html (Exaltación, Palau de la Música)
+- https://es.wikipedia.org/wiki/El_fallero · https://officialpress.es/19-de-marzo-y-entonces-sucedio-por-jose-luis-fortea/ · https://www.enciclopedia.cat/gran-enciclopedia-catalana/josep-serrano-i-simeon
+- https://www.visitvalencia.com/agenda-valencia/donde-comprar-los-mejores-bunuelos-de-calabaza
+- https://valenciaplaza.com/valenciaplaza/valencia/el-cierre-al-trafico-del-centro-en-las-fallas-de-2027-se-adelantara-a-las-830-horas-del-dia-16-de-marzo (Bando 2027)
+
+### quienes · traslado · redes · colecciones · semana-santa · deportivas · telas-casa · propia-tela · decoracion · galeria · vestidas · regional · reconocimientos · noticias
+
+- Todo sale de lo que ya publica la web: `index.html` (historia, colecciones, deportivas, contacto, pie, Falleras Mayores, Cortes), `trajes-a-medida.html`, `espolin.html`, `telas-valencianas.html`, `traje-de-valenciano.html`, `indumentaria-infantil.html`, `decoracion.html`, `galeria.html` y `datos/galeria.json`, `indumentaria-regional.html`/`regional-datos.js`, `datos/noticias.json`.
