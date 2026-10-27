@@ -34,6 +34,7 @@
 !/paginas.js
 !/regional-datos.js
 !/formulario-correo.js
+!/proteger-fotos.js
 
 # Datos que se editan desde el panel (/admin): Falleras Mayores, galería…
 !/datos*

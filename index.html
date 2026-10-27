@@ -6431,7 +6431,7 @@ function htmlBloque(b, portada) {
       /* la portada del vídeo se pide al abrir la noticia en el lector (data-poster); en la portada, ya */
       const poster = b.poster ? `${portada ? 'poster' : 'data-poster'}="${escHtml(rutaDato(b.poster))}" ` : '';
       return `<figure class="noticia__video${alto ? ' noticia__video--alto' : ''}">
-            <video controls playsinline preload="none" width="720" height="${alto ? 1280 : 960}"
+            <video controls controlslist="nodownload" playsinline preload="none" width="720" height="${alto ? 1280 : 960}"
                    ${poster}src="${escHtml(rutaDato(b.video))}" aria-label="${escHtml(txN(b.titulo))}"></video>
           </figure>`;
     }
@@ -7673,5 +7673,6 @@ function updateCitaBtn() {
 })();
 </script>
 
+<script src="proteger-fotos.js?v=1" defer></script>
 </body>
 </html>

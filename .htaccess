@@ -29,6 +29,18 @@ AddCharset utf-8 .html .css .js .json .yml .xml .txt
   # Archivos de configuración (.htaccess…): nunca se sirven
   RewriteRule ^\.ht - [R=404,L]
 
+  # ── Fotos y vídeos: no se pueden enseñar desde otras webs ───────────────────────────
+  # Si otra web mete nuestras fotos en sus páginas enlazándolas, el servidor no se las da (error 403).
+  # Pasan: las peticiones sin «Referer» (escribir la dirección, las vistas previas de WhatsApp,
+  # Facebook o Instagram al compartir un enlace), la propia web, el ordenador de pruebas y los
+  # buscadores, para que Google Imágenes las siga enseñando y traiga visitas.
+  RewriteCond %{HTTP_REFERER} !^$
+  RewriteCond %{HTTP_REFERER} !^https?://(www\.)?cosascucas\.es/ [NC]
+  RewriteCond %{HTTP_REFERER} !^https?://(localhost|127\.0\.0\.1)(:\d+)?/ [NC]
+  RewriteCond %{HTTP_REFERER} !^https?://cosas-cucas\.vercel\.app/ [NC]
+  RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?(google|bing|duckduckgo|yahoo|ecosia)\.[a-z.]+/ [NC]
+  RewriteRule \.(jpe?g|png|webp|gif|avif|jfif|mp4|webm|mov)$ - [F,NC,L]
+
   # ── Una sola dirección: https://cosascucas.es ───────────────────────────────────────
   # Cuando el certificado SSL esté activo para cosascucas.es y www.cosascucas.es, quitar el #
   # de las cuatro líneas siguientes: todo (http, www) va a https://cosascucas.es con un solo salto.
