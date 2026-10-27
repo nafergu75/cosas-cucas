@@ -1,6 +1,18 @@
 {
   "falleras": [
     {
+      "foto": "espolin/esp-tetuan-meri.webp",
+      "nombre": "María José Zalve Quilis",
+      "falla": {
+        "es": "Mossén Josep Cuenca-Pinedo",
+        "ca": "Mossén Josep Cuenca-Pinedo"
+      },
+      "cargo": {
+        "es": "Fallera Mayor 2027",
+        "ca": "Fallera Major 2027"
+      }
+    },
+    {
       "foto": "falleras mayores/fallera mayor2026 Matías perellolluis Santángel.jpeg",
       "nombre": "Cristina Huerta Pérez",
       "falla": {
