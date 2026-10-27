@@ -72,6 +72,9 @@ a.card { cursor: pointer; }
   background: linear-gradient(0deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,0) 100%);
 }
 @media (max-width: 900px) { .ideas { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
+/* si la última fila se queda con una sola foto, va centrada (3 columnas en ordenador, 2 en tableta y móvil) */
+@media (min-width: 901px) { .ideas > :last-child:nth-child(3n+1) { grid-column: 2; } }
+@media (max-width: 900px) { .ideas > :last-child:nth-child(2n+1) { grid-column: 1 / -1; justify-self: center; width: calc((100% - 12px) / 2); } }
 
 .visor {
   width: 100vw; height: 100vh; max-width: none; max-height: none; margin: 0; padding: 0;
