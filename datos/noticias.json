@@ -277,6 +277,251 @@
   },
   {
     "titulo": {
+      "es": "Así vestimos a Meri el día de su presentación",
+      "ca": "Així vam vestir Meri el dia de la seua presentació"
+    },
+    "antetitulo": {
+      "es": "Noticia · Octubre 2026",
+      "ca": "Notícia · Octubre 2026"
+    },
+    "id": "noticia-meri-presentacion",
+    "fecha": "2026-10-24",
+    "publicada": true,
+    "portada": false,
+    "tarjeta": [
+      {
+        "foto": "/noticias/meri-presentacion-11.webp",
+        "mini": "/noticias/meri-presentacion-11-mini.webp",
+        "x": 50,
+        "y": 20
+      },
+      {
+        "foto": "/noticias/meri-presentacion-13.webp",
+        "mini": "/noticias/meri-presentacion-13-mini.webp",
+        "x": 50,
+        "y": 25
+      }
+    ],
+    "fotos": [
+      {
+        "foto": "/noticias/meri-presentacion-01.webp",
+        "mini": "/noticias/meri-presentacion-01-mini.webp",
+        "alt": {
+          "es": "Noelia y María ajustan el traje de Meri en el salón, con la manteleta y el delantal ya puestos",
+          "ca": "Noelia i María ajusten el vestit de Meri al saló, amb la manteleta i el davantal ja posats"
+        },
+        "x": 50,
+        "y": 25,
+        "entera": true,
+        "pequena": false,
+        "fija": false,
+        "pase": false
+      },
+      {
+        "foto": "/noticias/meri-presentacion-02.webp",
+        "mini": "/noticias/meri-presentacion-02-mini.webp",
+        "alt": {
+          "es": "Ajustando la cinta de raso de la cintura",
+          "ca": "Ajustant la cinta de setí de la cintura"
+        },
+        "x": 50,
+        "y": 25,
+        "entera": true,
+        "pequena": false,
+        "fija": false,
+        "pase": false
+      },
+      {
+        "foto": "/noticias/meri-presentacion-03.webp",
+        "mini": "/noticias/meri-presentacion-03-mini.webp",
+        "alt": {
+          "es": "Meri de perfil mientras le colocan el vuelo de la falda",
+          "ca": "Meri de perfil mentre li col·loquen el vol de la falda"
+        },
+        "x": 50,
+        "y": 25,
+        "entera": true,
+        "pequena": false,
+        "fija": false,
+        "pase": false
+      },
+      {
+        "foto": "/noticias/meri-presentacion-04.webp",
+        "mini": "/noticias/meri-presentacion-04-mini.webp",
+        "alt": {
+          "es": "Por detrás, colocando la manteleta sobre los hombros",
+          "ca": "Per darrere, col·locant la manteleta sobre els muscles"
+        },
+        "x": 50,
+        "y": 25,
+        "entera": true,
+        "pequena": false,
+        "fija": false,
+        "pase": false
+      },
+      {
+        "foto": "/noticias/meri-presentacion-05.webp",
+        "mini": "/noticias/meri-presentacion-05-mini.webp",
+        "alt": {
+          "es": "La espalda del traje, con el lazo de raso champán de caídas largas",
+          "ca": "L'esquena del vestit, amb el llaç de setí xampany de caigudes llargues"
+        },
+        "x": 50,
+        "y": 25,
+        "entera": true,
+        "pequena": false,
+        "fija": false,
+        "pase": false
+      },
+      {
+        "foto": "/noticias/meri-presentacion-06.webp",
+        "mini": "/noticias/meri-presentacion-06-mini.webp",
+        "alt": {
+          "es": "De frente, con el delantal bordado en dorado, mientras repasan el bajo de la falda",
+          "ca": "De front, amb el davantal brodat en daurat, mentre repassen el baix de la falda"
+        },
+        "x": 50,
+        "y": 25,
+        "entera": true,
+        "pequena": false,
+        "fija": false,
+        "pase": false
+      },
+      {
+        "foto": "/noticias/meri-presentacion-07.webp",
+        "mini": "/noticias/meri-presentacion-07-mini.webp",
+        "alt": {
+          "es": "Meri, ya vestida, con el traje completo",
+          "ca": "Meri, ja vestida, amb el vestit complet"
+        },
+        "x": 50,
+        "y": 25,
+        "entera": true,
+        "pequena": false,
+        "fija": false,
+        "pase": false
+      },
+      {
+        "foto": "/noticias/meri-presentacion-08.webp",
+        "mini": "/noticias/meri-presentacion-08-mini.webp",
+        "alt": {
+          "es": "La manga corta de farol, rematada con un volante de encaje",
+          "ca": "La mànega curta de farolet, rematada amb un volant de punta"
+        },
+        "x": 50,
+        "y": 40,
+        "entera": true,
+        "pequena": false,
+        "fija": false,
+        "pase": false
+      },
+      {
+        "foto": "/noticias/meri-presentacion-09.webp",
+        "mini": "/noticias/meri-presentacion-09-mini.webp",
+        "alt": {
+          "es": "Detalle del espolín «Tetuán»: un ramo de flores rosas, azules y verdes sobre el fondo champán, entre hojas doradas",
+          "ca": "Detall de l'espolí «Tetuán»: un ram de flors roses, blaves i verdes sobre el fons xampany, entre fulles daurades"
+        },
+        "x": 50,
+        "y": 50,
+        "entera": true,
+        "pequena": false,
+        "fija": false,
+        "pase": false
+      },
+      {
+        "foto": "/noticias/meri-presentacion-10.webp",
+        "mini": "/noticias/meri-presentacion-10-mini.webp",
+        "alt": {
+          "es": "Otro detalle de la tela, con el ramo tejido color a color",
+          "ca": "Un altre detall de la tela, amb el ram teixit color a color"
+        },
+        "x": 50,
+        "y": 50,
+        "entera": true,
+        "pequena": false,
+        "fija": false,
+        "pase": false
+      },
+      {
+        "foto": "/noticias/meri-presentacion-11.webp",
+        "mini": "/noticias/meri-presentacion-11-mini.webp",
+        "alt": {
+          "es": "Meri sonríe, con la manteleta, el collar de perlas y el peinado de tres moños",
+          "ca": "Meri somriu, amb la manteleta, el collar de perles i el pentinat de tres monyos"
+        },
+        "x": 50,
+        "y": 20,
+        "entera": true,
+        "pequena": false,
+        "fija": false,
+        "pase": false
+      },
+      {
+        "foto": "/noticias/meri-presentacion-12.webp",
+        "mini": "/noticias/meri-presentacion-12-mini.webp",
+        "alt": {
+          "es": "Meri, de medio cuerpo, el día de su presentación",
+          "ca": "Meri, de mig cos, el dia de la seua presentació"
+        },
+        "x": 50,
+        "y": 20,
+        "entera": true,
+        "pequena": false,
+        "fija": false,
+        "pase": false
+      },
+      {
+        "foto": "/noticias/meri-presentacion-13.webp",
+        "mini": "/noticias/meri-presentacion-13-mini.webp",
+        "alt": {
+          "es": "Meri con Noelia y María, de Cosas Cucas, que la vistieron ese día",
+          "ca": "Meri amb Noelia i María, de Cosas Cucas, que la van vestir eixe dia"
+        },
+        "x": 50,
+        "y": 25,
+        "entera": true,
+        "pequena": false,
+        "fija": false,
+        "pase": false
+      }
+    ],
+    "cuerpo": [
+      {
+        "tipo": "parrafo",
+        "texto": {
+          "es": "El 24 de octubre fue la presentación de Meri, Mª José Zalve Quilis, como Fallera Mayor 2027 de la falla Mossén Josep Cuenca-Pinedo. Ese día Noelia y María fueron a vestirla con el traje de espolín «Tetuán» en color champán que le hemos confeccionado en nuestro taller.\n\nEs la tela que la Compañía Valenciana de la Seda tejió a mano para ella en Beniparrell, y que Meri siguió paso a paso desde que eligió el dibujo, en junio de 2024. Con ella cortamos y cosimos la falda, de mucho vuelo y fruncida en la cintura, y el corpiño con mangas cortas de farol, rematadas con un volante de encaje.",
+          "ca": "El 24 d'octubre va ser la presentació de Meri, Mª José Zalve Quilis, com a Fallera Major 2027 de la falla Mossén Josep Cuenca-Pinedo. Eixe dia Noelia i María la van anar a vestir amb el vestit d'espolí «Tetuán» de color xampany que li hem confeccionat al nostre taller.\n\nÉs la tela que la Compañía Valenciana de la Seda va teixir a mà per a ella a Beniparrell, i que Meri va seguir pas a pas des que va triar el dibuix, el juny de 2024. Amb ella vam tallar i cosir la falda, de molt de vol i frunzida a la cintura, i el cosset amb mànegues curtes de farolet, rematades amb un volant de punta."
+        }
+      },
+      {
+        "tipo": "figura",
+        "foto": "/noticias/meri-presentacion-13.webp",
+        "alt": {
+          "es": "Meri con Noelia y María, de Cosas Cucas, que la vistieron ese día",
+          "ca": "Meri amb Noelia i María, de Cosas Cucas, que la van vestir eixe dia"
+        },
+        "alta": false
+      },
+      {
+        "tipo": "parrafo",
+        "texto": {
+          "es": "Vestir a una fallera lleva su tiempo. Primero, la falda bien asentada y el vuelo en su sitio. Después, la manteleta sobre los hombros y el delantal, los dos bordados en dorado, y la cinta de raso champán de la cintura, que se ata a la espalda con un lazo de caídas largas. Antes de salir, un último repaso al bajo y a cada pliegue.\n\nMeri lució el peinado de tres moños y el collar de perlas, y no dejó de sonreír.\n\nGracias, Meri, por dejarnos acompañarte en un día tan tuyo. Enhorabuena a ti y a toda la falla de Pinedo.",
+          "ca": "Vestir una fallera porta el seu temps. Primer, la falda ben assentada i el vol al seu lloc. Després, la manteleta sobre els muscles i el davantal, tots dos brodats en daurat, i la cinta de setí xampany de la cintura, que es lliga a l'esquena amb un llaç de caigudes llargues. Abans d'eixir, un últim repàs al baix i a cada plec.\n\nMeri va lluir el pentinat de tres monyos i el collar de perles, i no va deixar de somriure.\n\nGràcies, Meri, per deixar-nos acompanyar-te en un dia tan teu. Enhorabona a tu i a tota la falla de Pinedo."
+        }
+      },
+      {
+        "tipo": "enlace_noticia",
+        "noticia": "noticia-meri-tetuan",
+        "texto": {
+          "es": "Cómo se tejió y se confeccionó su espolín «Tetuán»",
+          "ca": "Com es va teixir i confeccionar el seu espolí «Tetuán»"
+        }
+      }
+    ]
+  },
+  {
+    "titulo": {
       "es": "Del telar a Cosas Cucas: así se hizo el traje de proclamación de Meri",
       "ca": "Del teler a Cosas Cucas: així s'ha fet el vestit de proclamació de Meri"
     },
