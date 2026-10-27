@@ -2020,6 +2020,15 @@
       max-width: 780px; margin-bottom: 56px;
       padding-left: 24px; border-left: 3px solid var(--color-gold);
     }
+    /* botón de la colección a su página propia (campo «pagina» de la colección) */
+    .col-modal__pagina {
+      display: inline-block; margin: -28px 0 48px; padding: 12px 22px;
+      border: 1.5px solid var(--color-gold); border-radius: 2px;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--color-text); text-decoration: none; transition: background .2s, color .2s;
+    }
+    .col-modal__pagina:hover { background: var(--color-gold); color: var(--color-white); }
+    .col-modal__pagina[hidden] { display: none; }
     .col-modal__families {
       display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 48px;
     }
@@ -2055,6 +2064,13 @@
       font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em;
       text-transform: uppercase; color: var(--color-gold); margin-bottom: 28px;
     }
+    /* enlace de una familia a su página propia (p. ej. Espolín → espolin.html), bajo el título */
+    .col-modal__family-link {
+      display: inline-block; margin: -14px 0 24px; font-size: 0.85rem; font-weight: 600;
+      color: var(--color-gold); text-decoration: underline; text-underline-offset: 3px;
+    }
+    .col-modal__family-link:hover { color: var(--color-text); }
+    .col-modal__family-link[hidden] { display: none; }
     .col-modal__grid {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 64px;
     }
@@ -3763,6 +3779,7 @@
     </div>
     <div class="col-modal__body">
       <p class="col-modal__desc" id="col-modal-desc"></p>
+      <a class="col-modal__pagina" id="col-modal-pagina" href="#" hidden></a>
       <div class="col-modal__families" id="col-modal-families" hidden></div>
       <p class="col-modal__grid-label" id="col-modal-grid-label"></p>
       <div class="col-modal__grid" id="col-modal-grid"></div>
@@ -4428,13 +4445,14 @@ const translations = {
     drops: [
       {
         id: 'falles-2027-mujer', title: 'Indumentaria Femenina', subtitle: 'Fallas 2027 · La Luz de la Tradición',
+        pagina: { href: 'trajes-a-medida', label: 'Trajes a medida: así trabajamos en el taller →' },
         heroTitle: 'El arte de vestir Valencia.',
         description: 'En Cosas Cucas apostamos por la artesanía cuidada, los detalles únicos y las piezas que transmiten dulzura, tradición y originalidad.',
         heroImage: IMG.portada, archiveImage: IMG.archive1, badge: 'Disponible Ahora',
         ctaPrimary: { label: 'Ver la colección', href: '#drops-archive' },
         ctaSecondary: { label: 'Pedir cita', href: 'mailto:info@cosascucas.es' },
         families: [
-          { id:'espolin',      label:'Espolín',                 image:IMG.esp1 },
+          { id:'espolin',      label:'Espolín',                 image:IMG.esp1, pagina:{ href:'espolin', label:'Qué es el espolín y cómo lo convertimos en tu traje →' } },
           { id:'indumentaria', label:'Indumentaria Valenciana', image:IMG.p8, rest:true },
         ],
         products: [
@@ -4484,6 +4502,7 @@ const translations = {
       },
       {
         id: 'hombre-2027', title: 'Indumentaria Masculina', subtitle: 'Indumentaria Masculina Valenciana',
+        pagina: { href: 'traje-de-valenciano', label: 'Todo sobre el traje de valenciano →' },
         heroTitle: 'El llaurador, vestido con orgullo.',
         description: 'Indumentaria tradicional masculina valenciana para las Fallas de 2027. Jubones de seda, calzas, fajas bordadas y complementos artesanales. Todo confeccionado a medida en nuestro taller de Valencia, con los mismos materiales exclusivos que nuestra línea de mujer.',
         heroImage: IMG.hHero, archiveImage: IMG.hArchive, badge: 'Colección 2027',
@@ -4543,6 +4562,7 @@ const translations = {
       },
       {
         id: 'telas-bordados', title: 'Telas Valencianas', subtitle: 'El Corazón de la Indumentaria',
+        pagina: { href: 'telas-valencianas', label: 'Conoce nuestras telas exclusivas →' },
         heroTitle: 'Tejidos con alma valenciana.',
         description: 'Diseños exclusivos de brocado valenciano para indumentaria fallera: sedas, jacquards y espolinas con nombres propios de nuestra colección. Ven a nuestro taller a verlos y te asesoramos sin compromiso.',
         heroImage: IMG.tPortada, archiveImage: IMG.tPortada, badge: 'Siempre Disponible',
@@ -4919,13 +4939,14 @@ const translations = {
     drops: [
       {
         id: 'falles-2027-dona', title: 'Indumentària Femenina', subtitle: 'Falles 2027 · La Llum de la Tradició',
+        pagina: { href: 'trajes-a-medida', label: 'Vestits a mida: així treballem al taller →' },
         heroTitle: "L'art de vestir València.",
         description: "A Cosas Cucas apostem per l'artesania curada, els detalls únics i les peces que transmeten dolçor, tradició i originalitat.",
         heroImage: IMG.portada, archiveImage: IMG.archive1, badge: 'Disponible Ara',
         ctaPrimary: { label: "Veure la col·lecció", href: '#drops-archive' },
         ctaSecondary: { label: 'Demanar cita', href: 'mailto:info@cosascucas.es' },
         families: [
-          { id:'espolin',      label:'Espolí',                   image:IMG.esp1 },
+          { id:'espolin',      label:'Espolí',                   image:IMG.esp1, pagina:{ href:'espolin', label:"Què és l'espolí i com el convertim en el teu vestit →" } },
           { id:'indumentaria', label:'Indumentària Valenciana', image:IMG.p8, rest:true },
         ],
         products: [
@@ -4960,6 +4981,7 @@ const translations = {
       },
       {
         id: 'home-2027', title: 'Indumentària Masculina', subtitle: 'Indumentària Masculina Valenciana',
+        pagina: { href: 'traje-de-valenciano', label: 'Tot sobre el vestit de valencià →' },
         description: "Indumentària tradicional masculina valenciana per a les Falles del 2027. Jubons de seda, calces, faixes brodades i complements artesanals. Tot confeccionat a mida al nostre taller de València, amb els mateixos materials exclusius que la nostra línia de dona.",
         heroImage: IMG.hHero, archiveImage: IMG.hArchive, badge: "Col·lecció 2027",
         ctaPrimary: { label: "Veure la col·lecció", href: '#drops-archive' },
@@ -5017,6 +5039,7 @@ const translations = {
       },
       {
         id: 'teles-brodats', title: 'Teles Valencianes', subtitle: "El Cor de la Indumentària",
+        pagina: { href: 'telas-valencianas', label: 'Coneix les nostres teles exclusives →' },
         description: "Dissenys exclusius de brocat valencià per a indumentària fallera: sedes, jacquards i espolins amb noms propis de la nostra col·lecció. Vine al nostre taller a veure'ls i t'assessorem sense compromís.",
         heroImage: IMG.tPortada, archiveImage: IMG.tPortada, badge: 'Sempre Disponible',
         ctaPrimary: { label: 'Veure teles', href: '#drops-archive' },
@@ -5468,6 +5491,9 @@ function openCollectionModal(drop) {
   document.getElementById('col-modal-title').textContent = drop.title;
   document.getElementById('col-modal-sub').textContent   = drop.subtitle;
   document.getElementById('col-modal-desc').textContent  = drop.description;
+  const pagina = document.getElementById('col-modal-pagina');
+  pagina.hidden = !drop.pagina;
+  if (drop.pagina) { pagina.href = drop.pagina.href; pagina.textContent = drop.pagina.label; }
   const gridLabel = document.getElementById('col-modal-grid-label');
   const grid      = document.getElementById('col-modal-grid');
   const famsBox   = document.getElementById('col-modal-families');
@@ -5489,6 +5515,7 @@ function openCollectionModal(drop) {
       famsBox.querySelectorAll('.col-modal__family').forEach(b =>
         b.classList.toggle('active', b.dataset.family === id));
       gridLabel.textContent = f.label;
+      ponerEnlaceFamilia(f.pagina);
       grid.innerHTML = drop.products.filter(p => inFamily(f, p)).map(cardHtml).join('');
       gridLabel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
@@ -5502,12 +5529,14 @@ function openCollectionModal(drop) {
       if (b) showFamily(b.dataset.family);
     };
     famsBox.hidden = false;
+    ponerEnlaceFamilia(null);
     gridLabel.textContent = currentLang === 'ca' ? 'Tria una família' : 'Elige una familia';
     grid.innerHTML = '';
   } else {
     famsBox.hidden = true;
     famsBox.innerHTML = '';
     famsBox.onclick = null;
+    ponerEnlaceFamilia(null);
     gridLabel.textContent = labels[currentLang] || labels.es;
     grid.innerHTML = drop.products.map(cardHtml).join('');
   }
@@ -5533,6 +5562,19 @@ function openCollectionModal(drop) {
   document.body.style.width    = '100%';
   document.body.style.overflow = 'hidden';
   document.documentElement.style.overscrollBehavior = 'none';
+}
+/* Enlace de la familia elegida a su página (campo «pagina» de la familia); sin familia o sin página, oculto */
+function ponerEnlaceFamilia(pagina) {
+  const label = document.getElementById('col-modal-grid-label');
+  let a = document.getElementById('col-modal-family-link');
+  if (!a) {
+    a = document.createElement('a');
+    a.id = 'col-modal-family-link';
+    a.className = 'col-modal__family-link';
+    label.after(a);
+  }
+  a.hidden = !pagina;
+  if (pagina) { a.href = pagina.href; a.textContent = pagina.label; }
 }
 function closeCollectionModal() {
   const modal = document.getElementById('col-modal');
