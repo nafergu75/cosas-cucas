@@ -52,7 +52,7 @@ AddCharset utf-8 .html .css .js .json .yml .xml .txt
   RewriteRule ^ https://cosascucas.es%{REQUEST_URI} [L,R=301]
 
   # Páginas retiradas: a la portada
-  RewriteRule ^(probador|inauguracion)(\.html)?/?$ / [L,R=301]
+  RewriteRule ^(probador|inauguracion|landing)(\.html)?/?$ / [L,R=301]
 
   # Reseñas de Google (el QR de la tienda apunta aquí; si Google cambia el enlace, solo se cambia esta línea)
   RewriteRule ^resenas/?$ https://g.page/r/Cb2PzDJDyPBrEBM/review [L,R=302]
@@ -76,7 +76,7 @@ AddCharset utf-8 .html .css .js .json .yml .xml .txt
   RewriteCond %1.html -f
   RewriteRule ^(.+)/$ /$1 [L,R=301]
 
-  # /landing/ → /landing (páginas sin carpeta propia; sin esto, el servidor entraba en bucle: error 500)
+  # /pagina/ → /pagina (páginas sin carpeta propia; sin esto, el servidor entraba en bucle: error 500)
   RewriteCond %{REQUEST_FILENAME}.html -f
   RewriteRule ^([^/]+)/$ /$1 [L,R=301]
 

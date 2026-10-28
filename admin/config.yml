@@ -510,7 +510,7 @@ collections:
   - name: falleras_mayores
     label: Falleras Mayores
     icon: workspace_premium
-    description: Indumentaria de Honor (portada y landing). El orden de la lista es el de la web.
+    description: Indumentaria de Honor (portada). El orden de la lista es el de la web.
     files:
       - name: falleras_mayores
         label: Falleras Mayores

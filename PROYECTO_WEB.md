@@ -40,7 +40,6 @@ Fundada por Paquita Martorell en el Cabañal. Hoy la llevan sus hijas Noelia y M
 |---|---|
 | `index.html` | La web principal. Casi todo está aquí. |
 | `galeria.html` | Galería en dos apartados. Al entrar solo se ven dos ventanas con foto de portada, «Indumentaria femenina» (52 fotos) e «Indumentaria masculina» (16); al pinchar una salen sus fotos («Pasarela» y «Nuestras falleras» / «Nuestros falleros»), con enlaces para volver o pasar a la otra. Enlaces directos `galeria.html#femenina` y `#masculina` (el botón atrás vuelve a las ventanas). Datos: `PASARELA` (con `tipo: 'masculina'` en las 3 de chicos), `GALERIA_TIENDA` (`cat: 'hombre'` va a masculina) y `HOMBRE` (fotos reales de `hombre/`; las generadas con ChatGPT no entran). |
-| `landing.html` | Página de captación «Trajes de fallera en Valencia». |
 | `cartel-traslado.html` | Cartel del traslado a Burriana. |
 | `aviso-legal.html`, `politica-privacidad.html` | Textos legales. |
 | `404.html` | Página de error. |
@@ -168,7 +167,7 @@ Los textos fijos de la portada van escritos en castellano dentro de `index.html`
 
 - **Resuelto el 23/24-10-2026:** el dominio cosascucas.es ya resuelve (Arsys, https con certificado Sectigo, correo con MX) y el formulario de correo está activado y probado (ver historial del 24-10). Lo que sigue abajo sobre el formulario queda como referencia de cómo funciona.
 - **Formulario de correo (`formulario-correo.js`, ACTIVO desde el 24-10-2026).** Ignacio eligió que los botones de cita y «Consultar proyecto» abran una ventanita con nombre, teléfono, correo y mensaje, y que el mensaje llegue a info@ a través de FormSubmit (gratis, sin cuenta), sin abrir el correo de la clienta. Está publicado con `ACTIVO = false`: así no hace nada y cada botón sigue con su enlace de siempre (los de cita, a WhatsApp o al formulario de contacto). Los botones que lo usarán llevan `data-correo` (`cita`, `proyecto` o `consulta`): «Pedir cita» de Reseñas, «Pedir cita en tienda» de Nuestra historia, «Pedir cita» del pie, el botón de la ventana de colecciones (con la colección en el asunto, `data-correo-extra`), «Consultar proyecto», «Pedir mi par» y los tres de cita de `landing.html`. El «Pedir cita por WhatsApp» de la landing y el botón «WhatsApp» de la portada se quedan en WhatsApp.
-  **Para activarlo, cuando info@ reciba correo:** (1) `ACTIVO = true` en `formulario-correo.js`; (2) subir su `?v=` en `index.html` y `landing.html`; (3) añadir a `politica-privacidad.html`, apartado 1, este punto: «**Formulario para pedir cita o consultar un proyecto:** nombre, teléfono (si nos lo da), correo electrónico y mensaje. Al pulsar «Enviar», la web los manda a través de FormSubmit (formsubmit.co), un servicio externo de envío de formularios, que nos los hace llegar por correo a info@cosascucas.es. Solo los usamos para contestarle.»; (4) publicar y mandar un mensaje de prueba desde la web: FormSubmit envía a info@ un correo «Activate Form» y hasta que se pulsa no entrega nada. Probado en local con el envío simulado: avisos, castellano y valenciano, asunto, Escape y foco.
+  **Para activarlo, cuando info@ reciba correo:** (1) `ACTIVO = true` en `formulario-correo.js`; (2) subir su `?v=` en `index.html`; (3) añadir a `politica-privacidad.html`, apartado 1, este punto: «**Formulario para pedir cita o consultar un proyecto:** nombre, teléfono (si nos lo da), correo electrónico y mensaje. Al pulsar «Enviar», la web los manda a través de FormSubmit (formsubmit.co), un servicio externo de envío de formularios, que nos los hace llegar por correo a info@cosascucas.es. Solo los usamos para contestarle.»; (4) publicar y mandar un mensaje de prueba desde la web: FormSubmit envía a info@ un correo «Activate Form» y hasta que se pulsa no entrega nada. Probado en local con el envío simulado: avisos, castellano y valenciano, asunto, Escape y foco.
 - **Reglas de móvil pisadas (de antes):** unas 20 reglas del bloque `@media (max-width: 768px)` y del de 480px no se aplican porque las reglas de escritorio de Historia, Vídeos, Decoración, Galería, Reseñas, Deportivas… van después. Ya no hace que la página se salga del ancho, pero esas secciones no se ven en móvil como se pensó. Queda propuesto como tarea aparte.
 - **Crédito de las fotos de Laura:** van sin crédito. Si Ignacio quiere, se añade una línea (por ejemplo «Fotos cedidas por Laura Miquel») en `CORTE_CREDITOS`/`t().corte`.
 - **Texto de la noticia de la Corte:** no hay nada publicado sobre Laura aparte del nombre y la falla. Si Ignacio quiere contar algo de ella (desde cuándo la viste la casa, qué trajes son), se añade al párrafo 2.
@@ -188,7 +187,7 @@ Actúa como un ingeniero sénior de ciberseguridad web especializado en sitios e
 
 Mi web es HTML estático hecho a mano:
 - Archivo principal: index.html, con CSS y JavaScript embebidos o en archivos locales.
-- Otras páginas: galeria.html, landing.html, aviso legal, política de privacidad y 404.html.
+- Otras páginas: galeria.html, aviso legal, política de privacidad y 404.html.
 - No usa WordPress, React, Next.js, Laravel, Wix, base de datos ni proceso de compilación.
 - Está publicada en dos sitios con los mismos archivos:
   1. Vercel: https://cosas-cucas.vercel.app
@@ -210,7 +209,7 @@ IMPORTANTE:
 
 FASE 1 — AUDITORÍA ESTÁTICA
 Analiza todos los archivos públicos y el repositorio:
-1. index.html, galeria.html, landing.html, páginas legales y 404.
+1. index.html, galeria.html, páginas legales y 404.
 2. CSS, JavaScript, imágenes, fuentes, iconos, vídeos y cualquier recurso externo.
 3. Enlaces, formularios, atributos target, iframes, scripts externos, metadatos y comentarios.
 4. Posibles fugas de información: correos personales, teléfonos, rutas internas, claves, tokens, comentarios de desarrollo, nombres de archivos sensibles, backups, archivos .env, .git expuesto o configuraciones.
@@ -244,7 +243,7 @@ Configura como mínimo:
 - Reglas de caché adecuadas para HTML, CSS, JS e imágenes.
 - Cabeceras para impedir que los navegadores interpreten incorrectamente tipos de archivo.
 
-Explica cada cabecera, su efecto y cómo probarla. No apliques una CSP restrictiva sin antes analizar todos los scripts, estilos, imágenes y recursos externos usados en index.html, galeria.html y landing.html.
+Explica cada cabecera, su efecto y cómo probarla. No apliques una CSP restrictiva sin antes analizar todos los scripts, estilos, imágenes y recursos externos usados en index.html y galeria.html.
 
 FASE 3 — MEDIDAS DENTRO DEL HTML PARA GITHUB PAGES
 Como GitHub Pages no permite cabeceras personalizadas, implementa en el HTML lo que sea compatible:
@@ -316,7 +315,7 @@ Después de cada cambio:
 1. Indica archivos creados o modificados.
 2. Explica el cambio en lenguaje claro.
 3. Explica cómo probarlo en Vercel y GitHub Pages.
-4. Comprueba que el carrusel, lector, chat local, formulario de WhatsApp, galería, landing, páginas legales y 404 siguen funcionando.
+4. Comprueba que el carrusel, lector, chat local, formulario de WhatsApp, galería, páginas legales y 404 siguen funcionando.
 5. Comprueba escritorio y móvil.
 6. Indica cómo revertir el cambio si algo falla.
 7. Entrega un checklist final con estado: implementado, pendiente, requiere acción externa o no aplicable en GitHub Pages.
@@ -341,6 +340,7 @@ Empieza ahora con la FASE 1. No modifiques ningún archivo todavía. Analiza el 
 Ordenado de lo más nuevo a lo más antiguo. Cada línea es un trabajo terminado y publicado.
 
 ### 28-10-2026
+- **Retirada la página `landing.html` (/landing)** (lo pidió Ignacio: «parece una página de pruebas que no debería ser pública»). Ya tenía `noindex` y estaba fuera del sitemap desde el 27-10, y ninguna página la enlazaba, pero quien tuviera el enlace seguía viendo datos que la web no publica: «Ruzafa» (la tienda está en Burriana 21), «desde 1982», «+1.500 trajes», «tres generaciones», «sábados con cita previa» y un nombre propio. En el informe del 21-10 ya se le preguntó si la usaba para anuncios y no hubo respuesta. Se borra del repositorio (el despliegue la borra también del servidor de Arsys) y `/landing`, `/landing/` y `/landing.html` llevan a la portada con un 301, para que no se rompa ningún anuncio o QR viejo: en `.htaccess`, junto a probador e inauguración, y en `vercel.json` (quitada su reescritura). Fuera también de `.vercelignore`. Se quitan sus menciones en los comentarios de `formulario-correo.js`, `paginas.css`, `styles.css` (sigue en uso: lo cargan las páginas de servicio) y en el panel (`admin/config.yml`). Si algún día hace falta, está en git (commit anterior a este).
 - **Asistente: historia de la peineta** (pedida por Ignacio: «añade también la historia de la peineta»). Respuesta nueva `peineta-historia`, en ES y VAL, detrás de `traje-historia`. Cuenta de dónde viene según el Museo Nacional de Cerámica, el nombre de pinta, la peineta única del siglo XVIII y el juego de tres del XIX, los materiales antiguos, la peineta del museo con Fernando VII, la diferencia con la peineta de mantilla y la firma oficial de 2027 (Texor). Investigado con un workflow de 3 investigadores y 3 verificadores; lo que solo tenía una fuente se quedó fuera (lista en `ASISTENTE_FUENTES.md`). La firma oficial hay que revisarla cada temporada. 76 respuestas; batería 194 de 194.
 - **Asistente: historia del traje de fallera** (pedida por Ignacio: «añade también la historia del traje de fallera»). Se amplía la respuesta `historia`, que se llama ahora «Historia del traje de fallera». Mantiene lo de Vicent Ferrandis y añade: la mujer en Fallas desde los años veinte, Pepita Samper (1929) y el espolín «València», Reina Fallera, Belleza Fallera (1932) y Fallera Mayor (1933), el vestido de gala frente al traje de valenciana, el «traje de fallera» de los años sesenta y los modelos XVIII y XIX que se asentaron entre 1975 y 1985. Claves nuevas: «historia/origen del traje de fallera», «Pepita Samper», «Reina/Belleza Fallera». Fuentes en `ASISTENTE_FUENTES.md`. Batería: 186 de 186.
 - **Asistente de la web: Fallas, historia y la propia web** (pedido por Ignacio: «más información de las fallas en general y de la info de la web», y después la historia del espolín y la del traje de valenciano; «publícalo directamente»). De 39 a **75 respuestas** en ES y VAL. Nuevas: qué son las Fallas, origen, Junta Central, comisión y casal, monumento y ninots, secciones y premios, ninot indultat, Crida, mascletà, despertà, plantà, castillos y Nit del Foc, cremà, cabalgatas, San José, cómo se elige a la Fallera Mayor, Falleras Mayores 2027, «El Fallero», buñuelos, Fallas 2027, historia del espolín, historia del traje de valenciano, quiénes somos, la tienda de Burriana 21, redes, lo que hacemos, Semana Santa, deportivas, nuestras telas (no a metro), traer la propia tela, decoración (solo Cabañal), galería, a quién hemos vestido, indumentaria regional, premios y desfiles, noticias. La Ofrenda se amplía (días, recorrido, manto, blusón) y la tienda añade el correo. Las respuestas llevan enlaces a su página o sección (dorados; los de la portada cierran el panel). Datos investigados y verificados con fuentes (`ASISTENTE_FUENTES.md`); lo de un año concreto va con el año y hay que revisarlo cada temporada (lista de ids en ese archivo). **Buscador:** cada palabra suelta suma una vez por respuesta; «fallas», «falles», «falla» y «valencia» no cuentan; fuera las claves cortas que se colaban («ram», «nino»). **Batería nueva:** `node herramientas/probar-asistente.mjs` (179 de 179 bien), con las preguntas en `herramientas/asistente-preguntas.json`; comprueba también que cada respuesta tenga los dos idiomas y que sus enlaces existan. Probado en el navegador: respuestas, enlace a Historia, panel que se cierra, valenciano y sin errores.

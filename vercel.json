@@ -28,6 +28,16 @@
       "permanent": true
     },
     {
+      "source": "/landing",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/landing.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/((?!admin(?:/|$)).*)",
       "destination": "https://cosascucas.es/$1",
       "permanent": true
@@ -53,10 +63,6 @@
     {
       "source": "/politica-privacidad",
       "destination": "/politica-privacidad.html"
-    },
-    {
-      "source": "/landing",
-      "destination": "/landing.html"
     },
     {
       "source": "/cartel-traslado",

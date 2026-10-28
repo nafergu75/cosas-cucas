@@ -14,7 +14,7 @@
    ACTIVO = true desde el 24-10-2026 (el dominio ya resuelve y info@ recibe
    correo). Con ACTIVO = false el script no hace nada y cada botón sigue con
    su enlace de siempre. Al cambiarlo, subir el ?v= de este archivo en
-   index.html y landing.html (caché).
+   index.html (caché).
    FormSubmit envía a info@ un correo «Activate Form» con el primer mensaje:
    hasta que se pulsa ese enlace no entrega nada.
 ═══════════════════════════════════════════════════════════════════ */
@@ -237,7 +237,7 @@
   /* Delegado en el documento: vale también para los botones que se pintan con JS
      (reseñas, ventana de colecciones, pie) y para los que se repintan al cambiar de idioma.
      En fase de captura y parando la propagación, para que el desplazamiento suave de los
-     enlaces #contacto (landing) no se dispare a la vez que la ventanita. */
+     enlaces #contacto no se dispare a la vez que la ventanita. */
   document.addEventListener('click', function (e) {
     var btn = e.target.closest && e.target.closest('[data-correo]');
     if (!btn) return;
