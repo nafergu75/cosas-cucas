@@ -3185,8 +3185,9 @@
         height: min(48dvh, 360px);
       }
 
-      .col-modal__hero img,
-      .col-modal__card-img img {
+      /* Las fotos de las piezas llenan su recuadro, como en escritorio: con «contain» las
+         verticales, cuadradas y apaisadas salían de tamaños distintos (Mantillas, Semana Santa). */
+      .col-modal__hero img {
         object-fit: contain;
         background: var(--color-bg-alt);
       }
