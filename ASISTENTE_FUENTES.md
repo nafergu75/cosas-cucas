@@ -405,6 +405,21 @@ La primera parte (Vicent Ferrandis: traje de diario 1670-1830 y traje de labrado
 
 Fuera: que el traje de Samper se guarde en el Museo de la Ciudad (solo Distrito Fallas, sin segunda fuente).
 
+### peineta-historia · Historia de la peineta (28-10-2026)
+
+Tres investigadores (origen; materiales y oficio; Fallas en el siglo XX) y un verificador por tema que abrió cada fuente y buscó otra independiente.
+
+- https://www.cultura.gob.es/mnceramica/colecciones/seleccion-piezas/textiles-indumentaria-complementos/peineta.html (Museo Nacional de Cerámica: viene del peine que se dejaba en el moño para sujetar manto o mantilla; peineta del primer cuarto del XIX, inv. CE2/00406, plata sobredorada, medallón de Fernando VII; se atribuye al museo)
+- http://floreal-indumentaria.blogspot.com/2016/10/la-peineta.html · https://diariodeunapeineta.com/j-v-la-peineta/ · https://www.trajesdefallera.es/aderezos (peine/pinta; una sola al principio; 6-7 cm; plata, plata sobredorada o latón; grabado y cincelado)
+- https://diariodeunapeineta.com/j-v-el-peinado-de-valenciana-y-de-fallera/ · https://officialpress.es/el-peinado-de-valenciana-paso-a-paso (moño único del XVIII con la pinta trasera; las dos pequeñas, copias de la grande, avanzado el XIX)
+- https://en.wikipedia.org/wiki/Peineta_(comb) · https://www.ecured.cu/Peineta (la peineta de mantilla: carey, hoy acrílico o plástico)
+- https://es.wikipedia.org/wiki/Traje_de_fallera · https://actualidadfallera.es/en/galeriafotos/fotogaleria-elegancia-y-tradicion/peris-roca-orfebres-oficiales-de-daniela-y-la-corte-de-honor-infantil (latón cincelado dorado o plateado; calado y flor de agua hoy)
+- https://officialpress.es/indumentaristas-oficiales-de-las-falleras-mayores-de-valencia-2027/amp/ · https://www.esdiario.com/comunidad-valenciana/260706/192482/falleras-mayores-valencia-2027-indumentaristas-oficiales-son-elegidos-junta-central-fallera.html (Texor Indumentaria, peinetas oficiales 2027, tercer año)
+
+**Revisar cada temporada:** `peineta-historia` (la firma oficial de las peinetas cambia).
+
+Fuera, por tener una sola fuente: «escarpidor» como nombre antiguo, los 15 cm del XIX, el paso de rectangular a triangular, el calado y el repujado como técnicas «posteriores» con evocación morisca, la herencia de peinetas entre generaciones (National Geographic) y la opinión de Ferrandis sobre las peinetas de 1934. El peinado de 2016/2023 ya está en `peinado`.
+
 ### fallas-que · fallas-origen · jcf · comision · monumento · premios · indultat
 
 - https://ich.unesco.org/es/RL/las-fallas-de-valencia-00859 (UNESCO 2016, ninots, valenciano)

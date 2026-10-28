@@ -132,7 +132,13 @@
     "Origen del traje de fallera": "historia",
     "¿Quién fue Pepita Samper?": "historia",
     "¿Qué era la Reina Fallera?": "historia",
-    "¿Cuánto cuesta un traje de fallera?": "precio"
+    "¿Cuánto cuesta un traje de fallera?": "precio",
+    "¿Cuál es la historia de la peineta?": "peineta-historia",
+    "¿De dónde viene la peineta?": "peineta-historia",
+    "¿Cómo eran las peinetas antiguas?": "peineta-historia",
+    "¿Es igual que la peineta de mantilla?": "peineta-historia",
+    "¿Quién hace las peinetas de la Fallera Mayor?": "peineta-historia",
+    "¿De qué están hechas las peinetas?": "peinetas"
   },
   "ca": {
     "Per a què servix el cancan?": "cancan",
@@ -189,6 +195,8 @@
     "Què és el Premi Joia?": "reconocimientos",
     "Quines notícies teniu?": "noticias",
     "Història del vestit de fallera": "historia",
-    "Què era la Bellesa Fallera?": "historia"
+    "Què era la Bellesa Fallera?": "historia",
+    "Història de la pinta": "peineta-historia",
+    "D'on ve la pinta?": "peineta-historia"
   }
 }
