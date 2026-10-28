@@ -127,7 +127,12 @@
     "¿Qué es el Premio Joia?": "reconocimientos",
     "¿Habéis estado en algún desfile?": "reconocimientos",
     "¿Qué noticias tenéis?": "noticias",
-    "¿Qué se pone el fallero para la Ofrenda?": "ofrenda"
+    "¿Qué se pone el fallero para la Ofrenda?": "ofrenda",
+    "¿Cuál es la historia del traje de fallera?": "historia",
+    "Origen del traje de fallera": "historia",
+    "¿Quién fue Pepita Samper?": "historia",
+    "¿Qué era la Reina Fallera?": "historia",
+    "¿Cuánto cuesta un traje de fallera?": "precio"
   },
   "ca": {
     "Per a què servix el cancan?": "cancan",
@@ -182,6 +187,8 @@
     "On veig fotos dels vestits?": "galeria",
     "A qui heu vestit?": "vestidas",
     "Què és el Premi Joia?": "reconocimientos",
-    "Quines notícies teniu?": "noticias"
+    "Quines notícies teniu?": "noticias",
+    "Història del vestit de fallera": "historia",
+    "Què era la Bellesa Fallera?": "historia"
   }
 }

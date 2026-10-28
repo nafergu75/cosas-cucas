@@ -394,6 +394,17 @@ palabras: «ram» (en «programa» e «Instagram») y «nino» (en «ninot»). B
 - https://www.distritofallas.com/historia/historia-del-traje-de-fallera-y-de-fallero/ (años veinte; 1954 «de cucaracha»; años setenta) · 1954 también en https://www.folklore.ee/folklore/vol66/wilk.pdf
 - https://sede.valencia.es/sede/descarga/doc/DOCUMENT_1_ORD0157_C (Reglamento Fallero, art. 64: traje del IV Congreso)
 
+### historia · Historia del traje de fallera (ampliada el 28-10-2026)
+
+La primera parte (Vicent Ferrandis: traje de diario 1670-1830 y traje de labradora desde 1834) ya estaba. Se añade:
+
+- https://www.distritofallas.com/historia/historia-del-traje-de-fallera-y-de-fallero/ (la mujer sin papel visible hasta los años veinte; Reina Fallera, Belleza Fallera 1932, Fallera Mayor 1933; traje de gala y traje tradicional; años sesenta: «traje de fallera», uniforme, falda corta; se atribuye a Distrito Fallas)
+- https://valenciaplaza.com/noticas-cultura-valencia-comunitat-valenciana/bienvenido-a-la-republica-independiente-de-las-fallas (Reina 1931, Belleza 1932, Fallera Mayor desde 1933) · https://officialpress.es/curiosidades-historia-de-las-fallas/amp/ (Reina en 1930): como no coinciden en el año, el chat dice «a principios de los treinta»
+- https://www.valenciabonita.es/2026/03/09/exposicion-indumentaria-fallera-diputacion-de-valencia-fallas-2026/ (exposición «Lluir la festa»: vestidos de gala y piezas tradicionales en los años veinte y treinta; 1975-1985, modelos de hoy)
+- https://officialpress.es/carmen-prades-espolin-crida/ (Pepita Samper, Señorita de España 1929, primer espolín «València» famoso)
+
+Fuera: que el traje de Samper se guarde en el Museo de la Ciudad (solo Distrito Fallas, sin segunda fuente).
+
 ### fallas-que · fallas-origen · jcf · comision · monumento · premios · indultat
 
 - https://ich.unesco.org/es/RL/las-fallas-de-valencia-00859 (UNESCO 2016, ninots, valenciano)
