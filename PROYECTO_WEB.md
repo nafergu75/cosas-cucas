@@ -339,6 +339,9 @@ Empieza ahora con la FASE 1. No modifiques ningún archivo todavía. Analiza el 
 
 Ordenado de lo más nuevo a lo más antiguo. Cada línea es un trabajo terminado y publicado.
 
+### 10-11-2026
+- **Vercel bloqueaba los despliegues** (lo vio Ignacio en el panel de Vercel: «el correo electrónico de confirmación no coincidía con ninguna cuenta de Git»). Los commits salían con `ignacio@ifeval.es` y la cuenta de GitHub y de Vercel es otra: Vercel cancelaba cada despliegue que llegaba desde GitHub (desde el 28-10; la web seguía bien porque cosascucas.es está en Arsys y vercel.app solo redirige y sirve /admin). Arreglo: en este repositorio, `git config user.email 276733317+nafergu75@users.noreply.github.com`, la dirección privada de GitHub de nafergu75 (el repositorio es público, así no se publica el correo personal). Solo afecta a `cosas-cucas`; el correo global no se toca. Los commits viejos siguen con el correo anterior y no hace falta cambiarlos.
+
 ### 01-11-2026
 - **Mantillas: fuera la foto de las dos falleras y cuatro fotos nuevas** (pedido por Ignacio el 01-11-2026; las dejó en `mantillas/` como «WhatsApp Image 2026-11-01 at 21.22.19/21.22.39/21.23.00/21.23.34.jpeg»). Se quita la pieza `mt10` (`mantilla-blanca-dos-falleras.webp`, borrada; el original sigue en `_originales/mantillas/`) en ES y VAL. Nuevas `mt13`-`mt16`, al final, con pies en ES y VAL que describen lo que se ve: `mantilla-marfil-falda-granate.webp`, `mantilla-marfil-perfil-calle.webp`, `mantilla-marfil-falla-noche.webp` y `mantilla-ramo-banda.webp` (esta lleva la firma del fotógrafo «pardo» dentro de la foto). WebP a 1080 px de ancho como máximo (calidad 82); los originales, renombrados, en `_originales/mantillas/`. No se nombra a nadie. La colección queda en 15 piezas (5 filas de 3 en escritorio). Comprobado en ES y VAL, a 375 px, sin fotos rotas.
 
