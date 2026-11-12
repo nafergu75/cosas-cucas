@@ -69,7 +69,7 @@
       "@type": "ClothingStore",
       "@id": "https://cosascucas.es/#tienda-burriana",
       "name": "Cosas Cucas",
-      "description": "Tienda de indumentaria valenciana artesanal. Confección de trajes de fallera, Falleras Mayores, Cortes de Honor, telas, bordados y aderezos desde 1982.",
+      "description": "Tienda y taller de indumentaria valenciana. Trajes de fallera y de valenciano a medida, indumentaria masculina e infantil, espolines, telas y aderezos desde 1982.",
       "url": "https://cosascucas.es/",
       "telephone": "+34963511556",
       "email": "info@cosascucas.es",
@@ -1066,6 +1066,9 @@
       font-size: clamp(2rem, 3.5vw, 2.8rem);
       font-weight: 400;
     }
+    .archive-links { margin: 28px 0 0; text-align: center; font-size: 0.92rem; line-height: 2; color: var(--color-gold); }
+    .archive-links a { color: var(--color-text); text-decoration: underline; text-decoration-color: var(--color-gold); text-underline-offset: 3px; }
+    .archive-links a:hover { color: var(--color-gold); }
     .section-subtitle {
       font-size: 0.85rem;
       color: var(--color-text-muted);
@@ -3407,7 +3410,7 @@
     <div class="section-header">
       <div>
         <h2 class="section-title" id="archive-title" data-pre>Todas las Colecciones</h2>
-        <p class="section-subtitle" id="archive-subtitle" data-pre>Trajes de fallera y de valenciano a medida, espolines y telas exclusivas, aderezos y peinetas, mantillas e indumentaria de Semana Santa. Nuestro trabajo, nuestra ilusión.</p>
+        <p class="section-subtitle" id="archive-subtitle" data-pre>Trajes de fallera y trajes de valenciano de saragüells o de torrentí, a medida; espolines y telas exclusivas, aderezos y peinetas, mantillas e indumentaria de Semana Santa. Nuestro trabajo, nuestra ilusión.</p>
       </div>
     </div>
 
@@ -3472,6 +3475,8 @@
         </div>
       </div>
     </article></div>
+    <!-- Enlaces de texto a las páginas de cada servicio (las tarjetas abren una ventana, no son enlaces) -->
+    <p class="archive-links" id="archive-links" data-pre><a href="trajes-a-medida">Trajes de fallera a medida</a> · <a href="traje-de-valenciano">Indumentaria masculina valenciana: traje de valenciano</a> · <a href="telas-valencianas">Telas exclusivas de la casa</a> · <a href="espolin">Trajes de espolín</a> · <a href="indumentaria-infantil">Trajes de niña y de niño</a></p>
 
     <!-- ✦ FALLERAS MAYORES — sección dedicada -->
     <div id="falleras-mayores">
@@ -4109,7 +4114,7 @@ Sábados: 10:30–13:30</p>
         <a class="fs-map" href="https://maps.google.com/?q=Carrer+Vicent+Gallart+49+Valencia" target="_blank" rel="noopener">Ver en mapa →</a>
       </div></div>
       <div id="footer-col-3" data-pre><h4>Información</h4>
-    <ul><li><a href="trajes-a-medida">Trajes a medida</a></li><li><a href="traje-de-valenciano">Traje de valenciano</a></li><li><a href="telas-valencianas">Telas exclusivas</a></li><li><a href="espolin">Espolín</a></li><li><a href="indumentaria-infantil">Indumentaria infantil</a></li><li><a href="decoracion">Decoración</a></li><li><a href="mailto:info@cosascucas.es">Escríbenos</a></li><li><a href="#contacto" data-correo="cita">Pedir cita</a></li><li><a href="politica-privacidad" target="_blank" rel="noopener">Política de privacidad</a></li><li><a href="aviso-legal" target="_blank" rel="noopener">Aviso legal</a></li></ul></div>
+    <ul><li><a href="trajes-a-medida">Trajes de fallera a medida</a></li><li><a href="traje-de-valenciano">Indumentaria masculina: traje de valenciano</a></li><li><a href="telas-valencianas">Telas exclusivas</a></li><li><a href="espolin">Espolín</a></li><li><a href="indumentaria-infantil">Indumentaria infantil</a></li><li><a href="decoracion">Decoración</a></li><li><a href="mailto:info@cosascucas.es">Escríbenos</a></li><li><a href="#contacto" data-correo="cita">Pedir cita</a></li><li><a href="politica-privacidad" target="_blank" rel="noopener">Política de privacidad</a></li><li><a href="aviso-legal" target="_blank" rel="noopener">Aviso legal</a></li></ul></div>
     </div>
     <div class="footer-bottom">
       <p id="footer-copyright" data-pre>© 2026 Cosas Cucas. Todos los derechos reservados.</p>
@@ -4459,7 +4464,7 @@ const translations = {
     drops: [
       {
         id: 'falles-2027-mujer', title: 'Indumentaria Femenina', subtitle: 'Fallas 2027 · La Luz de la Tradición',
-        pagina: { href: 'trajes-a-medida', label: 'Trajes a medida: así trabajamos en el taller →' },
+        pagina: { href: 'trajes-a-medida', label: 'Trajes de fallera a medida: así trabajamos en el taller →' },
         heroTitle: 'El arte de vestir Valencia.',
         description: 'En Cosas Cucas apostamos por la artesanía cuidada, los detalles únicos y las piezas que transmiten dulzura, tradición y originalidad.',
         heroImage: IMG.portada, archiveImage: IMG.archive1, badge: 'Disponible Ahora',
@@ -4516,7 +4521,7 @@ const translations = {
       },
       {
         id: 'hombre-2027', title: 'Indumentaria Masculina', subtitle: 'Indumentaria Masculina Valenciana',
-        pagina: { href: 'traje-de-valenciano', label: 'Todo sobre el traje de valenciano →' },
+        pagina: { href: 'traje-de-valenciano', label: 'Indumentaria masculina valenciana: todo sobre el traje de valenciano →' },
         heroTitle: 'El llaurador, vestido con orgullo.',
         description: 'Indumentaria tradicional masculina valenciana para las Fallas de 2027. Jubones de seda, calzas, fajas bordadas y complementos artesanales. Todo confeccionado a medida en nuestro taller de Valencia, con los mismos materiales exclusivos que nuestra línea de mujer.',
         heroImage: IMG.hHero, archiveImage: IMG.hArchive, badge: 'Colección 2027',
@@ -4764,8 +4769,8 @@ const translations = {
           mapsHref: 'https://maps.google.com/?q=Carrer+Vicent+Gallart+49+Valencia' },
       ],
       info: [
-        { label: 'Trajes a medida',        href: 'trajes-a-medida' },
-        { label: 'Traje de valenciano',    href: 'traje-de-valenciano' },
+        { label: 'Trajes de fallera a medida', href: 'trajes-a-medida' },
+        { label: 'Indumentaria masculina: traje de valenciano', href: 'traje-de-valenciano' },
         { label: 'Telas exclusivas',       href: 'telas-valencianas' },
         { label: 'Espolín',                href: 'espolin' },
         { label: 'Indumentaria infantil',  href: 'indumentaria-infantil' },
@@ -4780,7 +4785,8 @@ const translations = {
         { label: 'Aviso legal', href: 'aviso-legal',        target: '_blank' },
       ],
       archiveTitle:    'Todas las Colecciones',
-      archiveSubtitle: 'Trajes de fallera y de valenciano a medida, espolines y telas exclusivas, aderezos y peinetas, mantillas e indumentaria de Semana Santa. Nuestro trabajo, nuestra ilusión.',
+      archiveLinks: [{ href: "trajes-a-medida", label: "Trajes de fallera a medida" }, { href: "traje-de-valenciano", label: "Indumentaria masculina valenciana: traje de valenciano" }, { href: "telas-valencianas", label: "Telas exclusivas de la casa" }, { href: "espolin", label: "Trajes de espolín" }, { href: "indumentaria-infantil", label: "Trajes de niña y de niño" }],
+      archiveSubtitle: 'Trajes de fallera y trajes de valenciano de saragüells o de torrentí, a medida; espolines y telas exclusivas, aderezos y peinetas, mantillas e indumentaria de Semana Santa. Nuestro trabajo, nuestra ilusión.',
       viewCollection:  'Ver colección',
       viewProduct:     '+ Ver pieza',
       viewAll:         'Ver todo',
@@ -4956,7 +4962,7 @@ const translations = {
     drops: [
       {
         id: 'falles-2027-dona', title: 'Indumentària Femenina', subtitle: 'Falles 2027 · La Llum de la Tradició',
-        pagina: { href: 'trajes-a-medida', label: 'Vestits a mida: així treballem al taller →' },
+        pagina: { href: 'trajes-a-medida', label: 'Vestits de fallera a mida: així treballem al taller →' },
         heroTitle: "L'art de vestir València.",
         description: "A Cosas Cucas apostem per l'artesania curada, els detalls únics i les peces que transmeten dolçor, tradició i originalitat.",
         heroImage: IMG.portada, archiveImage: IMG.archive1, badge: 'Disponible Ara',
@@ -4998,7 +5004,7 @@ const translations = {
       },
       {
         id: 'home-2027', title: 'Indumentària Masculina', subtitle: 'Indumentària Masculina Valenciana',
-        pagina: { href: 'traje-de-valenciano', label: 'Tot sobre el vestit de valencià →' },
+        pagina: { href: 'traje-de-valenciano', label: 'Indumentària masculina valenciana: tot sobre el vestit de valencià →' },
         description: "Indumentària tradicional masculina valenciana per a les Falles del 2027. Jubons de seda, calces, faixes brodades i complements artesanals. Tot confeccionat a mida al nostre taller de València, amb els mateixos materials exclusius que la nostra línia de dona.",
         heroImage: IMG.hHero, archiveImage: IMG.hArchive, badge: "Col·lecció 2027",
         ctaPrimary: { label: "Veure la col·lecció", href: '#drops-archive' },
@@ -5242,8 +5248,8 @@ const translations = {
           mapsHref: 'https://maps.google.com/?q=Carrer+Vicent+Gallart+49+Valencia' },
       ],
       info: [
-        { label: 'Vestits a mida',         href: 'trajes-a-medida' },
-        { label: 'Vestit de valencià',     href: 'traje-de-valenciano' },
+        { label: 'Vestits de fallera a mida', href: 'trajes-a-medida' },
+        { label: 'Indumentària masculina: vestit de valencià', href: 'traje-de-valenciano' },
         { label: 'Teles exclusives',       href: 'telas-valencianas' },
         { label: 'Espolí',                 href: 'espolin' },
         { label: 'Indumentària infantil',  href: 'indumentaria-infantil' },
@@ -5258,7 +5264,8 @@ const translations = {
         { label: "Avís legal", href: 'aviso-legal',         target: '_blank' },
       ],
       archiveTitle:    "Totes les Col·leccions",
-      archiveSubtitle: "Vestits de fallera i de valencià a mida, espolins i teles exclusives, adreços i peinetes, mantellines i indumentària de Setmana Santa. El nostre treball, la nostra il·lusió.",
+      archiveLinks: [{ href: "trajes-a-medida", label: "Vestits de fallera a mida" }, { href: "traje-de-valenciano", label: "Indumentària masculina valenciana: vestit de valencià" }, { href: "telas-valencianas", label: "Teles exclusives de la casa" }, { href: "espolin", label: "Vestits d'espolí" }, { href: "indumentaria-infantil", label: "Vestits de xiqueta i de xiquet" }],
+      archiveSubtitle: "Vestits de fallera i vestits de valencià de saragüells o de torrentí, a mida; espolins i teles exclusives, adreços i peinetes, mantellines i indumentària de Setmana Santa. El nostre treball, la nostra il·lusió.",
       viewCollection:  "Veure col·lecció",
       viewProduct:     '+ Veure peça',
       viewAll:         'Veure tot',
@@ -5814,6 +5821,7 @@ function buildArchive() {
   /* Cabecera dinámica de la sección Colecciones */
   document.getElementById('archive-title').textContent    = ft.archiveTitle;
   document.getElementById('archive-subtitle').textContent = ft.archiveSubtitle;
+  document.getElementById('archive-links').innerHTML = ft.archiveLinks.map(l => `<a href="${l.href}">${l.label}</a>`).join(' · ');
 
   document.getElementById('drops-archive-grid').innerHTML = t().drops.map((d, i) => `
     <article class="archive-card${i === activeDropIndex ? ' active' : ''}" data-drop-index="${i}">
@@ -7422,8 +7430,8 @@ function updateCitaBtn() {
       keys:["encargo", "encargar", "encàrrec", "encarrec", "encarregar", "a medida", "a mida", "plazo", "termini", "cuanto tarda", "quant tarda", "tardáis", "tardais", "tardeu", "agenda"],
       title:{ es:"Encargar un traje", ca:"Encarregar un vestit" },
       body:{
-        es:"Al encargarlo, aclara quién pone la tela y qué piezas entran: cancán, cintas, puntillas, forros, manteleta, zapatos...\n\nNo hay un plazo fijo, pero los talleres se llenan pronto: en 2019, a tres meses de Fallas, la mayoría ya tenía la agenda completa. Cuanto antes vengas, mejor.\n\nPide cita en la tienda o escríbenos al WhatsApp <b>667 775 501</b>. Así trabajamos: <a href='trajes-a-medida'>Trajes a medida</a>.",
-        ca:"En encarregar-lo, aclarix qui posa la tela i quines peces hi entren: cancan, cintes, puntes, folres, manteleta, sabates...\n\nNo hi ha un termini fix, però els tallers s'omplin prompte: el 2019, a tres mesos de Falles, la majoria ja tenia l'agenda plena. Com més prompte vingues, millor.\n\nDemana cita a la botiga o escriu-nos al WhatsApp <b>667 775 501</b>. Així treballem: <a href='trajes-a-medida'>Vestits a mida</a>." } },
+        es:"Al encargarlo, aclara quién pone la tela y qué piezas entran: cancán, cintas, puntillas, forros, manteleta, zapatos...\n\nNo hay un plazo fijo, pero los talleres se llenan pronto: en 2019, a tres meses de Fallas, la mayoría ya tenía la agenda completa. Cuanto antes vengas, mejor.\n\nPide cita en la tienda o escríbenos al WhatsApp <b>667 775 501</b>. Así trabajamos: <a href='trajes-a-medida'>Trajes de fallera a medida</a>.",
+        ca:"En encarregar-lo, aclarix qui posa la tela i quines peces hi entren: cancan, cintes, puntes, folres, manteleta, sabates...\n\nNo hi ha un termini fix, però els tallers s'omplin prompte: el 2019, a tres mesos de Falles, la majoria ja tenia l'agenda plena. Com més prompte vingues, millor.\n\nDemana cita a la botiga o escriu-nos al WhatsApp <b>667 775 501</b>. Així treballem: <a href='trajes-a-medida'>Vestits de fallera a mida</a>." } },
     { id:"mangas",
       keys:["manga", "mànega", "manega", "mànegues", "manegues", "màniga", "maniga", "farol", "farolet", "fanalet", "francesa", "codera", "tres cuartos", "tres quarts"],
       title:{ es:"Las mangas", ca:"Les mànegues" },

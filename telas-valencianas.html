@@ -31,6 +31,76 @@
   <link rel="preload" as="image" href="telas/web/azul-noche-hero.webp" fetchpriority="high" />
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="apple-touch-icon" href="favicon.png" />
+  <!-- Datos estructurados: ruta, servicio y las preguntas que se ven en la página. Si cambia una pregunta, cambiarla también aquí. -->
+  <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@graph": [
+    {
+     "@type": "BreadcrumbList",
+     "itemListElement": [
+      {
+       "@type": "ListItem",
+       "position": 1,
+       "name": "Inicio",
+       "item": "https://cosascucas.es/"
+      },
+      {
+       "@type": "ListItem",
+       "position": 2,
+       "name": "Telas valencianas para tu traje",
+       "item": "https://cosascucas.es/telas-valencianas"
+      }
+     ]
+    },
+    {
+     "@type": "FAQPage",
+     "mainEntity": [
+      {
+       "@type": "Question",
+       "name": "¿Vendéis la tela a metro?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Nuestras telas son exclusivas y las usamos para los trajes que confeccionamos en el taller. Ven a la tienda a verlas y te asesoramos sin compromiso."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Cuánta tela lleva un traje?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No hay una cifra fija: depende del ancho de la tela, de la talla y del vuelo. Como referencia, el espolín se teje a 54 cm de ancho, y para el traje completo de la Fallera Mayor de València se encargan 13,50 m (12,50 m para la infantil), más 3,50 m de seda lisa para el corpiño de manga larga."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Qué es mejor, seda o rayón?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Las dos sirven para la falda. La seda natural es la tela de siempre; el rayón brilla, es suave y puede imitar su tacto. Si eliges rayón, límpialo en seco."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Qué diferencia hay entre damasco y brocatel?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "En el damasco el dibujo sale del propio tejido y es plano; en el brocatel el dibujo va en relieve. Lo mejor es verlas y tocarlas en la tienda."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Qué faldas llevaba el traje antiguo?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cada una tenía su uso. El guardapiés era la falda larga de vestir, casi siempre de seda, y los más comunes eran azules o verdes. El sagaleco era la de diario, de lana o de lienzo. Y la basquiña, una sobrefalda oscura para salir a la calle, sobre todo a misa."
+       }
+      }
+     ]
+    }
+   ]
+  }
+  </script>
 </head>
 <body>
 
@@ -161,7 +231,7 @@
       <h2 data-t="oTitle">Más cosas de la casa</h2>
     </div>
     <div class="otras">
-      <a href="trajes-a-medida"><strong data-t="oMedida">Trajes a medida</strong><span data-t="oMedidaTxt">Cómo trabajamos en el taller, de la primera cita a la última prueba.</span></a>
+      <a href="trajes-a-medida"><strong data-t="oMedida">Trajes de fallera a medida</strong><span data-t="oMedidaTxt">Cómo trabajamos en el taller, de la primera cita a la última prueba.</span></a>
       <a href="espolin"><strong data-t="oEspolin">Espolín</strong><span data-t="oEspolinTxt">Qué es, cómo se reconoce y cómo lo convertimos en tu traje.</span></a>
       <a href="traje-de-valenciano"><strong data-t="fValenciano">Traje de valenciano</strong><span data-t="oValencianoTxt">Saragüells o torrentí, chaleco y faja, a medida.</span></a>
     </div>
@@ -220,7 +290,7 @@
       <div class="footer__col">
         <p class="footer__heading" data-t="fHacemos">Lo que hacemos</p>
         <ul class="footer__links">
-          <li><a href="trajes-a-medida" data-t="oMedida">Trajes a medida</a></li>
+          <li><a href="trajes-a-medida" data-t="oMedida">Trajes de fallera a medida</a></li>
           <li><a href="traje-de-valenciano" data-t="fValenciano">Traje de valenciano</a></li>
           <li><a href="espolin" data-t="oEspolin">Espolín</a></li>
           <li><a href="telas-valencianas" data-t="fTelas">Telas exclusivas</a></li>
@@ -317,7 +387,7 @@
     a5: 'Cadascuna tenia el seu ús. El guardapeu era la falda llarga de vestir, quasi sempre de seda, i els més comuns eren blaus o verds. El sagaleco era la de cada dia, de llana o de llenç. I la basquinya, una sobrefalda fosca per a eixir al carrer, sobretot a missa.',
     oEyebrow: '✦ També fem',
     oTitle: 'Més coses de la casa',
-    oMedida: 'Vestits a mida', oMedidaTxt: 'Com treballem al taller, de la primera cita a l’última prova.',
+    oMedida: 'Vestits de fallera a mida', oMedidaTxt: 'Com treballem al taller, de la primera cita a l’última prova.',
     oEspolin: 'Espolí', oEspolinTxt: 'Què és, com es reconeix i com el convertim en el teu vestit.',
     fValenciano: 'Vestit de valencià', oValencianoTxt: 'Saragüells o torrentí, armilla i faixa, a mida.',
     oInfantil: 'Indumentària infantil', oDeco: 'Decoració', fTelas: 'Teles exclusives',

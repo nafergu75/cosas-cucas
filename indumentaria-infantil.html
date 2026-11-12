@@ -31,6 +31,88 @@
   <link rel="preload" as="image" href="noticias/joies22-06.webp" fetchpriority="high" />
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="apple-touch-icon" href="favicon.png" />
+  <!-- Datos estructurados: ruta, servicio y las preguntas que se ven en la página. Si cambia una pregunta, cambiarla también aquí. -->
+  <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@graph": [
+    {
+     "@type": "BreadcrumbList",
+     "itemListElement": [
+      {
+       "@type": "ListItem",
+       "position": 1,
+       "name": "Inicio",
+       "item": "https://cosascucas.es/"
+      },
+      {
+       "@type": "ListItem",
+       "position": 2,
+       "name": "Trajes de fallera de niña y de valenciano de niño",
+       "item": "https://cosascucas.es/indumentaria-infantil"
+      }
+     ]
+    },
+    {
+     "@type": "Service",
+     "name": "Trajes de fallera de niña y de valenciano de niño",
+     "url": "https://cosascucas.es/indumentaria-infantil",
+     "areaServed": {
+      "@type": "City",
+      "name": "Valencia"
+     },
+     "provider": {
+      "@id": "https://cosascucas.es/#organizacion"
+     }
+    },
+    {
+     "@type": "FAQPage",
+     "mainEntity": [
+      {
+       "@type": "Question",
+       "name": "¿Cómo se encarga un traje de niña?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Igual que el de una adulta. Al encargarlo, aclara quién pone la tela y qué piezas entran: cancán, cintas, puntillas, forros, manteleta, zapatos… Pide cita y te asesoramos sin compromiso."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Cuánta tela lleva?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No hay una cifra fija: depende del ancho de la tela, de la talla y del vuelo. Como referencia, el espolín se teje a 54 cm de ancho, y para el traje completo de la Fallera Mayor Infantil de València se encargan 12,50 m (13,50 m para la Fallera Mayor de València)."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Qué se hace cuando el traje se le queda pequeño?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Se saca tela: es el arreglo que más nos piden. En los cancanes de niña se suelta la lorza para ganar largo."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Hacéis trajes de valenciano para niño?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, a medida, igual que el de adulto."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Cuánto cuesta?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Depende sobre todo de la tela y de las joyas, y también de los bordados y de la confección. Te hacemos el presupuesto sin compromiso; pregunta qué piezas entran."
+       }
+      }
+     ]
+    }
+   ]
+  }
+  </script>
 </head>
 <body>
 
@@ -80,7 +162,7 @@
     </div>
     <ul class="pasos pasos--sin-numero">
       <li class="paso"><h3 data-t="e1Title">Traje de niña</h3><p data-t="e1Text">Se pide igual que el de una adulta: el traje completo y, si quieres, un corpiño de manga larga. Lleva algo menos de tela.</p></li>
-      <li class="paso"><h3 data-t="e2Title">Traje de niño</h3><p data-t="e2Text">El traje de valenciano de niño también lo confeccionamos a medida, como el de adulto.</p></li>
+      <li class="paso"><h3 data-t="e2Title">Traje de niño</h3><p data-t="e2Text">El <a href="traje-de-valenciano">traje de valenciano</a> de niño también lo confeccionamos a medida, como el de adulto.</p></li>
       <li class="paso"><h3 data-t="e3Title">Cuando crecen</h3><p data-t="e3Text">Si a una niña se le queda pequeño el traje, el arreglo más pedido es sacar tela. Y los cancanes de niña suelen llevar una lorza que se suelta cuando crece, para ganar largo.</p></li>
     </ul>
   </section>
@@ -179,9 +261,9 @@
       <h2 data-t="oTitle">Más cosas de la casa</h2>
     </div>
     <div class="otras">
-      <a href="trajes-a-medida"><strong data-t="oMedida">Trajes a medida</strong><span data-t="oMedidaTxt">Cómo trabajamos en el taller, de la primera cita a la última prueba.</span></a>
+      <a href="trajes-a-medida"><strong data-t="oMedida">Trajes de fallera a medida</strong><span data-t="oMedidaTxt">Cómo trabajamos en el taller, de la primera cita a la última prueba.</span></a>
       <a href="espolin"><strong data-t="oEspolin">Espolín</strong><span data-t="oEspolinTxt">Qué es, cómo se reconoce y cómo lo convertimos en tu traje.</span></a>
-      <a href="decoracion"><strong data-t="oDeco">Decoración</strong><span data-t="oDecoTxt">Cortinas, tapizados y colchas a medida.</span></a>
+      <a href="traje-de-valenciano"><strong data-t="oValenciano">Indumentaria masculina</strong><span data-t="oValencianoTxt">Traje de valenciano: saragüells o torrentí, chaleco y faja, a medida.</span></a>
     </div>
   </section>
 
@@ -238,7 +320,7 @@
       <div class="footer__col">
         <p class="footer__heading" data-t="fHacemos">Lo que hacemos</p>
         <ul class="footer__links">
-          <li><a href="trajes-a-medida" data-t="oMedida">Trajes a medida</a></li>
+          <li><a href="trajes-a-medida" data-t="oMedida">Trajes de fallera a medida</a></li>
           <li><a href="traje-de-valenciano" data-t="fValenciano">Traje de valenciano</a></li>
           <li><a href="telas-valencianas" data-t="fTelas">Telas exclusivas</a></li>
           <li><a href="espolin" data-t="oEspolin">Espolín</a></li>
@@ -285,7 +367,7 @@
     eEyebrow: '✦ Com s\'encarrega',
     eTitle: 'Igual que un vestit d\'adult, i amb arranjament quan creixen',
     e1Title: 'Vestit de xiqueta', e1Text: 'Es demana igual que el d\'una adulta: el vestit complet i, si vols, un cosset de mànega llarga. Porta una mica menys de tela.',
-    e2Title: 'Vestit de xiquet', e2Text: 'El vestit de valencià de xiquet també el confeccionem a mida, com el d\'adult.',
+    e2Title: 'Vestit de xiquet', e2Text: 'El <a href="traje-de-valenciano">vestit de valencià</a> de xiquet també el confeccionem a mida, com el d\'adult.',
     e3Title: 'Quan creixen', e3Text: 'Si a una xiqueta se li queda xicotet el vestit, l\'arranjament més demanat és traure tela. I els cancans de xiqueta solen portar un plec cosit que es desfà quan creix, per a guanyar llargària.',
     jEyebrow: '✦ Fallera Major Infantil de València 2027',
     jTitle: 'Julia, vestida per la casa des de menuda',
@@ -337,9 +419,9 @@
     a5: 'Depén sobretot de la tela i de les joies, i també dels brodats i de la confecció. Et fem el pressupost sense compromís; pregunta quines peces hi entren.',
     oEyebrow: '✦ També fem',
     oTitle: 'Més coses de la casa',
-    oMedida: 'Vestits a mida', oMedidaTxt: 'Com treballem al taller, de la primera cita a l\'última prova.',
+    oMedida: 'Vestits de fallera a mida', oMedidaTxt: 'Com treballem al taller, de la primera cita a l\'última prova.',
     oEspolin: 'Espolí', oEspolinTxt: 'Què és, com es reconeix i com el convertim en el teu vestit.',
-    oDeco: 'Decoració', oDecoTxt: 'Cortines, entapissats i cobrellits a mida.',
+    oValenciano: 'Indumentària masculina', oValencianoTxt: 'Vestit de valencià: saragüells o torrentí, armilla i faixa, a mida.', oDeco: 'Decoració', oDecoTxt: 'Cortines, entapissats i cobrellits a mida.',
     sEyebrow: '✦ Vine a veure\'ns',
     sTitle: 'Demana cita per al vestit de la teua filla o del teu fill',
     sSub: 'T\'atenem en qualsevol de les nostres dues botigues, amb cita prèvia.',
