@@ -339,6 +339,9 @@ Empieza ahora con la FASE 1. No modifiques ningún archivo todavía. Analiza el 
 
 Ordenado de lo más nuevo a lo más antiguo. Cada línea es un trabajo terminado y publicado.
 
+### 19-11-2026
+- **Título de la portada al estilo de Álvaro Moliner** (Ignacio mandó una captura de Google con «Indumentaria Fallera | Álvaro Moliner» y pidió «indumentaria fallera | cosas cucas»). El `<title>`, `og:title` y `twitter:title` pasan a «Indumentaria Valenciana y Fallera | Cosas Cucas» (antes «Indumentaria valenciana y trajes de fallera en Valencia | Cosas Cucas» y, en redes, «Cosas Cucas · Trajes de fallera e indumentaria valenciana en Valencia»): corto como el suyo y sin perder «indumentaria valenciana», que es la palabra clave que pidió el 18-11. El favicon (CC dorada, 192×192) ya vale para el icono del resultado. Google puede tardar días en cambiarlo; se acelera con «Solicitar indexación» de la portada en Search Console.
+
 ### 18-11-2026
 - **Marca + palabra clave: «Cosas Cucas indumentaria valenciana»** (Ignacio: «que aparezca cosas cucas indumentaria valenciana, es la palabra clave»). Portada: la descripción (meta description, og:description y twitter:description) empieza ahora por «Cosas Cucas, tienda y taller de indumentaria valenciana…»; en el JSON-LD, `alternateName` «Cosas Cucas Indumentaria Valenciana» en Organization y en WebSite (este también con «cosascucas.es»). El título se queda igual («Indumentaria valenciana y trajes de fallera en Valencia | Cosas Cucas»): Google pone el nombre del sitio «Cosas Cucas» encima del título, así que el resultado ya se lee «Cosas Cucas · Indumentaria valenciana…». Recomendación a Ignacio: no añadir «Indumentaria Valenciana» al nombre de la ficha de Google salvo que sea el nombre del rótulo (Google lo penaliza); sí en la descripción y en la categoría.
 
