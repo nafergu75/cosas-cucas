@@ -468,9 +468,9 @@
       color: var(--color-text);
     }
     .mobile-menu a:hover { color: var(--color-gold); }
-    /* 980 px: por debajo, las pestañas no caben junto al selector de idioma.
+    /* 1200 px: por debajo, las 11 pestañas no caben junto al selector de idioma (medido el 25-11-2026; antes 980 px con 9).
        Va detrás de .hamburger para que su display:none no lo pise */
-    @media (max-width: 980px) {
+    @media (max-width: 1200px) {
       .nav-desktop { display: none; }
       .hamburger { display: flex; }
       .header-actions { justify-self: end; } /* sin el menú, a la derecha y no junto al logo */
@@ -3313,7 +3313,7 @@
 </header>
 
 <!-- MOBILE MENU -->
-<nav class="mobile-menu" id="mobile-menu" data-pre><a href="#noticias">Noticias</a><a href="#drops-archive">Colecciones</a><a href="#falleras-mayores">Falleras Mayores</a><a href="#zapatillas">Deportivas Fallera</a><a href="#historia">Historia</a><a href="decoracion">Decoración</a><a href="#videos">Vídeos</a><a href="galeria" target="_blank" rel="noopener">Galería</a><a href="#contacto">Contacto</a></nav>
+<nav class="mobile-menu" id="mobile-menu" data-pre><a href="#noticias">Noticias</a><a href="#drops-archive">Colecciones</a><a href="trajes-a-medida">Trajes a medida</a><a href="traje-de-valenciano">Indumentaria masculina</a><a href="#falleras-mayores">Falleras Mayores</a><a href="#zapatillas">Deportivas Fallera</a><a href="#historia">Historia</a><a href="decoracion">Decoración</a><a href="#videos">Vídeos</a><a href="galeria" target="_blank" rel="noopener">Galería</a><a href="#contacto">Contacto</a></nav>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
      ANNOUNCEMENT STRIPE
@@ -3755,7 +3755,7 @@
         </div>
         <div class="dh-block">
           <h3 class="dh-block-title" id="dh-b3-title" data-pre>Una casa nueva en Burriana</h3>
-          <p class="dh-block-text" id="dh-b3-p1" data-pre>En la tienda de la calle Grabador Esteve hemos vestido a muchas falleras y hemos compartido con sus familias pruebas, nervios y alegrías. Desde el 1 de julio de 2026 os recibimos en nuestra nueva casa, en la calle Burriana, 21: una tienda luminosa, con las telas a la vista y el mismo cariño de siempre.</p>
+          <p class="dh-block-text" id="dh-b3-p1" data-pre>En la tienda de la calle Grabador Esteve hemos vestido a muchas falleras y hemos compartido con sus familias pruebas, nervios y alegrías. Desde el 1 de julio de 2026 os recibimos en nuestra nueva tienda de trajes tradicionales en València, en la calle Burriana, 21: luminosa, con las telas a la vista y el mismo cariño de siempre.</p>
           <p class="dh-block-text" id="dh-b3-p2" data-pre>Hemos cambiado de calle, no de manera de trabajar. Y en el Cabañal, el barrio donde empezó todo, seguimos en Vicent Gallart, 49.</p>
         </div>
         <div class="dh-cta-row">
@@ -4423,6 +4423,8 @@ const translations = {
     nav: [
       { label: 'Noticias',         href: '#noticias'         },
       { label: 'Colecciones',      href: '#drops-archive'    },
+      { label: 'Trajes a medida',  href: 'trajes-a-medida'  },
+      { label: 'Indumentaria masculina', href: 'traje-de-valenciano' },
       { label: 'Falleras Mayores', href: '#falleras-mayores' },
       { label: 'Deportivas Fallera', href: '#zapatillas'   },
       { label: 'Historia',         href: '#historia'        },
@@ -4740,7 +4742,7 @@ const translations = {
       block2Title: 'Nuestro compromiso',
       block2p1: 'Con más de cuatro décadas de dedicación, <strong>Cosas Cucas</strong> se ha distinguido por la calidad y el detalle de cada prenda. Nuestra participación en la vida fallera es un homenaje a nuestra historia y a la belleza de nuestra cultura.',
       block3Title: 'Una casa nueva en Burriana',
-      block3p1: 'En la tienda de la calle Grabador Esteve hemos vestido a muchas falleras y hemos compartido con sus familias pruebas, nervios y alegrías. Desde el 1 de julio de 2026 os recibimos en nuestra nueva casa, en la calle Burriana, 21: una tienda luminosa, con las telas a la vista y el mismo cariño de siempre.',
+      block3p1: 'En la tienda de la calle Grabador Esteve hemos vestido a muchas falleras y hemos compartido con sus familias pruebas, nervios y alegrías. Desde el 1 de julio de 2026 os recibimos en nuestra nueva tienda de trajes tradicionales en València, en la calle Burriana, 21: luminosa, con las telas a la vista y el mismo cariño de siempre.',
       block3p2: 'Hemos cambiado de calle, no de manera de trabajar. Y en el Cabañal, el barrio donde empezó todo, seguimos en Vicent Gallart, 49.',
       ctaLabel: 'Pedir cita en tienda',
     },
@@ -4921,6 +4923,8 @@ const translations = {
     nav: [
       { label: 'Notícies',           href: '#noticias'         },
       { label: "Col·leccions",       href: '#drops-archive'    },
+      { label: 'Vestits a mida',     href: 'trajes-a-medida'  },
+      { label: 'Indumentària masculina', href: 'traje-de-valenciano' },
       { label: 'Falleres Majors',    href: '#falleras-mayores' },
       { label: 'Deportives Fallera', href: '#zapatillas'       },
       { label: "Història",           href: '#historia'         },
@@ -5219,7 +5223,7 @@ const translations = {
       block2Title: 'El nostre compromís',
       block2p1: 'Amb més de quatre dècades de dedicació, <strong>Cosas Cucas</strong> s\'ha distingit per la qualitat i el detall de cada peça. La nostra participació en la vida fallera és un homenatge a la nostra història i a la bellesa de la nostra cultura.',
       block3Title: 'Una casa nova a Burriana',
-      block3p1: "A la tenda del carrer Gravador Esteve hem vestit moltes falleres i hem compartit amb les seues famílies proves, nervis i alegries. Des de l'1 de juliol de 2026 vos rebem a la nostra nova casa, al carrer Burriana, 21: una tenda lluminosa, amb les teles a la vista i la mateixa estima de sempre.",
+      block3p1: "A la tenda del carrer Gravador Esteve hem vestit moltes falleres i hem compartit amb les seues famílies proves, nervis i alegries. Des de l'1 de juliol de 2026 vos rebem a la nostra nova tenda de vestits tradicionals a València, al carrer Burriana, 21: lluminosa, amb les teles a la vista i la mateixa estima de sempre.",
       block3p2: 'Hem canviat de carrer, no de manera de treballar. I al Cabanyal, el barri on va començar tot, continuem a Vicent Gallart, 49.',
       ctaLabel: 'Demanar cita a la tenda',
     },
